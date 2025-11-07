@@ -1,0 +1,1372 @@
+/* ===============================================
+   GLCTech - Estilos Principais do Site
+   Autor: André Luiz Cézar
+   Última Revisão: 04/11/2025
+   Descrição: Este arquivo contém toda a estilização base do site GLCTech,
+   incluindo estrutura, layout, responsividade e identidade visual.
+
+   Estrutura de Seções:
+   - Variáveis e Reset
+   - Cabeçalho e Menu (Header / Nav)
+   - Seção Hero (Slider de destaque)
+   - Seção Sobre (About)
+   - Seção Serviços (Services)
+   - Seção Parceiros (Partners)
+   - Seção Equipe (Team)
+   - Seção Depoimentos (Testimonials)
+   - Seção Contato (Contact)
+   - Rodapé (Footer)
+   - Responsividade (Media Queries)
+=============================================== */
+
+:root {
+  --dark: #2d2d2d;
+  --red: #e6262c;
+  --white: #ffffff;
+  --gray: #c9c9c9;
+  --zabbix-card-header-bg: #2d2d2d;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--dark);
+  color: var(--white);
+  line-height: 1.6;
+}
+
+h2 {
+color: var(--dark);
+
+}
+
+/* ======= Scroll suave e alinhamento de seções ======= */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px; /* espaço igual à altura do header */
+}
+
+@media (max-width: 992px) {
+  html {
+    scroll-padding-top: 70px; /* ajuste menor no mobile */
+  }
+}
+
+/* Destaque da seção ativa no menu */
+.nav ul li a.active {
+  color: var(--red);
+  border-bottom: 2px solid var(--red);
+  transition: all 0.3s ease;
+}
+
+
+
+
+/* ======= HEADER E MENU ======= */
+.header {
+  background-color: var(--dark);
+  border-bottom: 3px solid var(--red);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.8rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo img {
+  height: 45px;
+}
+
+/* NAVIGATION */
+.nav ul {
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+
+.nav ul li {
+  margin-left: 25px;
+  position: relative;
+}
+
+.nav ul li a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.nav ul li a:hover,
+.nav ul li a:focus {
+  color: var(--red);
+}
+
+/* ======= MENU HAMBÚRGUER AJUSTADO ======= */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 32px;
+  height: 24px;
+  cursor: pointer;
+  z-index: 1100; /* garante que fique acima do menu */
+  background: none;
+  border: none;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: var(--white); /* branco — altere para var(--red) se quiser vermelho */
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Animação de transformação do ícone ao clicar */
+.menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+.menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* ======= NAV MOBILE - DROP DOWN AJUSTADO ======= */
+@media (max-width: 992px) {
+  .menu-toggle {
+    display: flex;
+  }
+
+  .nav {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    background: var(--dark);
+    border-top: 3px solid var(--dark);
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: all 0.5s ease;
+    padding: 0;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  }
+
+  .nav.active {
+    max-height: 400px; /* permite mais altura para vários links */
+    opacity: 1;
+    padding: 15px 0 20px 0;
+  }
+
+  .nav ul {
+    flex-direction: column;
+    width: 90%;
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .nav ul li {
+    width: 100%;
+    margin: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .nav ul li:last-child {
+    border-bottom: none;
+  }
+
+  .nav ul li a {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 12px 0;
+    color: var(--white);
+    border-radius: 6px;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .nav ul li a:hover {
+    background: var(--red);
+    color: var(--white);
+  }
+}
+
+/* Hero Slider */
+.hero-slider {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 20px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: zoom 20s linear infinite;
+}
+
+.slide.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+}
+
+.hero-content {
+  position: relative;
+  color: var(--white);
+  max-width: 800px;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s forwards;
+}
+
+.hero-content p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s 0.3s forwards;
+}
+
+.btn {
+  display: inline-block;
+  background: var(--red);
+  color: var(--dark);
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s 0.6s forwards;
+  transition: all 0.3s;
+}
+.btn:hover,
+.btn:focus {
+  transform: translateY(-3px);
+  background: transparent;
+  outline: none;
+}
+
+/* Navigation Arrows */
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2.5rem;
+  background: rgba(0,0,0,0.5);
+  color: var(--white);
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+  z-index: 10;
+}
+
+.prev:hover, .next:hover,
+.prev:focus, .next:focus {
+  background: rgba(255,0,0,0.8);
+  outline: none;
+}
+
+.prev { left: 20px; }
+.next { right: 20px; }
+
+/* Dots */
+.dots {
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+  text-align: center;
+  z-index: 10;
+}
+
+.dot {
+  height: 12px;
+  width: 12px;
+  margin: 0 5px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.dot.active {
+  background: var(--red);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes zoom {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+
+
+
+/* About Section */
+.about {
+  background: #f5f5f5;
+  padding: 100px 20px;
+}
+
+.about-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about-text {
+  flex: 1 1 500px;
+  text-align: left;
+}
+
+.about-image {
+  flex: 1 1 400px;
+  text-align: center;
+}
+
+.about-image img {
+  max-width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.about-image img:hover,
+.about-image img:focus {
+  transform: scale(1.03);
+  outline: none;
+}
+
+.section-description {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 25px;
+}
+
+.highlight {
+  color: var(--red);
+  font-weight: 600;
+}
+
+.about-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.about-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 12px;
+}
+
+.about-list i {
+  color: var(--red);
+  font-size: 1.2rem;
+}
+
+
+/* ======= Serviços Section - correções para compatibilidade com Bootstrap ======= */
+.services {
+  background-color: var(--dark);
+  color: var(--gray);
+  padding: 80px 20px;
+}
+
+/* Título e subtítulo (mantido) */
+.services .section-title {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: var(--gray);
+}
+.services .section-title::after {
+  content: "";
+  width: 80px;
+  height: 4px;
+  background: var(--red);
+  display: block;
+  margin: 15px auto 0;
+  border-radius: 2px;
+}
+.services .section-subtitle {
+  text-align: center;
+  color: var(--gray);
+  font-size: 1.1rem;
+  margin-bottom: 50px;
+}
+
+/* Cards - estilo principal (limpo e único) */
+.services .card {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: var(--white);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.28s cubic-bezier(.2,.9,.3,1), box-shadow 0.28s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Hover */
+.services .card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.26);
+}
+
+/* Imagem: garantir que ocupe toda largura e não quebre layout */
+.services .card img {
+  display: block;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Corpo do card: garantir espaçamento e permitir que o rodapé fique alinhado */
+.services .card-body {
+  background-color: var(---lightgray, #f5f5f5);
+  padding: 22px;
+  flex: 1 1 auto; /* permite crescer e empurrar o footer para baixo */
+}
+.services .card-body h5 {
+  color: var(--dark);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.services .card-body p {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* Footer do card */
+.services .card-footer {
+  background: var(--gray);
+  border-top: none;
+  padding: 18px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* Botões */
+.services .btn-primary,
+.services .btn-danger {
+  background-color: var(--gray);
+  border: none;
+  color: var(--dark);
+  font-weight: 500;
+  padding: 10px 28px;
+  border-radius: 6px;
+  transition: all 0.25s ease;
+}
+.services .btn-primary:hover,
+.services .btn-danger:hover {
+  background-color: var(--dark);
+  color: var(--red);
+  border: 2px solid var(--red);
+}
+
+/* 
+  CORREÇÃO CRUCIAL: evitar sobrescrever o comportamento global do Bootstrap .col.
+  Em vez de tocar em .col global, definimos regras só para colunas *dentro* de .services.
+*/
+
+/* Garante que colunas dentro de .services respeitem os breakpoints do bootstrap,
+   e que no desktop ocupem 1/3 cada (quando usar .col-md-4 no HTML). */
+.services .row {
+  gap: 20px;
+  align-items: stretch; /* mantém cards com mesma altura */
+}
+
+/* Quando usar <div class="col-md-4">: estas regras reforçam o comportamento desejado */
+.services .col-md-4 {
+  display: flex;
+  flex-direction: column;
+  /* Assegura que a coluna não force 100% em telas maiores */
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
+}
+
+/* Para telas pequenas: deixe as colunas em 100% (bootstrap já faz isso, mas reforçamos) */
+@media (max-width: 767.98px) {
+  .services .col-md-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .services .card img {
+    height: 180px;
+  }
+  .services {
+    padding: 60px 12px;
+  }
+}
+
+/* Reset de possíveis regras conflitantes anteriores — caso você tenha declarado .services .col em outro lugar */
+.services .col {
+  /* deixar sem comportamento flex fixo aqui para não conflictar com bootstrap */
+  display: block;
+  flex: initial;
+}
+
+
+/* Partners Section */
+.partners {
+  background-color: var(--white);
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.partners .section-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.partners .section-title::after {
+  content: "";
+  width: 80px;
+  height: 4px;
+  background: var(--red);
+  display: block;
+  margin: 15px auto 0;
+  border-radius: 2px;
+}
+
+.partners .section-subtitle {
+  color: var(--dark);
+  font-size: 1rem;
+  max-width: 650px;
+  margin: 0 auto 50px;
+  line-height: 1.6;
+}
+
+.partners-logos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  align-items: center;
+  justify-items: center;
+  gap: 40px;
+}
+
+.partner img {
+  max-width: 180px;
+  filter: grayscale(0%);
+  opacity: 0.9;
+  transition: all 0.3s ease;
+}
+
+.partner img:hover,
+.partner img:focus {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.05);
+  outline: none;
+}
+
+
+
+/* ======= Team Section ======= */
+.team {
+  background-color: var(--dark);
+  color: var(--gray);
+}
+
+.team .section-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--gray);
+}
+
+.team .section-title::after {
+  content: "";
+  width: 80px;
+  height: 4px;
+  background: var(--red);
+  display: block;
+  margin: 15px auto 0;
+  border-radius: 2px;
+}
+
+.team .section-subtitle {
+  color: var(--gray);
+  font-size: 1.1rem;
+  margin-bottom: 50px;
+}
+
+.team-card {
+  background-color: #2d2d2d;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.team-img img {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border: 4px solid var(--gray);
+}
+
+.team-name {
+  color: var(--white);
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.team-role {
+  color: var(--gray-light);
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+
+.team-bio {
+  color: #ccc;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.team-social a {
+  color: var(--gray);
+  margin: 0 8px;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+.team-social a:hover {
+  color: var(--red);
+}
+
+@media (max-width: 768px) {
+  .team-img img {
+    width: 100px;
+    height: 100px;
+  }
+  .team-card {
+    padding: 30px 20px;
+  }
+}
+
+
+/* ======= Depoimentos Section ======= */
+.testimonials {
+  background-color: var(--dark);
+  color: var(--gray);
+}
+.mt-3{
+  color: var(--dark);
+  
+}
+
+.testimonials .section-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--gray);
+}
+
+.testimonials .section-title::after {
+  content: "";
+  width: 80px;
+  height: 4px;
+  background: var(--red);
+  display: block;
+  margin: 15px auto 0;
+  border-radius: 2px;
+}
+
+.testimonials .section-subtitle {
+  color: var(--gray);
+  font-size: 1.1rem;
+  margin-bottom: 50px;
+}
+
+.testimonial-card {
+  background-color: var(--gray);
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.testimonial-text {
+  font-style: italic;
+  color: var(--dark);
+}
+
+.stars i {
+  margin: 0 2px;
+  font-size: 1.1rem;
+}
+
+
+/* Contact Section */
+.contact {
+  background: var(--gray);
+  color: var(--dark);
+  padding: 100px 20px;
+}
+
+.contact .section-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  text-align: center;
+  color: var(--dark);
+}
+
+.contact .section-title::after {
+  content: "";
+  width: 80px;
+  height: 4px;
+  background: var(--red);
+  display: block;
+  margin: 15px auto 0;
+  border-radius: 2px;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--dark);
+  font-size: 1.1rem;
+  margin-bottom: 50px;
+}
+
+.contact-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 50px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.contact-form,
+.contact-info {
+  flex: 1 1 400px;
+  background: var(--white);
+  border-radius: 16px;
+  padding: 40px 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.contact-form {
+  text-align: left;
+}
+
+/* Estiliza o container do HubSpot */
+.hs-form-frame {
+  width: 100%;
+  min-height: 400px;
+}
+
+.contact-info h3 {
+  color: var(--dark);
+  font-size: 1.5rem;
+  margin-bottom: 25px;
+  border-left: 4px solid var(--red);
+  padding-left: 12px;
+}
+
+.contact-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 30px;
+}
+
+.contact-info li {
+  font-size: 1rem;
+  color: var(--dark);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-info i {
+  color: var(--red);
+  font-size: 1.2rem;
+}
+
+/* Redes Sociais */
+.socials {
+  display: flex;
+  gap: 15px;
+}
+
+.socials a {
+  color: var(--white);
+  font-size: 1.3rem;
+  transition: all 0.3s ease;
+}
+
+.socials a:hover,
+.socials a:focus {
+  color: var(--dark);
+  transform: scale(1.1);
+  outline: none;
+}
+
+/* ====== FOOTER ====== */
+.footer {
+  background: var(--dark);
+  color: var(--white);
+  font-size: 14px;
+  padding: 40px 0 20px;
+  border-top: 1px solid #eee;
+}
+
+.footer h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gray);
+  margin-bottom: 15px;
+}
+
+.footer a {
+  color: var(--gray);
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.footer a:hover {
+  color: #E4002B;
+  text-decoration: underline;
+}
+
+.footer .footer-top {
+  margin-bottom: 20px;
+}
+
+.footer .footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer .footer-links ul li {
+  padding: 5px 0;
+  display: flex;
+  align-items: center;
+}
+
+.footer .footer-links i {
+  color: #E4002B;
+  margin-right: 8px;
+  font-size: 12px;
+}
+
+.footer .social-links a {
+  display: inline-block;
+  background: var(--dark);
+  color: var(--gray);
+  font-size: 18px;
+  margin-right: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.footer .social-links a:hover {
+  background: var(--dark);
+  color: #fff;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  font-size: 13px;
+  color: #666;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .footer .row {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer .footer-links ul li {
+    justify-content: center;
+  }
+  .footer .social-links {
+    justify-content: center;
+  }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .about-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-text {
+    text-align: center;
+  }
+
+  .about-list li {
+    justify-content: center;
+  }
+
+  .contact-grid {
+    flex-direction: column;
+  }
+
+  .contact-info,
+  .contact-form {
+    text-align: center;
+  }
+
+  .contact-info h3 {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .contact-info ul {
+    text-align: center;
+  }
+
+  .contact-info li {
+    justify-content: center;
+  }
+
+  .socials {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav {
+    display: none;
+    flex-direction: column;
+    background: var(--dark);
+    position: absolute;
+    top: 70px;
+    right: 0;
+    width: 200px;
+    border-left: 2px solid var(--red);
+  }
+
+  .nav.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .btn {
+    padding: 0.6rem 1rem;
+  }
+
+  /* ======= ESTILO PARA A SEÇÃO VEEAM ======= */
+#veeam {
+  text-align: center;        /* Centraliza todo o conteúdo */
+  margin-top: 120px;         /* Espaço entre o menu e o texto */
+  padding: 60px 20px;        /* Respiro interno da seção */
+}
+
+#veeam h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;       /* Espaço entre título e parágrafo */
+  color: #E4002B;            /* Mantém o padrão de destaque GLCTech */
+}
+
+#veeam p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #ddd;               /* Mantém contraste em fundo escuro */
+  max-width: 700px;          /* Limita largura do texto */
+  margin: 0 auto;            /* Centraliza horizontalmente */
+}
+
+
+/* ======= AJUSTE GERAL DO MAIN ======= */
+main.main {
+  padding-top: 120px; /* Espaço entre o menu fixo e o conteúdo */
+}
+
+/* ======= SEÇÃO KASPERSKY (ATUALIZADA) ======= */
+#kaspersky {
+  background-color: var(--white);
+  color: var(--dark);
+  padding: 80px 20px;
+}
+
+#kaspersky h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 15px;
+  position: relative;
+}
+
+#kaspersky h2::after {
+  content: "";
+  width: 80px;
+  height: 4px;
+  background: var(--red);
+  display: block;
+  margin: 12px auto 0;
+  border-radius: 2px;
+}
+
+#kaspersky p {
+  color: #444;
+  line-height: 1.7;
+}
+
+#kaspersky .fw-semibold {
+  color: var(--dark);
+}
+
+#kaspersky ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+#kaspersky ul li {
+  margin-bottom: 8px;
+  font-size: 1rem;
+  color: #333;
+}
+
+#kaspersky ul li::before {
+  content: "✔ ";
+  color: var(--red);
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+#kaspersky .btn {
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 10px 22px;
+  transition: all 0.3s ease;
+}
+
+#kaspersky .btn-danger {
+  background-color: var(--red);
+  border: none;
+  color: var(--white);
+}
+
+#kaspersky .btn-danger:hover {
+  background-color: transparent;
+  color: var(--red);
+  border: 2px solid var(--red);
+}
+
+#kaspersky .btn-outline-dark {
+  border: 2px solid var(--dark);
+  color: var(--dark);
+}
+
+#kaspersky .btn-outline-dark:hover {
+  background-color: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  #kaspersky {
+    text-align: center;
+    padding: 60px 15px;
+  }
+
+  #kaspersky img {
+    margin: 0 auto 15px;
+  }
+
+  #kaspersky .mt-4 {
+    justify-content: center;
+  }
+}
+
+/* ==============================
+   Seção: Por que escolher a GLCTech
+   ============================== */
+.why-section {
+  background-color: #f8f9fc;
+  color: var(--dark);
+}
+
+.why-section .label {
+  display: inline-block;
+  background-color: var(--red);
+  color: transparent;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+}
+
+.why-section .section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.why-section .section-title span {
+  color: var(--red);
+}
+
+.why-section p {
+  color: var(--dark);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.why-section .why-item .icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: transparent;
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.why-section img {
+  border-radius: 24px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+@media (max-width: 992px) {
+  .why-section .section-title {
+    text-align: center;
+  }
+  .why-section .label {
+    display: block;
+    margin: 0 auto 10px;
+    text-align: center;
+  }
+  .why-section p {
+    text-align: center;
+  }
+}
+
+/* ==============================
+   Seção: Zabbix + Planos de Monitoramento
+   ============================== */
+.zabbix-section {
+  background-color: #f8f9fc;
+  color: var(--dark);
+  padding: 80px 20px;
+}
+
+.zabbix-section .label {
+  display: inline-block;
+  background-color: var(--red);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+}
+
+.zabbix-section .section-title span {
+  color: var(--red);
+}
+
+.zabbix-section p {
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+.zabbix-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 15px;
+}
+
+.zabbix-list li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.zabbix-list i {
+  color: var(--red);
+  font-size: 1.2rem;
+}
+
+/* ======= Cards dos Planos ======= */
+.zabbix-plans h3 {
+  color: var(--dark);
+}
+
+.zabbix-plans .card {
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Cabeçalho dos cards usa variável global */
+.zabbix-plans .card-header {
+  background-color: var(--zabbix-card-header-bg);
+  color: var(--white);
+  border-bottom: none;
+}
+
+.zabbix-plans .card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.zabbix-plans .card-body ul li {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 992px) {
+  .zabbix-section {
+    text-align: center;
+  }
+
+  .zabbix-section img {
+    margin-bottom: 20px;
+  }
+
+  .zabbix-list li {
+    justify-content: center;
+  }
+}
+
+.zabbix-plans .btn-success {
+  background-color: var(--dark);
+  color: var(--gray);
+  border: 1px solid var(--dark);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* Ícone do WhatsApp */
+.zabbix-plans .btn-success i {
+  font-size: 1.1rem;
+}
+
+/* Efeito ao passar o mouse */
+.zabbix-plans .btn-success:hover {
+  background-color: var(--gray);
+  color: var(--dark);
+  border-color: var(--gray);
+  transform: translateY(-2px);
+}
+
+/* Efeito ao clicar (active/focus) */
+.zabbix-plans .btn-success:active,
+.zabbix-plans .btn-success:focus {
+  background-color: var(--gray);
+  color: var(--dark);
+  border-color: var(--gray);
+  transform: scale(0.98);
+}
+
+
+}

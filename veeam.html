@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- ======= METADADOS BÁSICOS ======= -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GLCTech | Monitoramento e Segurança em TI</title>
+  <meta name="description" content="Monitoramento, backup e segurança de TI com as soluções GLCTech, Zabbix e Veeam.">
+  <link rel="icon" href="./assets/logo/favicon.png" type="image/png" />
+
+  <!-- ======= ESTILOS ======= -->
+  <link rel="stylesheet" href="main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- ======= SCRIPTS ======= -->
+  <script defer src="script.js"></script>
+</head>
+
+<body>
+  <!-- ======= HEADER ======= -->
+  <header class="header" role="banner">
+    <div class="header-container container d-flex justify-content-between align-items-center">
+      
+      <!-- LOGO -->
+      <div class="logo">
+        <a href="#inicio" aria-label="Página inicial GLCTech">
+          <img src="./assets/logo/logo.png" alt="Logotipo GLCTech" />
+        </a>
+      </div>
+
+      <!-- BOTÃO MENU HAMBÚRGUER -->
+      <button class="menu-toggle" aria-label="Abrir menu de navegação" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <!-- ======== MENU ========= -->
+      <nav class="nav" role="navigation">
+        <ul class="nav-list">
+          <li><a href="./index.html#home" class="active">Início</a></li>
+          <li><a href="./index.html#about">Sobre</a></li>
+          <li><a href="./index.html#services">Serviços</a></li>
+          <li><a href="https://ty0ci.share.hsforms.com/2dDZ5-CdFTKektziqcbgsTQ" target="_blank" rel="noopener" hidden>Trabalhe Conosco</a></li>
+          <li><a href="./index.html#contact">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ======= CONTEÚDO PRINCIPAL ======= -->
+  <main class="main" id="inicio">
+  <section id="veeam" class="section text-center mt-5 pt-5">
+    <div class="container section-title" data-aos="fade-up">
+      <h2 class="mb-3">Backup para Microsoft 365</h2>
+      <p class="lead">
+        Proteja seus dados do Exchange, SharePoint, OneDrive e Teams com a solução líder da 
+        <span class="description-title fw-bold text-danger">Veeam</span>, em parceria com a 
+        <strong>GLCTech Tecnologia</strong>.
+      </p>
+    </div>
+  </section>
+</main>
+
+      <!-- FRAME OCULTO DO VEEAM -->
+      <div id="sw_frame_div" style="display: none; height: 2000px; width: 100%;">
+        <iframe 
+          id="sw_frame"
+          allow-page-override="true"
+          add-utm-params="true"
+          data-src="https://wcs-backupm365-glctechtecnologia.veeampartnermktg.com/Home-PTBR"
+          style="height: 2000px; width: 100%; border: none;"
+          title="Página de Backup Microsoft 365 Veeam GLCTech">
+        </iframe>
+        <script src="https://wcs-backupm365-glctechtecnologia.veeampartnermktg.com/sw/app/CommonUI/JS/setupIframe.js"></script>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======= FOOTER ======= -->
+  assets<footer id="footer" class="footer">
+  <div class="container footer-top">
+    <div class="row">
+      
+      <!-- Coluna 1: Informações -->
+      <div class="col-lg-4 col-md-6 footer-info">
+        <h4>GLCTech Tecnologia</h4>
+        <p><strong>Contato:</strong> +55 11 91151-7501<br>
+        <strong>Email:</strong> contato@glctech.com.br</p>
+      </div>
+<!-- Coluna 2: Links Úteis -->
+      <div class="col-lg-4 col-md-6 footer-links">
+        <h4>Links Úteis</h4>
+        <ul>
+          <li><i class="bi bi-chevron-right"></i> <a href="./index.html#home">Home</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="./index.html#about">Sobre</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="./index.html#services">Serviços</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="politica.html">Política de Privacidade</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="termos.html">Termos de Uso</a></li>
+        </ul>
+      </div>
+
+      <!-- Coluna 3: Redes Sociais -->
+      <div class="col-lg-4 col-md-6 footer-social">
+        <h4>Redes Sociais</h4>
+        <p>Siga a GLCTech!</p>
+        <div class="social-links mt-3">
+          <a href="https://web.facebook.com/profile.php?viewas=100000686899395&id=61577370040413" class="facebook"><i class="fa-brands fa-facebook"></i></a>
+      
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Linha inferior -->
+  <div class="container footer-bottom">
+    <p>© 2015 Copyright <strong>GLCTech Tecnologia</strong> All Rights Reserved</p>
+  </div>
+</footer>
+
+  <!-- ======= SCRIPT DO MENU HAMBÚRGUER ======= -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const menuToggle = document.querySelector(".menu-toggle");
+      const nav = document.querySelector(".nav");
+      const navLinks = document.querySelectorAll(".nav a");
+
+      if (menuToggle && nav) {
+        // Toggle menu
+        menuToggle.addEventListener("click", () => {
+          const isActive = nav.classList.toggle("active");
+          menuToggle.classList.toggle("active", isActive);
+          menuToggle.setAttribute("aria-expanded", isActive);
+        });
+
+        // Fecha o menu ao clicar em um link
+        navLinks.forEach(link => {
+          link.addEventListener("click", () => {
+            nav.classList.remove("active");
+            menuToggle.classList.remove("active");
+            menuToggle.setAttribute("aria-expanded", "false");
+          });
+        });
+      }
+
+      // ======= ATIVAR LINK DO MENU CONFORME SCROLL =======
+      const sections = document.querySelectorAll("section[id]");
+
+      function activateMenuOnScroll() {
+        const scrollY = window.pageYOffset;
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop - 120;
+          const sectionHeight = section.offsetHeight;
+          const sectionId = section.getAttribute("id");
+          const currentLink = document.querySelector(`.nav a[href="#${sectionId}"]`);
+
+          if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+            navLinks.forEach(link => link.classList.remove("active"));
+            if (currentLink) currentLink.classList.add("active");
+          }
+        });
+      }
+
+      window.addEventListener("scroll", activateMenuOnScroll);
+    });
+  </script>
+</body>
+</html>

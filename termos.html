@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GLCTech Monitoramento e Segurança em TI</title>
+  <link rel="stylesheet" href="main.css" />
+  <link rel="icon" href="./assets/logo/favicon.png" type="image/png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script defer src="script.js"></script>
+</head>
+<body>
+
+
+
+  
+
+  <!-- ======= HEADER ======= -->
+
+  
+ <header class="header">
+  <div class="header-container">
+    <div class="logo">
+      <img src="./assets/logo/logo.png" alt="GLCTECH">
+    </div>
+
+   
+<!-- BOTÃO MENU HAMBÚRGUER -->
+<button class="menu-toggle" aria-label="Abrir menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
+    <!-- ======== MENU ========= -->
+    <nav class="nav" hidden>
+      <ul>
+        <li><a href="#">Início</a></li>
+        <li><a href="#about">Sobre</a></li>
+        <li><a href="#team" hidden>Nosso Time</a></li>
+        <li><a href="#services">Serviços</a></li>
+        <li><a href="https://ty0ci.share.hsforms.com/2dDZ5-CdFTKektziqcbgsTQ" target="_blank">Trabalhe Conosco</a></li>
+        <li><a href="#contact">Contato</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+   <main class="main py-5">
+    <div class="container">
+      <h1 class="mb-4">Termos de Uso</h1>
+
+      <p>Estes Termos de Uso regulam o acesso e a utilização do site da <strong>GLCTech</strong>. Ao navegar neste site, você concorda integralmente com estes termos.</p>
+
+      <h3 class="mt-5">1. Uso do Conteúdo</h3>
+      <p>Todos os textos, imagens, gráficos, marcas e demais conteúdos deste site são de propriedade da GLCTech ou de seus parceiros. É proibida a reprodução, cópia, distribuição ou modificação sem autorização prévia e por escrito.</p>
+
+      <h3 class="mt-4">2. Responsabilidades do Usuário</h3>
+      <p>O usuário compromete-se a utilizar o site de forma ética, legal e segura, sem violar direitos de terceiros ou as disposições legais vigentes.</p>
+
+      <h3 class="mt-4">3. Privacidade</h3>
+      <p>Ao utilizar este site, você concorda com nossa <a href="politica-privacidade.html">Política de Privacidade</a>, que trata da coleta e uso de dados pessoais.</p>
+
+      <h3 class="mt-4">4. Modificações</h3>
+      <p>A GLCTech pode alterar estes Termos de Uso a qualquer momento, sem aviso prévio. Recomendamos que o usuário revise este documento periodicamente.</p>
+
+      <h3 class="mt-4">5. Contato</h3>
+      <p>Em caso de dúvidas, entre em contato conosco pelo e-mail: <a href="mailto:contato@glctech.com.br">contato@glctech.com.br</a></p>
+
+      <p class="mt-5"><strong>Última atualização:</strong> 08 de julho de 2025</p>
+    </div>
+  </main>
+
+  <!-- ======== SCRIPT MENU HAMBÚRGUER ======== -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const menuToggle = document.querySelector(".menu-toggle");
+    const nav = document.querySelector(".nav");
+
+    // Garante que ambos os elementos existam antes de aplicar eventos
+    if (menuToggle && nav) {
+      menuToggle.addEventListener("click", () => {
+        menuToggle.classList.toggle("active");
+        nav.classList.toggle("active");
+      });
+
+      // Fecha o menu ao clicar em um link (melhor UX)
+      nav.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+          menuToggle.classList.remove("active");
+          nav.classList.remove("active");
+        });
+      });
+    }
+  });
+</script>
+
+
+   <!-- ======= FOOTER ======= -->
+<footer id="footer" class="footer">
+  <div class="container footer-top">
+    <div class="row">
+      
+      <!-- Coluna 1: Informações -->
+      <div class="col-lg-4 col-md-6 footer-info" hidden>
+        <h4>GLCTech Tecnologia</h4>
+        <p><strong>Contato:</strong> +55 11 91151-7501<br>
+        <strong>Email:</strong> contato@glctech.com.br</p>
+      </div>
+
+      <!-- Coluna 2: Links Úteis -->
+      <div class="col-lg-4 col-md-6 footer-links" hidden>
+        <h4>Links Úteis</h4>
+        <ul>
+          <li><i class="bi bi-chevron-right"></i> <a href="#home">Home</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="#about">Sobre</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="#services">Serviços</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="politica.html" target="_blank">Política de Privacidade</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="termos.html" target="_blank">Termos de Uso</a></li>
+        </ul>
+      </div>
+
+      <!-- Coluna 3: Redes Sociais -->
+      <div class="col-lg-4 col-md-6 footer-social" hidden>
+        <h4>Redes Sociais</h4>
+        <p>Siga a GLCTech!</p>
+        <div class="social-links mt-3">
+          <a href="https://web.facebook.com/profile.php?viewas=100000686899395&id=61577370040413" class="facebook" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+          <a href="https://www.instagram.com/glctechnologia" class="instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/company/glctechtecnologia/?viewAsMember=true" class="linkedin" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Linha inferior -->
+  <div class="container footer-bottom">
+    <p>© 2015 Copyright <strong>GLCTech Tecnologia</strong> All Rights Reserved</p>
+  </div>
+</footer>
+</body>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll(".nav ul li a");
+
+  // Função para atualizar o menu conforme o scroll
+  function activateMenuOnScroll() {
+    let scrollY = window.pageYOffset;
+
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop - 100;
+      const sectionHeight = section.offsetHeight;
+      const sectionId = section.getAttribute("id");
+
+      if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href").includes(sectionId)) {
+            link.classList.add("active");
+          }
+        });
+      }
+    });
+  }
+
+  // Detecta rolagem
+  window.addEventListener("scroll", activateMenuOnScroll);
+
+  // Fechar menu ao clicar em link (já existe, mas garantimos compatibilidade)
+  navLinks.forEach(link => {
+    link.addEventListener("click", () => {
+      document.querySelector(".menu-toggle").classList.remove("active");
+      document.querySelector(".nav").classList.remove("active");
+    });
+  });
+});
+</script>
+</html>
