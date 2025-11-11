@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-book Zabbix PMEs | Download Gratuito</title>
+    <!-- Carregamento da fonte Poppins (mencionada no CSS) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- CSS Customizado com base no arquivo main.css -->
+    <style>
+        /* Variáveis de Cor baseadas no main.css */
+        :root {
+            --dark: #2d2d2d;
+            --red: #e6262c;
+            --white: #ffffff;
+            --gray: #c9c9c9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark);
+            color: var(--white);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .landing-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #383838; /* Fundo levemente mais claro que o dark para contraste */
+            border-radius: 18px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            border-top: 5px solid var(--red);
+        }
+
+        .hero-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .text-content {
+            flex: 1;
+            text-align: left;
+        }
+
+        .ebook-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+
+        .title-red {
+            color: var(--red);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+
+        .key-benefits {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px;
+            text-align: left;
+            max-width: 400px;
+            margin: 0 auto 30px 0;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .icon-red {
+            color: var(--red);
+            font-size: 1.4rem;
+        }
+
+        /* Form Styling */
+        .form-card {
+            background-color: var(--white);
+            color: var(--dark);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .form-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: var(--dark);
+            text-align: center;
+        }
+
+        .form-field {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 2px solid var(--gray);
+            background-color: var(--white);
+            color: var(--dark);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-field:focus {
+            outline: none;
+            border-color: var(--red);
+        }
+
+        .cta-button {
+            width: 100%;
+            background-color: var(--red);
+            color: var(--dark);
+            font-weight: 700;
+            padding: 14px 30px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+        }
+
+        .cta-button:hover {
+            background-color: #ff474d; /* Slightly lighter red */
+            transform: translateY(-2px);
+        }
+        
+        /* Ebook Visual Placeholder (Styling to resemble a book) */
+        .ebook-placeholder {
+            width: 200px;
+            height: 280px;
+            background-color: var(--gray);
+            border: 5px solid var(--red);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 10px 10px 0 var(--dark), 20px 20px 0 rgba(0, 0, 0, 0.3);
+            transform: rotateZ(5deg);
+        }
+
+        .ebook-placeholder h3 {
+            color: var(--dark);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .ebook-placeholder p {
+            color: #555;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+        
+        /* Mensagem de sucesso */
+        #success-message {
+            background-color: var(--red);
+            color: var(--dark);
+            padding: 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+            margin-top: 20px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+            }
+            .landing-container {
+                padding: 30px 20px;
+            }
+            .hero-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            .text-content {
+                text-align: center;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .subtitle {
+                font-size: 1rem;
+            }
+            .key-benefits {
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .benefit-item {
+                justify-content: flex-start;
+                max-width: 300px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .ebook-placeholder {
+                width: 160px;
+                height: 220px;
+                margin-bottom: 20px;
+                box-shadow: 8px 8px 0 var(--dark), 16px 16px 0 rgba(0, 0, 0, 0.3);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="landing-container">
+        <div class="hero-section">
+            <div class="text-content">
+                <h1>
+                    O Guia Definitivo: <span class="title-red">Zabbix para Pequenas e Médias Empresas (PMEs)</span>
+                </h1>
+                <p class="subtitle">
+                    Descubra como ter um monitoramento de TI de nível corporativo, **sem custos de licença**, e evite perdas por falhas inesperadas.
+                </p>
+
+                <ul class="key-benefits">
+                    <li class="benefit-item">
+                        <i class="fas fa-check-circle icon-red"></i>
+                        <span>Zero Custo de Licença (Open Source).</span>
+                    </li>
+                    <li class="benefit-item">
+                        <i class="fas fa-check-circle icon-red"></i>
+                        <span>Detecção Proativa de Falhas (Pare de apagar incêndios).</span>
+                    </li>
+                    <li class="benefit-item">
+                        <i class="fas fa-check-circle icon-red"></i>
+                        <span>Otimização de Servidores e Recursos de Rede.</span>
+                    </li>
+                    <li class="benefit-item">
+                        <i class="fas fa-check-circle icon-red"></i>
+                        <span>Visão Centralizada da Saúde da sua TI.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="ebook-visual">
+                <div class="ebook-placeholder">
+                    <i class="fas fa-chart-line icon-red" style="font-size: 3rem;"></i>
+                    <h3 class="title-red" style="margin-top: 10px;">E-book Exclusivo</h3>
+                    <h3 style="color: var(--dark);">ZABBIX PME</h3>
+                    <p>Monitoramento Inteligente</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulário de Captura -->
+        <div class="form-card">
+            <h2>Preencha e Baixe Gratuitamente Agora!</h2>
+            <form id="download-form">
+                <input type="text" id="name" name="name" class="form-field" placeholder="Seu Nome Completo" required>
+                <input type="email" id="email" name="email" class="form-field" placeholder="Seu Melhor E-mail Corporativo" required>
+                <button type="submit" class="cta-button">
+                    <i class="fas fa-download"></i> Baixar E-book
+                </button>
+            </form>
+            <div id="success-message">
+                ✅ Download liberado! Verifique seu e-mail para acessar o link.
+            </div>
+        </div>
+
+    </div>
+
+    <footer style="text-align: center; margin-top: 40px; font-size: 0.85rem; color: #555;">
+        <span>© 2025 Zabbix PME. Todos os direitos reservados.</span>
+    </footer>
+
+    <script>
+        document.getElementById('download-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+
+            // Simple validation
+            if (name === "" || email === "") {
+                alert("Por favor, preencha todos os campos."); // Using custom modal in real app
+                return;
+            }
+
+            // In a real application, you would send this data to a CRM/Email Marketing platform
+            // Example of simulated data submission:
+            console.log('Dados submetidos para captura:');
+            console.log('Nome:', name);
+            console.log('E-mail:', email);
+
+            // Hide form and show success message
+            document.getElementById('download-form').style.display = 'none';
+            document.getElementById('success-message').style.display = 'block';
+
+            // Simulate the actual download link (Optional: redirect user or send email with link)
+            // window.location.href = "caminho/para/seu/ebook.pdf";
+        });
+    </script>
+</body>
+</html>
