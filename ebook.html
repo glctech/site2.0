@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-book Zabbix PMEs | Download Gratuito</title>
-    <!-- Carregamento da fonte Poppins (mencionada no CSS) -->
+    <!-- Carregamento da fonte Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <!-- CSS Customizado com base no arquivo main.css -->
+    <!-- CSS Customizado Integrado (Baseado no esquema de cores dark, red, white) -->
     <style>
-        /* Variáveis de Cor baseadas no main.css */
+        /* Variáveis de Cor */
         :root {
             --dark: #2d2d2d;
             --red: #e6262c;
@@ -144,7 +144,7 @@
         .cta-button {
             width: 100%;
             background-color: var(--red);
-            color: var(--dark);
+            color: var(--white); /* Alterado para White para melhor contraste no botão */
             font-weight: 700;
             padding: 14px 30px;
             border-radius: 8px;
@@ -160,39 +160,20 @@
             transform: translateY(-2px);
         }
         
-        /* Ebook Visual Placeholder (Styling to resemble a book) */
-        .ebook-placeholder {
-            width: 200px;
-            height: 280px;
-            background-color: var(--gray);
-            border: 5px solid var(--red);
+        /* Ebook Cover Styling */
+        .ebook-cover {
+            width: 200px; /* Largura padrão */
+            height: auto;
             border-radius: 6px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
             box-shadow: 10px 10px 0 var(--dark), 20px 20px 0 rgba(0, 0, 0, 0.3);
             transform: rotateZ(5deg);
-        }
-
-        .ebook-placeholder h3 {
-            color: var(--dark);
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .ebook-placeholder p {
-            color: #555;
-            font-size: 0.8rem;
-            margin-top: 10px;
+            transition: transform 0.3s ease;
         }
         
-        /* Mensagem de sucesso */
+        /* Mensagens de Feedback */
         #success-message {
             background-color: var(--red);
-            color: var(--dark);
+            color: var(--white);
             padding: 20px;
             border-radius: 8px;
             font-weight: 600;
@@ -200,6 +181,18 @@
             display: none;
             margin-top: 20px;
         }
+
+        #error-message {
+            background-color: #ffc0cb; /* Cor de erro suave */
+            color: #c62828; /* Cor de texto de erro */
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+        }
+
 
         /* Responsividade */
         @media (max-width: 768px) {
@@ -233,9 +226,9 @@
                 margin-left: auto;
                 margin-right: auto;
             }
-            .ebook-placeholder {
-                width: 160px;
-                height: 220px;
+            .ebook-cover {
+                width: 160px; /* Reduz o tamanho no mobile */
+                height: auto;
                 margin-bottom: 20px;
                 box-shadow: 8px 8px 0 var(--dark), 16px 16px 0 rgba(0, 0, 0, 0.3);
             }
@@ -275,12 +268,12 @@
             </div>
 
             <div class="ebook-visual">
-                <div class="ebook-placeholder">
-                    <i class="fas fa-chart-line icon-red" style="font-size: 3rem;"></i>
-                    <h3 class="title-red" style="margin-top: 10px;">E-book Exclusivo</h3>
-                    <h3 style="color: var(--dark);">ZABBIX PME</h3>
-                    <p>Monitoramento Inteligente</p>
-                </div>
+                <!-- IMAGEM DA CAPA DO E-BOOK INSERIDA AQUI -->
+                <img 
+                    src="http://glctech.com.br/assets/hero/ebook.png" 
+                    alt="Capa do E-book Zabbix para Pequenas e Médias Empresas" 
+                    class="ebook-cover"
+                >
             </div>
         </div>
         
@@ -293,7 +286,9 @@
                 <button type="submit" class="cta-button">
                     <i class="fas fa-download"></i> Baixar E-book
                 </button>
+                <div id="error-message"></div>
             </form>
+            
             <div id="success-message">
                 ✅ Download liberado! Verifique seu e-mail para acessar o link.
             </div>
@@ -311,10 +306,22 @@
             
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
+            const formCard = document.querySelector('.form-card');
+            const errorMessage = document.getElementById('error-message');
+            const successMessage = document.getElementById('success-message');
+
+            // Reset messages
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
 
             // Simple validation
             if (name === "" || email === "") {
-                alert("Por favor, preencha todos os campos."); // Using custom modal in real app
+                errorMessage.textContent = "❌ Por favor, preencha todos os campos.";
+                errorMessage.style.display = 'block';
+
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 3000); 
                 return;
             }
 
@@ -324,12 +331,13 @@
             console.log('Nome:', name);
             console.log('E-mail:', email);
 
-            // Hide form and show success message
+            // Hide form
             document.getElementById('download-form').style.display = 'none';
-            document.getElementById('success-message').style.display = 'block';
 
-            // Simulate the actual download link (Optional: redirect user or send email with link)
-            // window.location.href = "caminho/para/seu/ebook.pdf";
+            // Show success message
+            successMessage.style.display = 'block';
+
+            // In a real scenario, after success, you would redirect the user or trigger the email sending.
         });
     </script>
 </body>
