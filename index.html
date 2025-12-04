@@ -1,20 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VH0J5XFYK"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-7VH0J5XFYK');
-</script>
-
-  <!-- END GOOGLE Tag -->
-
-  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GLCTech Monitoramento e Segurança em TI</title>
@@ -25,6 +11,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script defer src="./scripts/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  
 </head>
 <body>
 
@@ -42,6 +31,8 @@
     </div>
 
    
+
+
 <!-- BOTÃO MENU HAMBÚRGUER -->
 <button class="menu-toggle" aria-label="Abrir menu">
   <span></span>
@@ -50,6 +41,12 @@
 </button>
 
     <!-- ======== MENU ========= -->
+    <button class="menu-toggle" aria-label="Abrir menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
     <nav class="nav">
       <ul>
         <li><a href="#">Início</a></li>
@@ -60,7 +57,20 @@
         <li><a href="#contact">Contato</a></li>
       </ul>
     </nav>
-  </div>
+    
+    <div class="dropdown me-3">
+      <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+        <i class="fas fa-globe"></i> PT
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item active" href="#" data-lang="pt-BR">Português (PT-BR)</a></li>
+        <li><a class="dropdown-item" href="./index_eng.html" data-lang="en-US">English (EN-US)</a></li>
+      </ul>
+    </div>
+    </div>
+
+
+    
 </header>
 
 
@@ -190,7 +200,7 @@ Com expertise comprovada, suporte dedicado, soluções sob medida e inovação c
 
 <!-- ============== TEAM ============-->
 
-<section id="team" class="team py-5" hidden>
+<section id="team" class="team py-5" >
   <div class="container">
     <h2 class="section-title text-center">Nosso Time</h2>
     <p class="section-subtitle text-center">Liderança e especialistas que impulsionam a GLC Tech</p>
@@ -201,7 +211,7 @@ Com expertise comprovada, suporte dedicado, soluções sob medida e inovação c
       <div class="col-md-4 col-sm-6">
         <div class="team-card text-center p-4 h-100">
           <div class="team-img mb-3">
-            <img src="./assets/team/team-1.jpg" alt="André Luiz Cézar" class="img-fluid rounded-circle">
+            <img src="./assets/team/eu3.png" alt="André Luiz Cézar" class="img-fluid rounded-circle">
           </div>
           <h5 class="team-name">André Luiz Cézar</h5>
           <p class="team-role">CEO & Fundador</p>
@@ -215,14 +225,14 @@ Com expertise comprovada, suporte dedicado, soluções sob medida e inovação c
       </div>
 
       <!-- Card 2 -->
-      <div class="col-md-4 col-sm-6">
+      <div class="col-md-4 col-sm-6" hidden>
         <div class="team-card text-center p-4 h-100">
           <div class="team-img mb-3">
-            <img src="./assets/team/team-2.jpg" alt="Juliana Silva" class="img-fluid rounded-circle">
+            <img src="./assets/team/kawan.png" alt="Juliana Silva" class="img-fluid rounded-circle">
           </div>
-          <h5 class="team-name">Juliana Silva</h5>
-          <p class="team-role">Diretora de Operações</p>
-          <p class="team-bio">Responsável pela coordenação de projetos, qualidade de entrega e relacionamento com clientes corporativos.</p>
+          <h5 class="team-name">Kawan Pablo</h5>
+          <p class="team-role">Gerente de TI</p>
+          <p class="team-bio">Responsável por coordenar projetos de infraestrutura na AWS, assegurando a qualidade de entrega das soluções em nuvem e cultivando o relacionamento estratégico com clientes corporativos.</p>
           <div class="team-social mt-3">
              <!-- <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
             <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
@@ -232,15 +242,21 @@ Com expertise comprovada, suporte dedicado, soluções sob medida e inovação c
       </div>
 
       <!-- Card 3 -->
-      <div class="col-md-4 col-sm-6">
+       <div class="col-md-4 col-sm-6">
         <div class="team-card text-center p-4 h-100">
           <div class="team-img mb-3">
-            <img src="./assets/team/team-3.jpg" alt="Roberto Lima" class="img-fluid rounded-circle">
+            <img src="./assets/team/kawan.png" alt="Juliana Silva" class="img-fluid rounded-circle">
           </div>
-          <h5 class="team-name">Roberto Lima</h5>
-          <p class="team-role">CTO — Tecnologia & Inovação</p>
-          <p class="team-bio">Especialista em segurança de redes, infraestrutura em nuvem e integração com soluções de backup e proteção de dados.</p>
+          <h5 class="team-name">Kawan Pablo</h5>
+          <p class="team-role">Gerente de TI</p>
+          <p class="team-bio">Responsável por coordenar projetos de infraestrutura na AWS, assegurando a qualidade de entrega das soluções em nuvem e cultivando o relacionamento estratégico com clientes corporativos.</p>
           <div class="team-social mt-3">
+             <!-- <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            -->
+          </div>
+        </div>
+      </div>
            <!-- <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
             <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
             -->
@@ -418,6 +434,71 @@ Com expertise comprovada, suporte dedicado, soluções sob medida e inovação c
   </div>
 </section>
 
+<!-- ========= BLOG =========== -->
+
+<section id="blog" class="blog-section" aria-labelledby="blog-title" hidden>
+  <div class="container">
+    <h2 id="blog-title" class="section-title">Últimas Novidades</h2>
+    <p class="section-subtitle">
+      Confira artigos, tutoriais e insights sobre monitoramento, segurança e infraestrutura de TI.
+    </p>
+
+    <div class="row g-4" id="rss-blog-posts">
+
+      <div class="col-lg-4 col-md-6">
+        <article class="blog-post-card h-100">
+          <div class="card-body">
+            <span class="post-date">01 de Janeiro, 2025</span>
+            <h5 class="card-title">Título de Exemplo do Post do Blog</h5>
+            <p class="card-text">
+              Este é um resumo da postagem. O script de leitura do RSS Feed irá preencher este conteúdo dinamicamente com os últimos posts do seu blog.
+            </p>
+            <a href="URL_DO_POST_AQUI" class="read-more" target="_blank">
+              Leia Mais <i class="fa-solid fa-arrow-right-long"></i>
+            </a>
+          </div>
+        </article>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <article class="blog-post-card h-100">
+          <div class="card-body">
+            <span class="post-date">15 de Dezembro, 2024</span>
+            <h5 class="card-title">Como Implementar Monitoramento Zabbix Eficiente</h5>
+            <p class="card-text">
+              Descubra os passos essenciais e as melhores práticas para uma implementação de sucesso, garantindo visibilidade total da sua infraestrutura.
+            </p>
+            <a href="#" class="read-more" target="_blank">
+              Leia Mais <i class="fa-solid fa-arrow-right-long"></i>
+            </a>
+          </div>
+        </article>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <article class="blog-post-card h-100">
+          <div class="card-body">
+            <span class="post-date">28 de Novembro, 2024</span>
+            <h5 class="card-title">As Novidades em Segurança Cibernética para 2025</h5>
+            <p class="card-text">
+              Preparamos um resumo das principais tendências e desafios que as empresas enfrentarão no próximo ano e como se proteger.
+            </p>
+            <a href="#" class="read-more" target="_blank">
+              Leia Mais <i class="fa-solid fa-arrow-right-long"></i>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+    <div class="text-center mt-5">
+      <a href="URL_DO_SEU_BLOG_COMPLETO" class="btn btn-danger px-4 py-2" target="_blank" style="background-color: var(--red); color: var(--white);">
+        Ver Todos os Posts <i class="fa-solid fa-book-open-reader ms-2"></i>
+      </a>
+    </div>
+
+  </div>
+</section>
+
      <!-- ======= CONTACT ======= -->
 
     <section id="contact" class="contact" aria-labelledby="contact-title">
@@ -520,6 +601,12 @@ Com expertise comprovada, suporte dedicado, soluções sob medida e inovação c
     <p>© 2015 Copyright <strong>GLCTech Tecnologia</strong> All Rights Reserved</p>
   </div>
 </footer>
+
+
+
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/50295618.js"></script>
+<!-- End of HubSpot Embed Code -->
 </body>
 
 <script>
@@ -561,21 +648,9 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </html>
 
- <!-- Start of HubSpot Embed Code -->
-  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na1.hs-scripts.com/50295618.js"></script>
-<!-- End of HubSpot Embed Code -->
-
-
+ 
 <!-- ======== TIDIO CHAT ====== -->
  <script src="//code.tidio.co/z471nxc3tjaciumkzzasuoe928m5odks.js" async></script>
 
 
 <!-- ======== END TIDIO CHAT ====== -->
-
-
-<!-- =========== ZOHO =========== -->
-
-<script src="https://cdn.pagesense.io/js/glctechmonitoramentoeseguranaemti/6c221566ab8047c5a24a14773900d7e1.js"></script>
-
-
-<!-- ======== ZOHO ========= -->

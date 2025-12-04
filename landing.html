@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico Gratuito de TI - GLCTech</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Variáveis de Cor baseadas no main.css */
+        :root {
+            --dark: #2d2d2d;
+            --red: #e6262c;
+            --white: #ffffff;
+            --gray: #c9c9c9;
+            --light-bg: #f8f9fc; /* Um cinza muito claro para fundos secundários */
+        }
+        
+        /* Estilos Globais e Tipografia GLCTech */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark); /* Fundo principal escuro */
+            color: var(--dark); /* Será ajustado no container */
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: var(--white); /* Conteúdo principal em branco */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4); /* Sombra mais escura para contraste */
+            border-radius: 8px;
+        }
+
+        /* Cabeçalho */
+        header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--red); /* Linha divisória vermelha GLCTech */
+        }
+        header h1 {
+            color: var(--dark);
+            font-size: 2.2em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        header p {
+            color: var(--dark);
+            font-size: 1.1em;
+        }
+        
+        /* Seção Principal */
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 30px 0;
+        }
+        .text-area {
+            flex: 1;
+            padding-right: 20px;
+            min-width: 300px;
+        }
+        /* Destaque do Formulário (Formulário em área mais clara que o fundo) */
+        .form-area {
+            flex-basis: 350px;
+            padding: 25px;
+            background-color: var(--light-bg); 
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Lista de Benefícios */
+        .benefits ul {
+            list-style: none;
+            padding: 0;
+        }
+        .benefits li {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            position: relative;
+            padding-left: 30px;
+            color: var(--dark);
+        }
+        .benefits li::before {
+            content: '✔'; /* Ícone de check GLCTech */
+            position: absolute;
+            left: 0;
+            color: var(--red); /* Cor de destaque GLCTech */
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        /* Formulário */
+        .form-area h2 {
+            margin-top: 0;
+            color: var(--dark);
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--gray);
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+        }
+        
+        /* Botão CTA Principal (Vermelho GLCTech) */
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--red); /* Cor de destaque GLCTech */
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            font-size: 1.2em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: #c01e23; /* Vermelho um pouco mais escuro no hover */
+            transform: translateY(-2px);
+        }
+
+        .highlight-text {
+             color: var(--red);
+             font-weight: 600;
+        }
+
+        /* Rodapé da LP (simples) */
+        footer {
+            text-align: center;
+            padding: 20px 0 0;
+            border-top: 1px solid #ddd;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px 10px;
+                padding: 15px;
+            }
+            .content {
+                flex-direction: column;
+            }
+            .text-area {
+                padding-right: 0;
+                margin-bottom: 30px;
+            }
+            header h1 {
+                font-size: 1.8em;
+            }
+            .submit-btn {
+                 font-size: 1.1em;
+                 padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <img src="https://glctech.com.br/assets/logo/logo.png" alt="Logo GLCTech" style="max-width: 280px; margin-bottom: 15px;">
+            <h1>Cansado de ser surpreendido? Pare de <span class="highlight-text">**apagar incêndio**</span>!</h1>
+            <p>Solicite o Diagnóstico de TI <span class="highlight-text">Gratuito</span> que te mostra ONDE sua infraestrutura vai falhar nos próximos 90 dias.</p>
+        </header>
+
+        <div class="content">
+            <div class="text-area">
+                <h2>O que a GLCTech fará por você, sem custo:</h2>
+                <div class="benefits">
+                    <ul>
+                        <li>**Identificação de Risco:** Encontre os 3 maiores pontos de falha que estão consumindo sua produtividade (sobrecarga, lentidão, vulnerabilidades).</li>
+                        <li>**Visibilidade com Zabbix:** Demonstraremos como o monitoramento proativo elimina o "achismo" e garante o controle <span class="highlight-text">24/7</span> de seus sistemas.</li>
+                        <li>**Plano de Ação:** Receba um resumo claro (1 página) sobre o que precisa ser corrigido **imediatamente** para garantir estabilidade.</li>
+                        <li>**Foco no Core Business:** Livre sua equipe (ou a si mesmo) do estresse de vigilância e permita que foquem no crescimento da PME.</li>
+                    </ul>
+                </div>
+
+                <p style="font-style: italic; margin-top: 30px; border-left: 4px solid var(--red); padding-left: 15px; color: var(--dark);">**RISCO ZERO:** Este é um diagnóstico 100% não invasivo e sem compromisso. É a sua chance de ter a tranquilidade de saber que seus sistemas críticos estão seguros.</p>
+            </div>
+
+            <div class="form-area">
+                <h2>Solicite seu Diagnóstico Gratuito Agora!</h2>
+                <form action="https://www.automationanywhere.com/br/rpa/crm-automation" method="POST">
+                    <div class="form-group">
+                        <label for="nome">Nome Completo*</label>
+                        <input type="text" id="nome" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail Corporativo*</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefone">Telefone (WhatsApp)*</label>
+                        <input type="tel" id="telefone" name="telefone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="empresa">Nome da Empresa*</label>
+                        <input type="text" id="empresa" name="empresa" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="servidores">Estimativa de Servidores/Usuários de TI*</label>
+                        <input type="text" id="servidores" name="servidores" placeholder="Ex: 5 Servidores ou 150 Usuários" required>
+                    </div>
+
+                    <button type="submit" class="submit-btn">QUERO MINHA AVALIAÇÃO GRÁTIS!</button>
+                    <p style="text-align: center; font-size: 0.8em; margin-top: 10px; color: #555;">Garantimos a privacidade de seus dados. Sem SPAM.</p>
+                </form>
+            </div>
+        </div>
+        
+        <footer>
+            &copy; 2025 GLCTech Tecnologia. Todos os direitos reservados. | <a href="./politica.html">Política de Privacidade</a>
+        </footer>
+    </div>
+
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/50295618.js"></script>
+<!-- End of HubSpot Embed Code -->
+</body>
+</html>
