@@ -190,10 +190,7 @@ With proven expertise, dedicated support, tailor-made solutions, and constant in
   </div>
 </section>
 
-    
-<!-- =============== TEAM ================ -->
-    
-<section id="team" class="team py-5" hidden>
+<section id="team" class="team py-5" >
   <div class="container">
     <h2 class="section-title text-center">Our Team</h2>
     <p class="section-subtitle text-center">Leadership and specialists driving GLC Tech</p>
@@ -408,6 +405,159 @@ With proven expertise, dedicated support, tailor-made solutions, and constant in
   </div>
 </section>
 
+
+<!-- ========== ORÇAMENTO ======-->
+
+<section id="calculator" class="py-5" style="background-color: #f8f9fa;">
+  <div class="container">
+    <h2 class="section-title text-center">Simulate Your Company's IT Investment</h2>
+    <div class="mx-auto mb-4" style="width: 80px; height: 3px; background-color: #E4002B;"></div>
+    <p class="section-subtitle text-center mb-5">
+      Get a quick estimate based on the official licensing models for Zabbix, Kaspersky, and Veeam.
+    </p>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="card p-4 shadow-lg border-0 rounded-3">
+          <form id="serviceCalculatorForm">
+            <div class="row g-4 mb-4">
+              <div class="col-md-12">
+                <div class="card h-100 p-3 bg-light border-danger border-2">
+                  <label for="serviceType" class="form-label fw-bold"><i class="fas fa-desktop me-2"></i> 1. Which service do you need?</label>
+                  <select class="form-select" id="serviceType" required>
+                    <option value="">-- Select an option --</option>
+                    <option value="zabbix">Zabbix Monitoring (Service)</option>
+                    <option value="kaspersky">Kaspersky Security (License)</option>
+                    <option value="veeam">Veeam Backup (VUL License)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-12" id="environmentFieldContainer" style="display: none;">
+                <div class="card h-100 p-3 bg-light border-danger border-2">
+                  <label for="environmentType" class="form-label fw-bold"><i class="fas fa-cloud me-2"></i> 2. What is the monitoring environment?</label>
+                  <select class="form-select" id="environmentType">
+                    <option value="">-- Select environment --</option>
+                    <option value="onpremises">On-premises (Local)</option>
+                    <option value="cloud">Cloud (AWS, Azure, GCP)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            
+            <div id="zabbixFieldsContainer" style="display: none;">
+                <h4 class="text-danger mb-3 mt-4">Zabbix Service Details</h4>
+
+                <div id="zabbixOnPremFields" style="display: none;" class="row g-3 mb-4 p-3 border rounded">
+                    <label class="form-label fw-bold text-dark"><i class="fas fa-server me-2"></i> 3. Assets for Monitoring (On-premises)</label>
+                    <div class="col-md-3">
+                        <label for="qtdServersOnPrem" class="form-label">Servers (OS/VMs)</label>
+                        <input type="number" class="form-control" id="qtdServersOnPrem" min="0" value="0">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="qtdRouters" class="form-label">Routers/Switches</label>
+                        <input type="number" class="form-control" id="qtdRouters" min="0" value="0">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="qtdServices" class="form-label">Services/Applications</label>
+                        <input type="number" class="form-control" id="qtdServices" min="0" value="0">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="qtdLinks" class="form-label">Internet Links</label>
+                        <input type="number" class="form-control" id="qtdLinks" min="0" value="0">
+                    </div>
+                    <div class="col-md-12 mt-3">
+                      <small class="text-muted">The number of assets defines the estimated implementation days (consulting).</small>
+                    </div>
+                </div>
+
+                <div id="zabbixCloudFields" style="display: none;" class="row g-3 mb-4 p-3 border rounded">
+                    <label class="form-label fw-bold text-dark"><i class="fas fa-cloud me-2"></i> 3. Assets for Monitoring (Cloud)</label>
+                    <div class="col-md-6">
+                        <label for="qtdServersCloud" class="form-label">Servers/Instances (EC2, VMs, etc.)</label>
+                        <input type="number" class="form-control" id="qtdServersCloud" min="0" value="0">
+                    </div>
+                    <div class="col-md-12 mt-3">
+                      <small class="text-muted">Includes complexity of integration with Cloud APIs and critical resources.</small>
+                    </div>
+                </div>
+            </div>
+
+            <div id="kasperskyFields" style="display: none;" class="p-3 border rounded mb-4">
+                <h4 class="text-danger mb-3 mt-0">Kaspersky Licensing Details (SMB/Enterprise Portfolio)</h4>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="qtdKasperskyEndpoints" class="form-label fw-bold"><i class="fas fa-users me-2"></i> 3. Quantity of Endpoints/Users</label>
+                        <input type="number" class="form-control" id="qtdKasperskyEndpoints" min="1" value="10">
+                        <small class="text-muted">Small Business Security is recommended for up to 25 users. Above that, use Next options.</small>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="kasperskyTier" class="form-label fw-bold"><i class="fas fa-shield-alt me-2"></i> 4. Protection Level (Tier)</label>
+                        <select class="form-select" id="kasperskyTier">
+                            <option value="0.5">Small Business Security (Basic Protection, Up to 25 Users)</option>
+                            <option value="1.0">Next EDR Foundations (Essential Protection and Management)</option>
+                            <option value="1.5">Next EDR Optimum (EDR, Control, and Automation)</option>
+                            <option value="2.0">Next XDR Optimum (Hybrid Security and Advanced XDR)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="kasperskyPeriod" class="form-label fw-bold"><i class="fas fa-calendar-alt me-2"></i> 5. Licensing Period (in Years)</label>
+                      <input type="number" class="form-control" id="kasperskyPeriod" min="1" max="3" value="1">
+                    </div>
+                </div>
+            </div>
+
+            <div id="veeamFields" style="display: none;" class="p-3 border rounded mb-4">
+                <h4 class="text-danger mb-3 mt-0">Veeam Licensing Details (VUL)</h4>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="qtdVeeamVMs" class="form-label fw-bold"><i class="fas fa-server me-2"></i> 3. VMs, Physical Servers, or Cloud</label>
+                        <input type="number" class="form-control" id="qtdVeeamVMs" min="0" value="10">
+                        <small class="text-muted">1 Workload = 1 VUL License.</small>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="qtdVeeamWorkstations" class="form-label fw-bold"><i class="fas fa-desktop me-2"></i> 4. Workstations / Endpoints</label>
+                        <input type="number" class="form-control" id="qtdVeeamWorkstations" min="0" value="0">
+                        <small class="text-muted">3 Workstations = 1 VUL License.</small>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <label for="veeamTier" class="form-label fw-bold"><i class="fas fa-layer-group me-2"></i> 5. Edition Level (Veeam Data Platform)</label>
+                        <select class="form-select" id="veeamTier">
+                            <option value="1.0">Foundation (Essential Backup)</option>
+                            <option value="1.5">Advanced (Extended Features and Immutability)</option>
+                            <option value="2.0">Premium (Maximum Functionality and Instant Recovery)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <label for="veeamPeriod" class="form-label fw-bold"><i class="fas fa-calendar-alt me-2"></i> 6. Licensing Period (in Years)</label>
+                      <input type="number" class="form-control" id="veeamPeriod" min="1" max="5" value="1">
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid mb-4">
+              <button type="submit" class="btn btn-danger btn-lg"><i class="fas fa-calculator me-2"></i> Calculate Estimate</button>
+            </div>
+          </form>
+
+          <div id="calculationResult" class="mt-4 p-4 rounded text-center border-danger border-3" style="display: none; background-color: #fff3f3;">
+            <h4 class="text-dark fw-bold">Your Estimated Investment:</h4>
+            <p class="h1 text-danger fw-bolder" id="estimatedValue">$ 0.00</p>
+            <p class="small text-muted mt-3" id="resultNote">
+              * This value is an **initial estimate**. For an official and detailed quote, please contact us.
+            </p>
+            <a href="#contact" class="btn btn-outline-danger btn-sm mt-2"><i class="fas fa-paper-plane me-2"></i> Request Official Quote</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= CONTACT =========-->
+
      <section id="contact" class="contact" aria-labelledby="contact-title">
       <div class="container">
         <h2 id="contact-title" class="section-title">Contact Us</h2>
@@ -434,6 +584,270 @@ With proven expertise, dedicated support, tailor-made solutions, and constant in
       </div>
     </section>
   </main>
+
+<!-- ======= SCRIPT ORÇAMENTO ==========-->
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('serviceCalculatorForm');
+    const resultDiv = document.getElementById('calculationResult');
+    const estimatedValueEl = document.getElementById('estimatedValue');
+    const serviceTypeSelect = document.getElementById('serviceType');
+    const environmentFieldContainer = document.getElementById('environmentFieldContainer');
+    const environmentTypeSelect = document.getElementById('environmentType');
+    const resultNoteEl = document.getElementById('resultNote');
+
+    // Zabbix Elements
+    const zabbixFieldsContainer = document.getElementById('zabbixFieldsContainer');
+    const zabbixOnPremFields = document.getElementById('zabbixOnPremFields');
+    const qtdServersOnPrem = document.getElementById('qtdServersOnPrem');
+    const qtdRouters = document.getElementById('qtdRouters');
+    const qtdServices = document.getElementById('qtdServices');
+    const qtdLinks = document.getElementById('qtdLinks');
+    const zabbixCloudFields = document.getElementById('zabbixCloudFields');
+    const qtdServersCloud = document.getElementById('qtdServersCloud');
+
+    // Kaspersky Elements
+    const kasperskyFields = document.getElementById('kasperskyFields');
+    const qtdKasperskyEndpoints = document.getElementById('qtdKasperskyEndpoints');
+    const kasperskyTier = document.getElementById('kasperskyTier');
+    const kasperskyPeriod = document.getElementById('kasperskyPeriod');
+
+    // Veeam Elements
+    const veeamFields = document.getElementById('veeamFields');
+    const qtdVeeamVMs = document.getElementById('qtdVeeamVMs');
+    const qtdVeeamWorkstations = document.getElementById('qtdVeeamWorkstations');
+    const veeamPeriod = document.getElementById('veeamPeriod');
+    const veeamTier = document.getElementById('veeamTier'); 
+    
+    // --- Visibility Functions ---
+    function hideAllConditionalFields() {
+      environmentFieldContainer.style.display = 'none';
+      zabbixFieldsContainer.style.display = 'none';
+      zabbixOnPremFields.style.display = 'none';
+      zabbixCloudFields.style.display = 'none';
+      kasperskyFields.style.display = 'none';
+      veeamFields.style.display = 'none';
+      // Disable "required" to ensure the form submits correctly
+      environmentTypeSelect.required = false;
+    }
+
+    // Main Listener (Service Type)
+    serviceTypeSelect.addEventListener('change', () => {
+      const selectedService = serviceTypeSelect.value;
+      
+      hideAllConditionalFields();
+      resultDiv.style.display = 'none'; 
+      
+      environmentTypeSelect.value = ''; 
+
+      if (selectedService === 'zabbix') {
+        environmentFieldContainer.style.display = 'block';
+        environmentTypeSelect.required = true;
+        zabbixFieldsContainer.style.display = 'block';
+      } else if (selectedService === 'kaspersky') {
+        kasperskyFields.style.display = 'block';
+      } else if (selectedService === 'veeam') {
+        veeamFields.style.display = 'block';
+      }
+    });
+
+    // Zabbix Environment Listener
+    environmentTypeSelect.addEventListener('change', () => {
+        const environmentType = environmentTypeSelect.value;
+        zabbixOnPremFields.style.display = 'none';
+        zabbixCloudFields.style.display = 'none';
+        resultDiv.style.display = 'none';
+
+        if (environmentType === 'onpremises') {
+            zabbixOnPremFields.style.display = 'flex';
+        } else if (environmentType === 'cloud') {
+            zabbixCloudFields.style.display = 'flex';
+        }
+    });
+
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const serviceType = serviceTypeSelect.value;
+      let totalCost = 0;
+      let resultNoteText = "";
+
+      // =========================================================================
+      // --- ⚠️ PRICE DEFINITIONS (USD) - ADJUST BASED ON OFFICIAL VALUES ---
+      // =========================================================================
+      
+      // ZABBIX (Services and Implementation)
+      const DAILY_RATE_USD = 800; // Average daily cost for Zabbix consulting in USD
+      
+      // Monthly Support Tier Mapping (USD/month)
+      const SUPPORT_TIER_S = 160; 
+      const SUPPORT_TIER_M = 300; 
+      const SUPPORT_TIER_L = 500; 
+      
+      // Thresholds for defining implementation effort (in total assets)
+      const THRESHOLD_SMALL = 10;
+      const THRESHOLD_MEDIUM = 25;
+      const DAYS_SMALL = 5; 
+      const DAYS_MEDIUM = 10;
+      const DAYS_LARGE = 15;
+
+
+      // KASPERSKY (Licenses) - ANNUAL Cost (USD) per Endpoint/User
+      const COST_KASPERSKY_SMALL_BUSINESS_YEAR = 30.00; // Small Business Tier
+      const COST_KASPERSKY_FOUNDATIONS_YEAR = 55.00; // Next EDR Foundations
+      const COST_KASPERSKY_OPTIMUM_YEAR = 90.00; // Next EDR Optimum
+      const COST_KASPERSKY_XDR_YEAR = 120.00; // Next XDR Optimum
+      const KASPERSKY_MIN_LICENSES = 10;
+      const KASPERSKY_SMALL_BUSINESS_MAX = 25; 
+
+      // VEEAM (VUL Licenses)
+      const VUL_PACK_SIZE = 10;
+      const WORKSTATION_FACTOR = 3; 
+      
+      // Base Annual Cost per VUL Pack (10 licenses) - Foundation/Standard Level
+      const COST_VEEAM_VUL_PACK_YEAR_STANDARD = 850.00; 
+      
+      // Multipliers (For simulating cost increase per tier)
+      const VEEAM_MULTIPLIER_STANDARD = 1.0; 
+      const VEEAM_MULTIPLIER_ENTERPRISE = 1.5; 
+      const VEEAM_MULTIPLIER_ENTERPRISE_PLUS = 2.0; 
+      // =========================================================================
+      
+      if (serviceType === 'zabbix') {
+        let totalAssets = 0;
+        let implementationDays = 0;
+        let monthlySupportCost = 0;
+        
+        const environmentType = environmentTypeSelect.value;
+
+        if (!environmentType) {
+            alert("Please select the environment (Cloud or On-premises).");
+            return;
+        }
+
+        if (environmentType === 'onpremises') {
+            const servers = parseInt(qtdServersOnPrem.value) || 0;
+            const routers = parseInt(qtdRouters.value) || 0;
+            const services = parseInt(qtdServices.value) || 0;
+            const links = parseInt(qtdLinks.value) || 0;
+
+            totalAssets = servers + routers + services + links;
+            monthlySupportCost = (totalAssets <= THRESHOLD_SMALL) ? SUPPORT_TIER_S : (totalAssets <= THRESHOLD_MEDIUM ? SUPPORT_TIER_M : SUPPORT_TIER_L);
+
+        } else if (environmentType === 'cloud') {
+            const servers = parseInt(qtdServersCloud.value) || 0;
+            totalAssets = servers;
+            monthlySupportCost = (totalAssets <= THRESHOLD_SMALL) ? SUPPORT_TIER_M : SUPPORT_TIER_L; 
+        }
+
+        if (totalAssets === 0) {
+           alert("Please enter the quantity of items to be monitored for Zabbix.");
+           return;
+        }
+        
+        if (totalAssets <= THRESHOLD_SMALL) {
+            implementationDays = DAYS_SMALL;
+        } else if (totalAssets <= THRESHOLD_MEDIUM) {
+            implementationDays = DAYS_MEDIUM;
+        } else {
+            implementationDays = DAYS_LARGE;
+        }
+
+        const implementationCost = implementationDays * DAILY_RATE_USD;
+        
+        totalCost = implementationCost + monthlySupportCost;
+        
+        resultNoteText = `This value is an **implementation estimate (${implementationDays} days) + 1 month of service**. The estimated recurring monthly cost is ${ monthlySupportCost.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) }.`;
+
+      } else if (serviceType === 'kaspersky') {
+        const endpoints = parseInt(qtdKasperskyEndpoints.value) || 0;
+        const period = parseInt(kasperskyPeriod.value) || 1;
+        const tierMultiplier = parseFloat(kasperskyTier.value);
+        let annualCostPerEndpoint = 0;
+        let tierName = "";
+
+        if (endpoints < KASPERSKY_MIN_LICENSES) {
+           alert(`Kaspersky licensing requires a minimum of ${KASPERSKY_MIN_LICENSES} endpoints.`);
+           return;
+        }
+        
+        if (tierMultiplier === 0.5 && endpoints > KASPERSKY_SMALL_BUSINESS_MAX) {
+            alert(`Small Business Security license is limited to ${KASPERSKY_SMALL_BUSINESS_MAX} users. For ${endpoints} users, please choose one of the Next options (EDR/XDR).`);
+            return;
+        }
+
+
+        if (tierMultiplier === 0.5) {
+            annualCostPerEndpoint = COST_KASPERSKY_SMALL_BUSINESS_YEAR;
+            tierName = "Small Business Security";
+        } else if (tierMultiplier === 1.0) {
+            annualCostPerEndpoint = COST_KASPERSKY_FOUNDATIONS_YEAR;
+            tierName = "Next EDR Foundations";
+        } else if (tierMultiplier === 1.5) {
+            annualCostPerEndpoint = COST_KASPERSKY_OPTIMUM_YEAR;
+            tierName = "Next EDR Optimum";
+        } else {
+            annualCostPerEndpoint = COST_KASPERSKY_XDR_YEAR;
+            tierName = "Next XDR Optimum";
+        }
+
+        totalCost = endpoints * annualCostPerEndpoint * period;
+        
+        resultNoteText = `This value is the **total licensing cost for ${tierName}** for ${endpoints} licenses over ${period} year(s).`;
+
+      } else if (serviceType === 'veeam') {
+        const vms = parseInt(qtdVeeamVMs.value) || 0;
+        const workstations = parseInt(qtdVeeamWorkstations.value) || 0;
+        const period = parseInt(veeamPeriod.value) || 1;
+        const selectedVeeamTier = veeamTier.value; 
+        
+        if (vms === 0 && workstations === 0) {
+           alert("Please enter the quantity of VMs/Servers and/or Workstations.");
+           return;
+        }
+        
+        const requiredVULs = vms + Math.ceil(workstations / WORKSTATION_FACTOR);
+        const vulPacks = Math.ceil(requiredVULs / VUL_PACK_SIZE);
+
+        let annualCostPerPack = 0;
+        let tierName = "";
+
+        if (selectedVeeamTier === "1.0") {
+            annualCostPerPack = COST_VEEAM_VUL_PACK_YEAR_STANDARD * VEEAM_MULTIPLIER_STANDARD;
+            tierName = "Foundation";
+        } else if (selectedVeeamTier === "1.5") {
+            annualCostPerPack = COST_VEEAM_VUL_PACK_YEAR_STANDARD * VEEAM_MULTIPLIER_ENTERPRISE;
+            tierName = "Advanced";
+        } else {
+            annualCostPerPack = COST_VEEAM_VUL_PACK_YEAR_STANDARD * VEEAM_MULTIPLIER_ENTERPRISE_PLUS;
+            tierName = "Premium";
+        }
+
+        totalCost = vulPacks * annualCostPerPack * period;
+        
+        resultNoteText = `This value is the **total VUL licensing cost for ${tierName}** (Veeam Data Platform) for ${requiredVULs} workloads (using ${vms} VMs/Servers and ${workstations} Workstations). The calculation used ${vulPacks} license pack(s) over ${period} year(s). <br><small>Monthly rental models for Service Providers (VCSP) have different pricing.</small>`;
+
+      } else {
+        estimatedValueEl.textContent = 'Select a Valid Service';
+        resultDiv.style.display = 'block';
+        return;
+      }
+      
+      // Format the final result in USD
+      estimatedValueEl.textContent = totalCost.toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD'
+      });
+      resultNoteEl.innerHTML = resultNoteText;
+
+      resultDiv.style.display = 'block';
+    });
+  });
+</script>
+
+<!-- ======== FIM SCRIPT ORÇAMENTO ========-->
 
 
 <script>
