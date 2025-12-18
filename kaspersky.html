@@ -94,7 +94,7 @@
 
           <div class="mt-4 d-flex flex-wrap gap-3">
             <a href="#contato" class="btn btn-danger">Saiba mais</a>
-            <a href="#proposta" class="btn btn-outline-dark">Solicitar proposta empresarial</a>
+            <a href="#proposta" class="btn btn-outline-dark" hidden>Solicitar proposta empresarial</a>
           </div>
         </div>
       </div>
@@ -104,6 +104,207 @@
 
 <!-- /Kaspersky Home Security Section -->
 
+
+
+
+
+
+
+
+<!-- =========CALCULADORA ========-->
+
+<section id="calculator" class="py-5" style="background-color: #f8f9fa;">
+  <div class="container">
+    <h2 class="section-title text-center">Simule o Investimento em TI da Sua Empresa</h2>
+    <div class="mx-auto mb-4" style="width: 80px; height: 3px; background-color: #E4002B;"></div>
+    <p class="section-subtitle text-center mb-5">
+      Obtenha uma estimativa rápida baseada nos modelos de licenciamento oficiais da Kaspersky .
+    </p>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="card p-4 shadow-lg border-0 rounded-3">
+          <form id="serviceCalculatorForm">
+            <div class="row g-4 mb-4">
+              <div class="col-md-12">
+                <div class="card h-100 p-3 bg-light border-danger border-2">
+                  <label for="serviceType" class="form-label fw-bold"><i class="fas fa-desktop me-2"></i> 1. Qual serviço você precisa?</label>
+                  <select class="form-select" id="serviceType" required>
+                    <option value="">-- Selecione uma opção --</option>
+                    <option value="zabbix" hidden>Monitoramento Zabbix (Serviço e Consultoria)</option>
+                    <option value="kaspersky" >Segurança Kaspersky (Licença e Endpoint)</option>
+                    <option value="veeam" hidden>Backup Veeam (Licença VUL e Plataforma)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-12" id="environmentFieldContainer" style="display: none;">
+                <div class="card h-100 p-3 bg-light border-danger border-2">
+                  <label for="environmentType" class="form-label fw-bold"><i class="fas fa-cloud me-2"></i> 2. Qual o ambiente de monitoramento?</label>
+                  <select class="form-select" id="environmentType">
+                    <option value="">-- Selecione o ambiente --</option>
+                    <option value="onpremises">On-premises (Local)</option>
+                    <option value="cloud">Cloud (AWS, Azure, GCP)</option>
+                    <option value="cloud">Híbrido (Cloud + On-remises)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            
+            <div id="zabbixFieldsContainer" style="display: none;">
+                <h4 class="text-danger mb-3 mt-4">Detalhes do Serviço Zabbix</h4>
+
+                <div id="zabbixOnPremFields" style="display: none;" class="row g-3 mb-4 p-3 border rounded">
+                    <label class="form-label fw-bold text-dark"><i class="fas fa-server me-2"></i> 3. Ativos e Estrutura (On-premises)</label>
+                    <div class="col-md-3">
+                        <label for="qtdServersOnPrem" class="form-label">Servidores (OS/VMs)</label>
+                        <input type="number" class="form-control" id="qtdServersOnPrem" value="10">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="qtdRouters" class="form-label">Roteadores/Switches</label>
+                        <input type="number" class="form-control" id="qtdRouters" value="5">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="qtdServices" class="form-label">Serviços/Aplicações</label>
+                        <input type="number" class="form-control" id="qtdServices" value="5">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="qtdLinks" class="form-label">Links de Internet</label>
+                        <input type="number" class="form-control" id="qtdLinks" value="1">
+                    </div>
+                                        
+                    <div class="col-md-6 mt-3">
+                        <label for="qtdFiliaisOnPrem" class="form-label">Total de Filiais (Sites)</label>
+                        <input type="number" class="form-control" id="qtdFiliaisOnPrem" min="1" value="1">
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <label for="qtdProxiesOnPrem" class="form-label">Proxies por Filial (Zabbix Proxy)</label>
+                        <input type="number" class="form-control" id="qtdProxiesOnPrem" min="0" value="0">
+                    </div>
+
+                    <div class="col-md-12 mt-3">
+                      <small class="text-muted">Filiais e Proxies adicionam complexidade de setup e esforço de consultoria.</small>
+                    </div>
+                </div>
+
+                <div id="zabbixCloudFields" style="display: none;" class="row g-3 mb-4 p-3 border rounded">
+                    <label class="form-label fw-bold text-dark"><i class="fas fa-cloud me-2"></i> 3. Ativos e Estrutura (Cloud)</label>
+                    <div class="col-md-6">
+                        <label for="qtdServersCloud" class="form-label">Servidores/Instâncias (EC2, VMs, etc.)</label>
+                        <input type="number" class="form-control" id="qtdServersCloud" value="10">
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <label for="qtdFiliaisCloud" class="form-label">Total de Filiais (Sites)</label>
+                        <input type="number" class="form-control" id="qtdFiliaisCloud" min="1" value="1">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="qtdProxiesCloud" class="form-label">Proxies por Filial (Zabbix Proxy)</label>
+                        <input type="number" class="form-control" id="qtdProxiesCloud" min="0" value="0">
+                    </div>
+
+                    <div class="col-md-12 mt-3">
+                      <small class="text-muted">A integração com APIs Cloud e a estrutura distribuída (filiais/proxies) influenciam a complexidade.</small>
+                    </div>
+                </div>
+            </div>
+
+            <div id="kasperskyFields" style="display: none;" class="p-3 border rounded mb-4">
+                <h4 class="text-danger mb-3 mt-0">Detalhes do Licenciamento Kaspersky (Portfólio PME/Corporativo)</h4>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="qtdKasperskyEndpoints" class="form-label fw-bold"><i class="fas fa-users me-2"></i> 3. Quantidade de Endpoints/Usuários</label>
+                        <input type="number" class="form-control" id="qtdKasperskyEndpoints" min="1" value="20">
+                        <small class="text-muted">A licença Small Business Security é indicada para até 25 usuários. Acima, use as opções Next.</small>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="kasperskyTier" class="form-label fw-bold"><i class="fas fa-shield-alt me-2"></i> 4. Nível de Proteção (Tier)</label>
+                        <select class="form-select" id="kasperskyTier">
+                            <option value="0.5">Small Business Security (Proteção Básica)</option>
+                            <option value="1.0">Next EDR Foundations (Proteção Essencial)</option>
+                            <option value="1.5">Next EDR Optimum (EDR, Controle e Automação)</option>
+                            <option value="2.0">Next XDR Optimum (Segurança Híbrida e XDR Avançado)</option>
+                        </select>
+                        <div class="mt-2 small text-muted">
+                            <ul class="list-unstyled">
+                                <li>**0.5**: Antimalware, Firewall, Web/Mail Security.</li>
+                                <li>**1.0**: + Gerenciamento Centralizado, Controle de Aplicativos e Dispositivos.</li>
+                                <li>**1.5**: + EDR (Detecção e Resposta a Endpoint), Análise de Comportamento.</li>
+                                <li>**2.0**: + XDR, Segurança de Workloads Cloud e Servidores.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="kasperskyPeriod" class="form-label fw-bold"><i class="fas fa-calendar-alt me-2"></i> 5. Período de Licenciamento (em Anos)</label>
+                      <input type="number" class="form-control" id="kasperskyPeriod" min="1" max="3" value="1">
+                    </div>
+                </div>
+            </div>
+
+            <div id="veeamFields" style="display: none;" class="p-3 border rounded mb-4">
+                <h4 class="text-danger mb-3 mt-0">Detalhes do Licenciamento Veeam (VUL)</h4>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="qtdVeeamVMs" class="form-label fw-bold"><i class="fas fa-server me-2"></i> 3. VMs, Servidores Físicos ou Cloud</label>
+                        <input type="number" class="form-control" id="qtdVeeamVMs" value="20">
+                        <small class="text-muted">1 Workload = 1 Licença VUL.</small>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="qtdVeeamWorkstations" class="form-label fw-bold"><i class="fas fa-desktop me-2"></i> 4. Workstations / Endpoints</label>
+                        <input type="number" class="form-control" id="qtdVeeamWorkstations" value="0">
+                        <small class="text-muted">3 Workstations = 1 Licença VUL.</small>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <label for="veeamTier" class="form-label fw-bold"><i class="fas fa-layer-group me-2"></i> 5. Nível de Edição (Veeam Data Platform)</label>
+                        <select class="form-select" id="veeamTier">
+                            <option value="1.0">Foundation (Backup Essencial)</option>
+                            <option value="1.5">Advanced (Recursos Estendidos)</option>
+                            <option value="2.0">Premium (Máxima Funcionalidade)</option>
+                        </select>
+                        <div class="mt-2 small text-muted">
+                            <ul class="list-unstyled">
+                                <li>**Foundation**: Backup de VM/Cloud/Físico, Imutabilidade Básica.</li>
+                                <li>**Advanced**: + Monitoramento Avançado, Ransomware Recovery, Imutabilidade Estendida.</li>
+                                <li>**Premium**: + Orquestração de Recuperação, Testes Automatizados e Instant Recovery.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <label for="veeamPeriod" class="form-label fw-bold"><i class="fas fa-calendar-alt me-2"></i> 6. Período de Licenciamento (em Anos)</label>
+                      <input type="number" class="form-control" id="veeamPeriod" min="1" max="5" value="1">
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid mb-4">
+              <button type="submit" class="btn btn-danger btn-lg"><i class="fas fa-calculator me-2"></i> Recalcular Estimativa</button>
+            </div>
+          </form>
+
+          <div id="calculationResult" class="mt-4 p-4 rounded text-center border-danger border-3" style="display: none; background-color: #fff3f3;">
+            <h4 class="text-dark fw-bold mb-3">Seu Investimento Estimado:</h4>
+            
+            <div id="resultDetails" class="mb-3 text-start px-md-5">
+              </div>
+
+            <div class="d-flex justify-content-between align-items-center p-3 border-top border-2 border-danger">
+                <p class="mb-0 fs-5 fw-bold text-dark">Total Estimado:</p>
+                <p class="h1 text-danger fw-bolder mb-0" id="estimatedValue">R$ 0,00</p>
+            </div>
+
+
+            <p class="small text-muted mt-3" id="resultNote">
+              * Este valor é uma **estimativa inicial**. Para um orçamento oficial e detalhado, entre em contato.
+            </p>
+            <a href="#contact" class="btn btn-outline-danger btn-sm mt-2"><i class="fas fa-paper-plane me-2"></i> Solicitar Orçamento Oficial</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
   <!-- ======= FOOTER ======= -->
   <footer id="footer" class="footer">
@@ -123,6 +324,7 @@
           <li><i class="bi bi-chevron-right"></i> <a href="./index.html#home">Home</a></li>
           <li><i class="bi bi-chevron-right"></i> <a href="./index.html#about">Sobre</a></li>
           <li><i class="bi bi-chevron-right"></i> <a href="./index.html#services">Serviços</a></li>
+          <li><i class="bi bi-chevron-right"></i><a href="https://ty0ci.share.hsforms.com/2dDZ5-CdFTKektziqcbgsTQ" target="_blank" rel="noopener">Trabalhe Conosco</a></li>
           <li><i class="bi bi-chevron-right"></i> <a href="politica.html">Política de Privacidade</a></li>
           <li><i class="bi bi-chevron-right"></i> <a href="termos.html">Termos de Uso</a></li>
         </ul>
@@ -145,6 +347,393 @@
     <p>© 2015 Copyright <strong>GLCTech Tecnologia</strong> All Rights Reserved</p>
   </div>
 </footer>
+
+
+
+
+
+
+
+
+<!-- ========= SCRIPT CALCULADORA ======-->
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('serviceCalculatorForm');
+    const resultDiv = document.getElementById('calculationResult');
+    const estimatedValueEl = document.getElementById('estimatedValue');
+    const serviceTypeSelect = document.getElementById('serviceType');
+    const environmentFieldContainer = document.getElementById('environmentFieldContainer');
+    const environmentTypeSelect = document.getElementById('environmentType');
+    const resultNoteEl = document.getElementById('resultNote');
+    const resultDetailsEl = document.getElementById('resultDetails'); 
+
+    // Zabbix Elements
+    const zabbixFieldsContainer = document.getElementById('zabbixFieldsContainer');
+    const zabbixOnPremFields = document.getElementById('zabbixOnPremFields');
+    const qtdServersOnPrem = document.getElementById('qtdServersOnPrem');
+    const qtdRouters = document.getElementById('qtdRouters');
+    const qtdServices = document.getElementById('qtdServices');
+    const qtdLinks = document.getElementById('qtdLinks');
+    const qtdFiliaisOnPrem = document.getElementById('qtdFiliaisOnPrem'); // NOVO
+    const qtdProxiesOnPrem = document.getElementById('qtdProxiesOnPrem'); // NOVO
+    const zabbixCloudFields = document.getElementById('zabbixCloudFields');
+    const qtdServersCloud = document.getElementById('qtdServersCloud');
+    const qtdFiliaisCloud = document.getElementById('qtdFiliaisCloud');   // NOVO
+    const qtdProxiesCloud = document.getElementById('qtdProxiesCloud');   // NOVO
+
+    // Kaspersky Elements (Mantidos)
+    const kasperskyFields = document.getElementById('kasperskyFields');
+    const qtdKasperskyEndpoints = document.getElementById('qtdKasperskyEndpoints');
+    const kasperskyTier = document.getElementById('kasperskyTier');
+    const kasperskyPeriod = document.getElementById('kasperskyPeriod');
+
+    // Veeam Elements (Mantidos)
+    const veeamFields = document.getElementById('veeamFields');
+    const qtdVeeamVMs = document.getElementById('qtdVeeamVMs');
+    const qtdVeeamWorkstations = document.getElementById('qtdVeeamWorkstations');
+    const veeamPeriod = document.getElementById('veeamPeriod');
+    const veeamTier = document.getElementById('veeamTier'); 
+    
+    // Função de formatação BRL
+    const formatBRL = (value) => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    // =========================================================================
+    // --- ⚠️ DEFINIÇÕES DE PREÇOS (BRL) - AJUSTE CONFORME OS VALORES OFICIAIS ---
+    // =========================================================================
+    
+    // ZABBIX (Serviços e Implementação)
+    const DAILY_RATE_BRL = 1500; 
+    const SUPPORT_TIER_S = 450; 
+    const SUPPORT_TIER_M = 850; 
+    const SUPPORT_TIER_L = 500; 
+    
+    // Parametros de Escala Base
+    const THRESHOLD_SMALL = 10;
+    const THRESHOLD_MEDIUM = 25;
+    const DAYS_SMALL = 5; 
+    const DAYS_MEDIUM = 10;
+    const ASSETS_PER_EXTRA_DAY = 5; // 1 dia extra para cada 5 ativos acima de 25
+
+    // Parametros de Estrutura Distribuída (NOVO)
+    const BRANCH_OVERHEAD_DAYS = 1.0; // 1 dia por filial para planejamento e gestão de rede
+    const PROXY_INSTALL_DAYS = 2.0;   // 2 dias por proxy para instalação, hardening e configuração
+
+    // KASPERSKY (Licenças)
+    const COST_KASPERSKY_SMALL_BUSINESS_YEAR = 150.00; 
+    const COST_KASPERSKY_FOUNDATIONS_YEAR = 280.00;
+    const COST_KASPERSKY_OPTIMUM_YEAR = 450.00;
+    const COST_KASPERSKY_XDR_YEAR = 600.00;
+    const KASPERSKY_MIN_LICENSES = 10;
+    const KASPERSKY_SMALL_BUSINESS_MAX = 25; 
+
+    // VEEAM (Licenças VUL)
+    const VUL_PACK_SIZE = 10;
+    const WORKSTATION_FACTOR = 3; 
+    const COST_VEEAM_VUL_PACK_YEAR_STANDARD = 4200.00; 
+    const VEEAM_MULTIPLIER_STANDARD = 1.0; 
+    const VEEAM_MULTIPLIER_ENTERPRISE = 1.5; 
+    const VEEAM_MULTIPLIER_ENTERPRISE_PLUS = 2.0; 
+    // =========================================================================
+
+    // --- Funções de Visibilidade ---
+    function hideAllConditionalFields() {
+      environmentFieldContainer.style.display = 'none';
+      zabbixFieldsContainer.style.display = 'none';
+      zabbixOnPremFields.style.display = 'none';
+      zabbixCloudFields.style.display = 'none';
+      kasperskyFields.style.display = 'none';
+      veeamFields.style.display = 'none';
+      environmentTypeSelect.required = false;
+    }
+
+    // --- Função Principal de Cálculo ---
+    function calculateTotal() {
+      const serviceType = serviceTypeSelect.value;
+      let totalCost = 0;
+      let resultNoteText = "";
+      let detailsHTML = "";
+
+      if (!serviceType) {
+        resultDiv.style.display = 'none';
+        return;
+      }
+      
+      resultDiv.style.display = 'block';
+      
+      if (serviceType === 'zabbix') {
+        let totalAssets = 0;
+        let coreMonitoringDays = 0; // Dias para o monitoramento central de ativos
+        let monthlySupportCost = 0;
+        
+        const environmentType = environmentTypeSelect.value;
+
+        if (!environmentType) {
+            estimatedValueEl.textContent = 'R$ 0,00';
+            resultDetailsEl.innerHTML = '<p class="text-danger text-center">Selecione o ambiente (Cloud ou On-premises) para calcular.</p>';
+            return;
+        }
+
+        // 1. Lendo os novos inputs
+        const qtdFiliais = environmentType === 'onpremises' 
+            ? Math.max(1, parseInt(qtdFiliaisOnPrem.value) || 1) 
+            : Math.max(1, parseInt(qtdFiliaisCloud.value) || 1); 
+            
+        const proxiesPerBranch = environmentType === 'onpremises' 
+            ? Math.max(0, parseInt(qtdProxiesOnPrem.value) || 0)
+            : Math.max(0, parseInt(qtdProxiesCloud.value) || 0);
+
+        const totalProxies = qtdFiliais * proxiesPerBranch;
+
+
+        if (environmentType === 'onpremises') {
+            const servers = Math.max(0, parseInt(qtdServersOnPrem.value) || 0);
+            const routers = Math.max(0, parseInt(qtdRouters.value) || 0);
+            const services = Math.max(0, parseInt(qtdServices.value) || 0);
+            const links = Math.max(0, parseInt(qtdLinks.value) || 0);
+
+            totalAssets = servers + routers + services + links;
+            monthlySupportCost = (totalAssets <= THRESHOLD_SMALL) ? SUPPORT_TIER_S : (totalAssets <= THRESHOLD_MEDIUM ? SUPPORT_TIER_M : SUPPORT_TIER_L);
+
+        } else if (environmentType === 'cloud') {
+            const servers = Math.max(0, parseInt(qtdServersCloud.value) || 0);
+            totalAssets = servers;
+            monthlySupportCost = (totalAssets <= THRESHOLD_SMALL) ? SUPPORT_TIER_M : SUPPORT_TIER_L; // Cloud tem suporte Mínimo M
+        }
+
+        if (totalAssets < 1) {
+           estimatedValueEl.textContent = 'R$ 0,00';
+           resultDetailsEl.innerHTML = '<p class="text-danger text-center">Informe a quantidade de ativos (> 0) para calcular o serviço Zabbix.</p>';
+           return;
+        }
+        
+        // 2. CÁLCULO CORE DAYS (MONITORAMENTO DE ATIVOS)
+        if (totalAssets <= THRESHOLD_SMALL) {
+            coreMonitoringDays = DAYS_SMALL;
+        } else if (totalAssets <= THRESHOLD_MEDIUM) {
+            coreMonitoringDays = DAYS_MEDIUM;
+        } else {
+            // Escala contínua para Enterprise (> 25 ativos)
+            const assetsOverThreshold = totalAssets - THRESHOLD_MEDIUM;
+            const extraDays = Math.ceil(assetsOverThreshold / ASSETS_PER_EXTRA_DAY);
+            coreMonitoringDays = DAYS_MEDIUM + extraDays;
+        }
+
+        // 3. CÁLCULO DE DIAS EXTRAS (ESTRUTURA DISTRIBUÍDA)
+        const proxyBranchOverheadDays = (qtdFiliais * BRANCH_OVERHEAD_DAYS) + (totalProxies * PROXY_INSTALL_DAYS);
+        
+        const implementationDays = coreMonitoringDays + proxyBranchOverheadDays;
+        const implementationCost = implementationDays * DAILY_RATE_BRL;
+        
+        totalCost = implementationCost + monthlySupportCost;
+
+        detailsHTML = `
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-dark"><i class="fas fa-microchip me-2 text-danger"></i> Esforço Monitoramento Base (${coreMonitoringDays} dias)</span>
+                <span class="fw-bold">${formatBRL(coreMonitoringDays * DAILY_RATE_BRL)}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-dark"><i class="fas fa-network-wired me-2 text-danger"></i> Esforço Estrutura Distribuída (${proxyBranchOverheadDays} dias)</span>
+                <span class="fw-bold">${formatBRL(proxyBranchOverheadDays * DAILY_RATE_BRL)}</span>
+            </div>
+             <div class="d-flex justify-content-between mb-2 border-top pt-2">
+                <span class="text-dark"><i class="fas fa-hammer me-2 text-danger"></i> Total Implementação (${implementationDays} dias)</span>
+                <span class="fw-bold">${formatBRL(implementationCost)}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-dark"><i class="fas fa-headset me-2 text-danger"></i> 1º Mês de Suporte Recorrente</span>
+                <span class="fw-bold">${formatBRL(monthlySupportCost)}</span>
+            </div>
+            <p class="small text-muted mt-3 mb-0">Total de Filiais: ${qtdFiliais}. Total de Proxies Adicionais: ${totalProxies}. Custo mensal de suporte/serviço recorrente: <strong>${formatBRL(monthlySupportCost)}</strong></p>
+        `;
+        
+        resultNoteText = `Este valor é uma **estimativa de implementação e serviço** (custo de setup inicial + 1º mês de suporte).`;
+
+      } else if (serviceType === 'kaspersky') {
+        const endpoints = Math.max(0, parseInt(qtdKasperskyEndpoints.value) || 0);
+        const period = Math.max(1, parseInt(kasperskyPeriod.value) || 1);
+        const tierMultiplier = parseFloat(kasperskyTier.value);
+        let annualCostPerEndpoint = 0;
+        let tierName = "";
+
+        if (endpoints < KASPERSKY_MIN_LICENSES) {
+           estimatedValueEl.textContent = 'R$ 0,00';
+           resultDetailsEl.innerHTML = `<p class="text-danger text-center">Mínimo de ${KASPERSKY_MIN_LICENSES} endpoints.</p>`;
+           return;
+        }
+        
+        if (tierMultiplier === 0.5 && endpoints > KASPERSKY_SMALL_BUSINESS_MAX) {
+            estimatedValueEl.textContent = 'R$ 0,00';
+            resultDetailsEl.innerHTML = `<p class="text-danger text-center">Small Business Security limitado a ${KASPERSKY_SMALL_BUSINESS_MAX} usuários. Escolha um tier Next.</p>`;
+            return;
+        }
+
+
+        if (tierMultiplier === 0.5) {
+            annualCostPerEndpoint = COST_KASPERSKY_SMALL_BUSINESS_YEAR;
+            tierName = "Small Business Security";
+        } else if (tierMultiplier === 1.0) {
+            annualCostPerEndpoint = COST_KASPERSKY_FOUNDATIONS_YEAR;
+            tierName = "Next EDR Foundations";
+        } else if (tierMultiplier === 1.5) {
+            annualCostPerEndpoint = COST_KASPERSKY_OPTIMUM_YEAR;
+            tierName = "Next EDR Optimum";
+        } else {
+            annualCostPerEndpoint = COST_KASPERSKY_XDR_YEAR;
+            tierName = "Next XDR Optimum";
+        }
+
+        const annualTotalCost = endpoints * annualCostPerEndpoint;
+        totalCost = annualTotalCost * period;
+        
+        detailsHTML = `
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-dark"><i class="fas fa-chart-line me-2 text-danger"></i> Nível de Proteção</span>
+                <span class="fw-bold">${tierName}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-dark"><i class="fas fa-desktop me-2 text-danger"></i> Custo Anual por Licença (${endpoints} Endpoints)</span>
+                <span class="fw-bold">${formatBRL(annualTotalCost)}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-dark"><i class="fas fa-calendar-alt me-2 text-danger"></i> Período de Contrato</span>
+                <span class="fw-bold">${period} Ano(s)</span>
+            </div>
+            <p class="small text-muted mt-3 mb-0">Custo anual total: <strong>${formatBRL(annualTotalCost)}</strong></p>
+        `;
+        
+        resultNoteText = `Este valor é o **custo total do licenciamento** para ${endpoints} licenças durante ${period} ano(s).`;
+
+      } else if (serviceType === 'veeam') {
+        const vms = Math.max(0, parseInt(qtdVeeamVMs.value) || 0);
+        const workstations = Math.max(0, parseInt(qtdVeeamWorkstations.value) || 0);
+        const period = Math.max(1, parseInt(veeamPeriod.value) || 1);
+        const selectedVeeamTier = veeamTier.value; 
+        
+        if (vms === 0 && workstations === 0) {
+           estimatedValueEl.textContent = 'R$ 0,00';
+           resultDetailsEl.innerHTML = '<p class="text-danger text-center">Informe a quantidade de VMs/Servidores e/ou Workstations.</p>';
+           return;
+        }
+        
+        const requiredVULs = vms + Math.ceil(workstations / WORKSTATION_FACTOR);
+        const vulPacks = Math.ceil(requiredVULs / VUL_PACK_SIZE);
+
+        let annualCostPerPack = 0;
+        let tierName = "";
+        let multiplier = 0;
+
+        if (selectedVeeamTier === "1.0") {
+            multiplier = VEEAM_MULTIPLIER_STANDARD;
+            tierName = "Foundation";
+        } else if (selectedVeeamTier === "1.5") {
+            multiplier = VEEAM_MULTIPLIER_ENTERPRISE;
+            tierName = "Advanced";
+        } else {
+            multiplier = VEEAM_MULTIPLIER_ENTERPRISE_PLUS;
+            tierName = "Premium";
+        }
+
+        annualCostPerPack = COST_VEEAM_VUL_PACK_YEAR_STANDARD * multiplier;
+        const annualTotalCost = vulPacks * annualCostPerPack;
+        totalCost = annualTotalCost * period;
+        
+        detailsHTML = `
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-dark"><i class="fas fa-layer-group me-2 text-danger"></i> Edição Veeam Data Platform</span>
+                <span class="fw-bold">${tierName}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-dark"><i class="fas fa-tag me-2 text-danger"></i> Licenças VUL Necessárias</span>
+                <span class="fw-bold">${requiredVULs} (${vulPacks} Pacote(s))</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-dark"><i class="fas fa-calendar-alt me-2 text-danger"></i> Custo Anual de Licença</span>
+                <span class="fw-bold">${formatBRL(annualTotalCost)}</span>
+            </div>
+            <p class="small text-muted mt-3 mb-0">Modelo de licenciamento VUL (Universal Licensing). Valor total para ${period} ano(s).</p>
+        `;
+        
+        resultNoteText = `Este valor é o **custo total do licenciamento VUL ${tierName}** para ${requiredVULs} workloads (utilizando ${vms} VM/Servidores e ${workstations} Workstations). O cálculo usou ${vulPacks} pacote(s) de licenças durante ${period} ano(s). <br><small>Modelos de aluguel mensal para Service Providers (VCSP) têm precificação diferenciada.</small>`;
+
+      } 
+      
+      // Atualiza o detalhamento e o resultado final
+      resultDetailsEl.innerHTML = detailsHTML;
+      estimatedValueEl.textContent = formatBRL(totalCost);
+      resultNoteEl.innerHTML = `* Este valor é uma **estimativa inicial**. ${resultNoteText} Os custos de licença podem variar conforme volume e promoções vigentes. Para um orçamento oficial e detalhado, entre em contato.`;
+    }
+    
+    // --- Funções de Visibilidade e Bind de Eventos ---
+
+    // Listener principal (Tipo de Serviço)
+    serviceTypeSelect.addEventListener('change', () => {
+      const selectedService = serviceTypeSelect.value;
+      
+      hideAllConditionalFields();
+      
+      environmentTypeSelect.value = ''; 
+
+      if (selectedService === 'zabbix') {
+        environmentFieldContainer.style.display = 'block';
+        environmentTypeSelect.required = true;
+        zabbixFieldsContainer.style.display = 'block';
+      } else if (selectedService === 'kaspersky') {
+        kasperskyFields.style.display = 'block';
+      } else if (selectedService === 'veeam') {
+        veeamFields.style.display = 'block';
+      }
+      
+      calculateTotal();
+    });
+
+    // Listener de Ambiente Zabbix (precisa recalcular e mostrar/esconder campos)
+    environmentTypeSelect.addEventListener('change', () => {
+        const environmentType = environmentTypeSelect.value;
+        zabbixOnPremFields.style.display = 'none';
+        zabbixCloudFields.style.display = 'none';
+
+        if (environmentType === 'onpremises') {
+            zabbixOnPremFields.style.display = 'flex';
+        } else if (environmentType === 'cloud') {
+            zabbixCloudFields.style.display = 'flex';
+        }
+        calculateTotal();
+    });
+    
+    // Lista de todos os inputs que devem disparar o cálculo em tempo real
+    const inputElements = [
+        // Zabbix On-Prem
+        qtdServersOnPrem, qtdRouters, qtdServices, qtdLinks, qtdFiliaisOnPrem, qtdProxiesOnPrem,
+        // Zabbix Cloud
+        qtdServersCloud, qtdFiliaisCloud, qtdProxiesCloud,
+        // Kaspersky
+        qtdKasperskyEndpoints, kasperskyTier, kasperskyPeriod,
+        // Veeam
+        qtdVeeamVMs, qtdVeeamWorkstations, veeamTier, veeamPeriod
+    ];
+    
+    // Adiciona o listener para cada input
+    inputElements.forEach(element => {
+        if (element) { 
+            // 'input' é para texto/número, 'change' para selects
+            const eventType = element.tagName === 'SELECT' ? 'change' : 'input';
+            element.addEventListener(eventType, calculateTotal);
+        }
+    });
+
+    // Submissão do formulário (para o caso de o usuário pressionar Enter ou clicar no botão)
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      calculateTotal(); 
+    });
+    
+    // Chamada inicial para calcular com os valores default
+    calculateTotal(); 
+  });
+</script>
+
 
   <!-- ======= SCRIPT DO MENU HAMBÚRGUER ======= -->
   <script>
