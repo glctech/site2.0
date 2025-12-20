@@ -132,97 +132,101 @@
 
 <!-- =========CALCULADORA ========-->
 
-<section class="py-5">
+<section class="py-5" id="kaspersky-calculator">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-9">
-        <div class="card shadow-lg border-0 rounded-4">
+      <div class="col-lg-10">
+        <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
           
-          <div class="p-4 text-white text-center" style="background: linear-gradient(135deg, #2c2c2c 0%, #2c2c2c 100%);">
-            <h3 class="fw-bold mb-1">Simulador Kaspersky Enterprise</h3>
-            <p class="small text-uppercase tracking-widest opacity-75">GLCTech - Gestão de Segurança da Informação</p>
+          <div class="p-4 text-white text-center" style="background: #006d5d; border-bottom: 4px solid #00f2d3;">
+            <h3 class="fw-bold mb-1">Simulador Kaspersky Cybersecurity</h3>
+            <p class="small text-uppercase tracking-widest opacity-75">Proteção de Endpoints, Mobile e EDR Optimum</p>
           </div>
 
-          <div class="p-4 p-md-5">
+          <div class="p-4 p-md-5 bg-white">
             <div class="row g-4 mb-4">
-              <div class="col-md-6">
-                <div class="p-3 param-card rounded shadow-sm">
-                  <label class="form-label fw-bold small text-muted">MÁQUINAS / DISPOSITIVOS</label>
-                  <input type="number" id="qtdEndpoints" class="form-control form-control-lg border-0 bg-light" value="10" min="5">
+              
+              <div class="col-md-12">
+                <div class="p-3 border rounded shadow-sm bg-light">
+                  <label class="form-label fw-bold small text-muted d-block mb-3 text-uppercase text-center">Perfil da Solução / Licenciamento</label>
+                  <div class="btn-group w-100" role="group">
+                    <input type="radio" class="btn-check" name="kaspTier" id="tierKSOS" value="pme" checked onchange="calcularKaspersky()">
+                    <label class="btn btn-outline-success" for="tierKSOS">PME (Small Office)</label>
+
+                    <input type="radio" class="btn-check" name="kaspTier" id="tierAdvanced" value="advanced" onchange="calcularKaspersky()">
+                    <label class="btn btn-outline-success" for="tierAdvanced">Enterprise Advanced</label>
+
+                    <input type="radio" class="btn-check" name="kaspTier" id="tierEDR" value="edr" onchange="calcularKaspersky()">
+                    <label class="btn btn-outline-success" for="tierEDR">Enterprise EDR Optimum</label>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="p-3 param-card rounded shadow-sm">
-                  <label class="form-label fw-bold small text-muted">NÍVEL DE TECNOLOGIA</label>
-                  <select id="edrLevel" class="form-select form-select-lg border-0 bg-light">
-                    <option value="1.0" data-tier="Foundations">Foundations (Proteção Essencial)</option>
-                    <option value="1.6" data-tier="Optimum" selected>Optimum (EDR Avançado)</option>
-                    <option value="2.2" data-tier="Expert">Expert (XDR Completo)</option>
-                  </select>
+
+              <div class="col-md-12">
+                <div class="p-3 border rounded shadow-sm bg-light">
+                  <label class="form-label fw-bold small text-muted d-block mb-3 text-uppercase text-center">Serviço de Gestão e Resposta (MDR)</label>
+                  <div class="btn-group w-100" role="group">
+                    <input type="radio" class="btn-check" name="kaspMgmt" id="mgmtNo" value="no" onchange="calcularKaspersky()">
+                    <label class="btn btn-outline-dark" for="mgmtNo">Apenas Licenciamento</label>
+
+                    <input type="radio" class="btn-check" name="kaspMgmt" id="mgmtYes" value="yes" checked onchange="calcularKaspersky()">
+                    <label class="btn btn-outline-dark" for="mgmtYes">Licença + Gestão GLCTech (NOC)</label>
+                  </div>
                 </div>
               </div>
+
               <div class="col-md-6">
-                <div class="p-3 param-card rounded shadow-sm">
-                  <label class="form-label fw-bold small text-muted">PLANO DE SUPORTE</label>
-                  <select id="supportLevel" class="form-select form-select-lg border-0 bg-light">
-                    <option value="0" data-name="Business (8x5)">GLCTech Business (8x5)</option>
-                    <option value="600" data-name="Premium (24x7)">GLCTech Premium (24x7)</option>
-                  </select>
+                <div class="p-3 border rounded shadow-sm">
+                  <label class="form-label fw-bold small text-muted">ESTAÇÕES / SERVIDORES (ENDPOINTS)</label>
+                  <input type="number" id="kaspEndpoints" class="form-control border-0 bg-light" value="10" min="5" onchange="calcularKaspersky()">
                 </div>
               </div>
+
               <div class="col-md-6">
-                <div class="p-3 param-card rounded shadow-sm">
-                  <label class="form-label fw-bold small text-muted">PERÍODO DE LICENCIAMENTO</label>
-                  <select id="period" class="form-select form-select-lg border-0 bg-light">
-                    <option value="1">Anual (12 Meses)</option>
-                    <option value="1.85">Bienal (24 Meses)</option>
-                    <option value="2.6">Trienal (36 Meses)</option>
-                  </select>
+                <div class="p-3 border rounded shadow-sm">
+                  <label class="form-label fw-bold small text-muted">DISPOSITIVOS MÓVEIS (MOBILE)</label>
+                  <input type="number" id="kaspMobile" class="form-control border-0 bg-light" value="0" min="0" onchange="calcularKaspersky()">
                 </div>
               </div>
+
             </div>
 
             <div class="d-grid">
-              <button id="btnCalcular" class="btn btn-danger btn-lg fw-bold py-3 shadow">
-                RECALCULAR INVESTIMENTO ESTIMADO
+              <button id="btnCalcularKaspersky" class="btn btn-success btn-lg fw-bold py-3 shadow" style="background-color: #006d5d; border: none;">
+                RECALCULAR INVESTIMENTO KASPERSKY
               </button>
             </div>
 
-            <div id="resultArea" class="mt-5 pt-5 border-top" style="display:none;">
+            <div id="kaspResultArea" class="mt-5 pt-5 border-top" style="display:none;">
               <div class="row g-5">
-                <div class="col-md-6">
-                  <h5 class="fw-bold mb-4">ESPECIFICAÇÕES TÉCNICAS:</h5>
-                  <div id="techDetails"></div>
+                <div class="col-md-7">
+                  <h5 class="fw-bold mb-4" style="color: #006d5d">RESUMO DETALHADO DA PROTEÇÃO:</h5>
+                  <div id="kaspTechDetails" class="p-3 bg-white border rounded shadow-sm">
+                    </div>
                 </div>
                 
-                <div class="col-md-6 text-center">
-                  <div class="result-box p-4 border-danger shadow-sm">
-                    <span class="text-muted small fw-bold">VALOR TOTAL ESTIMADO</span>
-                    <div class="h1 fw-bolder text-danger mb-0" id="totalValue">R$ 0,00</div>
-                    <div class="text-muted mb-4" id="monthlyRef"></div>
+                <div class="col-md-5 text-center">
+                  <div class="p-4 border border-2 rounded-4 shadow-sm" style="border-color: #006d5d !important;">
+                    <span class="text-muted small fw-bold">INVESTIMENTO ANUAL ESTIMADO</span>
+                    <div class="h1 fw-bolder mb-0" style="color: #006d5d" id="kaspTotalValue">R$ 0,00</div>
+                    <div class="text-muted mb-4 small" id="kaspSetupRef"></div>
                     
                     <div class="text-start bg-light p-3 rounded">
-                        <label class="fw-bold small mb-2">IDENTIFICAÇÃO:</label>
-                        <input type="text" id="companyName" class="form-control mb-2" placeholder="Nome da Empresa" required>
-                        <input type="email" id="clientEmail" class="form-control mb-3" placeholder="Seu E-mail Corporativo" required>
-                        
-                        <button id="sendQuote" class="btn btn-dark w-100 fw-bold py-2">
-                          ENVIAR COTAÇÃO OFICIAL <i class="fas fa-external-link-alt ms-2"></i>
-                        </button>
+                        <input type="text" id="kaspCompany" class="form-control mb-2" placeholder="Empresa">
+                        <input type="email" id="kaspEmail" class="form-control mb-3" placeholder="E-mail Corporativo">
+                        <button id="sendKaspQuote" class="btn btn-dark w-100 fw-bold">SOLICITAR COTAÇÃO OFICIAL</button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-
-
 
   <!-- ======= FOOTER ======= -->
   <footer id="footer" class="footer">
@@ -277,57 +281,139 @@
 
 
 <script>
- let dadosCotacao = {};
+ let dadosKasp = {}; // Objeto global para armazenar os dados do cálculo
 
-function calcular() {
-    const qtd = parseInt(document.getElementById('qtdEndpoints').value);
-    const edr = document.getElementById('edrLevel');
-    const sup = document.getElementById('supportLevel');
-    const per = document.getElementById('period');
+function calcularKaspersky() {
+    // 1. Captura de Elementos
+    const endpoints = parseInt(document.getElementById('kaspEndpoints').value) || 0;
+    const mobile = parseInt(document.getElementById('kaspMobile').value) || 0;
     
-    const basePrice = 195.00;
-    const total = (qtd * basePrice * parseFloat(edr.value) * parseFloat(per.value)) + parseFloat(sup.value);
-    const totalStr = total.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+    const tierRadio = document.querySelector('input[name="kaspTier"]:checked');
+    const tier = tierRadio ? tierRadio.value : 'pme';
     
-    dadosCotacao = {
-        total: totalStr,
-        plano: edr.options[edr.selectedIndex].dataset.tier,
-        dispositivos: qtd,
-        suporte: sup.options[sup.selectedIndex].dataset.name,
-        periodo: per.options[per.selectedIndex].text
-    };
+    const mgmtRadio = document.querySelector('input[name="kaspMgmt"]:checked');
+    const hasMgmt = mgmtRadio ? mgmtRadio.value : 'no';
 
-    document.getElementById('techDetails').innerHTML = `
-        <div class="feature-item"><i class="fas fa-shield-alt"></i> Licenciamento <strong>Kaspersky Next ${dadosCotacao.plano}</strong></div>
-        <div class="feature-item"><i class="fas fa-check"></i> Proteção para <strong>${qtd}</strong> dispositivos</div>
-        <div class="feature-item"><i class="fas fa-headset"></i> Suporte Especializado <strong>${dadosCotacao.suporte}</strong></div>
-        <div class="feature-item"><i class="fas fa-calendar-alt"></i> Vigência do Contrato: <strong>${dadosCotacao.periodo}</strong></div>
-        <div class="feature-item"><i class="fas fa-cloud"></i> Console Cloud Native de alta performance</div>
-    `;
+    // 2. Definição de Valores Unitários (Estimativa Anual em BRL)
+    let vUnitAnual = 98.00; // Base PME
+    let labelTier = "Small Office Security (PME)";
+    let setupBase = 450;
 
-    document.getElementById('totalValue').innerText = totalStr;
-    const meses = parseFloat(per.value) >= 2.6 ? 36 : (parseFloat(per.value) >= 1.85 ? 24 : 12);
-    document.getElementById('monthlyRef').innerText = `Projeção mensal: ${(total / meses).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}`;
-    
-    document.getElementById('resultArea').style.display = 'block';
-}
-
-document.getElementById('btnCalcular').addEventListener('click', calcular);
-
-document.getElementById('sendQuote').addEventListener('click', function() {
-    const empresa = document.getElementById('companyName').value;
-    const email = document.getElementById('clientEmail').value;
-
-    if(!empresa || !email.includes('@')) {
-        alert('Por favor, preencha o nome da empresa e um e-mail válido.');
-        return;
+    if (tier === "advanced") {
+        vUnitAnual = 195.00;
+        labelTier = "Next Endpoint Security Advanced";
+        setupBase = 900;
+    } else if (tier === "edr") {
+        vUnitAnual = 295.00;
+        labelTier = "Next EDR Optimum + Foundation";
+        setupBase = 1800;
     }
 
-    const destinatario = "contato@glctech.com.br";
-    const assunto = `SOLICITAÇÃO DE PROPOSTA: ${empresa}`;
+    // 3. Gestão GLCTech
+    let vUnitMgmt = 0;
+    let labelMgmt = "Apenas Licenciamento";
+    if (hasMgmt === "yes") {
+        vUnitMgmt = 85.00; 
+        labelMgmt = "Licença + Gestão Proativa (NOC)";
+    }
+
+    // 4. Cálculos de Totais
+    const vUnitMobile = vUnitAnual * 0.65; 
+    const totalEndpoints = endpoints * (vUnitAnual + vUnitMgmt);
+    const totalMobile = mobile * (vUnitMobile + (vUnitMgmt * 0.5));
     
-    // CORPO DO EMAIL COM FORMATAÇÃO VISUAL EM TEXTO (PROFISSIONAL)
-    const corpo = 
+    const investimentoTotal = totalEndpoints + totalMobile;
+    const setupTotal = setupBase + (endpoints * 15);
+
+    const formatar = (v) => v.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+
+    // Alimenta o objeto global para ser usado no e-mail
+    dadosKasp = {
+        total: formatar(investimentoTotal),
+        setup: formatar(setupTotal),
+        plano: labelTier,
+        suporte: labelMgmt,
+        dispositivos: endpoints,
+        mobile: mobile,
+        periodo: "Anual (12 meses)"
+    };
+
+    // 5. Atualização do Resumo Detalhado (Tabela)
+    const techDetails = document.getElementById('kaspTechDetails');
+    if (techDetails) {
+        techDetails.innerHTML = `
+            <div class="mb-3">
+                <h6 class="fw-bold border-bottom pb-1" style="color: #006d5d">DETALHAMENTO DA SOLUÇÃO</h6>
+                <small class="d-block"><strong>Produto:</strong> Kaspersky ${labelTier}</small>
+                <small class="d-block"><strong>Serviço:</strong> ${labelMgmt}</small>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-sm table-borderless small align-middle">
+                    <thead class="border-bottom">
+                        <tr class="text-muted">
+                            <th>Item</th>
+                            <th>Qtd</th>
+                            <th>Unit./Ano</th>
+                            <th class="text-end">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Licença + Gestão Endpoints</td>
+                            <td>${endpoints}</td>
+                            <td>${formatar(vUnitAnual + vUnitMgmt)}</td>
+                            <td class="text-end">${formatar(totalEndpoints)}</td>
+                        </tr>
+                        ${mobile > 0 ? `
+                        <tr>
+                            <td>Licença + Gestão Mobile</td>
+                            <td>${mobile}</td>
+                            <td>${formatar(vUnitMobile + (vUnitMgmt * 0.5))}</td>
+                            <td class="text-end">${formatar(totalMobile)}</td>
+                        </tr>` : ''}
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-muted mt-2" style="font-size: 0.7rem;">* Estimativa para contrato anual. Inclui suporte técnico GLCTech conforme nível de gestão.</p>
+        `;
+    }
+
+    document.getElementById('kaspTotalValue').innerText = dadosKasp.total;
+    document.getElementById('kaspSetupRef').innerText = `Setup de Implementação: ${dadosKasp.setup}`;
+    document.getElementById('kaspResultArea').style.display = 'block';
+}
+
+// Inicialização de Eventos
+document.addEventListener("DOMContentLoaded", () => {
+    // Primeiro cálculo automático ao carregar
+    calcularKaspersky();
+
+    const btnCalc = document.getElementById('btnCalcularKaspersky');
+    if (btnCalc) {
+        btnCalc.addEventListener('click', (e) => {
+            e.preventDefault();
+            calcularKaspersky();
+        });
+    }
+
+    // Envio de E-mail Profissional
+    const btnMail = document.getElementById('sendKaspQuote');
+    if (btnMail) {
+        btnMail.addEventListener('click', function() {
+            const empresa = document.getElementById('kaspCompany').value;
+            const email = document.getElementById('kaspEmail').value;
+
+            if(!empresa || !email.includes('@')) {
+                alert('Por favor, preencha o nome da empresa e um e-mail válido.');
+                return;
+            }
+
+            const destinatario = "contato@glctech.com.br";
+            const assunto = `SOLICITAÇÃO DE PROPOSTA KASPERSKY: ${empresa.toUpperCase()}`;
+            
+            // CORPO DO EMAIL FORMATADO
+            const corpo = 
 `Prezada Equipe GLCTech,
 
 Uma nova simulação de licenciamento foi realizada através do portal. 
@@ -342,12 +428,13 @@ CONTATO: ${email}
 ==================================================
         CONFIGURAÇÃO DA SOLUÇÃO
 ==================================================
-SOLUÇÃO: Kaspersky Next ${dadosCotacao.plano}
-QUANTIDADE: ${dadosCotacao.dispositivos} Dispositivos
-PERÍODO: ${dadosCotacao.periodo}
-SUPORTE: ${dadosCotacao.suporte}
+SOLUÇÃO: Kaspersky ${dadosKasp.plano}
+QUANTIDADE: ${dadosKasp.dispositivos} Endpoints / ${dadosKasp.mobile} Mobile
+PERÍODO: ${dadosKasp.periodo}
+SUPORTE: ${dadosKasp.suporte}
 --------------------------------------------------
-INVESTIMENTO ESTIMADO: ${dadosCotacao.total}
+INVESTIMENTO ESTIMADO: ${dadosKasp.total}
+SETUP DE IMPLANTAÇÃO: ${dadosKasp.setup}
 ==================================================
 
 Favor entrar em contato com o cliente para validar o cenário técnico.
@@ -355,13 +442,11 @@ Favor entrar em contato com o cliente para validar o cenário técnico.
 Atenciosamente,
 Sistema de Cotação Online - GLCTech`;
 
-    // ABRE EM NOVA JANELA
-    const mailtoUrl = `mailto:${destinatario}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
-    window.open(mailtoUrl, '_blank');
+            const mailtoUrl = `mailto:${destinatario}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
+            window.open(mailtoUrl, '_blank');
+        });
+    }
 });
-
-// Inicializa o primeiro cálculo
-calcular();
 
 
 </script>
