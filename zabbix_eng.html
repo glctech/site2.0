@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-7VH0J5XFYK"></script>
@@ -13,13 +13,15 @@
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GLCTech | IT Monitoring & Security</title>
+  <title>GLCTech | IT Monitoring and Security</title>
   <meta name="description" content="IT monitoring, backup, and security with GLCTech, Zabbix, and Veeam solutions.">
   <link rel="icon" href="./assets/logo/favicon.png" type="image/png" />
 
   <link rel="stylesheet" href="./css/main.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
   <script defer src="./scripts/script.js"></script>
 </head>
@@ -29,7 +31,7 @@
     <div class="header-container container d-flex justify-content-between align-items-center">
       
       <div class="logo">
-        <a href="#inicio" aria-label="GLCTech Homepage">
+        <a href="#inicio" aria-label="GLCTech home page">
           <img src="./assets/logo/logo.png" alt="GLCTech Logo" />
         </a>
       </div>
@@ -38,49 +40,65 @@
         <span></span><span></span><span></span>
       </button>
 
-      <nav class="nav" role="navigation">
-        <ul class="nav-list">
-          <li><a href="./index_eng.html" class="active">Home</a></li>
-          <li><a href="./index_eng.html#about">About</a></li>
-          <li><a href="./index_eng.html#services">Services</a></li>
-          <li><a href="./index_eng.html#contact">Contact</a></li>
-        </ul>
-      </nav>
+        <nav class="nav">
+      <ul>
+        <li><a href="./index_eng.html">Home</a></li>
+        <li><a href="./index.html/#about">About</a></li>
+        <li><a href="./index.html/#team" hidden>Our Team</a></li>
+        <li><a href="./index_eng.html/#services">Services</a></li>
+        <li><a href="https://ty0ci.share.hsforms.com/2dDZ5-CdFTKektziqcbgsTQ" target="_blank">Work With Us</a></li>
+        <li><a href="./index_eng.html/#contact">Contact</a></li>
+      </ul>
+    </nav>
+    
+    <div class="dropdown me-3">
+      <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+        <i class="fas fa-globe"></i> EN
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="./index.html" data-lang="pt-BR">Português (PT-BR)</a></li>
+        <li><a class="dropdown-item active" href="./index_eng.html" data-lang="en-US">English (EN-US)</a></li>
+      </ul>
     </div>
+    </div>
+
+
   </header>
 
  <section id="zabbix" class="zabbix-section py-5">
   <div class="container">
     <div class="row align-items-center g-5">
-      <div class="col-lg-6">
+      <div class="col-lg-6" data-aos="fade-right">
         <img src="./assets/hero/zabbix_fk.png" alt="GLCTech Zabbix Monitoring Dashboard" class="img-fluid rounded-3 shadow-sm">
       </div>
 
-      <div class="col-lg-6 text-start">
-        <div class="label text-uppercase mb-2">Enterprise Monitoring</div>
+      <div class="col-lg-6 text-start" data-aos="fade-left">
+        <div class="label text-uppercase mb-2">Corporate Monitoring</div>
         <h2 class="section-title mb-3">Monitoring with <span>Zabbix</span></h2>
 
         <p class="mb-3">
-          <strong>Zabbix</strong> is the heart of <strong>GLCTech's</strong> monitoring solutions.
-          It provides your company with full visibility into IT infrastructure, detecting failures in real-time and acting proactively to prevent business impacts.
+          Zabbix is the heart of GLCTech monitoring solutions.
+          With it, your company gains complete visibility into your IT infrastructure, detecting failures in real-time and acting proactively to prevent business impacts.
         </p>
 
         <ul class="zabbix-list">
-          <li><i class="fa-solid fa-chart-line"></i> Dynamic dashboards and custom KPIs.</li>
+          <li><i class="fa-solid fa-chart-line"></i> Dynamic dashboards and customized indicators.</li>
           <li><i class="fa-solid fa-bell"></i> Smart alerts with email and WhatsApp notifications.</li>
-          <li><i class="fa-solid fa-gears"></i> Task automation and external system integrations.</li>
+          <li><i class="fa-solid fa-gears"></i> Task automation and integrations with external systems.</li>
           <li><i class="fa-solid fa-cloud"></i> Cloud and on-premise monitoring with security and scalability.</li>
         </ul>
 
         <p class="mt-3">
-          Our team of <strong>Zabbix 7.2</strong> experts develops custom templates, triggers, and dashboards, enabling your IT team to act with speed and precision.
+          Our **Zabbix 7.2** specialist team develops tailored templates, triggers, and dashboards, allowing your IT team to act quickly and accurately.
         </p>
+
+        <a href="./index.html#contact" class="btn btn-danger mt-3 px-4">Request Demo</a>
       </div>
     </div>
 
-    <div class="zabbix-plans mt-5 text-center" hidden>
+    <div class="zabbix-plans mt-5 text-center">
       <h3 class="fw-bold mb-3">Choose the Ideal Plan for Your Company</h3>
-      <p class="text-muted mb-5">Flexible and scalable solutions that grow with your business.</p>
+      <p class="text-muted mb-5">Flexible and scalable solutions that keep pace with your business growth.</p>
 
       <div class="row g-4 justify-content-center">
         <div class="col-md-4">
@@ -90,16 +108,17 @@
               <small>For small operations</small>
             </div>
             <div class="card-body bg-light text-dark">
-              <h3 class="fw-bold text-danger mb-3">$ 85<span class="fs-6">/mo</span></h3>
-              <ul class="list-unstyled mb-4 text-start">
-                <li><i class="fa-solid fa-check text-danger me-2"></i> Up to 30 hosts</li>
+              <h3 class="fw-bold text-danger mb-3">$ 90<span class="fs-6">/month</span></h3>
+              <ul class="list-unstyled mb-4">
+                <li><i class="fa-solid fa-check text-danger me-2"></i> Monitoring up to 30 hosts</li>
                 <li><i class="fa-solid fa-check text-danger me-2"></i> Basic Grafana dashboards</li>
                 <li><i class="fa-solid fa-check text-danger me-2"></i> Email alerts</li>
                 <li><i class="fa-solid fa-xmark text-secondary me-2"></i> No 24/7 support</li>
               </ul>
-              <a href="https://wa.me/5511911517501" target="_blank" class="btn btn-success w-100">
-                <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
-              </a>
+              <a href="https://wa.me/5511911517501?text=Hello!%20I'm%20interested%20in%20the%20Essential%20Monitoring%20Plan%20from%20GLCTech." 
+             target="_blank" class="btn btn-success w-100">
+            <i class="fa-brands fa-whatsapp"></i> Talk on WhatsApp
+          </a>
             </div>
           </div>
         </div>
@@ -108,19 +127,20 @@
           <div class="card h-100 shadow-lg border-2 border-danger rounded-3 overflow-hidden">
             <div class="card-header bg-dark text-white py-3">
               <h5 class="mb-0 fw-bold">Advanced Plan</h5>
-              <small>The perfect balance for medium businesses</small>
+              <small>The perfect balance for medium-sized companies</small>
             </div>
             <div class="card-body bg-light text-dark">
-              <h3 class="fw-bold text-danger mb-3">$ 220<span class="fs-6">/mo</span></h3>
-              <ul class="list-unstyled mb-4 text-start">
-                <li><i class="fa-solid fa-check text-danger me-2"></i> Up to 100 hosts</li>
+              <h3 class="fw-bold text-danger mb-3">$ 250<span class="fs-6">/month</span></h3>
+              <ul class="list-unstyled mb-4">
+                <li><i class="fa-solid fa-check text-danger me-2"></i> Monitoring up to 100 hosts</li>
                 <li><i class="fa-solid fa-check text-danger me-2"></i> Customized dashboards</li>
                 <li><i class="fa-solid fa-check text-danger me-2"></i> Telegram and email alerts</li>
-                <li><i class="fa-solid fa-check text-danger me-2"></i> Extended business hours support</li>
+                <li><i class="fa-solid fa-check text-danger me-2"></i> Extended hours commercial support</li>
               </ul>
-              <a href="https://wa.me/5511911517501" target="_blank" class="btn btn-success w-100">
-                <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
-              </a>
+              <a href="https://wa.me/5511911517501?text=Hello!%20I'm%20interested%20in%20the%20Advanced%20Monitoring%20Plan%20from%20GLCTech." 
+             target="_blank" class="btn btn-success w-100">
+            <i class="fa-brands fa-whatsapp"></i> Talk on WhatsApp
+          </a>
             </div>
           </div>
         </div>
@@ -132,16 +152,17 @@
               <small>Corporate monitoring and full automation</small>
             </div>
             <div class="card-body bg-light text-dark">
-              <h3 class="fw-bold text-danger mb-3">Custom Quote</h3>
-              <ul class="list-unstyled mb-4 text-start">
-                <li><i class="fa-solid fa-check text-danger me-2"></i> Unlimited hosts and custom SLA</li>
+              <h3 class="fw-bold text-danger mb-3">By consultation</h3>
+              <ul class="list-unstyled mb-4">
+                <li><i class="fa-solid fa-check text-danger me-2"></i> Unlimited hosts and customized SLA</li>
                 <li><i class="fa-solid fa-check text-danger me-2"></i> Predictive triggers and automation</li>
-                <li><i class="fa-solid fa-check text-danger me-2"></i> API and script integration</li>
+                <li><i class="fa-solid fa-check text-danger me-2"></i> Integration with APIs and scripts</li>
                 <li><i class="fa-solid fa-check text-danger me-2"></i> 24/7 support with dedicated NOC</li>
               </ul>
-              <a href="https://wa.me/5511911517501" target="_blank" class="btn btn-success w-100">
-                <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
-              </a>
+              <a href="https://wa.me/5511911517501?text=Hello!%20I'm%20interested%20in%20the%20Enterprise%20Monitoring%20Plan%20from%20GLCTech." 
+             target="_blank" class="btn btn-success w-100">
+            <i class="fa-brands fa-whatsapp"></i> Talk on WhatsApp
+          </a>
             </div>
           </div>
         </div>
@@ -150,322 +171,94 @@
   </div>
 </section>
 
-<section class="py-5" id="zabbix-calculator">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
-          <div class="p-4 text-white text-center" style="background: #212529; border-bottom: 4px solid #dc3545;">
-            <h3 class="fw-bold mb-1">Zabbix Monitoring Simulator</h3>
-            <p class="small text-uppercase tracking-widest opacity-75">GLCTech - Infrastructure Observability</p>
-          </div>
-
-          <div class="p-4 p-md-5 bg-white">
-            <div class="row g-4 mb-4">
-              <div class="col-md-12">
-                <div class="p-3 border rounded shadow-sm bg-light">
-                  <label class="form-label fw-bold small text-muted">INFRASTRUCTURE MODEL</label>
-                  <select id="zabInfraType" class="form-select form-select-lg border-0 bg-white" onchange="calcularZabbix()">
-                    <option value="onprem" selected>On-Premises (Local / Datacenter)</option>
-                    <option value="cloud">Cloud / VMs (AWS, Azure, GCP)</option>
-                    <option value="hybrid">Hybrid (Local + Cloud)</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="p-3 border rounded shadow-sm">
-                  <label class="form-label fw-bold small text-muted">SERVERS / VMs</label>
-                  <input type="number" id="zabHosts" class="form-control border-0 bg-light" value="5" min="0" onchange="calcularZabbix()">
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="p-3 border rounded shadow-sm">
-                  <label class="form-label fw-bold small text-muted">NETWORK (SW/RT/AP)</label>
-                  <input type="number" id="zabNetwork" class="form-control border-0 bg-light" value="2" min="0" onchange="calcularZabbix()">
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="p-3 border rounded shadow-sm">
-                  <label class="form-label fw-bold small text-muted">LINKS / INTERFACES</label>
-                  <input type="number" id="zabLinks" class="form-control border-0 bg-light" value="2" min="0" onchange="calcularZabbix()">
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="p-3 border rounded shadow-sm bg-light">
-                  <label class="form-label fw-bold small text-muted">NUMBER OF BRANCHES / SITES</label>
-                  <input type="number" id="zabSites" class="form-control border-0 bg-white" value="1" min="1" onchange="calcularZabbix()">
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="p-3 border rounded shadow-sm bg-light">
-                  <label class="form-label fw-bold small text-muted">ZABBIX PROXY PER SITE</label>
-                  <input type="number" id="zabProxiesPerSite" class="form-control border-0 bg-white" value="1" min="0" onchange="calcularZabbix()">
-                </div>
-              </div>
-
-              <div class="col-md-12">
-                <div class="p-3 border rounded shadow-sm bg-light text-center">
-                  <label class="form-label fw-bold small text-muted d-block mb-3 text-uppercase">Installation Architecture</label>
-                  <div class="btn-group w-100" role="group">
-                    <input type="radio" class="btn-check" name="archOption" id="archAio" value="aio" checked onchange="calcularZabbix()">
-                    <label class="btn btn-outline-danger" for="archAio">All-in-One</label>
-
-                    <input type="radio" class="btn-check" name="archOption" id="arch2in1" value="2in1" onchange="calcularZabbix()">
-                    <label class="btn btn-outline-danger" for="arch2in1">2 in 1 (App+DB)</label>
-
-                    <input type="radio" class="btn-check" name="archOption" id="archHa" value="ha" onchange="calcularZabbix()">
-                    <label class="btn btn-outline-danger" for="archHa">HA (High Availability)</label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-12 text-center">
-                <div class="p-3 border rounded shadow-sm bg-light">
-                  <label class="form-label fw-bold small text-muted d-block mb-3 text-uppercase">Visualization / Dashboards</label>
-                  <div class="btn-group w-100" role="group">
-                    <input type="radio" class="btn-check" name="grafanaOption" id="grafanaNo" value="no" checked onchange="calcularZabbix()">
-                    <label class="btn btn-outline-dark" for="grafanaNo">Zabbix Standard</label>
-
-                    <input type="radio" class="btn-check" name="grafanaOption" id="grafanaYes" value="yes" onchange="calcularZabbix()">
-                    <label class="btn btn-outline-dark" for="grafanaYes">Include Grafana</label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-12">
-                <div class="p-3 border rounded shadow-sm">
-                  <label class="form-label fw-bold small text-muted">MANAGEMENT & SUPPORT LEVEL</label>
-                  <select id="zabLevel" class="form-select border-0 bg-light" onchange="calcularZabbix()">
-                    <option value="1.0" data-tier="Essentials">Base Monitoring (Alerts)</option>
-                    <option value="1.4" data-tier="Proactive" selected>Proactive Management (NOC 8x5)</option>
-                    <option value="2.0" data-tier="Critical">Mission Critical (NOC 24x7)</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div class="d-grid">
-              <button id="btnCalcularZabbix" onclick="calcularZabbix()" class="btn btn-danger btn-lg fw-bold py-3 shadow">RECALCULATE INVESTMENT</button>
-            </div>
-
-            <div id="zabbixResultArea" class="mt-5 pt-5 border-top" style="display:none;">
-              <div class="row g-5">
-                <div class="col-md-7">
-                  <h5 class="fw-bold mb-4">DETAILED PROPOSAL SUMMARY:</h5>
-                  <div id="zabbixTechDetails" class="p-3 bg-white border rounded shadow-sm"></div>
-                </div>
-                <div class="col-md-5 text-center">
-                  <div class="p-4 border border-2 rounded-4 shadow-sm" style="border-color: #dc3545 !important;">
-                    <span class="text-muted small fw-bold">ESTIMATED MONTHLY RECURRENCE</span>
-                    <div class="h1 fw-bolder text-danger mb-0" id="zabTotalValue">$ 0.00</div>
-                    <div class="text-muted mb-4 small" id="zabSetupRef"></div>
-                    <div class="text-start bg-light p-3 rounded">
-                        <input type="text" id="zabCompany" class="form-control mb-2" placeholder="Company Name">
-                        <input type="email" id="zabEmail" class="form-control mb-3" placeholder="Corporate Email">
-                        <button id="sendZabbixQuote" class="btn btn-dark w-100 fw-bold">SEND FORMAL PROPOSAL</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer id="footer" class="footer py-5 bg-dark text-white">
+   <footer id="footer" class="footer">
   <div class="container footer-top">
     <div class="row">
+      
       <div class="col-lg-4 col-md-6 footer-info">
         <h4>GLCTech Technology</h4>
-        <p><strong>Contact:</strong> +55 11 91151-7501<br>
-        <strong>Email:</strong> contato@glctech.com.br</p>
+        <p>**Contact:** +55 11 95762-4146<br>
+        **Email:** contato@glctech.com.br</p>
       </div>
+
       <div class="col-lg-4 col-md-6 footer-links">
-        <h4>Quick Links</h4>
-        <ul class="list-unstyled">
-          <li><a href="./index_eng.html#home" class="text-white text-decoration-none">Home</a></li>
-          <li><a href="./index_eng.html#about" class="text-white text-decoration-none">About</a></li>
-          <li><a href="politica.html" class="text-white text-decoration-none">Privacy Policy</a></li>
+        <h4>Useful Links</h4>
+        <ul>
+          <li><a href="./index_eng.html">Home</a></li>
+          <li><a href="./index.html/#about">About</a></li>
+          <li><a href="./index.html/#team" hidden>Our Team</a></li>
+          <li><a href="./index_eng.html/#services">Services</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="politica_eng.html" target="_blank">Privacy Policy</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="termos_eng.html" target="_blank">Terms of Use</a></li>
         </ul>
       </div>
+
       <div class="col-lg-4 col-md-6 footer-social">
-          <h4>Social Media</h4>
-          <p>Follow GLCTech!</p>
-          <div class="social-links mt-3">
+        <h4>Social Media</h4>
+        <p>Follow GLCTech!</p>
+        <div class="social-links mt-3">
           <a href="https://web.facebook.com/profile.php?viewas=100000686899395&id=61577370040413" class="facebook" target="_blank"><i class="fa-brands fa-facebook"></i></a>
           <a href="https://www.instagram.com/glctechnologia" class="instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
           <a href="https://www.linkedin.com/company/glctechtecnologia/?viewAsMember=true" class="linkedin" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
         </div>
-        </div>
       </div>
+
     </div>
   </div>
-  <div class="container text-center mt-4 border-top pt-3">
-    <p>© 2025 Copyright <strong>GLCTech Tecnologia</strong>. All Rights Reserved.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <p>© 2015 Copyright **GLCTech Tecnologia** All Rights Reserved</p>
   </div>
 </footer>
 
-<script>
-let dadosZabbix = {};
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const menuToggle = document.querySelector(".menu-toggle");
+      const nav = document.querySelector(".nav");
+      const navLinks = document.querySelectorAll(".nav a");
 
-function calcularZabbix() {
-    const infraType = document.getElementById('zabInfraType').value;
-    const hosts = parseInt(document.getElementById('zabHosts').value) || 0;
-    const network = parseInt(document.getElementById('zabNetwork').value) || 0;
-    const links = parseInt(document.getElementById('zabLinks').value) || 0;
-    const sites = parseInt(document.getElementById('zabSites').value) || 1;
-    const proxiesPerSite = parseInt(document.getElementById('zabProxiesPerSite').value) || 0;
-    const totalProxies = sites * proxiesPerSite;
+      if (menuToggle && nav) {
+        // Toggle menu
+        menuToggle.addEventListener("click", () => {
+          const isActive = nav.classList.toggle("active");
+          menuToggle.classList.toggle("active", isActive);
+          menuToggle.setAttribute("aria-expanded", isActive);
+        });
 
-    const nivel = document.getElementById('zabLevel');
-    const archRadio = document.querySelector('input[name="archOption"]:checked');
-    const archType = archRadio ? archRadio.value : 'aio';
-    const hasGrafana = document.querySelector('input[name="grafanaOption"]:checked')?.value || 'no';
+        // Close menu when clicking a link
+        navLinks.forEach(link => {
+          link.addEventListener("click", () => {
+            nav.classList.remove("active");
+            menuToggle.classList.remove("active");
+            menuToggle.setAttribute("aria-expanded", "false");
+          });
+        });
+      }
 
-    // 1. USD Pricing Definitions
-    let multiplicadorInfra = 1.0;
-    let labelInfra = "On-Premises";
-    if (infraType === "cloud") {
-        multiplicadorInfra = 1.25; 
-        labelInfra = "Cloud / VMs (AWS/Azure/GCP)";
-    } else if (infraType === "hybrid") {
-        multiplicadorInfra = 1.40;
-        labelInfra = "Hybrid (Local + Cloud)";
-    }
+      // ======= ACTIVATE MENU LINK ON SCROLL =======
+      const sections = document.querySelectorAll("section[id]");
 
-    const vUnitHost = 8.00 * multiplicadorInfra;
-    const vUnitNet = 6.50 * multiplicadorInfra;
-    const vUnitLink = 3.00;
-    const vUnitProxy = 15.00; 
+      function activateMenuOnScroll() {
+        const scrollY = window.pageYOffset;
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop - 120;
+          const sectionHeight = section.offsetHeight;
+          const sectionId = section.getAttribute("id");
+          const currentLink = document.querySelector(`.nav a[href="#${sectionId}"]`);
 
-    // 2. Architecture Logic
-    let labelArch = "All-in-One";
-    let qtdServidoresArch = 1;
-    let vUnitArch = 0; 
-    let custoSetupArch = 0;
+          if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+            navLinks.forEach(link => link.classList.remove("active"));
+            if (currentLink) currentLink.classList.add("active");
+          }
+        });
+      }
 
-    if (archType === "aio") {
-        labelArch = "All-in-One (Single Server)";
-        qtdServidoresArch = 1;
-        vUnitArch = 10.00;
-        custoSetupArch = 0;
-    } else if (archType === "2in1") {
-        labelArch = "2-in-1 (App + DB)";
-        qtdServidoresArch = 2;
-        vUnitArch = 25.00;
-        custoSetupArch = 150;
-    } else if (archType === "ha") {
-        labelArch = "High Availability (HA)";
-        qtdServidoresArch = 3;
-        vUnitArch = 50.00;
-        custoSetupArch = 500;
-    }
-
-    // 3. Totals Calculation
-    const fatorGestao = parseFloat(nivel.value);
-    
-    const totalHosts = (hosts * vUnitHost) * fatorGestao;
-    const totalNet = (network * vUnitNet) * fatorGestao;
-    const totalLinks = (links * vUnitLink) * fatorGestao;
-    const totalArch = (qtdServidoresArch * vUnitArch) * fatorGestao;
-    const totalProxiesValor = (totalProxies * vUnitProxy) * fatorGestao;
-
-    const totalMensal = totalHosts + totalNet + totalLinks + totalArch + totalProxiesValor + (hasGrafana === "yes" ? 30 : 0);
-    const setupTotal = 250 + custoSetupArch + (totalProxies * 60) + (hasGrafana === "yes" ? 100 : 0);
-
-    const formatar = (v) => v.toLocaleString('en-US', {style: 'currency', currency: 'USD'});
-
-    dadosZabbix = {
-        total: formatar(totalMensal),
-        setup: formatar(setupTotal),
-        infra: labelInfra,
-        arquitetura: labelArch,
-        nivel: nivel.options[nivel.selectedIndex].dataset.tier,
-        descNivel: nivel.options[nivel.selectedIndex].text,
-        grafana: hasGrafana === "yes" ? "Yes" : "No",
-        detalhes: `Sites: ${sites} | Total Proxies: ${totalProxies}`
-    };
-
-    // 4. Detailed Summary Table
-    document.getElementById('zabbixTechDetails').innerHTML = `
-        <div class="mb-3">
-            <h6 class="fw-bold text-danger border-bottom pb-1">SOLUTION COMPOSITION</h6>
-            <small class="d-block"><strong>Scenario:</strong> ${labelInfra}</small>
-            <small class="d-block"><strong>Support:</strong> ${dadosZabbix.descNivel}</small>
-            <small class="d-block"><strong>Locations:</strong> ${sites} site(s) with ${totalProxies} Proxies</small>
-        </div>
-
-        <div class="table-responsive">
-            <table class="table table-sm table-borderless small align-middle">
-                <thead class="border-bottom">
-                    <tr class="text-muted">
-                        <th>Item (Recurrence)</th>
-                        <th>Qty</th>
-                        <th>Unit</th>
-                        <th class="text-end">Subtotal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>Core Server Management</td><td>${qtdServidoresArch}</td><td>${formatar(vUnitArch)}</td><td class="text-end">${formatar(totalArch)}</td></tr>
-                    ${totalProxies > 0 ? `<tr><td>Zabbix Proxy Management</td><td>${totalProxies}</td><td>${formatar(vUnitProxy)}</td><td class="text-end">${formatar(totalProxiesValor)}</td></tr>` : ''}
-                    <tr><td>Server/VM Monitoring</td><td>${hosts}</td><td>${formatar(vUnitHost)}</td><td class="text-end">${formatar(totalHosts)}</td></tr>
-                    <tr><td>Network Device Monitoring</td><td>${network}</td><td>${formatar(vUnitNet)}</td><td class="text-end">${formatar(totalNet)}</td></tr>
-                    <tr><td>Link Monitoring</td><td>${links}</td><td>${formatar(vUnitLink)}</td><td class="text-end">${formatar(totalLinks)}</td></tr>
-                    ${hasGrafana === "yes" ? `<tr><td>Grafana Integration</td><td>1</td><td>$30.00</td><td class="text-end">$30.00</td></tr>` : ''}
-                </tbody>
-            </table>
-        </div>
-        <p class="text-muted mt-2" style="font-size: 0.7rem;">* Monthly values are adjusted based on management levels and infra multipliers.</p>
-    `;
-
-    document.getElementById('zabTotalValue').innerText = dadosZabbix.total;
-    document.getElementById('zabSetupRef').innerText = `Implementation Setup: ${dadosZabbix.setup}`;
-    document.getElementById('zabbixResultArea').style.display = 'block';
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById('btnCalcularZabbix').addEventListener('click', calcularZabbix);
-
-    document.getElementById('sendZabbixQuote').addEventListener('click', function() {
-        const empresa = document.getElementById('zabCompany').value;
-        const email = document.getElementById('zabEmail').value;
-
-        if(!empresa || !email.includes('@')) {
-            alert('Please provide a company name and a valid email.');
-            return;
-        }
-
-        const destinatario = "contato@glctech.com.br";
-        const assunto = `ZABBIX QUOTE: ${empresa.toUpperCase()} - ${dadosZabbix.arquitetura}`;
-        
-        const corpo = `Hello GLCTech Sales Team,
-        
-A new Zabbix monitoring simulation has been generated:
-
-CLIENT DATA:
-- Company: ${empresa.toUpperCase()}
-- Email: ${email}
-
-TECHNICAL SPECS:
-- Infrastructure: ${dadosZabbix.infra}
-- Architecture: ${dadosZabbix.arquitetura}
-- Locations/Proxies: ${dadosZabbix.detalhes}
-- Grafana Integration: ${dadosZabbix.grafana}
-- Support Level: ${dadosZabbix.nivel}
-
-ESTIMATED INVESTMENT:
-SETUP (Implementation): ${dadosZabbix.setup}
-MONTHLY (Management): ${dadosZabbix.total}`;
-
-        window.open(`mailto:${destinatario}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`, '_blank');
+      window.addEventListener("scroll", activateMenuOnScroll);
     });
-});
-</script>
-
+  </script>
 </body>
 </html>

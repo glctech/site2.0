@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
+
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-7VH0J5XFYK"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-7VH0J5XFYK');
-  </script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7VH0J5XFYK');
+</script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GLCTech | IT Monitoring and Security</title>
@@ -17,6 +21,8 @@
   <link rel="stylesheet" href="./css/main.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
   <script defer src="./scripts/script.js"></script>
 </head>
@@ -26,7 +32,7 @@
     <div class="header-container container d-flex justify-content-between align-items-center">
       
       <div class="logo">
-        <a href="#home" aria-label="GLCTech Home Page">
+        <a href="#inicio" aria-label="GLCTech home page">
           <img src="./assets/logo/logo.png" alt="GLCTech Logo" />
         </a>
       </div>
@@ -35,329 +41,94 @@
         <span></span><span></span><span></span>
       </button>
 
-      <nav class="nav" role="navigation">
-        <ul class="nav-list">
-          <li><a href="./index_eng.html#home" class="active">Home</a></li>
-          <li><a href="./index_eng.html#about">About</a></li>
-          <li><a href="./index_eng.html#services">Services</a></li>
-          <li><a href="./index_eng.html#contact">Contact</a></li>
-        </ul>
-      </nav>
+      <nav class="nav">
+      <ul>
+        <li><a href="./index_eng.html">Home</a></li>
+        <li><a href="./index.html/#about">About</a></li>
+        <li><a href="./index.html/#team" hidden>Our Team</a></li>
+        <li><a href="./index_eng.html/#services">Services</a></li>
+        <li><a href="https://ty0ci.share.hsforms.com/2dDZ5-CdFTKektziqcbgsTQ" target="_blank">Work With Us</a></li>
+        <li><a href="./index_eng.html/#contact">Contact</a></li>
+      </ul>
+    </nav>
+    
+    <div class="dropdown me-3">
+      <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+        <i class="fas fa-globe"></i> EN
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="./index.html" data-lang="pt-BR">Português (PT-BR)</a></li>
+        <li><a class="dropdown-item active" href="./index_eng.html" data-lang="en-US">English (EN-US)</a></li>
+      </ul>
     </div>
+    </div>
+
+
+
   </header>
 
-  <main class="main" id="home">
-    <section id="veeam" class="section text-center mt-5 pt-5">
-      <div class="container section-title" data-aos="fade-up">
-        <h2 class="mb-3">Backup for Microsoft 365</h2>
-        <p class="lead">
-          Protect your Exchange, SharePoint, OneDrive, and Teams data with the leading solution from 
-          <span class="description-title fw-bold text-danger">Veeam</span>, in partnership with 
-          <strong>GLCTech Tecnologia</strong>.
-        </p>
-      </div>
-    </section>
+  <main class="main" id="inicio">
+  <section id="veeam" class="section text-center mt-5 pt-5">
+    <div class="container section-title" data-aos="fade-up">
+      <h2 class="mb-3">Backup for Microsoft 365</h2>
+      <p class="lead">
+        Protect your Exchange, SharePoint, OneDrive, and Teams data with the leading solution from 
+        <span class="description-title fw-bold text-danger">Veeam</span>, in partnership with 
+        GLCTech Tecnologia
+      </p>
+    </div>
+  </section>
+</main>
 
-    <div id="sw_frame_div" style="display: none; height: 2000px; width: 100%;">
-      <iframe 
-        id="sw_frame"
-        allow-page-override="true"
-        add-utm-params="true"
-        data-src="https://wcs-backupm365-glctechtecnologia.veeampartnermktg.com/Home-PTBR"
-        style="height: 2000px; width: 100%; border: none;"
-        title="Microsoft 365 Veeam GLCTech Backup Page">
+      <div id="sw_frame_div" style="display: none; height: 2000px; width: 100%;">
+        <iframe 
+        id="sw_frame" 
+        allow-page-override="true" 
+        add-utm-params="true" 
+        data-src="https://wcs-backupm365-glctechtecnologia.veeampartnermktg.com/Home" 
+        style="height: 2000px; width: 100%; border: none;">
       </iframe>
       <script src="https://wcs-backupm365-glctechtecnologia.veeampartnermktg.com/sw/app/CommonUI/JS/setupIframe.js"></script>
     </div>
-
-    <section class="py-5" id="veeam-calculator">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-10">
-            <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
-              
-              <div class="p-4 text-white text-center" style="background: #005f27; border-bottom: 4px solid #54b948;">
-                <h3 class="fw-bold mb-1">Veeam Backup & Replication Simulator</h3>
-                <p class="small text-uppercase tracking-widest opacity-75">Data Protection, Ransomware Recovery, and Continuity</p>
-              </div>
-
-              <div class="p-4 p-md-5 bg-white">
-                <div class="row g-4 mb-4">
-                  
-                  <div class="col-md-12">
-                    <div class="p-3 border rounded shadow-sm bg-light">
-                      <label class="form-label fw-bold small text-muted d-block mb-3 text-uppercase text-center">Solution Edition (VUL)</label>
-                      <div class="btn-group w-100" role="group">
-                        <input type="radio" class="btn-check" name="veeamTier" id="veeamFoundation" value="foundation" checked onchange="calcularVeeam()">
-                        <label class="btn btn-outline-success" for="veeamFoundation">Veeam Data Platform Foundation</label>
-
-                        <input type="radio" class="btn-check" name="veeamTier" id="veeamAdvanced" value="advanced" onchange="calcularVeeam()">
-                        <label class="btn btn-outline-success" for="veeamAdvanced">Veeam Data Platform Advanced</label>
-
-                        <input type="radio" class="btn-check" name="veeamTier" id="veeamPremium" value="premium" onchange="calcularVeeam()">
-                        <label class="btn btn-outline-success" for="veeamPremium">Premium (Cyber Secure)</label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-12">
-                    <div class="p-3 border rounded shadow-sm bg-light">
-                      <label class="form-label fw-bold small text-muted d-block mb-3 text-uppercase text-center">GLCTech Service Level (BaaS)</label>
-                      <div class="btn-group w-100" role="group">
-                        <input type="radio" class="btn-check" name="veeamMgmt" id="vMgmtNo" value="no" onchange="calcularVeeam()">
-                        <label class="btn btn-outline-dark" for="vMgmtNo">License Only</label>
-
-                        <input type="radio" class="btn-check" name="veeamMgmt" id="vMgmtYes" value="yes" checked onchange="calcularVeeam()">
-                        <label class="btn btn-outline-dark" for="vMgmtYes">Management + Job Monitoring</label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <div class="p-3 border rounded shadow-sm">
-                      <label class="form-label fw-bold small text-muted">VMs (VMWARE/HYPER-V)</label>
-                      <input type="number" id="veeamVms" class="form-control border-0 bg-light" value="5" min="0" onchange="calcularVeeam()">
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <div class="p-3 border rounded shadow-sm">
-                      <label class="form-label fw-bold small text-muted">PHYSICAL SERVERS</label>
-                      <input type="number" id="veeamAgents" class="form-control border-0 bg-light" value="1" min="0" onchange="calcularVeeam()">
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <div class="p-3 border rounded shadow-sm">
-                      <label class="form-label fw-bold small text-muted">STORAGE (TB)</label>
-                      <input type="number" id="veeamStorage" class="form-control border-0 bg-light" value="1" min="1" onchange="calcularVeeam()">
-                    </div>
-                  </div>
-
-                </div>
-
-                <div class="d-grid">
-                  <button id="btnCalcularVeeam" class="btn btn-success btn-lg fw-bold py-3 shadow" style="background-color: #005f27; border: none;">
-                    RECALCULATE VEEAM INVESTMENT
-                  </button>
-                </div>
-
-                <div id="veeamResultArea" class="mt-5 pt-5 border-top" style="display:none;">
-                  <div class="row g-5">
-                    <div class="col-md-7">
-                      <h5 class="fw-bold mb-4" style="color: #005f27">DETAILED PROTECTION SUMMARY:</h5>
-                      <div id="veeamTechDetails" class="p-3 bg-white border rounded shadow-sm"></div>
-                    </div>
-                    
-                    <div class="col-md-5 text-center">
-                      <div class="p-4 border border-2 rounded-4 shadow-sm" style="border-color: #005f27 !important;">
-                        <span class="text-muted small fw-bold">ESTIMATED MONTHLY FEE (BaaS)</span>
-                        <div class="h1 fw-bolder mb-0" style="color: #005f27" id="veeamTotalValue">$ 0.00</div>
-                        <div class="text-muted mb-4 small" id="veeamSetupRef"></div>
-                        
-                        <div class="text-start bg-light p-3 rounded">
-                            <input type="text" id="veeamCompany" class="form-control mb-2" placeholder="Company">
-                            <input type="email" id="veeamEmail" class="form-control mb-3" placeholder="Corporate E-mail">
-                            <button id="sendVeeamQuote" class="btn btn-dark w-100 fw-bold">REQUEST VEEAM PROPOSAL</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
   </main>
 
-  <footer id="footer" class="footer">
-    <div class="container footer-top">
-      <div class="row">
-        
-        <div class="col-lg-4 col-md-6 footer-info">
-          <h4>GLCTech Tecnologia</h4>
-          <p><strong>Contact:</strong> +55 11 91151-7501<br>
-          <strong>Email:</strong> contato@glctech.com.br</p>
-        </div>
-
-        <div class="col-lg-4 col-md-6 footer-links">
-          <h4>Useful Links</h4>
-          <ul>
-            <li><i class="bi bi-chevron-right"></i> <a href="./index_eng.html#home">Home</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="./index_eng.html#about">About</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="./index_eng.html#services">Services</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="politica.html">Privacy Policy</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="termos.html">Terms of Use</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-4 col-md-6 footer-social">
-          <h4>Social Media</h4>
-          <p>Follow GLCTech!</p>
-          <div class="social-links mt-3">
-          <a href="https://web.facebook.com/profile.php?viewas=100000686899395&id=61577370040413" class="facebook" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-          <a href="https://www.instagram.com/glctechnologia" class="instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-          <a href="https://www.linkedin.com/company/glctechtecnologia/?viewAsMember=true" class="linkedin" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-        </div>
-        </div>
-
+  assets<footer id="footer" class="footer">
+  <div class="container footer-top">
+    <div class="row">
+      
+      <div class="col-lg-4 col-md-6 footer-info">
+        <h4>GLCTech Technology</h4>
+        <p>**Contact:** +55 11 95762-4146<br>
+        **Email:** contato@glctech.com.br</p>
       </div>
+<div class="col-lg-4 col-md-6 footer-links">
+        <h4>Useful Links</h4>
+        <ul>
+          <li><a href="./index_eng.html">Home</a></li>
+          <li><a href="./index.html/#about">About</a></li>
+          <li><a href="./index.html/#team" hidden>Our Team</a></li>
+          <li><a href="./index_eng.html/#services">Services</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="politica_eng.html" target="_blank">Privacy Policy</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="termos_eng.html" target="_blank">Terms of Use</a></li>
+        </ul>
+      </div>
+
+      <div class="col-lg-4 col-md-6 footer-social">
+        <h4>Social Media</h4>
+        <p>Follow GLCTech!</p>
+        <div class="social-links mt-3">
+          <a href="https://web.facebook.com/profile.php?viewas=100000686899395&id=61577370040413" class="facebook"><i class="fa-brands fa-facebook"></i></a>
+      
+      </div>
+
     </div>
+  </div>
 
-    <div class="container footer-bottom">
-      <p>© 2015 Copyright <strong>GLCTech Tecnologia</strong> All Rights Reserved</p>
-    </div>
-  </footer>
-
-  <script>
-   let dadosVeeam = {};
-
-  function calcularVeeam() {
-      // 1. Elements Capture
-      const vms = parseInt(document.getElementById('veeamVms').value) || 0;
-      const agents = parseInt(document.getElementById('veeamAgents').value) || 0;
-      const storageTB = parseInt(document.getElementById('veeamStorage').value) || 1;
-      
-      const tierRadio = document.querySelector('input[name="veeamTier"]:checked');
-      const tier = tierRadio ? tierRadio.value : 'foundation';
-      
-      const mgmtRadio = document.querySelector('input[name="veeamMgmt"]:checked');
-      const hasMgmt = mgmtRadio ? mgmtRadio.value : 'no';
-
-      // 2. Unit Values (Estimated Monthly per VUL Workload in USD)
-      let vUnitWorkload = 15.00; // Base Foundation (Example conversion)
-      let labelTier = "Veeam Data Platform Foundation";
-      let setupBase = 250;
-
-      if (tier === "advanced") {
-          vUnitWorkload = 22.00;
-          labelTier = "Veeam Data Platform Advanced (Monitoring)";
-          setupBase = 450;
-      } else if (tier === "premium") {
-          vUnitWorkload = 32.00;
-          labelTier = "Veeam Cyber Secure Premium (Orchestration)";
-          setupBase = 700;
-      }
-
-      // 3. GLCTech Management and Support
-      let vUnitMgmt = 0;
-      let labelMgmt = "Licensing Only";
-      if (hasMgmt === "yes") {
-          vUnitMgmt = 12.00; // Value per workload for job management and restoration
-          labelMgmt = "BaaS (Backup as a Service) - GLCTech Management";
-      }
-
-      // 4. Calculations
-      const totalWorkloads = vms + agents;
-      const custoLicencas = totalWorkloads * (vUnitWorkload + vUnitMgmt);
-      const custoStorage = storageTB * 17.00; // Estimated value per TB of immutable/cloud storage
-      
-      const mensalidadeTotal = custoLicencas + custoStorage;
-      const setupTotal = setupBase + (totalWorkloads * 15); // Deployment cost per agent/VM
-
-      const formatar = (v) => v.toLocaleString('en-US', {style: 'currency', currency: 'USD'});
-
-      dadosVeeam = {
-          total: formatar(mensalidadeTotal),
-          setup: formatar(setupTotal),
-          plano: labelTier,
-          suporte: labelMgmt,
-          workloads: totalWorkloads,
-          storage: storageTB,
-          periodo: "Monthly"
-      };
-
-      // 5. Update Summary Table
-      document.getElementById('veeamTechDetails').innerHTML = `
-          <div class="mb-3">
-              <h6 class="fw-bold border-bottom pb-1" style="color: #005f27">BACKUP DETAILS</h6>
-              <small class="d-block"><strong>Solution:</strong> ${labelTier}</small>
-              <small class="d-block"><strong>Service Level:</strong> ${labelMgmt}</small>
-          </div>
-
-          <div class="table-responsive">
-              <table class="table table-sm table-borderless small align-middle">
-                  <thead class="border-bottom">
-                      <tr class="text-muted">
-                          <th>Item</th>
-                          <th>Qty</th>
-                          <th>Unit</th>
-                          <th class="text-end">Subtotal</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr>
-                          <td>Workloads (VMs + Physical)</td>
-                          <td>${totalWorkloads}</td>
-                          <td>${formatar(vUnitWorkload + vUnitMgmt)}</td>
-                          <td class="text-end">${formatar(custoLicencas)}</td>
-                      </tr>
-                      <tr>
-                          <td>Repository Space (TB)</td>
-                          <td>${storageTB} TB</td>
-                          <td>$17.00</td>
-                          <td class="text-end">${formatar(custoStorage)}</td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
-          <p class="text-muted mt-2" style="font-size: 0.7rem;">* Values based on the VUL subscription model. Storage includes immutable repository for Ransomware protection.</p>
-      `;
-
-      document.getElementById('veeamTotalValue').innerText = dadosVeeam.total;
-      document.getElementById('veeamSetupRef').innerText = `Implementation Setup: ${dadosVeeam.setup}`;
-      document.getElementById('veeamResultArea').style.display = 'block';
-  }
-
-  // Event Initialization
-  document.addEventListener("DOMContentLoaded", () => {
-      calcularVeeam();
-
-      document.getElementById('btnCalcularVeeam').addEventListener('click', (e) => {
-          e.preventDefault();
-          calcularVeeam();
-      });
-
-      document.getElementById('sendVeeamQuote').addEventListener('click', function() {
-          const empresa = document.getElementById('veeamCompany').value;
-          const email = document.getElementById('veeamEmail').value;
-
-          if(!empresa || !email.includes('@')) {
-              alert('Please fill in the data correctly.');
-              return;
-          }
-
-          const destinatario = "contato@glctech.com.br";
-          const assunto = `VEEAM PROPOSAL REQUEST: ${empresa.toUpperCase()}`;
-          const corpo = 
-  `Dear GLCTech Team,
-
-  New Backup simulation performed:
-
-  COMPANY: ${empresa.toUpperCase()}
-  CONTACT: ${email}
-
-  ==================================================
-  VEEAM CONFIGURATION
-  ==================================================
-  PLAN: ${dadosVeeam.plano}
-  LOADS: ${dadosVeeam.workloads} Workloads
-  STORAGE: ${dadosVeeam.storage} TB
-  MANAGEMENT: ${dadosVeeam.suporte}
-  --------------------------------------------------
-  ESTIMATED INVESTMENT: ${dadosVeeam.total} /month
-  SETUP: ${dadosVeeam.setup}
-  ==================================================
-
-  Quotation System - GLCTech`;
-
-          window.open(`mailto:${destinatario}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`, '_blank');
-      });
-  });
-  </script>
+  <div class="container footer-bottom">
+    <p>© 2015 Copyright **GLCTech Tecnologia** All Rights Reserved</p>
+  </div>
+</footer>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -366,12 +137,14 @@
       const navLinks = document.querySelectorAll(".nav a");
 
       if (menuToggle && nav) {
+        // Toggle menu
         menuToggle.addEventListener("click", () => {
           const isActive = nav.classList.toggle("active");
           menuToggle.classList.toggle("active", isActive);
           menuToggle.setAttribute("aria-expanded", isActive);
         });
 
+        // Close menu when clicking a link
         navLinks.forEach(link => {
           link.addEventListener("click", () => {
             nav.classList.remove("active");
@@ -380,8 +153,27 @@
           });
         });
       }
+
+      // ======= ACTIVATE MENU LINK ON SCROLL =======
+      const sections = document.querySelectorAll("section[id]");
+
+      function activateMenuOnScroll() {
+        const scrollY = window.pageYOffset;
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop - 120;
+          const sectionHeight = section.offsetHeight;
+          const sectionId = section.getAttribute("id");
+          const currentLink = document.querySelector(`.nav a[href="#${sectionId}"]`);
+
+          if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+            navLinks.forEach(link => link.classList.remove("active"));
+            if (currentLink) currentLink.classList.add("active");
+          }
+        });
+      }
+
+      window.addEventListener("scroll", activateMenuOnScroll);
     });
   </script>
-  <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/50295618.js"></script>
-  </body>
+</body>
 </html>

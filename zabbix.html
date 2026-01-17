@@ -219,24 +219,6 @@
                 </div>
               </div>
 
-              <div class="col-md-6">
-                <div class="p-3 border rounded shadow-sm bg-light">
-                  <label class="form-label fw-bold small text-muted">QTD DE FILIAIS / SITES</label>
-                  <div class="input-group">
-                    <span class="input-group-text border-0 bg-transparent"><i class="bi bi-geo-alt"></i></span>
-                    <input type="number" id="zabSites" class="form-control border-0 bg-white" value="1" min="1" onchange="calcularZabbix()">
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="p-3 border rounded shadow-sm bg-light">
-                  <label class="form-label fw-bold small text-muted">ZABBIX PROXY POR LOCALIDADE</label>
-                  <div class="input-group">
-                    <span class="input-group-text border-0 bg-transparent"><i class="bi bi-cpu"></i></span>
-                    <input type="number" id="zabProxiesPerSite" class="form-control border-0 bg-white" value="1" min="0" onchange="calcularZabbix()">
-                  </div>
-                </div>
-              </div>
 
               <div class="col-md-12">
                 <div class="p-3 border rounded shadow-sm bg-light">
@@ -280,7 +262,7 @@
             </div>
 
             <div class="d-grid">
-              <button id="btnCalcularZabbix" onclick="calcularZabbix()" class="btn btn-danger btn-lg fw-bold py-3 shadow">RECALCULAR INVESTIMENTO</button>
+              <button id="btnCalcularZabbix" class="btn btn-danger btn-lg fw-bold py-3 shadow">RECALCULAR INVESTIMENTO</button>
             </div>
 
             <div id="zabbixResultArea" class="mt-5 pt-5 border-top" style="display:none;">
@@ -318,7 +300,7 @@
       <!-- Coluna 1: Informações -->
       <div class="col-lg-4 col-md-6 footer-info">
         <h4>GLCTech Tecnologia</h4>
-        <p><strong>Contato:</strong> +55 11 91151-7501<br>
+        <p><strong>Contato:</strong> +55 11 95762-4146<br>
         <strong>Email:</strong> contato@glctech.com.br</p>
       </div>
 
@@ -377,18 +359,13 @@ function calcularZabbix() {
     const hosts = parseInt(document.getElementById('zabHosts').value) || 0;
     const network = parseInt(document.getElementById('zabNetwork').value) || 0;
     const links = parseInt(document.getElementById('zabLinks').value) || 0;
-    
-    // NOVOS CAMPOS CAPTURADOS
-    const sites = parseInt(document.getElementById('zabSites').value) || 1;
-    const proxiesPerSite = parseInt(document.getElementById('zabProxiesPerSite').value) || 0;
-    const totalProxies = sites * proxiesPerSite;
-
     const nivel = document.getElementById('zabLevel');
+
     const archRadio = document.querySelector('input[name="archOption"]:checked');
     const archType = archRadio ? archRadio.value : 'aio';
     const hasGrafana = document.querySelector('input[name="grafanaOption"]:checked')?.value || 'no';
 
-    // 1. Definição de Preços por Infra
+    // 1. Definição de Preços por Infra (Preços Cloud Reais em BRL)
     let multiplicadorInfra = 1.0;
     let labelInfra = "On-Premises";
     if (infraType === "cloud") {
@@ -399,31 +376,30 @@ function calcularZabbix() {
         labelInfra = "Híbrido (Local + Cloud)";
     }
 
-    const vUnitHost = 45.00 * multiplicadorInfra;
-    const vUnitNet = 35.00 * multiplicadorInfra;
-    const vUnitLink = 18.00;
-    const vUnitProxy = 85.00; // Valor de gestão por Proxy (SO + Tunnel + Serviço)
+    const vUnitHost = 15.00 * multiplicadorInfra;
+    const vUnitNet = 10.00 * multiplicadorInfra;
+    const vUnitLink = 20.00;
 
-    // 2. Arquitetura de Instalação
+    // 2. Arquitetura de Instalação - Definição de Qtd Servidores e Custos
     let labelArch = "All-in-One";
     let qtdServidoresArch = 1;
-    let vUnitArch = 0; 
+    let vUnitArch = 0; // Custo mensal adicional de gestão por complexidade técnica
     let custoSetupArch = 0;
 
     if (archType === "aio") {
         labelArch = "All-in-One (Servidor Único)";
         qtdServidoresArch = 1;
-        vUnitArch = 50.00;
+        vUnitArch = 50.00; // Gestão base do SO
         custoSetupArch = 0;
     } else if (archType === "2in1") {
         labelArch = "2 em 1 (App + Banco)";
         qtdServidoresArch = 2;
-        vUnitArch = 120.00;
+        vUnitArch = 120.00; // Gestão de 2 SO + Tunning DB
         custoSetupArch = 950;
     } else if (archType === "ha") {
         labelArch = "Alta Disponibilidade (HA)";
-        qtdServidoresArch = 3;
-        vUnitArch = 280.00;
+        qtdServidoresArch = 3; // Mínimo para HA robusto (2 App + 1 DB ou Cluster)
+        vUnitArch = 280.00; // Gestão de Cluster/Sincronismo
         custoSetupArch = 3200;
     }
 
@@ -434,12 +410,9 @@ function calcularZabbix() {
     const totalNet = (network * vUnitNet) * fatorGestao;
     const totalLinks = (links * vUnitLink) * fatorGestao;
     const totalArch = (qtdServidoresArch * vUnitArch) * fatorGestao;
-    const totalProxiesValor = (totalProxies * vUnitProxy) * fatorGestao;
 
-    const totalMensal = totalHosts + totalNet + totalLinks + totalArch + totalProxiesValor + (hasGrafana === "yes" ? 150 : 0);
-    
-    // Setup: Base + Arquitetura + Grafana + R$ 350 por Proxy configurado
-    const setupTotal = 1500 + custoSetupArch + (totalProxies * 350) + (hasGrafana === "yes" ? 650 : 0);
+    const totalMensal = totalHosts + totalNet + totalLinks + totalArch + (hasGrafana === "yes" ? 150 : 0);
+    const setupTotal = 1500 + custoSetupArch + (hasGrafana === "yes" ? 650 : 0);
 
     const formatar = (v) => v.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
 
@@ -449,9 +422,7 @@ function calcularZabbix() {
         infra: labelInfra,
         arquitetura: labelArch,
         nivel: nivel.options[nivel.selectedIndex].dataset.tier,
-        descNivel: nivel.options[nivel.selectedIndex].text,
-        grafana: hasGrafana === "yes" ? "Sim" : "Não",
-        detalhes: `Sites: ${sites} | Total Proxies: ${totalProxies}`
+        descNivel: nivel.options[nivel.selectedIndex].text
     };
 
     // 4. Montagem do Resumo com Tabela Detalhada
@@ -460,7 +431,6 @@ function calcularZabbix() {
             <h6 class="fw-bold text-danger border-bottom pb-1">COMPOSIÇÃO DA SOLUÇÃO</h6>
             <small class="d-block"><strong>Cenário:</strong> ${labelInfra}</small>
             <small class="d-block"><strong>Suporte:</strong> ${dadosZabbix.descNivel}</small>
-            <small class="d-block"><strong>Localidades:</strong> ${sites} site(s) com ${totalProxies} Proxies no total</small>
         </div>
 
         <div class="table-responsive">
@@ -475,18 +445,11 @@ function calcularZabbix() {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Gestão de Servidores (Core)</td>
+                        <td>Arquitetura: ${labelArch}</td>
                         <td>${qtdServidoresArch}</td>
                         <td>${formatar(vUnitArch)}</td>
                         <td class="text-end">${formatar(totalArch)}</td>
                     </tr>
-                    ${totalProxies > 0 ? `
-                    <tr>
-                        <td>Gestão Zabbix Proxies</td>
-                        <td>${totalProxies}</td>
-                        <td>${formatar(vUnitProxy)}</td>
-                        <td class="text-end">${formatar(totalProxiesValor)}</td>
-                    </tr>` : ''}
                     <tr>
                         <td>Monitoramento Servidores/VMs</td>
                         <td>${hosts}</td>
@@ -518,23 +481,33 @@ function calcularZabbix() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Escuta cliques no botão de calcular
     document.getElementById('btnCalcularZabbix').addEventListener('click', calcularZabbix);
-
-    // Escuta o botão de envio de proposta
     document.getElementById('sendZabbixQuote').addEventListener('click', function() {
         const empresa = document.getElementById('zabCompany').value;
         const email = document.getElementById('zabEmail').value;
-
-        if(!empresa || !email.includes('@')) {
-            alert('Por favor, informe o nome da empresa e um e-mail válido.');
-            return;
-        }
-
+        if(!empresa || !email.includes('@')) { alert('Dados inválidos.'); return; }
         const destinatario = "contato@glctech.com.br";
-        const assunto = `COTAÇÃO ZABBIX: ${empresa.toUpperCase()} - ${dadosZabbix.arquitetura}`;
-        
-        const corpo = 
+        const assunto = `SIMULAÇÃO ZABBIX: ${empresa.toUpperCase()}`;
+        const corpo = `Olá GLCTech,\n\nNova simulação:\nArquitetura: ${dadosZabbix.arquitetura}\nGestão: ${dadosZabbix.nivel}\nSetup: ${dadosZabbix.setup}\nMensal: ${dadosZabbix.total}`;
+        window.open(`mailto:${destinatario}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`, '_blank');
+    });
+});
+/**
+ * Event Listener para Envio de Proposta via Mailto
+ */
+document.getElementById('sendZabbixQuote').addEventListener('click', function() {
+    const empresa = document.getElementById('zabCompany').value;
+    const email = document.getElementById('zabEmail').value;
+
+    if(!empresa || !email.includes('@')) {
+        alert('Por favor, informe o nome da empresa e um e-mail válido.');
+        return;
+    }
+
+    const destinatario = "contato@glctech.com.br";
+    const assunto = `COTAÇÃO ZABBIX: ${empresa.toUpperCase()} - ${dadosZabbix.arquitetura}`;
+    
+    const corpo = 
 `Olá Equipe Comercial GLCTech,
 
 Uma nova simulação de monitoramento Zabbix foi gerada através do site:
@@ -545,10 +518,12 @@ DADOS DO CLIENTE:
 
 ESPECIFICAÇÕES TÉCNICAS:
 - Infraestrutura: ${dadosZabbix.infra}
-- Arquitetura: ${dadosZabbix.arquitetura}
-- Localidades/Proxies: ${dadosZabbix.detalhes}
+- Arquitetura de Instalação: ${dadosZabbix.arquitetura}
 - Integração Grafana: ${dadosZabbix.grafana}
 - Nível de Suporte: ${dadosZabbix.nivel}
+
+DETALHES DO ESCOPO:
+${dadosZabbix.escopo}
 
 --------------------------------------------------
 INVESTIMENTO ESTIMADO:
@@ -556,11 +531,11 @@ SETUP (Implantação): ${dadosZabbix.setup}
 MENSALIDADE (Gestão): ${dadosZabbix.total}
 --------------------------------------------------
 
-Por favor, entrem em contato com o cliente para formalizar a proposta.`;
+Por favor, entrem em contacto com o cliente para formalizar a proposta.`;
 
-        window.open(`mailto:${destinatario}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`, '_blank');
-    });
+    window.open(`mailto:${destinatario}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`, '_blank');
 });
+
 
 </script>
 
