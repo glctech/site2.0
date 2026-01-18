@@ -1,74 +1,88 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
+  <!-- ======= METADADOS BÁSICOS ======= -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GLCTech | IT Monitoring and Security</title>
-  <meta name="description" content="IT monitoring, backup, and security with GLCTech, Zabbix, and Veeam solutions.">
+  <meta name="description" content="IT monitoring, backup and cybersecurity with GLCTech solutions, Zabbix and Veeam.">
   <link rel="icon" href="./assets/logo/favicon.png" type="image/png" />
 
+  <!-- ======= ESTILOS ======= -->
   <link rel="stylesheet" href="./css/main.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-
+  <!-- ======= SCRIPTS ======= -->
   <script defer src="./scripts/script.js"></script>
+
+
+
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --k-red: #e6262c; --k-dark: #2c2c2c; --k-teal: #e6262c; }
+        .border-danger { border-color: var(--k-red) !important; }
+        .btn-danger { background-color: var(--k-red); border-color: var(--k-red); border-radius: 8px; }
+        .btn-dark { background-color: var(--k-dark); border-radius: 8px; }
+        .param-card { border: 1px solid #e0e0e0; border-left: 5px solid #ccc; transition: 0.3s; background: #fff; }
+        .param-card:focus-within { border-left-color: var(--k-red); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .result-box { background: #ffffff; border-radius: 15px; border: 1px solid #eee; }
+        .feature-item { font-size: 0.9rem; margin-bottom: 10px; color: #444; }
+        .feature-item i { color: var(--k-teal); width: 25px; }
+    </style>
+
+
 </head>
 
 <body>
+  <!-- ======= HEADER ======= -->
   <header class="header" role="banner">
     <div class="header-container container d-flex justify-content-between align-items-center">
       
+      <!-- LOGO -->
       <div class="logo">
-        <a href="#home" aria-label="GLCTech home page">
-          <img src="./assets/logo/logo.png" alt="GLCTech Logo" />
+        <a href="#inicio" aria-label="GLCTech home page">
+          <img src="./assets/logo/logo.png" alt="GLCTech logo" />
         </a>
       </div>
 
+      <!-- BOTÃO MENU HAMBÚRGUER -->
       <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
 
-      <nav class="nav">
-      <ul>
-        <li><a href="./index_eng.html">Home</a></li>
-        <li><a href="./index.html/#about">About</a></li>
-        <li><a href="./index.html/#team" hidden>Our Team</a></li>
-        <li><a href="./index_eng.html/#services">Services</a></li>
-        <li><a href="https://ty0ci.share.hsforms.com/2dDZ5-CdFTKektziqcbgsTQ" target="_blank">Work With Us</a></li>
-        <li><a href="./index_eng.html/#contact">Contact</a></li>
-      </ul>
-    </nav>
-    
-    <div class="dropdown me-3">
-      <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-        <i class="fas fa-globe"></i> EN
-      </button>
-      <ul class="dropdown-menu dropdown-menu-end">
-        <li><a class="dropdown-item" href="./index.html" data-lang="pt-BR">Português (PT-BR)</a></li>
-        <li><a class="dropdown-item active" href="./index_eng.html" data-lang="en-US">English (EN-US)</a></li>
-      </ul>
+      <!-- ======== MENU ========= -->
+      <nav class="nav" role="navigation">
+        <ul class="nav-list">
+          <li><a href="./index.html" class="active">Home</a></li>
+          <li><a href="./index.html#about">About</a></li>
+          <li><a href="./index.html#services">Services</a></li>
+          <li><a href="https://ty0ci.share.hsforms.com/2dDZ5-CdFTKektziqcbgsTQ" target="_blank" rel="noopener" hidden>Careers</a></li>
+          <li><a href="./index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
     </div>
-    </div>
-
-
-
-
   </header>
 
-   <main class="main" id="home">
+   <!-- /Kaspersky Home Security Section -->
+
+
+ <main class="main" id="inicio">
   <section id="kaspersky" class="section">
     <div class="container py-5 text-center text-md-start" data-aos="fade-up">
+      <!-- Cabeçalho -->
       <div class="text-center mb-4">
         <h2 class="fw-bold">Kaspersky SMB Security</h2>
         <p class="text-muted fs-5">
-          Scalable cybersecurity solutions for small and medium businesses — 
-          corporate protection with simplicity and efficiency.
+          Scalable cybersecurity solutions for small and mid-sized businesses — 
+          enterprise-grade protection with simplicity and efficiency.
         </p>
       </div>
 
       <div class="row align-items-start justify-content-center g-4">
+        <!-- Coluna Esquerda -->
         <div class="col-md-5">
           <h3 class="fw-semibold">Small to Medium Business Security</h3>
           <p class="text-muted mb-3">Ideal solutions for companies with up to 999 employees</p>
@@ -79,26 +93,27 @@
           <p class="small text-muted">Includes Kaspersky Next EDR Foundations</p>
         </div>
 
+        <!-- Coluna Direita -->
         <div class="col-md-6">
-          <h3 class="fw-semibold">Business protection without complexity</h3>
+          <h3 class="fw-semibold">Enterprise protection without complexity</h3>
           <p>
-            **Kaspersky SMB Security** was developed for growing businesses that
-            require robust, accessible, and easily managed solutions. Combining
+            <strong>Kaspersky SMB Security</strong> was built for growing businesses that
+            need robust, affordable, and easy-to-manage solutions. By combining
             advanced security and automation, it protects your data, devices, and users
-            without overburdening your IT team.
+            without overloading your IT team.
           </p>
 
           <ul class="list-unstyled ms-3">
             <li>✔ Comprehensive protection for endpoints, servers, and workstations</li>
-            <li>✔ Security for local, hybrid, and cloud environments</li>
+            <li>✔ Security for on-premises, hybrid, and cloud environments</li>
             <li>✔ Unified cloud management console</li>
             <li>✔ Real-time detection and threat visibility</li>
-            <li>✔ Multiple layers against ransomware, phishing, and data leaks</li>
+            <li>✔ Multi-layer protection against ransomware, phishing, and data leaks</li>
           </ul>
 
           <div class="mt-4 d-flex flex-wrap gap-3">
-            <a href="#contact" class="btn btn-danger">Learn more</a>
-            <a href="#quote" class="btn btn-outline-dark">Request a business quote</a>
+            <a href="#contato" class="btn btn-danger" hidden >Learn more</a>
+            <a href="#proposta" class="btn btn-outline-dark" hidden>Request an enterprise quote</a>
           </div>
         </div>
       </div>
@@ -106,27 +121,138 @@
   </section>
 </main>
 
-<footer id="footer" class="footer">
+<!-- /Kaspersky Home Security Section -->
+
+
+
+
+
+
+
+
+<!-- =========CALCULADORA ========-->
+
+<section class="py-5" id="kaspersky-calculator">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+          
+          <div class="p-4 text-white text-center" style="background: #006d5d; border-bottom: 4px solid #00f2d3;">
+            <h3 class="fw-bold mb-1">Kaspersky Cybersecurity Estimator</h3>
+            <p class="small text-uppercase tracking-widest opacity-75">Endpoint, Mobile, and EDR Optimum protection</p>
+          </div>
+
+          <div class="p-4 p-md-5 bg-white">
+            <div class="row g-4 mb-4">
+              
+              <div class="col-md-12">
+                <div class="p-3 border rounded shadow-sm bg-light">
+                  <label class="form-label fw-bold small text-muted d-block mb-3 text-uppercase text-center">Solution Profile / Licensing</label>
+                  <div class="btn-group w-100" role="group">
+                    <input type="radio" class="btn-check" name="kaspTier" id="tierKSOS" value="pme" checked onchange="calcularKaspersky()">
+                    <label class="btn btn-outline-success" for="tierKSOS">PME (Small Office)</label>
+
+                    <input type="radio" class="btn-check" name="kaspTier" id="tierAdvanced" value="advanced" onchange="calcularKaspersky()">
+                    <label class="btn btn-outline-success" for="tierAdvanced">Enterprise Advanced</label>
+
+                    <input type="radio" class="btn-check" name="kaspTier" id="tierEDR" value="edr" onchange="calcularKaspersky()">
+                    <label class="btn btn-outline-success" for="tierEDR">Enterprise EDR Optimum</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="p-3 border rounded shadow-sm bg-light">
+                  <label class="form-label fw-bold small text-muted d-block mb-3 text-uppercase text-center">Managed Detection & Response (MDR)</label>
+                  <div class="btn-group w-100" role="group">
+                    <input type="radio" class="btn-check" name="kaspMgmt" id="mgmtNo" value="no" onchange="calcularKaspersky()">
+                    <label class="btn btn-outline-dark" for="mgmtNo">Licensing only</label>
+
+                    <input type="radio" class="btn-check" name="kaspMgmt" id="mgmtYes" value="yes" checked onchange="calcularKaspersky()">
+                    <label class="btn btn-outline-dark" for="mgmtYes">License + GLCTech Managed Service (NOC)</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="p-3 border rounded shadow-sm">
+                  <label class="form-label fw-bold small text-muted">WORKSTATIONS / SERVERS (ENDPOINTS)</label>
+                  <input type="number" id="kaspEndpoints" class="form-control border-0 bg-light" value="10" min="5" onchange="calcularKaspersky()">
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="p-3 border rounded shadow-sm">
+                  <label class="form-label fw-bold small text-muted">MOBILE DEVICES (MOBILE)</label>
+                  <input type="number" id="kaspMobile" class="form-control border-0 bg-light" value="0" min="0" onchange="calcularKaspersky()">
+                </div>
+              </div>
+
+            </div>
+
+            <div class="d-grid">
+              <button id="btnCalcularKaspersky" class="btn btn-success btn-lg fw-bold py-3 shadow" style="background-color: #006d5d; border: none;">
+                RECALCULATE KASPERSKY INVESTMENT
+              </button>
+            </div>
+
+            <div id="kaspResultArea" class="mt-5 pt-5 border-top" style="display:none;">
+              <div class="row g-5">
+                <div class="col-md-7">
+                  <h5 class="fw-bold mb-4" style="color: #006d5d">DETAILED PROTECTION SUMMARY:</h5>
+                  <div id="kaspTechDetails" class="p-3 bg-white border rounded shadow-sm">
+                    </div>
+                </div>
+                
+                <div class="col-md-5 text-center">
+                  <div class="p-4 border border-2 rounded-4 shadow-sm" style="border-color: #006d5d !important;">
+                    <span class="text-muted small fw-bold">ESTIMATED ANNUAL INVESTMENT</span>
+                    <div class="h1 fw-bolder mb-0" style="color: #006d5d" id="kaspTotalValue">$0.00</div>
+                    <div class="text-muted mb-4 small" id="kaspSetupRef"></div>
+                    
+                    <div class="text-start bg-light p-3 rounded">
+                        <input type="text" id="kaspCompany" class="form-control mb-2" placeholder="Company">
+                        <input type="email" id="kaspEmail" class="form-control mb-3" placeholder="Business Email">
+                        <button id="sendKaspQuote" class="btn btn-dark w-100 fw-bold">REQUEST AN OFFICIAL QUOTE</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- ======= FOOTER ======= -->
+  <footer id="footer" class="footer">
   <div class="container footer-top">
     <div class="row">
       
+      <!-- Coluna 1: Informações -->
       <div class="col-lg-4 col-md-6 footer-info">
-        <h4>GLCTech Technology</h4>
-        <p>**Contact:** +55 11 95762-4146<br>
-        **Email:** contato@glctech.com.br</p>
+        <h4>GLCTech Tecnologia</h4>
+        <p><strong>Contact:</strong> +55 11 95762-4146<br>
+        <strong>Email:</strong> contato@glctech.com.br</p>
       </div>
-<div class="col-lg-4 col-md-6 footer-links">
+<!-- Coluna 2: Links Úteis -->
+      <div class="col-lg-4 col-md-6 footer-links">
         <h4>Useful Links</h4>
         <ul>
-          <li><a href="./index_eng.html">Home</a></li>
-          <li><a href="./index.html/#about">About</a></li>
-          <li><a href="./index.html/#team" hidden>Our Team</a></li>
-          <li><a href="./index_eng.html/#services">Services</a></li>
-          <li><i class="bi bi-chevron-right"></i> <a href="politica_eng.html" target="_blank">Privacy Policy</a></li>
-          <li><i class="bi bi-chevron-right"></i> <a href="termos_eng.html" target="_blank">Terms of Use</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="./index.html#home">Home</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="./index.html#about">About</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="./index.html#services">Services</a></li>
+          <li><i class="bi bi-chevron-right"></i><a href="https://ty0ci.share.hsforms.com/2dDZ5-CdFTKektziqcbgsTQ" target="_blank" rel="noopener">Careers</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="politica.html">Privacy Policy</a></li>
+          <li><i class="bi bi-chevron-right"></i> <a href="termos.html">Terms of Use</a></li>
         </ul>
       </div>
 
+      <!-- Coluna 3: Redes Sociais -->
       <div class="col-lg-4 col-md-6 footer-social">
         <h4>Social Media</h4>
         <p>Follow GLCTech!</p>
@@ -138,11 +264,204 @@
     </div>
   </div>
 
+  <!-- Linha inferior -->
   <div class="container footer-bottom">
-    <p>© 2015 Copyright **GLCTech Tecnologia** All Rights Reserved</p>
+    <p>© 2015 Copyright <strong>GLCTech Tecnologia</strong> All Rights Reserved</p>
   </div>
 </footer>
 
+
+
+
+
+
+
+
+<!-- ========= SCRIPT CALCULADORA ======-->
+
+
+<script>
+ let dadosKasp = {}; // Objeto global para armazenar os dados do cálculo
+
+function calcularKaspersky() {
+    // 1. Captura de Elementos
+    const endpoints = parseInt(document.getElementById('kaspEndpoints').value) || 0;
+    const mobile = parseInt(document.getElementById('kaspMobile').value) || 0;
+    
+    const tierRadio = document.querySelector('input[name="kaspTier"]:checked');
+    const tier = tierRadio ? tierRadio.value : 'pme';
+    
+    const mgmtRadio = document.querySelector('input[name="kaspMgmt"]:checked');
+    const hasMgmt = mgmtRadio ? mgmtRadio.value : 'no';
+
+    // FX reference: 1 USD = 5.37 BRL (mid-market)
+    // You can adjust this rate if needed.
+    const FX_USD_BRL = 5.37;
+    const brlToUsd = (v) => v / FX_USD_BRL;
+
+
+    // 2. Unit values (annual estimate in BRL; displayed in USD)
+    let vUnitAnual = 98.00; // Base PME
+    let labelTier = "Small Office Security (PME)";
+    let setupBase = 450;
+
+    if (tier === "advanced") {
+        vUnitAnual = 195.00;
+        labelTier = "Next Endpoint Security Advanced";
+        setupBase = 900;
+    } else if (tier === "edr") {
+        vUnitAnual = 295.00;
+        labelTier = "Next EDR Optimum + Foundation";
+        setupBase = 1800;
+    }
+
+    // 3. Gestão GLCTech
+    let vUnitMgmt = 0;
+    let labelMgmt = "Licensing only";
+    if (hasMgmt === "yes") {
+        vUnitMgmt = 85.00; 
+        labelMgmt = "License + Proactive Managed Service (NOC)";
+    }
+
+    // 4. Cálculos de Totais
+    const vUnitMobile = vUnitAnual * 0.65; 
+    const totalEndpoints = endpoints * (vUnitAnual + vUnitMgmt);
+    const totalMobile = mobile * (vUnitMobile + (vUnitMgmt * 0.5));
+    
+    const investimentoTotal = totalEndpoints + totalMobile;
+    const investimentoTotalUsd = brlToUsd(investimentoTotal);
+    const setupTotal = setupBase + (endpoints * 15);
+    const setupTotalUsd = brlToUsd(setupTotal);
+
+
+    const formatar = (vUsd) => vUsd.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+
+    // Alimenta o objeto global para ser usado no e-mail
+    dadosKasp = {
+        total: formatar(investimentoTotalUsd),
+        setup: formatar(setupTotalUsd),
+        plano: labelTier,
+        suporte: labelMgmt,
+        dispositivos: endpoints,
+        mobile: mobile,
+        periodo: "Annual (12 months)"
+    };
+
+    // 5. Atualização do Resumo Detalhado (Tabela)
+    const techDetails = document.getElementById('kaspTechDetails');
+    if (techDetails) {
+        techDetails.innerHTML = `
+            <div class="mb-3">
+                <h6 class="fw-bold border-bottom pb-1" style="color: #006d5d">SOLUTION DETAILS</h6>
+                <small class="d-block"><strong>Product:</strong> Kaspersky ${labelTier}</small>
+                <small class="d-block"><strong>Service:</strong> ${labelMgmt}</small>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-sm table-borderless small align-middle">
+                    <thead class="border-bottom">
+                        <tr class="text-muted">
+                            <th>Item</th>
+                            <th>Qty</th>
+                            <th>Unit/Year</th>
+                            <th class="text-end">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Endpoint License + Managed Service</td>
+                            <td>${endpoints}</td>
+                            <td>${formatar(brlToUsd(vUnitAnual + vUnitMgmt))}</td>
+                            <td class="text-end">${formatar(brlToUsd(totalEndpoints))}</td>
+                        </tr>
+                        ${mobile > 0 ? `
+                        <tr>
+                            <td>Mobile License + Managed Service</td>
+                            <td>${mobile}</td>
+                            <td>${formatar(brlToUsd(vUnitMobile + (vUnitMgmt * 0.5)))}</td>
+                            <td class="text-end">${formatar(brlToUsd(totalMobile))}</td>
+                        </tr>` : ''}
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-muted mt-2" style="font-size: 0.7rem;">* Estimate for an annual contract. Includes GLCTech technical support according to the selected management level.</p>
+        `;
+    }
+
+    document.getElementById('kaspTotalValue').innerText = dadosKasp.total;
+    document.getElementById('kaspSetupRef').innerText = `Implementation setup: ${dadosKasp.setup}`;
+    document.getElementById('kaspResultArea').style.display = 'block';
+}
+
+// Inicialização de Eventos
+document.addEventListener("DOMContentLoaded", () => {
+    // Primeiro cálculo automático ao carregar
+    calcularKaspersky();
+
+    const btnCalc = document.getElementById('btnCalcularKaspersky');
+    if (btnCalc) {
+        btnCalc.addEventListener('click', (e) => {
+            e.preventDefault();
+            calcularKaspersky();
+        });
+    }
+
+    // Envio de E-mail Profissional
+    const btnMail = document.getElementById('sendKaspQuote');
+    if (btnMail) {
+        btnMail.addEventListener('click', function() {
+            const empresa = document.getElementById('kaspCompany').value;
+            const email = document.getElementById('kaspEmail').value;
+
+            if(!empresa || !email.includes('@')) {
+                alert('Please enter the company name and a valid email address.');
+                return;
+            }
+
+            const destinatario = "contato@glctech.com.br";
+            const assunto = `KASPERSKY QUOTE REQUEST: ${empresa.toUpperCase()}`;
+            
+            // CORPO DO EMAIL FORMATADO
+            const corpo = 
+`Dear GLCTech Team,
+
+A new licensing simulation was completed through the portal. 
+Below are the details to prepare the official proposal:
+
+==================================================
+        CUSTOMER DETAILS
+==================================================
+COMPANY: ${empresa.toUpperCase()}
+CONTACT: ${email}
+
+==================================================
+        SOLUTION CONFIGURATION
+==================================================
+SOLUTION: Kaspersky ${dadosKasp.plano}
+QUANTITY: ${dadosKasp.dispositivos} Endpoints / ${dadosKasp.mobile} Mobile
+TERM: ${dadosKasp.periodo}
+SUPPORT: ${dadosKasp.suporte}
+--------------------------------------------------
+ESTIMATED INVESTMENT: ${dadosKasp.total}
+IMPLEMENTATION SETUP: ${dadosKasp.setup}
+==================================================
+
+Please contact the customer to validate the technical scenario.
+
+Sincerely,
+Online Quotation System - GLCTech`;
+
+            const mailtoUrl = `mailto:${destinatario}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
+            window.open(mailtoUrl, '_blank');
+        });
+    }
+});
+
+
+</script>
+
+
+  <!-- ======= SCRIPT DO MENU HAMBÚRGUER ======= -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const menuToggle = document.querySelector(".menu-toggle");
@@ -157,7 +476,7 @@
           menuToggle.setAttribute("aria-expanded", isActive);
         });
 
-        // Close menu when clicking a link
+        // Fecha o menu ao clicar em um link
         navLinks.forEach(link => {
           link.addEventListener("click", () => {
             nav.classList.remove("active");
@@ -167,7 +486,7 @@
         });
       }
 
-      // ======= ACTIVATE MENU LINK ON SCROLL =======
+      // ======= ATIVAR LINK DO MENU CONFORME SCROLL =======
       const sections = document.querySelectorAll("section[id]");
 
       function activateMenuOnScroll() {
@@ -188,5 +507,8 @@
       window.addEventListener("scroll", activateMenuOnScroll);
     });
   </script>
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/50295618.js"></script>
+<!-- End of HubSpot Embed Code -->
 </body>
 </html>

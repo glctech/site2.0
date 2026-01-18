@@ -8,247 +8,117 @@
   <link rel="icon" href="./assets/logo/favicon.png" type="image/png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script defer src="./scripts/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-  
 </head>
+
 <body>
 
-
-
-  
-
-  <header class="header">
+<!-- ======= HEADER ======= -->
+<header class="header">
   <div class="header-container">
     <div class="logo">
       <img src="./assets/logo/logo.png" alt="GLCTECH">
     </div>
 
-   
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
 
-
-<button class="menu-toggle" aria-label="Open menu">
-  <span></span>
-  <span></span>
-  <span></span>
-</button>
-
-    <button class="menu-toggle" aria-label="Open menu">
-  <span></span>
-  <span></span>
-  <span></span>
-</button>
-
-    <nav class="nav">
+    <nav class="nav" role="navigation">
       <ul>
-        <li><a href="#">Home</a></li>
+        <li><a href="#hero">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#team" hidden>Our Team</a></li>
         <li><a href="#services">Services</a></li>
-        <li><a href="https://ty0ci.share.hsforms.com/2dDZ5-CdFTKektziqcbgsTQ" target="_blank" hidden>Work With Us</a></li>
+        <li><a href="https://ty0ci.share.hsforms.com/2dDZ5-CdFTKektziqcbgsTQ" target="_blank" hidden>Careers</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
-    
+
     <div class="dropdown me-3">
       <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
         <i class="fas fa-globe"></i> EN
       </button>
       <ul class="dropdown-menu dropdown-menu-end">
         <li><a class="dropdown-item" href="./index.html" data-lang="pt-BR">Português (PT-BR)</a></li>
-        <li><a class="dropdown-item active" href="./index_eng.html" data-lang="en-US">English (EN-US)</a></li>
+        <li><a class="dropdown-item active" href="#" data-lang="en-US">English (EN-US)</a></li>
       </ul>
     </div>
-    </div>
+  </div>
 </header>
 
+<main>
 
-  <main>
-    <section id="hero" class="hero-slider" aria-label="Main Highlights">
-      <article class="slide active" style="background-image: url('./assets/hero/noc.png');" aria-hidden="false">
-        <div class="overlay"></div>
-        <div class="hero-content">
-          <h1>Intelligent Monitoring and IT Security</h1>
-          <p>Full visibility of your infrastructure with Zabbix and Grafana.</p>
-          <a href="#contact" class="btn" hidden>Get in Touch</a>
-        </div>
-      </article>
-      <article class="slide" style="background-image: url('images/slide2.jpg');" aria-hidden="true">
-        <div class="overlay"></div>
-        <div class="hero-content">
-          <h1>Real-Time Alerts</h1>
-          <p>Receive immediate notifications about critical issues.</p>
-          <a href="#contact" class="btn">Learn More</a>
-        </div>
-      </article>
-      <article class="slide" style="background-image: url('images/slide3.jpg');" aria-hidden="true">
-        <div class="overlay"></div>
-        <div class="hero-content">
-          <h1>Detailed Reports</h1>
-          <p>Analyze your IT performance with clear and complete graphs.</p>
-          <a href="#services" class="btn">View Our Services</a>
-        </div>
-      </article>
-      <button class="prev" aria-label="Previous slide" hidden>&#10094;</button>
-      <button class="next" aria-label="Next slide" hidden>&#10095;</button>
-      <div class="dots" role="tablist">
-        <span class="dot active" role="tab" aria-selected="true" tabindex="0" hidden></span>
-        <span class="dot" role="tab" aria-selected="false" tabindex="-1" hidden></span>
-        <span class="dot" role="tab" aria-selected="false" tabindex="-1" hidden></span>
-      </div>
-    </section>
-
-    <section id="about" class="about" aria-labelledby="about-title">
-      <div class="container about-content">
-        <article class="about-text" data-aos="fade-right">
-          <h2 id="about-title" class="section-title">About GLCTech</h2>
-            <p class="section-description">
-              <strong>GLCTech</strong> has an unwavering commitment to customer satisfaction. Our customer-centric approach ensures that all solutions are designed and implemented with a focus on the client's needs and objectives, guaranteeing exceptional and lasting results.
-          </p>
-          <ul class="about-list" role="list">
-            <li><i class="fa-solid fa-award"></i><strong>Zabbix Experience</strong></li><li><span>GLCTech has a highly qualified and experienced team in Zabbix, one of the leading infrastructure monitoring platforms. Their deep understanding of the tool allows them to offer customized and efficient solutions to meet the specific needs of each client.</span></li>
-            <li><i class="fa-solid fa-headset"></i><strong>Comprehensive Support</strong></li><li><span>By choosing GLCTech, you will have access to comprehensive support at all stages of the project. From conception to implementation and continuous maintenance, we will be by your side, ensuring the monitoring system operates optimally and reliably.</span></li>
-            <li>With experience, comprehensive support, customized solutions, technological innovation, and a commitment to customer satisfaction, GLCTech stands out as the ideal partner to ensure the success and efficiency of your monitoring projects.</li>
-          </ul>
-        </article>
-        <figure class="about-image" data-aos="fade-left">
-          <img src="./assets/hero/escritorio.png" alt="GLCTech Team monitoring systems" />
-          <figcaption></figcaption>
-        </figure>
-      </div>
-    </section>
-
-
-    <section id="why-glctech" class="why-section py-5" hidden>
-  <div class="container">
-    <div class="row align-items-center g-5">
-      <div class="col-lg-6" data-aos="fade-right">
-        <img src="./assets/hero/business-8676529_1280.jpg" alt="GLCTech Team" class="img-fluid rounded-3 shadow-sm">
-      </div>
-
-      <div class="col-lg-6" data-aos="fade-left">
-        <div class="label text-uppercase mb-2">The Best Choice</div>
-        <h2 class="section-title mb-4">Why choose <span>GLCTech</span></h2>
-
-        <h5 class="fw-bold">Commitment to customer satisfaction</h5>
-        <p class="mb-4">
-                Choosing GLCTech means opting for a partner who understands that monitoring goes far beyond alerts — it's about ensuring business continuity, security, and efficiency. Our mission is to simplify infrastructure management, anticipate problems, and deliver solutions that truly make a difference in companies' daily operations.
-        </p>
-
-        <div class="why-item d-flex align-items-start mb-4">
-          <div class="icon me-3">
-            <i class="fa-solid fa-user-check"></i>
-          </div>
-          <div>
-            <h6 class="fw-bold">Proven Expertise</h6>
-            <p class="mb-0">
-                 With extensive experience in Zabbix and other monitoring technologies, GLCTech masters the entire deployment cycle — from architecture to automation. Each project is developed based on best practices, performance analysis, and customized integrations that maximize results.
-            </p>
-          </div>
-        </div>
-
-        <div class="why-item d-flex align-items-start mb-4">
-          <div class="icon me-3">
-            <i class="fa-solid fa-chess"></i>
-          </div>
-          <div>
-            <h6 class="fw-bold">Strategic Approach</h6>
-            <p class="mb-0">
-            We don't just deliver tools: we create tailor-made monitoring strategies, aligned with the client's business objectives. Our team works to transform data into actionable insights, helping with intelligent and quick decision-making.
-          </div>
-        </div>
-
-        <div class="why-item d-flex align-items-start mb-4">
-          <div class="icon me-3">
-            <i class="fa-solid fa-handshake"></i>
-          </div>
-          <div>
-            <h6 class="fw-bold">Long-Term Partnership</h6>
-            <p class="mb-0">
-            We believe in lasting relationships. Therefore, we offer continuous technical support, proactive updates, and close follow-up, ensuring that your operation remains stable, secure, and constantly evolving.
-          </div>
-        </div>
-
-        <div class="why-item d-flex align-items-start mb-4">
-          <div class="icon me-3">
-            <i class="fa-solid fa-crown"></i>
-          </div>
-          <div>
-            <h6 class="fw-bold">Commitment to Excellence</h6>
-            <p class="mb-0">
-            At GLCTech, every solution is planned with quality, transparency, and innovation. Our focus is on delivering measurable results, increasing your team's productivity, and consolidating a robust and reliable IT environment.
-          </div>
-        </div>
-        <p class="mt-4">
-With proven expertise, dedicated support, tailor-made solutions, and constant innovation, GLCTech establishes itself as the ideal strategic partner for companies seeking high performance, stability, and lasting results in their monitoring projects.
-        </p>
-      </div>
+<!-- ======= HERO ======= -->
+<section id="hero" class="hero-slider" aria-label="Main highlights">
+  <article class="slide active" style="background-image: url('./assets/hero/noc.png');">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>Intelligent IT Monitoring and Security</h1>
+      <p>Full visibility of your infrastructure with Zabbix and Grafana.</p>
+      <a href="#contact" class="glc-btn" hidden>Contact Us</a>
     </div>
+  </article>
+
+  <article class="slide" style="background-image: url('images/slide2.jpg');">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>Real-Time Alerts</h1>
+      <p>Receive immediate notifications about critical issues.</p>
+      <a href="#contact" class="glc-btn">Learn More</a>
+    </div>
+  </article>
+
+  <article class="slide" style="background-image: url('images/slide3.jpg');">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>Detailed Reports</h1>
+      <p>Analyze your IT performance with clear and complete dashboards.</p>
+      <a href="#services" class="glc-btn">View Our Services</a>
+    </div>
+  </article>
+</section>
+
+<!-- ======= ABOUT ======= -->
+<section id="about" class="about">
+  <div class="container about-content">
+    <article class="about-text">
+      <h2 class="section-title">About GLCTech</h2>
+      <p class="section-description">
+        <strong>GLCTech</strong> has an unwavering commitment to customer satisfaction. Its customer-centric approach ensures that all solutions are designed and implemented with a focus on client needs and objectives, delivering exceptional and long-lasting results.
+      </p>
+
+      <ul class="about-list">
+        <li><i class="fa-solid fa-award"></i><strong>Expertise in Zabbix</strong></li>
+        <li>
+          <span>
+            GLCTech has a highly qualified and experienced team in Zabbix, one of the leading infrastructure monitoring platforms. This deep expertise enables customized and efficient solutions tailored to each client.
+          </span>
+        </li>
+
+        <li><i class="fa-solid fa-headset"></i><strong>Comprehensive Support</strong></li>
+        <li>
+          <span>
+            By choosing GLCTech, you gain access to full support throughout all project stages — from design to implementation and ongoing maintenance — ensuring optimal and reliable monitoring performance.
+          </span>
+        </li>
+
+        <li>
+          With experience, comprehensive support, customized solutions, technological innovation, and a strong commitment to customer satisfaction, GLCTech stands out as the ideal partner for successful and efficient monitoring projects.
+        </li>
+      </ul>
+    </article>
+
+    <figure class="about-image">
+      <img src="./assets/hero/escritorio.png" alt="GLCTech team monitoring systems" />
+    </figure>
   </div>
 </section>
 
-<section id="team" class="team py-5" >
-  <div class="container">
-    <h2 class="section-title text-center">Our Team</h2>
-    <p class="section-subtitle text-center">Leadership and specialists driving GLC Tech</p>
-
-    <div class="row g-4 justify-content-center">
-
-      <div class="col-md-4 col-sm-6">
-        <div class="team-card text-center p-4 h-100">
-          <div class="team-img mb-3">
-            <img src="./assets/team/eu3.png" alt="André Luiz Cézar" class="img-fluid rounded-circle">
-          </div>
-          <h5 class="team-name">André Luiz Cézar</h5>
-          <p class="team-role">CEO & Founder</p>
-          <p class="team-bio">Specialist in IT infrastructure and monitoring focused on corporate solutions based on Zabbix, Grafana, and automation.</p>
-          <div class="team-social mt-3">
-            <a href="https://www.linkedin.com/in/andrelcezar/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            <a href="mailto:andre.cezar@glctech.com.br" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="col-md-4 col-sm-6" >
-        <div class="team-card text-center p-4 h-100">
-          <div class="team-img mb-3">
-            <img src="./assets/team/tchize.png" alt="Juliana Silva" class="img-fluid rounded-circle">
-          </div>
-          <h5 class="team-name">Tchize Matias</h5>
-          <p class="team-role">Manager</p>
-          <p class="team-bio"></p>
-          <div class="team-social mt-3">
-            <a href="https://www.linkedin.com/in/tchize-i-do-devops/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            <a href="#" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
-            
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4 col-sm-6">
-        <div class="team-card text-center p-4 h-100">
-          <div class="team-img mb-3">
-            <img src="./assets/team/kawan.png" alt="Juliana Silva" class="img-fluid rounded-circle">
-          </div>
-          <h5 class="team-name">Kawan Pablo</h5>
-          <p class="team-role">CTO</p>
-          <p class="team-bio">Responsible for coordinating infrastructure projects in AWS, ensuring the quality of cloud solution delivery and cultivating strategic relationships with corporate clients.</p>
-          <div class="team-social mt-3">
-             <a href="https://www.linkedin.com/in/kawan-pablo-a381b5292/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            <a href="mailto:kawan.pablo@glctech.com.br" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
-            
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-    
+<!-- ======= SERVICES ======= -->
 <section id="services" class="py-5 text-center text-light" style="background-color: #2c2c2c;">
   <div class="container">
     <h2 class="fw-bold mb-3">Our Services</h2>
@@ -258,709 +128,124 @@ With proven expertise, dedicated support, tailor-made solutions, and constant in
     </p>
 
     <div class="row g-4">
+
       <div class="col-md-4">
         <div class="card h-100 shadow-lg border-0 rounded-3 overflow-hidden">
-          <img src="./assets/services/monitoring.png" class="card-img-top" alt="Network Security">
+          <img src="./assets/services/monitoring.png" class="card-img-top" alt="IT Monitoring">
           <div class="card-body bg-light text-start">
             <h5 class="card-title text-dark fw-semibold">Intelligent Monitoring with Zabbix</h5>
             <p class="card-text text-muted">
-              Monitor the performance of servers, networks, and applications in real-time, with accurate metrics, custom dashboards, and proactive incident analysis.
+              Monitor servers, networks, and applications in real time with precise metrics, custom dashboards, and proactive incident analysis.
             </p>
           </div>
           <div class="card-footer bg-white border-0 text-center pb-4">
-            <a href="./zabbix_eng.html" target="_blank" class="btn btn-danger px-4">Learn More</a>
+            <a href="./zabbix.html" target="_blank" class="btn btn-danger px-4">Learn More</a>
           </div>
         </div>
       </div>
 
       <div class="col-md-4">
         <div class="card h-100 shadow-lg border-0 rounded-3 overflow-hidden">
-          <img src="./assets/services/kaspersky.png" class="card-img-top" alt="Network Security">
+          <img src="./assets/services/kaspersky.png" class="card-img-top" alt="Cybersecurity">
           <div class="card-body bg-light text-start">
-            <h5 class="card-title text-dark fw-semibold">Kaspersky Real-Time Security</h5>
+            <h5 class="card-title text-dark fw-semibold">Real-Time Security with Kaspersky</h5>
             <p class="card-text text-muted">
-              Continuously monitor your systems and detect threats in real-time, ensuring security, performance, and compliance across the entire environment.
+              Continuously monitor your systems and detect threats in real time, ensuring security, performance, and compliance.
             </p>
           </div>
           <div class="card-footer bg-white border-0 text-center pb-4">
-            <a href="./kaspersky_eng.html" class="btn btn-danger px-4" target="_blank">Learn More</a>
+            <a href="./kaspersky.html" class="btn btn-danger px-4" target="_blank">Learn More</a>
           </div>
         </div>
       </div>
 
       <div class="col-md-4">
         <div class="card h-100 shadow-lg border-0 rounded-3 overflow-hidden">
-          <img src="./assets/services/veeam.png" class="card-img-top" alt="IT Consulting">
+          <img src="./assets/services/veeam.png" class="card-img-top" alt="Backup Solutions">
           <div class="card-body bg-light text-start">
-            <h5 class="card-title text-dark fw-semibold">Intelligent Backup with Veeam Backup</h5>
+            <h5 class="card-title text-dark fw-semibold">Smart Backup with Veeam</h5>
             <p class="card-text text-muted">
-              Ensure your business continuity with automatic backups, rapid recovery, and complete reports on the status of your security copies.
+              Ensure business continuity with automated backups, fast recovery, and detailed reporting on your backup status.
             </p>
           </div>
           <div class="card-footer bg-white border-0 text-center pb-4">
-            <a href="./veeam_eng.html" class="btn btn-danger px-4" target="_blank">Learn More</a>
+            <a href="./veeam.html" class="btn btn-danger px-4" target="_blank">Learn More</a>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-</section>
 
-
-
-
-
-     <section id="partners" class="partners" aria-labelledby="partners-title">
-      <div class="container">
-        <h2 id="partners-title" class="section-title">Our Partners</h2>
-        <p class="section-subtitle">We work alongside leading companies and technologies to offer complete and reliable solutions.</p>
-        <div class="partners-logos" role="list">
-          <div class="partner" role="listitem"><img src="" alt="Partner 1" hidden/></div>
-          <div class="partner" role="listitem"><img src="" alt="Partner 2" hidden/></div>
-          <div class="partner" role="listitem"><img src="./assets/partner/client-2.png" alt="Partner 3" /></div>
-          <div class="partner" role="listitem"><img src="./assets/partner/client-4.png" alt="Partner 4" /></div>
-          <div class="partner" role="listitem"><img src="" alt="Partner 5" hidden/></div>
-          <div class="partner" role="listitem"><img src="" alt="Partner 6" hidden/></div>
-          
-        </div>
-      </div>
-    </section>
-
-
-    <section id="testimonials" class="testimonials py-5">
-  <div class="container">
-    <h2 class="section-title text-center">Testimonials</h2>
-    <p class="section-subtitle text-center">What our clients say about GLC Tech</p>
-
-    <div class="col-md-4" hidden>
-        <div class="testimonial-card text-center p-4 h-100">
-          <div class="stars mb-3">
-            <i class="fas fa-star text-warning"></i>
-            <i class="fas fa-star text-warning"></i>
-            <i class="fas fa-star text-warning"></i>
-            <i class="fas fa-star text-warning"></i>
-            <i class="far fa-star text-warning"></i>
-          </div>
-          <p class="testimonial-text">
-            “Whenever we need something, they are willing to help. They have a good knowledge of their area of expertise and can provide solutions according to our needs. I definitely recommend them.”
-          </p>
-          <h5 class="mt-3">Wilson</h5>
-          <small class="text-muted">President - Nordenet</small>
-        </div>
-      </div>
-
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="testimonial-card text-center p-4 h-100">
-          <div class="stars mb-3">
-            <i class="fas fa-star text-warning"></i>
-            <i class="fas fa-star text-warning"></i>
-            <i class="fas fa-star text-warning"></i>
-            <i class="fas fa-star text-warning"></i>
-            <i class="fas fa-star text-warning"></i>
-          </div>
-          <p class="testimonial-text">
-            “The quality of services provided by GLCTech is exceptional. Always attentive and agile in meeting our needs, they demonstrate deep knowledge in their area, offering effective solutions for any challenge. I strongly recommend their services.”
-          </p>
-          <h5 class="mt-3">Matheus</h5>
-          <small class="text-muted">President - Web+ Telecom</small>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="testimonial-card text-center p-4 h-100">
-          <div class="stars mb-3">
-            <i class="fas fa-star text-warning"></i>
-            <i class="fas fa-star text-warning"></i>
-            <i class="fas fa-star text-warning"></i>
-            <i class="fas fa-star text-warning"></i>
-            <i class="far fa-star text-warning"></i>
-          </div>
-          <p class="testimonial-text">
-            “Whenever we need something, they are willing to help. They have a good knowledge of their area of expertise and can provide solutions according to our needs. I definitely recommend them.”
-          </p>
-          <h5 class="mt-3">Wilson</h5>
-          <small class="text-muted">President - Nordenet</small>
-        </div>
-      </div>
-
-      <div class="col-md-4" hidden>
-        <div class="testimonial-card text-center p-4 h-100">
-          <div class="stars mb-3">
-            <i class="fas fa-star text-warning"></i>
-            <i class="fas fa-star text-warning"></i>
-            <i class="fas fa-star text-warning"></i>
-            <i class="fas fa-star text-warning"></i>
-            <i class="fas fa-star-half-alt text-warning"></i>
-          </div>
-          <p class="testimonial-text">
-            “Excellent consulting. Besides monitoring, they helped us optimize costs and improve network security with Kaspersky.”
-          </p>
-          <h5 class="mt-3">Juliana Pires</h5>
-          <small class="text-muted">CTO — GlobalSystems</small>
-        </div>
-      </div>
     </div>
   </div>
 </section>
 
+<!-- ======= CONTACT ======= -->
 
-<!-- ========== ORÇAMENTO ======-->
-
-<section id="calculator" class="py-5" style="background-color: #f8f9fa;">
+<section id="contact" class="contact" aria-labelledby="contact-title">
   <div class="container">
-    <h2 class="section-title text-center">Simulate Your Company's IT Investment</h2>
-    <div class="mx-auto mb-4" style="width: 80px; height: 3px; background-color: #E4002B;"></div>
-    <p class="section-subtitle text-center mb-5">
-      Get a quick estimate based on the official licensing models for Zabbix, Kaspersky, and Veeam.
+    <h2 id="contact-title" class="section-title">Contact Us</h2>
+    <p class="section-subtitle">
+      Get in touch with our technical team and discover how we can help optimize your IT infrastructure.
     </p>
 
-    <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <div class="card p-4 shadow-lg border-0 rounded-3">
-          <form id="serviceCalculatorForm">
-            <div class="row g-4 mb-4">
-              <div class="col-md-12">
-                <div class="card h-100 p-3 bg-light border-danger border-2">
-                  <label for="serviceType" class="form-label fw-bold"><i class="fas fa-desktop me-2"></i> 1. Which service do you need?</label>
-                  <select class="form-select" id="serviceType" required>
-                    <option value="">-- Select an option --</option>
-                    <option value="zabbix">Zabbix Monitoring (Service)</option>
-                    <option value="kaspersky">Kaspersky Security (License)</option>
-                    <option value="veeam">Veeam Backup (VUL License)</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-md-12" id="environmentFieldContainer" style="display: none;">
-                <div class="card h-100 p-3 bg-light border-danger border-2">
-                  <label for="environmentType" class="form-label fw-bold"><i class="fas fa-cloud me-2"></i> 2. What is the monitoring environment?</label>
-                  <select class="form-select" id="environmentType">
-                    <option value="">-- Select environment --</option>
-                    <option value="onpremises">On-premises (Local)</option>
-                    <option value="cloud">Cloud (AWS, Azure, GCP)</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            
-            <div id="zabbixFieldsContainer" style="display: none;">
-                <h4 class="text-danger mb-3 mt-4">Zabbix Service Details</h4>
-
-                <div id="zabbixOnPremFields" style="display: none;" class="row g-3 mb-4 p-3 border rounded">
-                    <label class="form-label fw-bold text-dark"><i class="fas fa-server me-2"></i> 3. Assets for Monitoring (On-premises)</label>
-                    <div class="col-md-3">
-                        <label for="qtdServersOnPrem" class="form-label">Servers (OS/VMs)</label>
-                        <input type="number" class="form-control" id="qtdServersOnPrem" min="0" value="0">
-                    </div>
-                    <div class="col-md-3">
-                        <label for="qtdRouters" class="form-label">Routers/Switches</label>
-                        <input type="number" class="form-control" id="qtdRouters" min="0" value="0">
-                    </div>
-                    <div class="col-md-3">
-                        <label for="qtdServices" class="form-label">Services/Applications</label>
-                        <input type="number" class="form-control" id="qtdServices" min="0" value="0">
-                    </div>
-                    <div class="col-md-3">
-                        <label for="qtdLinks" class="form-label">Internet Links</label>
-                        <input type="number" class="form-control" id="qtdLinks" min="0" value="0">
-                    </div>
-                    <div class="col-md-12 mt-3">
-                      <small class="text-muted">The number of assets defines the estimated implementation days (consulting).</small>
-                    </div>
-                </div>
-
-                <div id="zabbixCloudFields" style="display: none;" class="row g-3 mb-4 p-3 border rounded">
-                    <label class="form-label fw-bold text-dark"><i class="fas fa-cloud me-2"></i> 3. Assets for Monitoring (Cloud)</label>
-                    <div class="col-md-6">
-                        <label for="qtdServersCloud" class="form-label">Servers/Instances (EC2, VMs, etc.)</label>
-                        <input type="number" class="form-control" id="qtdServersCloud" min="0" value="0">
-                    </div>
-                    <div class="col-md-12 mt-3">
-                      <small class="text-muted">Includes complexity of integration with Cloud APIs and critical resources.</small>
-                    </div>
-                </div>
-            </div>
-
-            <div id="kasperskyFields" style="display: none;" class="p-3 border rounded mb-4">
-                <h4 class="text-danger mb-3 mt-0">Kaspersky Licensing Details (SMB/Enterprise Portfolio)</h4>
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label for="qtdKasperskyEndpoints" class="form-label fw-bold"><i class="fas fa-users me-2"></i> 3. Quantity of Endpoints/Users</label>
-                        <input type="number" class="form-control" id="qtdKasperskyEndpoints" min="1" value="10">
-                        <small class="text-muted">Small Business Security is recommended for up to 25 users. Above that, use Next options.</small>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="kasperskyTier" class="form-label fw-bold"><i class="fas fa-shield-alt me-2"></i> 4. Protection Level (Tier)</label>
-                        <select class="form-select" id="kasperskyTier">
-                            <option value="0.5">Small Business Security (Basic Protection, Up to 25 Users)</option>
-                            <option value="1.0">Next EDR Foundations (Essential Protection and Management)</option>
-                            <option value="1.5">Next EDR Optimum (EDR, Control, and Automation)</option>
-                            <option value="2.0">Next XDR Optimum (Hybrid Security and Advanced XDR)</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                      <label for="kasperskyPeriod" class="form-label fw-bold"><i class="fas fa-calendar-alt me-2"></i> 5. Licensing Period (in Years)</label>
-                      <input type="number" class="form-control" id="kasperskyPeriod" min="1" max="3" value="1">
-                    </div>
-                </div>
-            </div>
-
-            <div id="veeamFields" style="display: none;" class="p-3 border rounded mb-4">
-                <h4 class="text-danger mb-3 mt-0">Veeam Licensing Details (VUL)</h4>
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label for="qtdVeeamVMs" class="form-label fw-bold"><i class="fas fa-server me-2"></i> 3. VMs, Physical Servers, or Cloud</label>
-                        <input type="number" class="form-control" id="qtdVeeamVMs" min="0" value="10">
-                        <small class="text-muted">1 Workload = 1 VUL License.</small>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="qtdVeeamWorkstations" class="form-label fw-bold"><i class="fas fa-desktop me-2"></i> 4. Workstations / Endpoints</label>
-                        <input type="number" class="form-control" id="qtdVeeamWorkstations" min="0" value="0">
-                        <small class="text-muted">3 Workstations = 1 VUL License.</small>
-                    </div>
-                    
-                    <div class="col-md-6">
-                        <label for="veeamTier" class="form-label fw-bold"><i class="fas fa-layer-group me-2"></i> 5. Edition Level (Veeam Data Platform)</label>
-                        <select class="form-select" id="veeamTier">
-                            <option value="1.0">Foundation (Essential Backup)</option>
-                            <option value="1.5">Advanced (Extended Features and Immutability)</option>
-                            <option value="2.0">Premium (Maximum Functionality and Instant Recovery)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="col-md-6">
-                      <label for="veeamPeriod" class="form-label fw-bold"><i class="fas fa-calendar-alt me-2"></i> 6. Licensing Period (in Years)</label>
-                      <input type="number" class="form-control" id="veeamPeriod" min="1" max="5" value="1">
-                    </div>
-                </div>
-            </div>
-
-            <div class="d-grid mb-4">
-              <button type="submit" class="btn btn-danger btn-lg"><i class="fas fa-calculator me-2"></i> Calculate Estimate</button>
-            </div>
-          </form>
-
-          <div id="calculationResult" class="mt-4 p-4 rounded text-center border-danger border-3" style="display: none; background-color: #fff3f3;">
-            <h4 class="text-dark fw-bold">Your Estimated Investment:</h4>
-            <p class="h1 text-danger fw-bolder" id="estimatedValue">$ 0.00</p>
-            <p class="small text-muted mt-3" id="resultNote">
-              * This value is an **initial estimate**. For an official and detailed quote, please contact us.
-            </p>
-            <a href="#contact" class="btn btn-outline-danger btn-sm mt-2"><i class="fas fa-paper-plane me-2"></i> Request Official Quote</a>
-          </div>
+    <div class="contact-grid">
+      
+      <!-- HUBSPOT FORM (UNCHANGED STRUCTURE) -->
+      <form class="contact-form" aria-label="Contact form">
+        <script src="https://js.hsforms.net/forms/embed/50295618.js" defer></script>
+        <div
+          class="hs-form-frame"
+          data-region="na1"
+          data-form-id="f978a146-9f87-4953-95b5-b3caadb49530"
+          data-portal-id="50295618">
         </div>
-      </div>
+      </form>
+
+      <!-- CONTACT INFO -->
+      <address class="contact-info" aria-label="Contact information">
+        <h3>Contact Information</h3>
+        <ul>
+          <li>
+            <i class="fa-regular fa-envelope"></i>
+            <a href="mailto:contato@glctech.com.br">contato@glctech.com.br</a>
+          </li>
+          <li>
+            <i class="fa-brands fa-whatsapp"></i>
+            +55 11 95762-4146
+          </li>
+          <li>
+            <i class="fa-regular fa-map"></i>
+            São Paulo, SP - Brazil
+          </li>
+        </ul>
+
+        <div class="socials" role="list">
+          <a href="#" aria-label="LinkedIn" role="listitem">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="#" aria-label="Instagram" role="listitem">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" aria-label="YouTube" role="listitem">
+            <i class="fab fa-youtube"></i>
+          </a>
+        </div>
+      </address>
+
     </div>
   </div>
 </section>
 
-<!-- ======= CONTACT =========-->
 
-     <section id="contact" class="contact" aria-labelledby="contact-title">
-      <div class="container">
-        <h2 id="contact-title" class="section-title">Contact Us</h2>
-        <p class="section-subtitle">Get in touch with our technical team and discover how we can help optimize your IT infrastructure.</p>
-        <div class="contact-grid">
-          <form class="contact-form" aria-label="Contact form">
-            <script src="https://js.hsforms.net/forms/embed/50295618.js" defer></script>
-<div class="hs-form-frame" data-region="na1" data-form-id="5c7035d7-055a-4dff-964b-cb56a87c58b3" data-portal-id="50295618"></div>
-          </form>
-          <address class="contact-info" aria-label="Contact Information">
-            <h3>Contact Information</h3>
-            <ul>
-              <li><i class="fa-regular fa-envelope"></i> <a href="mailto:contato@glctech.com.br">contato@glctech.com.br</a></li>
-              <li><i class="fa-brands fa-whatsapp"></i> +55 11 95762-4146</li>
-              <li><i class="fa-regular fa-map"></i></i> São Paulo, SP - Brazil</li>
-            </ul>
-            <div class="socials" role="list">
-              <a href="#" aria-label="LinkedIn" role="listitem"><i class="fab fa-linkedin"></i></a>
-              <a href="#" aria-label="Instagram" role="listitem"><i class="fab fa-instagram"></i></a>
-              <a href="#" aria-label="YouTube" role="listitem"><i class="fab fa-youtube"></i></a>
-            </div>
-          </address>
-        </div>
-      </div>
-    </section>
-  </main>
+</main>
 
-<!-- ======= SCRIPT ORÇAMENTO ==========-->
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('serviceCalculatorForm');
-    const resultDiv = document.getElementById('calculationResult');
-    const estimatedValueEl = document.getElementById('estimatedValue');
-    const serviceTypeSelect = document.getElementById('serviceType');
-    const environmentFieldContainer = document.getElementById('environmentFieldContainer');
-    const environmentTypeSelect = document.getElementById('environmentType');
-    const resultNoteEl = document.getElementById('resultNote');
-
-    // Zabbix Elements
-    const zabbixFieldsContainer = document.getElementById('zabbixFieldsContainer');
-    const zabbixOnPremFields = document.getElementById('zabbixOnPremFields');
-    const qtdServersOnPrem = document.getElementById('qtdServersOnPrem');
-    const qtdRouters = document.getElementById('qtdRouters');
-    const qtdServices = document.getElementById('qtdServices');
-    const qtdLinks = document.getElementById('qtdLinks');
-    const zabbixCloudFields = document.getElementById('zabbixCloudFields');
-    const qtdServersCloud = document.getElementById('qtdServersCloud');
-
-    // Kaspersky Elements
-    const kasperskyFields = document.getElementById('kasperskyFields');
-    const qtdKasperskyEndpoints = document.getElementById('qtdKasperskyEndpoints');
-    const kasperskyTier = document.getElementById('kasperskyTier');
-    const kasperskyPeriod = document.getElementById('kasperskyPeriod');
-
-    // Veeam Elements
-    const veeamFields = document.getElementById('veeamFields');
-    const qtdVeeamVMs = document.getElementById('qtdVeeamVMs');
-    const qtdVeeamWorkstations = document.getElementById('qtdVeeamWorkstations');
-    const veeamPeriod = document.getElementById('veeamPeriod');
-    const veeamTier = document.getElementById('veeamTier'); 
-    
-    // --- Visibility Functions ---
-    function hideAllConditionalFields() {
-      environmentFieldContainer.style.display = 'none';
-      zabbixFieldsContainer.style.display = 'none';
-      zabbixOnPremFields.style.display = 'none';
-      zabbixCloudFields.style.display = 'none';
-      kasperskyFields.style.display = 'none';
-      veeamFields.style.display = 'none';
-      // Disable "required" to ensure the form submits correctly
-      environmentTypeSelect.required = false;
-    }
-
-    // Main Listener (Service Type)
-    serviceTypeSelect.addEventListener('change', () => {
-      const selectedService = serviceTypeSelect.value;
-      
-      hideAllConditionalFields();
-      resultDiv.style.display = 'none'; 
-      
-      environmentTypeSelect.value = ''; 
-
-      if (selectedService === 'zabbix') {
-        environmentFieldContainer.style.display = 'block';
-        environmentTypeSelect.required = true;
-        zabbixFieldsContainer.style.display = 'block';
-      } else if (selectedService === 'kaspersky') {
-        kasperskyFields.style.display = 'block';
-      } else if (selectedService === 'veeam') {
-        veeamFields.style.display = 'block';
-      }
-    });
-
-    // Zabbix Environment Listener
-    environmentTypeSelect.addEventListener('change', () => {
-        const environmentType = environmentTypeSelect.value;
-        zabbixOnPremFields.style.display = 'none';
-        zabbixCloudFields.style.display = 'none';
-        resultDiv.style.display = 'none';
-
-        if (environmentType === 'onpremises') {
-            zabbixOnPremFields.style.display = 'flex';
-        } else if (environmentType === 'cloud') {
-            zabbixCloudFields.style.display = 'flex';
-        }
-    });
-
-
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      const serviceType = serviceTypeSelect.value;
-      let totalCost = 0;
-      let resultNoteText = "";
-
-      // =========================================================================
-      // --- ⚠️ PRICE DEFINITIONS (USD) - ADJUST BASED ON OFFICIAL VALUES ---
-      // =========================================================================
-      
-      // ZABBIX (Services and Implementation)
-      const DAILY_RATE_USD = 800; // Average daily cost for Zabbix consulting in USD
-      
-      // Monthly Support Tier Mapping (USD/month)
-      const SUPPORT_TIER_S = 160; 
-      const SUPPORT_TIER_M = 300; 
-      const SUPPORT_TIER_L = 500; 
-      
-      // Thresholds for defining implementation effort (in total assets)
-      const THRESHOLD_SMALL = 10;
-      const THRESHOLD_MEDIUM = 25;
-      const DAYS_SMALL = 5; 
-      const DAYS_MEDIUM = 10;
-      const DAYS_LARGE = 15;
-
-
-      // KASPERSKY (Licenses) - ANNUAL Cost (USD) per Endpoint/User
-      const COST_KASPERSKY_SMALL_BUSINESS_YEAR = 30.00; // Small Business Tier
-      const COST_KASPERSKY_FOUNDATIONS_YEAR = 55.00; // Next EDR Foundations
-      const COST_KASPERSKY_OPTIMUM_YEAR = 90.00; // Next EDR Optimum
-      const COST_KASPERSKY_XDR_YEAR = 120.00; // Next XDR Optimum
-      const KASPERSKY_MIN_LICENSES = 10;
-      const KASPERSKY_SMALL_BUSINESS_MAX = 25; 
-
-      // VEEAM (VUL Licenses)
-      const VUL_PACK_SIZE = 10;
-      const WORKSTATION_FACTOR = 3; 
-      
-      // Base Annual Cost per VUL Pack (10 licenses) - Foundation/Standard Level
-      const COST_VEEAM_VUL_PACK_YEAR_STANDARD = 850.00; 
-      
-      // Multipliers (For simulating cost increase per tier)
-      const VEEAM_MULTIPLIER_STANDARD = 1.0; 
-      const VEEAM_MULTIPLIER_ENTERPRISE = 1.5; 
-      const VEEAM_MULTIPLIER_ENTERPRISE_PLUS = 2.0; 
-      // =========================================================================
-      
-      if (serviceType === 'zabbix') {
-        let totalAssets = 0;
-        let implementationDays = 0;
-        let monthlySupportCost = 0;
-        
-        const environmentType = environmentTypeSelect.value;
-
-        if (!environmentType) {
-            alert("Please select the environment (Cloud or On-premises).");
-            return;
-        }
-
-        if (environmentType === 'onpremises') {
-            const servers = parseInt(qtdServersOnPrem.value) || 0;
-            const routers = parseInt(qtdRouters.value) || 0;
-            const services = parseInt(qtdServices.value) || 0;
-            const links = parseInt(qtdLinks.value) || 0;
-
-            totalAssets = servers + routers + services + links;
-            monthlySupportCost = (totalAssets <= THRESHOLD_SMALL) ? SUPPORT_TIER_S : (totalAssets <= THRESHOLD_MEDIUM ? SUPPORT_TIER_M : SUPPORT_TIER_L);
-
-        } else if (environmentType === 'cloud') {
-            const servers = parseInt(qtdServersCloud.value) || 0;
-            totalAssets = servers;
-            monthlySupportCost = (totalAssets <= THRESHOLD_SMALL) ? SUPPORT_TIER_M : SUPPORT_TIER_L; 
-        }
-
-        if (totalAssets === 0) {
-           alert("Please enter the quantity of items to be monitored for Zabbix.");
-           return;
-        }
-        
-        if (totalAssets <= THRESHOLD_SMALL) {
-            implementationDays = DAYS_SMALL;
-        } else if (totalAssets <= THRESHOLD_MEDIUM) {
-            implementationDays = DAYS_MEDIUM;
-        } else {
-            implementationDays = DAYS_LARGE;
-        }
-
-        const implementationCost = implementationDays * DAILY_RATE_USD;
-        
-        totalCost = implementationCost + monthlySupportCost;
-        
-        resultNoteText = `This value is an **implementation estimate (${implementationDays} days) + 1 month of service**. The estimated recurring monthly cost is ${ monthlySupportCost.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) }.`;
-
-      } else if (serviceType === 'kaspersky') {
-        const endpoints = parseInt(qtdKasperskyEndpoints.value) || 0;
-        const period = parseInt(kasperskyPeriod.value) || 1;
-        const tierMultiplier = parseFloat(kasperskyTier.value);
-        let annualCostPerEndpoint = 0;
-        let tierName = "";
-
-        if (endpoints < KASPERSKY_MIN_LICENSES) {
-           alert(`Kaspersky licensing requires a minimum of ${KASPERSKY_MIN_LICENSES} endpoints.`);
-           return;
-        }
-        
-        if (tierMultiplier === 0.5 && endpoints > KASPERSKY_SMALL_BUSINESS_MAX) {
-            alert(`Small Business Security license is limited to ${KASPERSKY_SMALL_BUSINESS_MAX} users. For ${endpoints} users, please choose one of the Next options (EDR/XDR).`);
-            return;
-        }
-
-
-        if (tierMultiplier === 0.5) {
-            annualCostPerEndpoint = COST_KASPERSKY_SMALL_BUSINESS_YEAR;
-            tierName = "Small Business Security";
-        } else if (tierMultiplier === 1.0) {
-            annualCostPerEndpoint = COST_KASPERSKY_FOUNDATIONS_YEAR;
-            tierName = "Next EDR Foundations";
-        } else if (tierMultiplier === 1.5) {
-            annualCostPerEndpoint = COST_KASPERSKY_OPTIMUM_YEAR;
-            tierName = "Next EDR Optimum";
-        } else {
-            annualCostPerEndpoint = COST_KASPERSKY_XDR_YEAR;
-            tierName = "Next XDR Optimum";
-        }
-
-        totalCost = endpoints * annualCostPerEndpoint * period;
-        
-        resultNoteText = `This value is the **total licensing cost for ${tierName}** for ${endpoints} licenses over ${period} year(s).`;
-
-      } else if (serviceType === 'veeam') {
-        const vms = parseInt(qtdVeeamVMs.value) || 0;
-        const workstations = parseInt(qtdVeeamWorkstations.value) || 0;
-        const period = parseInt(veeamPeriod.value) || 1;
-        const selectedVeeamTier = veeamTier.value; 
-        
-        if (vms === 0 && workstations === 0) {
-           alert("Please enter the quantity of VMs/Servers and/or Workstations.");
-           return;
-        }
-        
-        const requiredVULs = vms + Math.ceil(workstations / WORKSTATION_FACTOR);
-        const vulPacks = Math.ceil(requiredVULs / VUL_PACK_SIZE);
-
-        let annualCostPerPack = 0;
-        let tierName = "";
-
-        if (selectedVeeamTier === "1.0") {
-            annualCostPerPack = COST_VEEAM_VUL_PACK_YEAR_STANDARD * VEEAM_MULTIPLIER_STANDARD;
-            tierName = "Foundation";
-        } else if (selectedVeeamTier === "1.5") {
-            annualCostPerPack = COST_VEEAM_VUL_PACK_YEAR_STANDARD * VEEAM_MULTIPLIER_ENTERPRISE;
-            tierName = "Advanced";
-        } else {
-            annualCostPerPack = COST_VEEAM_VUL_PACK_YEAR_STANDARD * VEEAM_MULTIPLIER_ENTERPRISE_PLUS;
-            tierName = "Premium";
-        }
-
-        totalCost = vulPacks * annualCostPerPack * period;
-        
-        resultNoteText = `This value is the **total VUL licensing cost for ${tierName}** (Veeam Data Platform) for ${requiredVULs} workloads (using ${vms} VMs/Servers and ${workstations} Workstations). The calculation used ${vulPacks} license pack(s) over ${period} year(s). <br><small>Monthly rental models for Service Providers (VCSP) have different pricing.</small>`;
-
-      } else {
-        estimatedValueEl.textContent = 'Select a Valid Service';
-        resultDiv.style.display = 'block';
-        return;
-      }
-      
-      // Format the final result in USD
-      estimatedValueEl.textContent = totalCost.toLocaleString('en-US', {
-        style: 'currency',
-        currency: 'USD'
-      });
-      resultNoteEl.innerHTML = resultNoteText;
-
-      resultDiv.style.display = 'block';
-    });
-  });
-</script>
-
-<!-- ======== FIM SCRIPT ORÇAMENTO ========-->
-
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const menuToggle = document.querySelector(".menu-toggle");
-    const nav = document.querySelector(".nav");
-
-    // Ensures both elements exist before applying events
-    if (menuToggle && nav) {
-      menuToggle.addEventListener("click", () => {
-        menuToggle.classList.toggle("active");
-        nav.classList.toggle("active");
-      });
-
-      // Closes the menu when clicking a link (better UX)
-      nav.querySelectorAll("a").forEach(link => {
-        link.addEventListener("click", () => {
-          menuToggle.classList.remove("active");
-          nav.classList.remove("active");
-        });
-      });
-    }
-  });
-</script>
-
-
-   <footer id="footer" class="footer">
-  <div class="container footer-top">
-    <div class="row">
-      
-      <div class="col-lg-4 col-md-6 footer-info">
-        <h4>GLCTech Tecnologia</h4>
-        <p><strong>Contact:</strong> +55 11 95762-4146<br>
-        <strong>Email:</strong> contato@glctech.com.br</p>
-      </div>
-
-      <div class="col-lg-4 col-md-6 footer-links">
-        <h4>Useful Links</h4>
-        <ul>
-          <li><i class="bi bi-chevron-right"></i> <a href="#home">Home</a></li>
-          <li><i class="bi bi-chevron-right"></i> <a href="#about">About</a></li>
-          <li><i class="bi bi-chevron-right"></i> <a href="#services">Services</a></li>
-          <li><i class="bi bi-chevron-right"></i> <a href="https://ty0ci.share.hsforms.com/2bA7FlfgFRDqxpiOUaFDhhw" target="_blank">Work With Us</a></li>
-          <li><i class="bi bi-chevron-right"></i> <a href="politica_eng.html" target="_blank">Privacy Policy</a></li>
-          <li><i class="bi bi-chevron-right"></i> <a href="termos_eng.html" target="_blank">Terms of Use</a></li>
-        </ul>
-      </div>
-
-      <div class="col-lg-4 col-md-6 footer-social">
-        <h4>Social Media</h4>
-        <p>Follow GLCTech!</p>
-        <div class="social-links mt-3">
-          <a href="https://web.facebook.com/profile.php?viewas=100000686899395&id=61577370040413" class="facebook" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-          <a href="https://www.instagram.com/glctechnologia" class="instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-          <a href="https://www.linkedin.com/company/glctechtecnologia/?viewAsMember=true" class="linkedin" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-      </div>
-
-    </div>
-  </div>
-
+<footer id="footer" class="footer">
   <div class="container footer-bottom">
-    <p>© 2015 Copyright <strong>GLCTech Tecnologia</strong> All Rights Reserved</p>
+    <p>© 2015 <strong>GLCTech Tecnologia</strong>. All Rights Reserved.</p>
   </div>
 </footer>
 
-<!-- Start of HubSpot Embed Code -->
-<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/50295618.js"></script>
-<!-- End of HubSpot Embed Code -->
-</body>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const sections = document.querySelectorAll("section[id]");
-  const navLinks = document.querySelectorAll(".nav ul li a");
-
-  // Function to update the menu according to the scroll
-  function activateMenuOnScroll() {
-    let scrollY = window.pageYOffset;
-
-    sections.forEach((section) => {
-      const sectionTop = section.offsetTop - 100;
-      const sectionHeight = section.offsetHeight;
-      const sectionId = section.getAttribute("id");
-
-      if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-        navLinks.forEach((link) => {
-          link.classList.remove("active");
-          if (link.getAttribute("href").includes(sectionId)) {
-            link.classList.add("active");
-          }
-        });
-      }
-    });
-  }
-
-  // Detect scroll
-  window.addEventListener("scroll", activateMenuOnScroll);
-
-  // Close menu when clicking a link (already exists, but ensures compatibility)
-  navLinks.forEach(link => {
-    link.addEventListener("click", () => {
-      document.querySelector(".menu-toggle").classList.remove("active");
-      document.querySelector(".nav").classList.remove("active");
-    });
-  });
-});
-</script>
-</html>
-
- <script type="text/javascript" id="hs-script-loader" async defer src="//js-na1.hs-scripts.com/50295618.js"></script>
+<script src="//js.hs-scripts.com/50295618.js" async defer></script>
 <script src="//code.tidio.co/z471nxc3tjaciumkzzasuoe928m5odks.js" async></script>
+
+</body>
+</html>
