@@ -274,7 +274,7 @@ html {
   animation: fadeInUp 1s 0.3s forwards;
 }
 
-.btn {
+.glc-btn {
   display: inline-block;
   background: var(--red);
   color: var(--dark);
@@ -287,8 +287,8 @@ html {
   animation: fadeInUp 1s 0.6s forwards;
   transition: all 0.3s;
 }
-.btn:hover,
-.btn:focus {
+.glc-btn:hover,
+.glc-btn:focus {
   transform: translateY(-3px);
   background: transparent;
   outline: none;
@@ -1045,7 +1045,7 @@ html {
     font-size: 1rem;
   }
 
-  .btn {
+  .glc-btn {
     padding: 0.6rem 1rem;
   }
 
