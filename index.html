@@ -8,8 +8,6 @@
   <link rel="icon" href="./assets/logo/favicon.png" type="image/png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script defer src="./scripts/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -34,22 +32,15 @@
 
 
 <!-- BOTÃO MENU HAMBÚRGUER -->
-<button class="menu-toggle" aria-label="Abrir menu">
+<button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
   <span></span>
   <span></span>
   <span></span>
 </button>
 
-    <!-- ======== MENU ========= -->
-    <button class="menu-toggle" aria-label="Abrir menu">
-  <span></span>
-  <span></span>
-  <span></span>
-</button>
-
-    <nav class="nav">
+    <nav class="nav" role="navigation">
       <ul>
-        <li><a href="#">Início</a></li>
+        <li><a href="#hero">Início</a></li>
         <li><a href="#about">Sobre</a></li>
         <li><a href="#team" hidden>Nosso Time</a></li>
         <li><a href="#services">Serviços</a></li>
@@ -81,7 +72,7 @@
         <div class="hero-content">
           <h1>Monitoramento Inteligente e Segurança de TI</h1>
           <p>Visibilidade total da sua infraestrutura com Zabbix e Grafana.</p>
-          <a href="#contact" class="btn" hidden>Entre em Contato</a>
+          <a href="#contact" class="glc-btn" hidden>Entre em Contato</a>
         </div>
       </article>
       <article class="slide" style="background-image: url('images/slide2.jpg');" aria-hidden="true">
@@ -89,7 +80,7 @@
         <div class="hero-content">
           <h1>Alertas em Tempo Real</h1>
           <p>Receba notificações imediatas sobre problemas críticos.</p>
-          <a href="#contact" class="btn">Saiba Mais</a>
+          <a href="#contact" class="glc-btn">Saiba Mais</a>
         </div>
       </article>
       <article class="slide" style="background-image: url('images/slide3.jpg');" aria-hidden="true">
@@ -97,7 +88,7 @@
         <div class="hero-content">
           <h1>Relatórios Detalhados</h1>
           <p>Analise o desempenho da sua TI com gráficos claros e completos.</p>
-          <a href="#services" class="btn">Veja Nossos Serviços</a>
+          <a href="#services" class="glc-btn">Veja Nossos Serviços</a>
         </div>
       </article>
       <button class="prev" aria-label="Slide anterior" hidden>&#10094;</button>
@@ -124,7 +115,7 @@
           </ul>
         </article>
         <figure class="about-image" data-aos="fade-left">
-          <img src="./assets/hero/escritorio.png"Equipe GLCTech monitorando sistemas" />
+          <img src="./assets/hero/escritorio.png" alt="Equipe GLCTech monitorando sistemas" />
           <figcaption></figcaption>
         </figure>
       </div>
@@ -532,30 +523,6 @@ Com expertise comprovada, suporte dedicado, soluções sob medida e inovação c
     </section>
   </main>
 
-
-<!-- ======== SCRIPT MENU HAMBÚRGUER ======== -->
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const menuToggle = document.querySelector(".menu-toggle");
-    const nav = document.querySelector(".nav");
-
-    // Garante que ambos os elementos existam antes de aplicar eventos
-    if (menuToggle && nav) {
-      menuToggle.addEventListener("click", () => {
-        menuToggle.classList.toggle("active");
-        nav.classList.toggle("active");
-      });
-
-      // Fecha o menu ao clicar em um link (melhor UX)
-      nav.querySelectorAll("a").forEach(link => {
-        link.addEventListener("click", () => {
-          menuToggle.classList.remove("active");
-          nav.classList.remove("active");
-        });
-      });
-    }
-  });
-</script>
 
 
    <!-- ======= FOOTER ======= -->
