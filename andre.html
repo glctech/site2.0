@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vCard GLCTech</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #2d2d2d, #1f1f1f);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      color: #ffffff;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: #ffffff;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+      border: 2px solid #2d2d2d;
+      color: #2d2d2d;
+    }
+
+    .topo {
+      position: relative;
+      height: 140px;
+      background: linear-gradient(135deg, #e6262c, #b91c22);
+    }
+
+    .logo-empresa {
+      position: absolute;
+      top: -60px;
+      left: 5px;
+      width: 90px;
+      height: 90px;
+      border-radius: 10px;
+      background: #ffffff;
+      border: 1px solid #e6262c00;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      overflow: hidden;
+      z-index: 4;
+    }
+
+    .logo-empresa img,
+    .foto-perfil img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .foto-perfil {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid #ffffff;
+      background: #ddd;
+      margin: -60px auto 12px;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    .conteudo {
+      padding: 0 28px 28px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 8px 0 4px;
+      font-size: 1.7rem;
+      color: #2d2d2d;
+    }
+
+    .cargo {
+      margin: 0;
+      color: #e6262c;
+      font-weight: bold;
+      font-size: 0.98rem;
+    }
+
+    .empresa {
+      margin: 6px 0 20px;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    .descricao {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #444;
+      margin-bottom: 22px;
+    }
+
+    .info {
+      text-align: left;
+      display: grid;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .item {
+      background: #f7f7f7;
+      border: 1px solid #e3e3e3;
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+
+    .item strong {
+      display: block;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #e6262c;
+      margin-bottom: 4px;
+    }
+
+    .item a,
+    .item span {
+      color: #2d2d2d;
+      text-decoration: none;
+      word-break: break-word;
+      font-size: 0.96rem;
+    }
+
+    .acoes {
+      display: grid;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 14px;
+      padding: 14px 16px;
+      transition: 0.2s ease;
+    }
+
+    .btn-principal {
+      background: #e6262c;
+      color: #ffffff;
+    }
+
+    .btn-secundario {
+      background: transparent;
+      color: #2d2d2d;
+      border: 2px solid #2d2d2d;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.92;
+    }
+
+    .rodape {
+      margin-top: 20px;
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    @media (max-width: 480px) {
+      .conteudo { padding: 0 20px 22px; }
+      h1 { font-size: 1.45rem; }
+    }
+  </style>
+</head>
+<body>
+  <section class="card">
+    <div class="topo">
+      
+    </div>
+
+    <div class="foto-perfil">
+      <!-- Troque o src pela foto da pessoa responsável -->
+      <img src="https://andrelcezar.github.io/site2.0/assets/team/eu3.png" alt="Foto de perfil">
+    </div>
+
+    <div class="conteudo" style="position:relative;">
+      <div class="logo-empresa">
+        <!-- Troque o src pelo logo oficial da GLCTech -->
+        <img src="https://andrelcezar.github.io/site2.0/assets/logo/glc2.png" alt="Logo da GLCTech">
+      </div>
+
+      <h1>André Luiz Cézar</h1>
+      <p class="cargo">Consultor de Monitoramento</p>
+      <p class="empresa">GLCTech • Especialista em Zabbix</p>
+
+      <p class="descricao">
+        Implantação, consultoria e otimização de monitoramento com foco em Zabbix,
+        observabilidade e operação proativa para ambientes de TI.
+      </p>
+
+      <div class="info">
+        <div class="item">
+          <strong>Telefone</strong>
+          <a href="tel:+5511911517501">+55 11 91151-7501</a>
+        </div>
+
+        <div class="item">
+          <strong>E-mail</strong>
+          <a href="mailto:contato@glctech.com.br">andre.cezar@glctech.com.br</a>
+        </div>
+
+        <div class="item">
+          <strong>Site</strong>
+          <a href="https://www.glctech.com.br" target="_blank">www.glctech.com.br</a>
+        </div>
+
+        <div class="item">
+          <strong>LinkedIn</strong>
+          <a href="https://www.linkedin.com/in/andrelcezar/" target="_blank">André Luiz Cézar</a>
+        </div>
+      </div>
+
+      <div class="acoes">
+        <a class="btn btn-principal" href="#" onclick="baixarVCard()">Baixar contato (.vcf)</a>
+        <a class="btn btn-secundario" href="https://wa.me/5511957624146" target="_blank">Chamar no WhatsApp</a>
+      </div>
+
+      <p class="rodape">GLCTech • Monitoramento inteligente para ambientes críticos</p>
+    </div>
+  </section>
+
+  <script>
+    function baixarVCard() {
+      const vcard = `BEGIN:VCARD
+VERSION:3.0
+FN:André Luiz Cézar
+ORG:GLCTech Tecnologia
+TITLE:Consultor de Monitoramento
+TEL;TYPE=CELL:+5511911517501
+EMAIL:andre.cezar@glctech.com.br
+URL:https://www.glctech.com.br
+NOTE:Consultoria e implantação de monitoramento com Zabbix.
+END:VCARD`;
+
+      const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'glctech-contato.vcf';
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }
+  </script>
+</body>
+</html>
