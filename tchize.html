@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GLCTech | Tchize Matias</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+
+margin:0;
+font-family:'Inter',sans-serif;
+background:linear-gradient(140deg,#2d2d2d,#1a1a1a);
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:25px;
+
+}
+
+.card{
+
+width:100%;
+max-width:420px;
+background:white;
+border-radius:18px;
+overflow:hidden;
+box-shadow:0 25px 60px rgba(0,0,0,.35);
+
+}
+
+.header{
+
+height:160px;
+background:linear-gradient(135deg,#e6262c,#b81d22);
+position:relative;
+
+}
+
+.logo{
+
+position:absolute;
+left:25px;
+bottom:-35px;
+
+width:85px;
+height:85px;
+
+background:white;
+border-radius:14px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+box-shadow:0 10px 25px rgba(0,0,0,.25);
+
+}
+
+.logo img{
+
+width:85%;
+height:85%;
+object-fit:contain;
+
+}
+
+.profile{
+position:absolute;
+right:30px;
+bottom:-35px;
+}
+
+.profile img{
+width:90px;
+height:90px;
+border-radius:50%;
+border:4px solid white;
+object-fit:cover;
+box-shadow:0 10px 20px rgba(0,0,0,.25);
+}
+
+.content{
+
+padding:70px 30px 30px;
+
+}
+
+h1{
+
+margin:0;
+font-size:1.55rem;
+color:#2d2d2d;
+
+}
+
+.role{
+
+color:#e6262c;
+font-weight:600;
+margin-top:6px;
+
+}
+
+.company{
+
+font-size:.9rem;
+color:#666;
+margin-bottom:20px;
+
+}
+
+.description{
+
+font-size:.92rem;
+line-height:1.55;
+color:#555;
+margin-bottom:25px;
+
+}
+
+.contacts{
+
+display:grid;
+gap:12px;
+margin-bottom:25px;
+
+}
+
+.contact{
+
+display:flex;
+align-items:center;
+gap:10px;
+
+background:#f6f6f6;
+border-radius:12px;
+
+padding:12px;
+
+}
+
+.contact span{
+
+font-size:.9rem;
+color:#2d2d2d;
+
+}
+
+.contact a{
+
+text-decoration:none;
+color:#2d2d2d;
+
+}
+
+.buttons{
+
+display:grid;
+gap:12px;
+
+}
+
+.btn{
+
+text-decoration:none;
+padding:14px;
+
+border-radius:12px;
+
+font-weight:600;
+
+text-align:center;
+
+transition:.2s;
+
+}
+
+.btn-primary{
+
+background:#e6262c;
+color:white;
+
+}
+
+.btn-secondary{
+
+border:2px solid #2d2d2d;
+color:#2d2d2d;
+
+}
+
+.btn:hover{
+
+transform:translateY(-2px);
+box-shadow:0 8px 20px rgba(0,0,0,.2);
+
+}
+
+.footer{
+
+margin-top:25px;
+font-size:.8rem;
+text-align:center;
+color:#888;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="card">
+
+<div class="header">
+
+<div class="logo">
+<img src="https://andrelcezar.github.io/site2.0/assets/logo/glc2.png">
+</div>
+
+<div class="profile">
+<img src="https://andrelcezar.github.io/site2.0/assets/team/tchize.png">
+</div>
+
+</div>
+
+
+
+<div class="content">
+
+<h1>Tchize Matias</h1>
+
+<div class="role">
+Devops Operations
+</div>
+
+<div class="company">
+GLCTech Technologia 
+</div>
+
+
+<div class="description">
+
+
+
+</div>
+
+
+<div class="contacts">
+
+<div class="contact">
+📞 <a href="tel:+447824979005"><span>+44 7824 979005</span></a>
+</div>
+
+<div class="contact">
+📧 <a href="mailto:andre.cezar@glctech.com.br"><span>tchize.matias@glctech.com.br</span></a>
+</div>
+
+<div class="contact">
+🌐 <a href="https://www.glctech.com.br"><span>www.glctech.com.br</span></a>
+</div>
+
+<div class="contact">
+💼 <a href="https://www.linkedin.com/in/tchize-i-do-devops/"><span>Tchize Matias</span></a>
+</div>
+
+</div>
+
+
+<div class="buttons">
+
+<a class="btn btn-primary" onclick="baixarVCard()">
+Salvar contato
+</a>
+
+<a class="btn btn-secondary" href="https://wa.me/447824979005">
+WhatsApp
+</a>
+
+</div>
+
+
+<div class="footer">
+
+GLCTech • Monitoramento inteligente para ambientes críticos
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+function baixarVCard(){
+
+const vcard=`BEGIN:VCARD
+VERSION:3.0
+FN:André Luiz Cézar
+ORG:GLCTech Tecnologia
+TITLE:Fundador e Consultor de Monitoramento
+TEL;TYPE=CELL:+5511911517501
+EMAIL:andre.cezar@glctech.com.br
+URL:https://www.glctech.com.br
+NOTE:Consultoria e implantação de monitoramento com Zabbix
+END:VCARD`;
+
+const blob=new Blob([vcard],{type:'text/vcard;charset=utf-8'});
+
+const link=document.createElement('a');
+
+link.href=URL.createObjectURL(blob);
+link.download='glctech-contato.vcf';
+link.click();
+
+}
+
+</script>
+
+
+</body>
+</html>
