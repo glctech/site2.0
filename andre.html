@@ -1,340 +1,548 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>GLCTech | André Luiz Cézar</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+<title>André Luiz Cézar — GLCTech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
-
-*{
-box-sizing:border-box;
-}
-
-body{
-
-margin:0;
-font-family:'Inter',sans-serif;
-background:linear-gradient(140deg,#2d2d2d,#1a1a1a);
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:25px;
-
-}
-
-.card{
-
-width:100%;
-max-width:420px;
-background:white;
-border-radius:18px;
-overflow:hidden;
-box-shadow:0 25px 60px rgba(0,0,0,.35);
-
-}
-
-.header{
-
-height:160px;
-background:linear-gradient(135deg,#e6262c,#b81d22);
-position:relative;
-
-}
-
-.logo{
-
-position:absolute;
-left:25px;
-bottom:-35px;
-
-width:85px;
-height:85px;
-
-background:white;
-border-radius:14px;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-box-shadow:0 10px 25px rgba(0,0,0,.25);
-
-}
-
-.logo img{
-
-width:85%;
-height:85%;
-object-fit:contain;
-
-}
-
-.profile{
-position:absolute;
-right:30px;
-bottom:-35px;
-}
-
-.profile img{
-width:90px;
-height:90px;
-border-radius:50%;
-border:4px solid white;
-object-fit:cover;
-box-shadow:0 10px 20px rgba(0,0,0,.25);
-}
-
-.content{
-
-padding:70px 30px 30px;
-
-}
-
-h1{
-
-margin:0;
-font-size:1.55rem;
-color:#2d2d2d;
-
-}
-
-.role{
-
-color:#e6262c;
-font-weight:600;
-margin-top:6px;
-
-}
-
-.company{
-
-font-size:.9rem;
-color:#666;
-margin-bottom:20px;
-
-}
-
-.description{
-
-font-size:.92rem;
-line-height:1.55;
-color:#555;
-margin-bottom:25px;
-
-}
-
-.contacts{
-
-display:grid;
-gap:12px;
-margin-bottom:25px;
-
-}
-
-.contact{
-
-display:flex;
-align-items:center;
-gap:10px;
-
-background:#f6f6f6;
-border-radius:12px;
-
-padding:12px;
-
-}
-
-.contact span{
-
-font-size:.9rem;
-color:#2d2d2d;
-
-}
-
-.contact a{
-
-text-decoration:none;
-color:#2d2d2d;
-
-}
-
-.buttons{
-
-display:grid;
-gap:12px;
-
-}
-
-.btn{
-
-text-decoration:none;
-padding:14px;
-
-border-radius:12px;
-
-font-weight:600;
-
-text-align:center;
-
-transition:.2s;
-
-}
-
-.btn-primary{
-
-background:#e6262c;
-color:white;
-
-}
-
-.btn-secondary{
-
-border:2px solid #2d2d2d;
-color:#2d2d2d;
-
-}
-
-.btn:hover{
-
-transform:translateY(-2px);
-box-shadow:0 8px 20px rgba(0,0,0,.2);
-
-}
-
-.footer{
-
-margin-top:25px;
-font-size:.8rem;
-text-align:center;
-color:#888;
-
-}
-
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --dark:    #2d2d2d;
+    --dark2:   #242424;
+    --dlight:  #383838;
+    --border:  #484848;
+    --red:     #e6262c;
+    --red2:    #ff4a50;
+    --reddim:  rgba(230,38,44,0.12);
+    --white:   #ffffff;
+    --gray:    #c9c9c9;
+    --gdim:    #909090;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--dark2);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Glow fundo */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(230,38,44,0.08) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Grid fundo */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(72,72,72,0.18) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(72,72,72,0.18) 1px, transparent 1px);
+    background-size: 44px 44px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── CARD ── */
+  .card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 400px;
+    background: var(--dark);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+    animation: fadeUp 0.6s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── HERO TOPO ── */
+  .hero {
+    position: relative;
+    height: 160px;
+    background: var(--dark2);
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(72,72,72,0.25) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(72,72,72,0.25) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 240px; height: 240px;
+    background: radial-gradient(circle, rgba(230,38,44,0.18) 0%, transparent 65%);
+  }
+
+  /* Stripe vermelha topo */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--red);
+    z-index: 2;
+  }
+
+  /* Stripe vermelha lateral */
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 3px;
+    background: var(--red);
+    z-index: 2;
+  }
+
+  /* Cantos decorativos */
+  .hero-corner {
+    position: absolute;
+    width: 20px; height: 20px;
+    z-index: 3;
+  }
+  .hero-corner-tr { top: 14px; right: 14px;
+    border-top: 2px solid var(--red);
+    border-right: 2px solid var(--red); }
+  .hero-corner-bl { bottom: 14px; left: 14px;
+    border-bottom: 2px solid var(--red);
+    border-left: 2px solid var(--red); }
+
+  /* Logo empresa */
+  .logo-wrap {
+    position: absolute;
+    top: 14px; left: 14px;
+    z-index: 4;
+  }
+  .logo-wrap img {
+    height: 44px;
+    display: block;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+  }
+
+  /* Tag cargo */
+  .hero-tag {
+    position: absolute;
+    bottom: 14px; right: 14px;
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    background: rgba(230,38,44,0.12);
+    border: 1px solid rgba(230,38,44,0.3);
+    padding: 4px 10px;
+    border-radius: 100px;
+    z-index: 4;
+  }
+
+  /* Foto de perfil */
+  .foto-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: -52px;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 5;
+  }
+
+  .foto {
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
+    border: 3px solid var(--red);
+    overflow: hidden;
+    background: var(--dlight);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 0 6px var(--dark);
+  }
+
+  .foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+  }
+
+  /* ── CONTEÚDO ── */
+  .content {
+    padding: 0 24px 28px;
+    text-align: center;
+  }
+
+  .name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 4px;
+  }
+
+  .role {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 4px;
+  }
+
+  .company {
+    font-size: 0.88rem;
+    color: var(--gdim);
+    margin-bottom: 18px;
+  }
+
+  .divider {
+    width: 40px;
+    height: 2px;
+    background: var(--red);
+    margin: 0 auto 18px;
+    border-radius: 1px;
+  }
+
+  .bio {
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: var(--gdim);
+    margin-bottom: 22px;
+    font-weight: 300;
+  }
+
+  /* ── INFO GRID ── */
+  .info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 22px;
+    text-align: left;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--dlight);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 14px;
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+
+  .info-item:hover {
+    border-color: var(--red);
+    transform: translateX(3px);
+  }
+
+  .info-icon {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    background: var(--reddim);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--red);
+  }
+
+  .info-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gdim);
+    margin-bottom: 2px;
+  }
+
+  .info-value {
+    font-size: 0.88rem;
+    color: var(--white);
+    font-weight: 500;
+    word-break: break-all;
+  }
+
+  /* ── AÇÕES ── */
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    border-radius: 10px;
+    padding: 14px 20px;
+    transition: transform 0.2s, background 0.2s, opacity 0.2s;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+  }
+
+  .btn:hover { transform: translateY(-1px); }
+
+  .btn-primary {
+    background: var(--red);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--red2); }
+
+  .btn-whatsapp {
+    background: #1a3a1a;
+    color: #4ade80;
+    border: 1px solid rgba(74,222,128,0.25);
+  }
+  .btn-whatsapp:hover { background: #1e4a1e; }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--gray);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--red); color: var(--white); }
+
+  /* ── FOOTER ── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .footer-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--red);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  .footer span {
+    font-size: 0.75rem;
+    color: var(--gdim);
+    font-weight: 300;
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--dlight);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 100;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    white-space: nowrap;
+  }
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  .toast i { color: var(--red); }
 </style>
-
 </head>
-
-
 <body>
-
 
 <div class="card">
 
-<div class="header">
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-corner hero-corner-tr"></div>
+    <div class="hero-corner hero-corner-bl"></div>
+    <div class="logo-wrap">
+      <img src="https://andrelcezar.github.io/glctech/assets/logo/glc2.png" alt="GLCTech">
+    </div>
+    <div class="hero-tag">CEO &amp; Fundador · Zabbix Expert</div>
+  </div>
 
-<div class="logo">
-<img src="https://andrelcezar.github.io/site2.0/assets/logo/glc2.png">
+  <!-- FOTO -->
+  <div class="foto-wrap">
+    <div class="foto">
+      <img src="https://andrelcezar.github.io/glctech/assets/team/eu3.png" alt="André Luiz Cézar">
+    </div>
+  </div>
+
+  <!-- CONTEÚDO -->
+  <div class="content">
+
+    <div class="name">André Luiz Cézar</div>
+    <div class="role">CEO &amp; Fundador · Especialista Zabbix</div>
+    <div class="company">GLCTech Tecnologia</div>
+    <div class="divider"></div>
+
+    <p class="bio">
+      Implantação, consultoria e otimização de monitoramento com foco em
+      Zabbix, observabilidade e operação proativa para ambientes de TI corporativos.
+    </p>
+
+    <!-- INFO -->
+    <div class="info-grid">
+
+      <a class="info-item" href="tel:+5511911517501">
+        <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
+        <div>
+          <div class="info-label">Telefone</div>
+          <div class="info-value">+55 11 95762-4146</div>
+        </div>
+      </a>
+
+      <a class="info-item" href="/cdn-cgi/l/email-protection#6b0804051f0a1f042b0c07081f0e080345080406450919">
+        <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
+        <div>
+          <div class="info-label">E-mail</div>
+          <div class="info-value"><span class="__cf_email__" data-cfemail="7e1d11100a1f0a113e19121d0a1b1d16501d1113501c0c">[email&#160;protected]</span></div>
+        </div>
+      </a>
+
+      <a class="info-item" href="https://www.glctech.com.br" target="_blank" rel="noopener">
+        <div class="info-icon"><i class="fa-solid fa-globe"></i></div>
+        <div>
+          <div class="info-label">Site</div>
+          <div class="info-value">www.glctech.com.br</div>
+        </div>
+      </a>
+
+      <a class="info-item" href="https://www.linkedin.com/company/glctechtecnologia" target="_blank" rel="noopener">
+        <div class="info-icon"><i class="fa-brands fa-linkedin-in"></i></div>
+        <div>
+          <div class="info-label">LinkedIn</div>
+          <div class="info-value">GLCTech Tecnologia</div>
+        </div>
+      </a>
+
+      <a class="info-item" href="https://wa.me/5511957624146" target="_blank" rel="noopener">
+        <div class="info-icon"><i class="fa-brands fa-whatsapp"></i></div>
+        <div>
+          <div class="info-label">WhatsApp</div>
+          <div class="info-value">+55 11 95762-4146</div>
+        </div>
+      </a>
+
+      <div class="info-item" style="cursor:default;">
+        <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div>
+          <div class="info-label">Localização</div>
+          <div class="info-value">São Paulo, SP — Brasil</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- AÇÕES -->
+    <div class="actions">
+      <button class="btn btn-primary" onclick="baixarVCard()">
+        <i class="fa-solid fa-address-card"></i>
+        Salvar Contato (.vcf)
+      </button>
+      <a class="btn btn-whatsapp" href="https://wa.me/5511957624146?text=Olá%20André!%20Vi%20seu%20cartão%20digital%20da%20GLCTech." target="_blank" rel="noopener">
+        <i class="fa-brands fa-whatsapp"></i>
+        Chamar no WhatsApp
+      </a>
+      <a class="btn btn-outline" href="https://www.glctech.com.br" target="_blank" rel="noopener">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        Visitar Site GLCTech
+      </a>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div class="footer-dot"></div>
+      <span>GLCTech · Monitoramento inteligente para ambientes críticos</span>
+    </div>
+
+  </div>
 </div>
 
-<div class="profile">
-<img src="https://andrelcezar.github.io/site2.0/assets/team/eu3.png">
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <i class="fa-solid fa-circle-check"></i>
+  Contato salvo com sucesso!
 </div>
 
-</div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  function baixarVCard() {
+    const vcard = [
+      'BEGIN:VCARD',
+      'VERSION:3.0',
+      'FN:André Luiz Cézar',
+      'N:Cézar;André;Luiz;;',
+      'ORG:GLCTech Tecnologia',
+      'TITLE:CEO & Fundador — Especialista Zabbix',
+      'TEL;TYPE=CELL,VOICE:+5511911517501',
+      'EMAIL;TYPE=WORK:andre.cezar@glctech.com.br',
+      'URL:https://www.glctech.com.br',
+      'ADR;TYPE=WORK:;;São Paulo;SP;;Brasil',
+      'X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/company/glctechtecnologia',
+      'NOTE:Especialista em Zabbix | Monitoramento e Segurança em TI | GLCTech',
+      'END:VCARD'
+    ].join('\r\n');
 
-
-
-<div class="content">
-
-<h1>André Luiz Cézar</h1>
-
-<div class="role">
-Fundador & Consultor de Monitoramento
-</div>
-
-<div class="company">
-GLCTech • Especialista em Zabbix
-</div>
-
-
-<div class="description">
-
-Implantação, consultoria e otimização de monitoramento com foco em Zabbix, observabilidade e operação proativa para ambientes críticos de TI.
-
-</div>
-
-
-<div class="contacts">
-
-<div class="contact">
-📞 <a href="tel:+5511911517501"><span>+55 11 91151-7501</span></a>
-</div>
-
-<div class="contact">
-📧 <a href="mailto:andre.cezar@glctech.com.br"><span>andre.cezar@glctech.com.br</span></a>
-</div>
-
-<div class="contact">
-🌐 <a href="https://www.glctech.com.br"><span>www.glctech.com.br</span></a>
-</div>
-
-<div class="contact">
-💼 <a href="https://www.linkedin.com/in/andrelcezar/"><span>LinkedIn</span></a>
-</div>
-
-</div>
-
-
-<div class="buttons">
-
-<a class="btn btn-primary" onclick="baixarVCard()">
-Salvar contato
-</a>
-
-<a class="btn btn-secondary" href="https://wa.me/5511957624146">
-WhatsApp
-</a>
-
-</div>
-
-
-<div class="footer">
-
-GLCTech • Monitoramento inteligente para ambientes críticos
-
-</div>
-
-</div>
-
-
-</div>
-
-
-
-<script>
-
-function baixarVCard(){
-
-const vcard=`BEGIN:VCARD
-VERSION:3.0
-FN:André Luiz Cézar
-ORG:GLCTech Tecnologia
-TITLE:Fundador e Consultor de Monitoramento
-TEL;TYPE=CELL:+5511911517501
-EMAIL:andre.cezar@glctech.com.br
-URL:https://www.glctech.com.br
-NOTE:Consultoria e implantação de monitoramento com Zabbix
-END:VCARD`;
-
-const blob=new Blob([vcard],{type:'text/vcard;charset=utf-8'});
-
-const link=document.createElement('a');
-
-link.href=URL.createObjectURL(blob);
-link.download='glctech-contato.vcf';
-link.click();
-
-}
-
-</script>
-
-
-</body>
-</html>
+    const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'Andre-Cezar-GLCTech.vcf';
+    document.body.appendChild(link);
+    link.click();
+    document.b
