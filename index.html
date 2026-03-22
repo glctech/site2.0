@@ -73,8 +73,8 @@
     width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 2rem;
   }
 
-  .nav-logo { display: block; text-decoration: none; }
-  .nav-logo img { height: 42px; display: block; }
+  .nav-logo4 { display: block; text-decoration: none; }
+  .nav-logo4 img { height: 42px; display: block; }
 
   .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
 
@@ -586,8 +586,8 @@
 <!-- NAVIGATION -->
 <nav>
   <div class="nav-inner">
-    <a href="#hero" class="nav-logo">
-      <img src="https://glctech.com.br/assets/logo/logo4.png" alt="GLCTech — Monitoramento e Segurança em TI">
+    <a href="#hero" class="nav-logo4">
+      <img src="https://glctech.com.br/assets/logo4/logo4.webp" alt="GLCTech — Monitoramento e Segurança em TI">
     </a>
     <ul class="nav-links">
       <li><a href="#about">Sobre</a></li>
@@ -639,7 +639,7 @@
           <span class="hero-img-label">GLCTech · Dashboard Zabbix</span>
           <div class="hero-img-live"><div class="hero-status-dot"></div>Ao vivo</div>
         </div>
-        <img src="./assets/hero/zabbix_fk.png" alt="Dashboard Zabbix GLCTech" class="hero-zabbix-img">
+        <img src="./assets/hero/zabbix_fk.webp" alt="Dashboard Zabbix GLCTech" class="hero-zabbix-img">
       </div>
     </div>
   </div>
@@ -676,7 +676,7 @@
   <div class="container">
     <div class="about-grid">
       <div class="about-img-wrap">
-        <img src="https://glctech.com.br/assets/hero/escritorio.png" alt="Equipe GLCTech">
+        <img src="https://glctech.com.br/assets/hero/escritorio.webp" alt="Equipe GLCTech">
         <div class="about-img-badge"hidden>
           <div class="about-img-badge-num">+50</div>
           <div class="about-img-badge-text">Projetos Entregues</div>
@@ -824,7 +824,7 @@
     </div>
     <div class="team-grid">
       <div class="team-card">
-        <img src="https://glctech.com.br/assets/team/eu3.png" alt="André Luiz Cézar" class="team-card-img face-fix">
+        <img src="https://glctech.com.br/assets/team/eu3.webp" alt="André Luiz Cézar" class="team-card-img face-fix">
         <div class="team-card-body">
           <div class="team-card-role">CEO &amp; Fundador</div>
           <h3>André Luiz Cézar</h3>
@@ -832,7 +832,7 @@
         </div>
       </div>
       <div class="team-card">
-        <img src="https://glctech.com.br/assets/team/tchize.png" alt="Tchize Matias" class="team-card-img">
+        <img src="https://glctech.com.br/assets/team/tchize.webp" alt="Tchize Matias" class="team-card-img">
         <div class="team-card-body">
           <div class="team-card-role">Co-Founder & Dev Operations</div>
           <h3>Tchize Matias</h3>
@@ -841,7 +841,7 @@
       </div>
       <!-- Kawan Pablo — temporariamente oculto -->
       <div class="team-card" style="display:none;" aria-hidden="true">
-        <img src="https://glctech.com.br/assets/team/kawan.png" alt="Kawan Pablo" class="team-card-img">
+        <img src="https://glctech.com.br/assets/team/kawan.webp" alt="Kawan Pablo" class="team-card-img">
         <div class="team-card-body">
           <div class="team-card-role">Arquiteto Clou</div>
           <h3>Kawan Pablo</h3>
@@ -985,23 +985,23 @@
  
 <script>
 (function () {
- 
+
   // ─────────────────────────────────────────────────────────
   // CONFIGURAÇÃO
   // Para funcionar melhor: crie conta GRATUITA em rss2json.com
   // e cole sua API key abaixo (deixe '' para usar sem key)
   var RSS2JSON_KEY = '62efwtaerreoxsqnlf3dzmt1painunkn2k6kttuu';
   // ─────────────────────────────────────────────────────────
- 
+
   var FEEDS = [
     { url: 'https://pox.globo.com/rss/techtudo/',        source: 'techtudo', label: 'TechTudo'           },
     { url: 'https://www.tecmundo.com.br/seguranca/rss',  source: 'tecmundo', label: 'TecMundo Segurança' }
   ];
- 
-  var CACHE_KEY = 'glc_rss_v5';
+
+  var CACHE_KEY = 'glc_rss_v6';
   var CACHE_TTL = 25 * 60 * 1000; // 25 min
   var TIMEOUT   = 8000;
- 
+
   var skeleton  = document.getElementById('blog-skeleton');
   var feedEl    = document.getElementById('blog-feed');
   var errorEl   = document.getElementById('blog-error');
@@ -1009,7 +1009,7 @@
   var statusTxt = document.getElementById('rss-status-text');
   var allItems  = [];
   var curFilter = 'all';
- 
+
   // ── UTILS ──────────────────────────────────────────────────
   function formatDate(s) {
     var d = new Date(s);
@@ -1033,7 +1033,7 @@
   function getCat(item) {
     return (item.categories && item.categories.length) ? item.categories[0] : 'Segurança';
   }
- 
+
   // ── CACHE ──────────────────────────────────────────────────
   function readCache() {
     try {
@@ -1046,7 +1046,7 @@
   function writeCache(items) {
     try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), items: items })); } catch (e) {}
   }
- 
+
   // ── FETCH COM TIMEOUT ──────────────────────────────────────
   function tFetch(url) {
     return new Promise(function (resolve, reject) {
@@ -1059,7 +1059,7 @@
         .catch(function (e) { if (!done) { done = true; clearTimeout(timer); reject(e); } });
     });
   }
- 
+
   // ── PARSER XML (fallback quando a API retorna XML bruto) ───
   function parseXml(text, source, label) {
     var items = [];
@@ -1095,13 +1095,13 @@
     } catch (e) {}
     return items;
   }
- 
+
   // ── FETCH UM FEED (cascata de proxies) ─────────────────────
   function fetchFeed(feed) {
     var keyParam = RSS2JSON_KEY ? ('&api_key=' + RSS2JSON_KEY) : '';
     var r2j = 'https://api.rss2json.com/v1/api.json?order_by=pubDate&count=3'
             + keyParam + '&rss_url=' + encodeURIComponent(feed.url);
- 
+
     // 1️⃣ rss2json (JSON pronto)
     return tFetch(r2j).then(function (r) { return r.json(); })
       .then(function (data) {
@@ -1111,7 +1111,7 @@
         }
         throw new Error('r2j-empty');
       })
- 
+
       // 2️⃣ allorigins (CORS proxy → XML)
       .catch(function () {
         var u = 'https://api.allorigins.win/get?url=' + encodeURIComponent(feed.url);
@@ -1122,7 +1122,7 @@
             throw new Error('allorigins-empty');
           });
       })
- 
+
       // 3️⃣ corsproxy.io (CORS proxy → XML)
       .catch(function () {
         var u = 'https://corsproxy.io/?' + encodeURIComponent(feed.url);
@@ -1132,11 +1132,11 @@
             return items; // pode ser [] — tratado em render()
           });
       })
- 
+
       // falha total → array vazio
       .catch(function () { return []; });
   }
- 
+
   // ── CARD ───────────────────────────────────────────────────
   function buildCard(item) {
     var img = extractImg(item);
@@ -1145,7 +1145,7 @@
         + '" class="blog-card-thumb" loading="lazy" width="400" height="225" decoding="async"'
         + ' onerror="this.parentNode.innerHTML='<div class=\"blog-card-no-thumb\"><i class=\"fa-regular fa-newspaper\"></i></div>'">'
       : '<div class="blog-card-no-thumb"><i class="fa-regular fa-newspaper"></i></div>';
- 
+
     return '<a href="' + item.link + '" target="_blank" rel="noopener" class="blog-card" data-source="' + item._source + '">'
       + imgBlock
       + '<span class="blog-source-badge ' + item._source + '">' + item._label + '</span>'
@@ -1156,7 +1156,7 @@
         + '<p>'  + trunc(stripHtml(item.description), 110) + '</p>'
       + '</div></a>';
   }
- 
+
   // ── FILTRO ─────────────────────────────────────────────────
   window.filterFeed = function (f) {
     curFilter = f;
@@ -1167,7 +1167,7 @@
     var list = f === 'all' ? allItems : allItems.filter(function (i) { return i._source === f; });
     feedEl.innerHTML = list.map(buildCard).join('');
   };
- 
+
   // ── RENDER ─────────────────────────────────────────────────
   function render(items, fromCache) {
     skeleton.style.display = 'none';
@@ -1186,12 +1186,12 @@
     statusDot.style.background = '#4ade80';
     statusTxt.textContent = (fromCache ? '⚡ ' : '') + n + (n > 1 ? ' fontes ativas' : ' fonte ativa');
   }
- 
+
   // ── LOAD ───────────────────────────────────────────────────
   function load() {
     var cached = readCache();
     if (cached && cached.length) { render(cached, true); return; }
- 
+
     Promise.all(FEEDS.map(fetchFeed)).then(function (results) {
       var merged = [];
       results.forEach(function (r) { if (r) merged = merged.concat(r); });
@@ -1200,18 +1200,48 @@
       render(merged, false);
     }).catch(function () { render([], false); });
   }
- 
-  // ── INTERSECTION OBSERVER ──────────────────────────────────
+
+  // ── TRIGGER ──────────────────────────────────────────────
+  // Limpar cache corrompido antes de carregar
+  (function() {
+    try {
+      var raw = localStorage.getItem(CACHE_KEY);
+      if (raw) { JSON.parse(raw); } // testa se é JSON válido
+    } catch(e) {
+      localStorage.removeItem(CACHE_KEY); // remove se corrompido
+    }
+  })();
+
   var section = document.getElementById('blog');
+  var loaded  = false;
+
+  function triggerLoad() {
+    if (loaded) return;
+    loaded = true;
+    load();
+  }
+
+  // Dispara assim que DOM estiver pronto
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      // Aguarda 100ms para garantir que o DOM está completo
+      setTimeout(triggerLoad, 100);
+    });
+  } else {
+    setTimeout(triggerLoad, 100);
+  }
+
+  // IntersectionObserver como segurança adicional
   if (typeof IntersectionObserver !== 'undefined' && section) {
     var obs = new IntersectionObserver(function (entries) {
-      if (entries[0].isIntersecting) { obs.disconnect(); load(); }
-    }, { rootMargin: '300px' });
+      if (entries[0].isIntersecting) { obs.disconnect(); triggerLoad(); }
+    }, { rootMargin: '400px', threshold: 0 });
     obs.observe(section);
-  } else {
-    setTimeout(load, 200);
   }
- 
+
+  // Fallback final: se depois de 3s ainda não carregou, força
+  setTimeout(triggerLoad, 3000);
+
 })();
 </script>
 
@@ -1234,7 +1264,7 @@
         <div class="rule"></div>
         <p>Entre em contato com nossa equipe e descubra como a GLCTech pode otimizar sua infraestrutura de TI. Resposta em até 24h úteis.</p>
         <div class="contact-items">
-          <a href="mailto:contato@glctech.com.br" class="contact-item">
+          <a href="/cdn-cgi/l/email-protection#50333f3e2431243f10373c33243533387e333f3d7e3222" class="contact-item">
             <div class="contact-item-icon"><i class="fa-solid fa-envelope"></i></div>
             <div>
               <div class="contact-item-label">E-mail</div>
@@ -1310,7 +1340,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="https://glctech.com.br/assets/logo/logo4.png" alt="GLCTech">
+        <img src="https://glctech.com.br/assets/logo4/logo4.webp" alt="GLCTech">
         <p>Monitoramento inteligente e segurança de TI para empresas que exigem alta performance e continuidade operacional.</p>
       </div>
       <div class="footer-col">
@@ -1336,7 +1366,7 @@
         <h4>Legal</h4>
         <ul class="footer-links">
           <li><a href="politica.html">Política de Privacidade</a></li>
-          <li><a></a>
+          <li><a
           <li><a href="termos.html">Termos de Uso</a></li>
         </ul>
       </div>
