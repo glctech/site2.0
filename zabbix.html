@@ -1,593 +1,455 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GLCTech — Monitoramento com Zabbix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --dark: #2d2d2d; --dark-mid: #242424; --dark-light: #383838; --dark-border: #484848;
+    --red: #e6262c; --red-light: #ff4a50; --red-dim: rgba(230,38,44,0.12);
+    --white: #ffffff; --gray: #c9c9c9; --gray-dim: #909090; --gray-dark: #606060;
+    --font-display: 'Syne', sans-serif; --font-body: 'DM Sans', sans-serif;
+    --radius: 4px; --radius-lg: 8px; --transition: 0.22s ease;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--dark); color: var(--gray); line-height: 1.7; font-size: 16px; overflow-x: hidden; }
+  h1,h2,h3,h4,h5 { font-family: var(--font-display); font-weight: 700; line-height: 1.2; }
+  .label { font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--red); }
+  .container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
+  section { padding: 6rem 0; }
+  .rule { width: 48px; height: 2px; background: var(--red); margin: 1.5rem 0; }
 
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VH0J5XFYK"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  /* NAV */
+  nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(30,30,30,0.97); backdrop-filter: blur(14px); border-bottom: 1px solid var(--dark-border); height: 70px; display: flex; align-items: center; }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
+  .nav-logo img { height: 42px; display: block; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+  .nav-links a { text-decoration: none; color: var(--gray-dim); font-size: 14px; font-weight: 500; transition: color var(--transition); }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta { background: var(--red) !important; color: #fff !important; padding: 9px 22px; border-radius: var(--radius); font-weight: 600 !important; }
+  .nav-cta:hover { background: var(--red-light) !important; }
 
-  gtag('config', 'G-7VH0J5XFYK');
-</script>
+  /* HERO */
+  #hero { padding-top: 70px; min-height: 72vh; display: flex; align-items: center; position: relative; overflow: hidden; }
+  .hero-grid-bg { position: absolute; inset: 0; background-image: linear-gradient(rgba(72,72,72,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(72,72,72,0.25) 1px, transparent 1px); background-size: 60px 60px; }
+  .hero-glow { position: absolute; top: -10%; right: -5%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(230,38,44,0.06) 0%, transparent 65%); pointer-events: none; }
+  .hero-inner { position: relative; z-index: 1; width: 100%; max-width: 1160px; margin: 0 auto; padding: 5rem 2rem 4rem; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 5rem; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--dark-border); background: var(--dark-light); padding: 6px 14px; border-radius: 100px; font-size: 12px; font-weight: 500; color: var(--gray-dim); margin-bottom: 1.5rem; }
+  .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+  .hero-content h1 { font-size: clamp(2.2rem, 4vw, 3.4rem); color: var(--white); line-height: 1.1; margin-bottom: 1.2rem; }
+  .hero-content h1 span { color: var(--red); }
+  .hero-content p { font-size: 17px; color: var(--gray-dim); max-width: 480px; margin-bottom: 2rem; font-weight: 300; line-height: 1.8; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--red); color: #fff; padding: 13px 26px; border-radius: var(--radius); text-decoration: none; font-weight: 600; font-size: 15px; font-family: var(--font-display); transition: background var(--transition), transform var(--transition); }
+  .btn-primary:hover { background: var(--red-light); transform: translateY(-1px); }
+  .btn-outline { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--dark-border); color: var(--gray-dim); padding: 13px 26px; border-radius: var(--radius); text-decoration: none; font-weight: 500; font-size: 15px; font-family: var(--font-display); transition: border-color var(--transition), color var(--transition); }
+  .btn-outline:hover { border-color: var(--red); color: var(--red); }
 
-  <!-- END GOOGLE Tag -->
+  /* Hero image */
+  .hero-img-wrap { position: relative; }
+  .hero-img-wrap img { width: 100%; border-radius: var(--radius-lg); border: 1px solid var(--dark-border); display: block; filter: brightness(0.85); }
 
-  
-  <!-- ======= METADADOS BÁSICOS ======= -->
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GLCTech | Monitoramento e Segurança em TI</title>
-  <meta name="description" content="Monitoramento, backup e segurança de TI com as soluções GLCTech, Zabbix e Veeam.">
-  <link rel="icon" href="./assets/logo/favicon.png" type="image/png" />
+  /* FEATURES */
+  #features { background: var(--dark-mid); border-top: 1px solid var(--dark-border); border-bottom: 1px solid var(--dark-border); }
+  .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .feature-card { background: var(--dark); border: 1px solid var(--dark-border); border-radius: var(--radius-lg); padding: 2rem; transition: border-color var(--transition); }
+  .feature-card:hover { border-color: var(--red); }
+  .feature-icon { font-size: 28px; margin-bottom: 1rem; }
+  .feature-card h3 { font-size: 1rem; color: var(--white); margin-bottom: 8px; }
+  .feature-card p { font-size: 14px; color: var(--gray-dim); line-height: 1.7; }
 
-  <!-- ======= ESTILOS ======= -->
-  <link rel="stylesheet" href="./css/main.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  /* PLANS */
+  #plans { background: var(--dark); }
+  .section-header { margin-bottom: 4rem; }
+  .section-header .label { display: block; margin-bottom: 1rem; }
+  .section-header h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); color: var(--white); }
+  .section-header p { color: var(--gray-dim); max-width: 560px; margin-top: 1rem; font-size: 17px; }
+  .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .plan-card { background: var(--dark-light); border: 1px solid var(--dark-border); border-radius: var(--radius-lg); padding: 2.5rem; transition: border-color var(--transition), transform var(--transition); position: relative; overflow: hidden; }
+  .plan-card:hover { transform: translateY(-4px); border-color: var(--gray-dark); }
+  .plan-card.featured { border-color: var(--red); }
+  .plan-badge { position: absolute; top: 1.5rem; right: 1.5rem; background: var(--red); color: #fff; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 100px; font-family: var(--font-display); letter-spacing: 0.05em; }
+  .plan-tier { font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red); margin-bottom: 0.5rem; }
+  .plan-name { font-size: 1.3rem; color: var(--white); margin-bottom: 0.4rem; }
+  .plan-sub { font-size: 13px; color: var(--gray-dim); margin-bottom: 2rem; }
+  .plan-price { font-family: var(--font-display); font-size: 2.4rem; font-weight: 800; color: var(--white); line-height: 1; margin-bottom: 0.4rem; }
+  .plan-price span { font-size: 14px; font-weight: 400; color: var(--gray-dim); }
+  .plan-divider { height: 1px; background: var(--dark-border); margin: 1.5rem 0; }
+  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 2rem; }
+  .plan-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--gray); }
+  .plan-features li::before { content: '✓'; color: var(--red); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+  .plan-features li.no::before { content: '×'; color: var(--gray-dark); }
+  .plan-features li.no { color: var(--gray-dark); }
+  .btn-plan { display: block; text-align: center; text-decoration: none; padding: 13px; border-radius: var(--radius); font-family: var(--font-display); font-weight: 600; font-size: 14px; transition: background var(--transition), color var(--transition), border-color var(--transition); border: 1px solid var(--dark-border); color: var(--gray); }
+  .btn-plan:hover { border-color: var(--red); color: var(--red); }
+  .btn-plan.featured { background: var(--red); color: #fff; border-color: var(--red); }
+  .btn-plan.featured:hover { background: var(--red-light); }
 
-  <!-- ======= SCRIPTS ======= -->
-  <script defer src="./scripts/script.js"></script>
+  /* SIMULATOR */
+  #simulator { background: var(--dark-mid); border-top: 1px solid var(--dark-border); }
+  .simulator-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .sim-card { background: var(--dark); border: 1px solid var(--dark-border); border-radius: var(--radius-lg); padding: 2rem; }
+  .sim-card h3 { font-size: 1rem; color: var(--white); margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--dark-border); }
+  .sim-group { margin-bottom: 1.4rem; }
+  .sim-label { font-family: var(--font-display); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gray-dim); display: block; margin-bottom: 8px; }
+  .sim-select, .sim-input { width: 100%; background: var(--dark-light); border: 1px solid var(--dark-border); border-radius: var(--radius); padding: 10px 14px; color: var(--white); font-family: var(--font-body); font-size: 14px; outline: none; -webkit-appearance: none; cursor: pointer; transition: border-color var(--transition); }
+  .sim-select:focus, .sim-input:focus { border-color: var(--red); }
+  .sim-slider-row { display: flex; align-items: center; gap: 12px; }
+  .sim-slider { flex: 1; -webkit-appearance: none; height: 4px; border-radius: 2px; background: var(--dark-border); outline: none; }
+  .sim-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--red); cursor: pointer; }
+  .sim-val { font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--white); min-width: 36px; text-align: right; }
+  .sim-btn { width: 100%; background: var(--red); color: #fff; border: none; border-radius: var(--radius); padding: 14px; font-family: var(--font-display); font-size: 14px; font-weight: 700; cursor: pointer; transition: background var(--transition); letter-spacing: 0.05em; margin-top: 0.5rem; }
+  .sim-btn:hover { background: var(--red-light); }
+
+  /* Result card */
+  .result-card { background: var(--dark); border: 1px solid var(--dark-border); border-radius: var(--radius-lg); padding: 2rem; position: sticky; top: 90px; }
+  .result-card h3 { font-size: 1rem; color: var(--white); margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--dark-border); }
+  .result-main { text-align: center; padding: 2rem 0; border-bottom: 1px solid var(--dark-border); margin-bottom: 1.5rem; }
+  .result-label { font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-dim); margin-bottom: 0.5rem; }
+  .result-price { font-family: var(--font-display); font-size: 3rem; font-weight: 800; color: var(--white); line-height: 1; }
+  .result-price span { font-size: 16px; font-weight: 400; color: var(--gray-dim); }
+  .result-items { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
+  .result-item { display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+  .result-item-key { color: var(--gray-dim); }
+  .result-item-val { color: var(--white); font-weight: 500; font-family: var(--font-display); }
+  .result-cta { display: block; text-align: center; text-decoration: none; background: var(--red); color: #fff; padding: 14px; border-radius: var(--radius); font-family: var(--font-display); font-weight: 700; font-size: 14px; transition: background var(--transition); }
+  .result-cta:hover { background: var(--red-light); }
+
+  /* CTA BANNER */
+  .cta-banner { background: var(--red); padding: 5rem 0; text-align: center; position: relative; overflow: hidden; }
+  .cta-banner::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 40px 40px; }
+  .cta-banner-inner { position: relative; }
+  .cta-banner h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: #fff; margin-bottom: 1rem; }
+  .cta-banner p { color: rgba(255,255,255,0.82); font-size: 17px; margin-bottom: 2.5rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+  .btn-white { display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--red); padding: 14px 30px; border-radius: var(--radius); text-decoration: none; font-weight: 700; font-size: 15px; font-family: var(--font-display); transition: transform var(--transition); }
+  .btn-white:hover { transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer { background: var(--dark-mid); border-top: 1px solid var(--dark-border); padding: 4rem 0 2rem; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
+  .footer-brand img { height: 40px; margin-bottom: 1.2rem; display: block; }
+  .footer-brand p { font-size: 14px; color: var(--gray-dim); line-height: 1.8; max-width: 260px; }
+  .footer-col h4 { font-family: var(--font-display); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gray-dim); margin-bottom: 1.2rem; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .footer-links a { text-decoration: none; font-size: 14px; color: var(--gray-dim); transition: color var(--transition); }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom { border-top: 1px solid var(--dark-border); padding-top: 2rem; display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: var(--gray-dim); }
+
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-img-wrap { display: none; }
+    .features-grid, .plans-grid { grid-template-columns: 1fr; }
+    .simulator-wrap { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .nav-links { display: none; }
+  }
+</style>
 </head>
-
 <body>
-  <!-- ======= HEADER ======= -->
-  <header class="header" role="banner">
-    <div class="header-container container d-flex justify-content-between align-items-center">
-      
-      <!-- LOGO -->
-      <div class="logo">
-        <a href="#inicio" aria-label="Página inicial GLCTech">
-          <img src="./assets/logo/logo.png" alt="Logotipo GLCTech" />
-        </a>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="https://glctech.com.br/assets/logo/logo.png" alt="GLCTech"></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="index.html#about">Sobre</a></li>
+      <li><a href="index.html#services">Serviços</a></li>
+      <li><a href="https://ty0ci.share.hsforms.com/2dDZ5-CdFTKektziqcbgsTQ" target="_blank">Trabalhe Conosco</a></li>
+      <li><a href="index.html#contact" class="nav-cta">Fale Conosco</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge"><div class="hero-badge-dot"></div>Zabbix 7.2 · Monitoramento Corporativo</div>
+      <h1>Visibilidade Total com <span>Zabbix</span></h1>
+      <p>Sua empresa com monitoramento completo da infraestrutura de TI — detectando falhas em tempo real e agindo proativamente para evitar impactos nos negócios.</p>
+      <div class="hero-actions">
+        <a href="#simulator" class="btn-primary">Simular Investimento &rarr;</a>
+        <a href="index.html#contact" class="btn-outline">Falar com Especialista</a>
       </div>
-
-      <!-- BOTÃO MENU HAMBÚRGUER -->
-      <button class="menu-toggle" aria-label="Abrir menu de navegação" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-
-      <!-- ======== MENU ========= -->
-      <nav class="nav" role="navigation">
-        <ul class="nav-list">
-          <li><a href="./index.html" class="active">Início</a></li>
-          <li><a href="./index.html#about">Sobre</a></li>
-          <li><a href="./index.html#services">Serviços</a></li>
-          <li><a href="https://ty0ci.share.hsforms.com/2dDZ5-CdFTKektziqcbgsTQ" target="_blank" rel="noopener" hidden>Trabalhe Conosco</a></li>
-          <li><a href="./index.html#contact">Contato</a></li>
-        </ul>
-      </nav>
     </div>
-  </header>
+    <div class="hero-img-wrap">
+      <img src="https://glctech.com.br/assets/hero/zabbix_fk.png" alt="Painel Zabbix GLCTech">
+    </div>
+  </div>
+</section>
 
- <!-- ======= MONITORAMENTO COM ZABBIX ======= -->
-<section id="zabbix" class="zabbix-section py-5">
+<!-- FEATURES -->
+<section id="features">
   <div class="container">
-    <div class="row align-items-center g-5">
-      <!-- Imagem lateral -->
-      <div class="col-lg-6" data-aos="fade-right">
-        <img src="./assets/hero/zabbix_fk.png" alt="Painel de Monitoramento Zabbix da GLCTech" class="img-fluid rounded-3 shadow-sm">
-      </div>
-
-      <!-- Texto -->
-      <div class="col-lg-6 text-start" data-aos="fade-left">
-        <div class="label text-uppercase mb-2">Monitoramento Corporativo</div>
-        <h2 class="section-title mb-3">Monitoramento com <span>Zabbix</span></h2>
-
-        <p class="mb-3">
-          O <strong>Zabbix</strong> é o coração das soluções de monitoramento da <strong>GLCTech</strong>.
-          Com ele, sua empresa tem visibilidade completa da infraestrutura de TI, detectando falhas em tempo real e agindo proativamente para evitar impactos nos negócios.
-        </p>
-
-        <ul class="zabbix-list">
-          <li><i class="fa-solid fa-chart-line"></i> Dashboards dinâmicos e indicadores personalizados.</li>
-          <li><i class="fa-solid fa-bell"></i> Alertas inteligentes com notificações por e-mail e WhatsApp.</li>
-          <li><i class="fa-solid fa-gears"></i> Automação de tarefas e integrações com sistemas externos.</li>
-          <li><i class="fa-solid fa-cloud"></i> Monitoramento em nuvem e on-premise com segurança e escalabilidade.</li>
-        </ul>
-
-        <p class="mt-3">
-          Nossa equipe especialista em <strong>Zabbix 7.2</strong> desenvolve templates, triggers e dashboards sob medida, permitindo que sua equipe de TI atue com rapidez e precisão.
-        </p>
-
-        <a href="./index.html#contact" class="btn btn-danger mt-3 px-4" hidden>Solicitar Demonstração</a>
-      </div>
+    <div class="section-header">
+      <span class="label">Recursos</span>
+      <h2>O que o Zabbix oferece<br>para sua empresa</h2>
+      <p>Plataforma líder em monitoramento de infraestrutura, com soluções personalizadas pela equipe GLCTech.</p>
     </div>
-
-    <!-- ======= Planos de Monitoramento ======= -->
-    <div class="zabbix-plans mt-5 text-center" hidden>
-      <h3 class="fw-bold mb-3">Escolha o Plano Ideal para Sua Empresa</h3>
-      <p class="text-muted mb-5">Soluções flexíveis e escaláveis que acompanham o crescimento do seu negócio.</p>
-
-      <div class="row g-4 justify-content-center">
-        <!-- Plano 1 -->
-        <div class="col-md-4">
-          <div class="card h-100 shadow-lg border-0 rounded-3 overflow-hidden">
-            <div class="card-header bg-dark text-white py-3">
-              <h5 class="mb-0 fw-bold">Plano Essencial</h5>
-              <small>Para pequenas operações</small>
-            </div>
-            <div class="card-body bg-light text-dark">
-              <h3 class="fw-bold text-danger mb-3">R$ 499<span class="fs-6">/mês</span></h3>
-              <ul class="list-unstyled mb-4">
-                <li><i class="fa-solid fa-check text-danger me-2"></i> Monitoramento de até 30 hosts</li>
-                <li><i class="fa-solid fa-check text-danger me-2"></i> Dashboards básicos no Grafana</li>
-                <li><i class="fa-solid fa-check text-danger me-2"></i> Alertas via e-mail</li>
-                <li><i class="fa-solid fa-xmark text-secondary me-2"></i> Sem suporte 24/7</li>
-              </ul>
-              <a href="https://wa.me/5511911517501?text=Olá!%20Tenho%20interesse%20no%20Plano%20Essencial%20de%20Monitoramento%20da%20GLCTech." 
-             target="_blank" class="btn btn-success w-100">
-            <i class="fa-brands fa-whatsapp"></i> Falar no WhatsApp
-          </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Plano 2 -->
-        <div class="col-md-4">
-          <div class="card h-100 shadow-lg border-2 border-danger rounded-3 overflow-hidden">
-            <div class="card-header bg-dark text-white py-3">
-              <h5 class="mb-0 fw-bold">Plano Avançado</h5>
-              <small>O equilíbrio perfeito para médias empresas</small>
-            </div>
-            <div class="card-body bg-light text-dark">
-              <h3 class="fw-bold text-danger mb-3">R$ 1.299<span class="fs-6">/mês</span></h3>
-              <ul class="list-unstyled mb-4">
-                <li><i class="fa-solid fa-check text-danger me-2"></i> Monitoramento de até 100 hosts</li>
-                <li><i class="fa-solid fa-check text-danger me-2"></i> Dashboards customizados</li>
-                <li><i class="fa-solid fa-check text-danger me-2"></i> Alertas via Telegram e e-mail</li>
-                <li><i class="fa-solid fa-check text-danger me-2"></i> Suporte comercial em horário estendido</li>
-              </ul>
-              <a href="https://wa.me/5511911517501?text=Olá!%20Tenho%20interesse%20no%20Plano%20Avançado%20de%20Monitoramento%20da%20GLCTech." 
-             target="_blank" class="btn btn-success w-100">
-            <i class="fa-brands fa-whatsapp"></i> Falar no WhatsApp
-          </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Plano 3 -->
-        <div class="col-md-4">
-          <div class="card h-100 shadow-lg border-0 rounded-3 overflow-hidden">
-            <div class="card-header bg-dark text-white py-3">
-              <h5 class="mb-0 fw-bold">Plano Enterprise</h5>
-              <small>Monitoramento corporativo e automação total</small>
-            </div>
-            <div class="card-body bg-light text-dark">
-              <h3 class="fw-bold text-danger mb-3">Sob consulta</h3>
-              <ul class="list-unstyled mb-4">
-                <li><i class="fa-solid fa-check text-danger me-2"></i> Hosts ilimitados e SLA customizado</li>
-                <li><i class="fa-solid fa-check text-danger me-2"></i> Triggers preditivas e automação</li>
-                <li><i class="fa-solid fa-check text-danger me-2"></i> Integração com APIs e scripts</li>
-                <li><i class="fa-solid fa-check text-danger me-2"></i> Suporte 24/7 com NOC dedicado</li>
-              </ul>
-              <a href="https://wa.me/5511911517501?text=Olá!%20Tenho%20interesse%20no%20Plano%20Enterprise%20de%20Monitoramento%20da%20GLCTech." 
-             target="_blank" class="btn btn-success w-100">
-            <i class="fa-brands fa-whatsapp"></i> Falar no WhatsApp
-          </a>
-            </div>
-          </div>
-        </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Dashboards Dinâmicos</h3>
+        <p>Indicadores personalizados e painéis interativos que mostram o estado real da sua infraestrutura em tempo real, integrados com Grafana.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <h3>Alertas Inteligentes</h3>
+        <p>Notificações imediatas via e-mail e WhatsApp quando algo sai do padrão — antes que o problema afete os usuários finais.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚙️</div>
+        <h3>Automação e Integrações</h3>
+        <p>Automação de tarefas repetitivas e integrações com sistemas externos via API, reduzindo o trabalho manual da equipe de TI.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">☁️</div>
+        <h3>Cloud & On-Premise</h3>
+        <p>Monitoramento flexível para ambientes locais, em nuvem ou híbridos — com segurança e escalabilidade para crescer junto com o negócio.</p>
       </div>
     </div>
   </div>
 </section>
 
-
-<!-- =========CALCULADORA ========-->
-
-<section class="py-5" id="zabbix-calculator">
+<!-- PLANS -->
+<section id="plans">
   <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
-          <div class="p-4 text-white text-center" style="background: var(--dark); border-bottom: 4px solid var(--red);">
-            <h3 class="fw-bold mb-1">Simulador de Monitoramento Zabbix</h3>
-            <p class="small text-uppercase tracking-widest opacity-75">GLCTech - Observabilidade em Infraestrutura</p>
-          </div>
+    <div class="section-header">
+      <span class="label">Planos</span>
+      <h2>Escolha o plano ideal<br>para sua empresa</h2>
+      <p>Soluções flexíveis e escaláveis que acompanham o crescimento do seu negócio.</p>
+    </div>
+    <div class="plans-grid">
 
-          <div class="p-4 p-md-5 bg-white">
-            <div class="row g-4 mb-4">
-              <div class="col-md-12">
-                <div class="p-3 border rounded shadow-sm bg-light">
-                  <label class="form-label fw-bold small text-muted">MODELO DE INFRAESTRUTURA</label>
-                  <select id="zabInfraType" class="form-select form-select-lg border-0 bg-white" onchange="calcularZabbix()">
-                    <option value="onprem" selected>On-Premises (Local / Datacenter)</option>
-                    <option value="cloud">Cloud / VMs (AWS, Azure, GCP)</option>
-                    <option value="hybrid">Híbrido (Local + Cloud)</option>
-                  </select>
-                </div>
-              </div>
+      <div class="plan-card">
+        <div class="plan-tier">Plano 01</div>
+        <div class="plan-name">Essencial</div>
+        <div class="plan-sub">Para pequenas operações</div>
+        <div class="plan-price">R$ 499<span>/mês</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>Monitoramento de até 30 hosts</li>
+          <li>Dashboards básicos no Grafana</li>
+          <li>Alertas via e-mail</li>
+          <li class="no">Suporte 24/7</li>
+          <li class="no">NOC dedicado</li>
+        </ul>
+        <a href="https://wa.me/5511911517501?text=Olá! Tenho interesse no Plano Essencial de Monitoramento da GLCTech." target="_blank" class="btn-plan">Falar no WhatsApp &rarr;</a>
+      </div>
 
-              <div class="col-md-4">
-                <div class="p-3 border rounded shadow-sm">
-                  <label class="form-label fw-bold small text-muted">SERVIDORES / VMs</label>
-                  <input type="number" id="zabHosts" class="form-control border-0 bg-light" value="5" min="0" onchange="calcularZabbix()">
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="p-3 border rounded shadow-sm">
-                  <label class="form-label fw-bold small text-muted">NETWORK (SW/RT/AP)</label>
-                  <input type="number" id="zabNetwork" class="form-control border-0 bg-light" value="2" min="0" onchange="calcularZabbix()">
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="p-3 border rounded shadow-sm">
-                  <label class="form-label fw-bold small text-muted">LINKS / INTERFACES</label>
-                  <input type="number" id="zabLinks" class="form-control border-0 bg-light" value="2" min="0" onchange="calcularZabbix()">
-                </div>
-              </div>
+      <div class="plan-card featured">
+        <div class="plan-badge">Mais Popular</div>
+        <div class="plan-tier">Plano 02</div>
+        <div class="plan-name">Avançado</div>
+        <div class="plan-sub">Equilíbrio para médias empresas</div>
+        <div class="plan-price">R$ 1.299<span>/mês</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>Monitoramento de até 100 hosts</li>
+          <li>Dashboards customizados</li>
+          <li>Alertas via Telegram e e-mail</li>
+          <li>Suporte em horário estendido</li>
+          <li class="no">NOC dedicado 24/7</li>
+        </ul>
+        <a href="https://wa.me/5511911517501?text=Olá! Tenho interesse no Plano Avançado de Monitoramento da GLCTech." target="_blank" class="btn-plan featured">Falar no WhatsApp &rarr;</a>
+      </div>
 
+      <div class="plan-card">
+        <div class="plan-tier">Plano 03</div>
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-sub">Monitoramento corporativo total</div>
+        <div class="plan-price">Sob<span> consulta</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>Hosts ilimitados e SLA custom</li>
+          <li>Triggers preditivas e automação</li>
+          <li>Integração com APIs e scripts</li>
+          <li>Suporte 24/7 com NOC dedicado</li>
+          <li>Implantação sob medida</li>
+        </ul>
+        <a href="https://wa.me/5511911517501?text=Olá! Tenho interesse no Plano Enterprise de Monitoramento da GLCTech." target="_blank" class="btn-plan">Falar no WhatsApp &rarr;</a>
+      </div>
 
-              <div class="col-md-12">
-                <div class="p-3 border rounded shadow-sm bg-light">
-                  <label class="form-label fw-bold small text-muted d-block mb-3 text-uppercase text-center">Arquitetura de Instalação</label>
-                  <div class="btn-group w-100" role="group">
-                    <input type="radio" class="btn-check" name="archOption" id="archAio" value="aio" checked onchange="calcularZabbix()">
-                    <label class="btn btn-outline-danger" for="archAio">All-in-One</label>
+    </div>
+  </div>
+</section>
 
-                    <input type="radio" class="btn-check" name="archOption" id="arch2in1" value="2in1" onchange="calcularZabbix()">
-                    <label class="btn btn-outline-danger" for="arch2in1">2 em 1 (App+DB)</label>
+<!-- SIMULATOR -->
+<section id="simulator">
+  <div class="container">
+    <div class="section-header">
+      <span class="label">Simulador</span>
+      <h2>Simule o investimento<br>para sua infraestrutura</h2>
+      <p>Configure os parâmetros do seu ambiente e receba uma estimativa personalizada.</p>
+    </div>
+    <div class="simulator-wrap">
+      <div class="sim-card">
+        <h3>Configurações do Ambiente</h3>
 
-                    <input type="radio" class="btn-check" name="archOption" id="archHa" value="ha" onchange="calcularZabbix()">
-                    <label class="btn btn-outline-danger" for="archHa">HA (High Availability)</label>
-                  </div>
-                </div>
-              </div>
+        <div class="sim-group">
+          <label class="sim-label">Modelo de Infraestrutura</label>
+          <select class="sim-select" id="infra">
+            <option value="1">On-Premises (Local / Datacenter)</option>
+            <option value="1.2">Cloud / VMs (AWS, Azure, GCP)</option>
+            <option value="1.5">Híbrido (Local + Cloud)</option>
+          </select>
+        </div>
 
-              <div class="col-md-12">
-                <div class="p-3 border rounded shadow-sm bg-light">
-                  <label class="form-label fw-bold small text-muted d-block mb-3 text-uppercase text-center">Visualização / Dashboards</label>
-                  <div class="btn-group w-100" role="group">
-                    <input type="radio" class="btn-check" name="grafanaOption" id="grafanaNo" value="no" checked onchange="calcularZabbix()">
-                    <label class="btn btn-outline-dark" for="grafanaNo">Padrão Zabbix</label>
+        <div class="sim-group">
+          <label class="sim-label">Arquitetura de Instalação</label>
+          <select class="sim-select" id="arch">
+            <option value="1">All-in-One</option>
+            <option value="1.3">2 em 1 (App + DB)</option>
+            <option value="1.8">HA (High Availability)</option>
+          </select>
+        </div>
 
-                    <input type="radio" class="btn-check" name="grafanaOption" id="grafanaYes" value="yes" onchange="calcularZabbix()">
-                    <label class="btn btn-outline-dark" for="grafanaYes">Incluir Grafana</label>
-                  </div>
-                </div>
-              </div>
+        <div class="sim-group">
+          <label class="sim-label">Nível de Gestão e Suporte</label>
+          <select class="sim-select" id="support">
+            <option value="1">Monitoramento Base (Alertas)</option>
+            <option value="1.6">Gestão Proativa (NOC 8x5)</option>
+            <option value="2.5">Missão Crítica (NOC 24x7)</option>
+          </select>
+        </div>
 
-              <div class="col-md-12">
-                <div class="p-3 border rounded shadow-sm">
-                  <label class="form-label fw-bold small text-muted">NÍVEL DE GESTÃO E SUPORTE</label>
-                  <select id="zabLevel" class="form-select border-0 bg-light" onchange="calcularZabbix()">
-                    <option value="1.0" data-tier="Essentials">Monitoramento Base (Alertas)</option>
-                    <option value="1.4" data-tier="Proactive" selected>Gestão Proativa (NOC 8x5)</option>
-                    <option value="2.0" data-tier="Critical">Missão Crítica (NOC 24x7)</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div class="d-grid">
-              <button id="btnCalcularZabbix" class="btn btn-danger btn-lg fw-bold py-3 shadow">RECALCULAR INVESTIMENTO</button>
-            </div>
-
-            <div id="zabbixResultArea" class="mt-5 pt-5 border-top" style="display:none;">
-              <div class="row g-5">
-                <div class="col-md-7">
-                  <h5 class="fw-bold mb-4" style="color: var(--dark)">RESUMO DETALHADO DA PROPOSTA:</h5>
-                  <div id="zabbixTechDetails" class="p-3 bg-white border rounded shadow-sm"></div>
-                </div>
-                <div class="col-md-5 text-center">
-                  <div class="p-4 border border-2 rounded-4 shadow-sm" style="border-color: var(--red) !important;">
-                    <span class="text-muted small fw-bold">RECORRÊNCIA MENSAL ESTIMADA</span>
-                    <div class="h1 fw-bolder text-danger mb-0" id="zabTotalValue">R$ 0,00</div>
-                    <div class="text-muted mb-4 small" id="zabSetupRef"></div>
-                    <div class="text-start bg-light p-3 rounded">
-                        <input type="text" id="zabCompany" class="form-control mb-2" placeholder="Empresa">
-                        <input type="email" id="zabEmail" class="form-control mb-3" placeholder="E-mail Corporativo">
-                        <button id="sendZabbixQuote" class="btn btn-dark w-100 fw-bold">ENVIAR PROPOSTA FORMAL</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div class="sim-group">
+          <label class="sim-label">Servidores / VMs: <span id="servers-val">10</span></label>
+          <div class="sim-slider-row">
+            <input type="range" class="sim-slider" id="servers" min="1" max="200" value="10">
+            <span class="sim-val" id="servers-out">10</span>
           </div>
         </div>
+
+        <div class="sim-group">
+          <label class="sim-label">Network (SW/RT/AP): <span id="network-val">5</span></label>
+          <div class="sim-slider-row">
+            <input type="range" class="sim-slider" id="network" min="0" max="100" value="5">
+            <span class="sim-val" id="network-out">5</span>
+          </div>
+        </div>
+
+        <div class="sim-group">
+          <label class="sim-label">Links / Interfaces: <span id="links-val">3</span></label>
+          <div class="sim-slider-row">
+            <input type="range" class="sim-slider" id="links" min="0" max="50" value="3">
+            <span class="sim-val" id="links-out">3</span>
+          </div>
+        </div>
+
+        <button class="sim-btn" onclick="calcZabbix()">Calcular Investimento</button>
+      </div>
+
+      <div class="result-card" id="result-card">
+        <h3>Resumo da Proposta</h3>
+        <div class="result-main">
+          <div class="result-label">Recorrência Mensal Estimada</div>
+          <div class="result-price" id="result-price"><span>Preencha os dados</span></div>
+        </div>
+        <div class="result-items" id="result-items">
+          <div class="result-item"><span class="result-item-key">Hosts monitorados</span><span class="result-item-val" id="ri-hosts">—</span></div>
+          <div class="result-item"><span class="result-item-key">Infraestrutura</span><span class="result-item-val" id="ri-infra">—</span></div>
+          <div class="result-item"><span class="result-item-key">Arquitetura</span><span class="result-item-val" id="ri-arch">—</span></div>
+          <div class="result-item"><span class="result-item-key">Nível de suporte</span><span class="result-item-val" id="ri-support">—</span></div>
+        </div>
+        <a href="https://wa.me/5511911517501" target="_blank" class="result-cta" id="result-cta">Enviar Proposta Formal &rarr;</a>
       </div>
     </div>
   </div>
 </section>
 
-   <!-- ======= FOOTER ======= -->
-<footer id="footer" class="footer">
-  <div class="container footer-top">
-    <div class="row">
-      
-      <!-- Coluna 1: Informações -->
-      <div class="col-lg-4 col-md-6 footer-info">
-        <h4>GLCTech Tecnologia</h4>
-        <p><strong>Contato:</strong> +55 11 95762-4146<br>
-        <strong>Email:</strong> contato@glctech.com.br</p>
-      </div>
+<div class="cta-banner">
+  <div class="container cta-banner-inner">
+    <h2>Pronto para monitorar sua infraestrutura?</h2>
+    <p>Nossa equipe especialista em Zabbix 7.2 está pronta para desenvolver templates e dashboards sob medida para você.</p>
+    <a href="index.html#contact" class="btn-white">Solicitar Demonstração Gratuita &rarr;</a>
+  </div>
+</div>
 
-      <!-- Coluna 2: Links Úteis -->
-      <div class="col-lg-4 col-md-6 footer-links">
-        <h4>Links Úteis</h4>
-        <ul>
-          <li><i class="bi bi-chevron-right"></i> <a href="#home">Home</a></li>
-          <li><i class="bi bi-chevron-right"></i> <a href="#about">Sobre</a></li>
-          <li><i class="bi bi-chevron-right"></i> <a href="#services">Serviços</a></li>
-          <li><i class="bi bi-chevron-right"></i><a href="https://ty0ci.share.hsforms.com/2dDZ5-CdFTKektziqcbgsTQ" target="_blank" rel="noopener">Trabalhe Conosco</a></li>
-          <li><i class="bi bi-chevron-right"></i> <a href="politica.html" target="_blank">Política de Privacidade</a></li>
-          <li><i class="bi bi-chevron-right"></i> <a href="termos.html" target="_blank">Termos de Uso</a></li>
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="https://glctech.com.br/assets/logo/logo.png" alt="GLCTech">
+        <p>Monitoramento inteligente e segurança de TI para empresas que exigem alta performance e continuidade operacional.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="index.html#about">Sobre</a></li>
+          <li><a href="index.html#services">Serviços</a></li>
+          <li><a href="index.html#team">Time</a></li>
         </ul>
       </div>
-
-      <!-- Coluna 3: Redes Sociais -->
-      <div class="col-lg-4 col-md-6 footer-social">
-        <h4>Redes Sociais</h4>
-        <p>Siga a GLCTech!</p>
-        <div class="social-links mt-3">
-          <a href="https://web.facebook.com/profile.php?viewas=100000686899395&id=61577370040413" class="facebook" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-          <a href="https://www.instagram.com/glctechnologia" class="instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-          <a href="https://www.linkedin.com/company/glctechtecnologia/?viewAsMember=true" class="linkedin" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-        </div>
+      <div class="footer-col">
+        <h4>Serviços</h4>
+        <ul class="footer-links">
+          <li><a href="zabbix.html">Zabbix</a></li>
+          <li><a href="kaspersky.html">Kaspersky</a></li>
+          <li><a href="veeam.html">Veeam Backup</a></li>
+          <li><a href="https://ty0ci.share.hsforms.com/2dDZ5-CdFTKektziqcbgsTQ" target="_blank">Trabalhe Conosco</a></li>
+        </ul>
       </div>
-
-    </div>
-  </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul class="footer-links">
+          <li><a href="politica.html">Política de Privacidade</a></li>
+          <li><a href="termos.html">Termos de Uso</a></li>
+        </ul>
       </div>
-
     </div>
-  </div>
-
-  <!-- Linha inferior -->
-  <div class="container footer-bottom">
-    <p>© 2015 Copyright <strong>GLCTech Tecnologia</strong> All Rights Reserved</p>
+    <div class="footer-bottom">
+      <span>© 2025 GLCTech Tecnologia. Todos os direitos reservados.</span>
+      <span>São Paulo, SP — Brasil</span>
+    </div>
   </div>
 </footer>
 
-
-
-
-
-
-
-
-<!-- ========= SCRIPT CALCULADORA ======-->
-
-
 <script>
-let dadosZabbix = {};
+  const infraLabels = { '1': 'On-Premises', '1.2': 'Cloud / VMs', '1.5': 'Híbrido' };
+  const archLabels = { '1': 'All-in-One', '1.3': '2 em 1 (App+DB)', '1.8': 'HA' };
+  const supportLabels = { '1': 'Monitoramento Base', '1.6': 'NOC 8×5', '2.5': 'NOC 24×7' };
 
-function calcularZabbix() {
-    const infraType = document.getElementById('zabInfraType').value;
-    const hosts = parseInt(document.getElementById('zabHosts').value) || 0;
-    const network = parseInt(document.getElementById('zabNetwork').value) || 0;
-    const links = parseInt(document.getElementById('zabLinks').value) || 0;
-    const nivel = document.getElementById('zabLevel');
+  const sliders = [
+    ['servers', 'servers-out'],
+    ['network', 'network-out'],
+    ['links', 'links-out']
+  ];
+  sliders.forEach(([id, outId]) => {
+    const el = document.getElementById(id);
+    const out = document.getElementById(outId);
+    el.addEventListener('input', () => { out.textContent = el.value; });
+  });
 
-    const archRadio = document.querySelector('input[name="archOption"]:checked');
-    const archType = archRadio ? archRadio.value : 'aio';
-    const hasGrafana = document.querySelector('input[name="grafanaOption"]:checked')?.value || 'no';
+  function calcZabbix() {
+    const infra = parseFloat(document.getElementById('infra').value);
+    const arch = parseFloat(document.getElementById('arch').value);
+    const support = parseFloat(document.getElementById('support').value);
+    const servers = parseInt(document.getElementById('servers').value);
+    const network = parseInt(document.getElementById('network').value);
+    const links = parseInt(document.getElementById('links').value);
 
-    // 1. Definição de Preços por Infra (Preços Cloud Reais em BRL)
-    let multiplicadorInfra = 1.0;
-    let labelInfra = "On-Premises";
-    if (infraType === "cloud") {
-        multiplicadorInfra = 1.30; 
-        labelInfra = "Cloud / VMs (AWS/Azure/GCP)";
-    } else if (infraType === "hybrid") {
-        multiplicadorInfra = 1.45;
-        labelInfra = "Híbrido (Local + Cloud)";
-    }
+    const hosts = servers + network + links;
+    const base = 299 + (hosts * 12);
+    const total = Math.round(base * infra * arch * support / 10) * 10;
 
-    const vUnitHost = 15.00 * multiplicadorInfra;
-    const vUnitNet = 10.00 * multiplicadorInfra;
-    const vUnitLink = 20.00;
+    document.getElementById('result-price').innerHTML = 'R$ ' + total.toLocaleString('pt-BR') + '<span>/mês</span>';
+    document.getElementById('ri-hosts').textContent = hosts + ' hosts';
+    document.getElementById('ri-infra').textContent = infraLabels[document.getElementById('infra').value];
+    document.getElementById('ri-arch').textContent = archLabels[document.getElementById('arch').value];
+    document.getElementById('ri-support').textContent = supportLabels[document.getElementById('support').value];
 
-    // 2. Arquitetura de Instalação - Definição de Qtd Servidores e Custos
-    let labelArch = "All-in-One";
-    let qtdServidoresArch = 1;
-    let vUnitArch = 0; // Custo mensal adicional de gestão por complexidade técnica
-    let custoSetupArch = 0;
-
-    if (archType === "aio") {
-        labelArch = "All-in-One (Servidor Único)";
-        qtdServidoresArch = 1;
-        vUnitArch = 50.00; // Gestão base do SO
-        custoSetupArch = 0;
-    } else if (archType === "2in1") {
-        labelArch = "2 em 1 (App + Banco)";
-        qtdServidoresArch = 2;
-        vUnitArch = 120.00; // Gestão de 2 SO + Tunning DB
-        custoSetupArch = 950;
-    } else if (archType === "ha") {
-        labelArch = "Alta Disponibilidade (HA)";
-        qtdServidoresArch = 3; // Mínimo para HA robusto (2 App + 1 DB ou Cluster)
-        vUnitArch = 280.00; // Gestão de Cluster/Sincronismo
-        custoSetupArch = 3200;
-    }
-
-    // 3. Cálculos de Totais
-    const fatorGestao = parseFloat(nivel.value);
-    
-    const totalHosts = (hosts * vUnitHost) * fatorGestao;
-    const totalNet = (network * vUnitNet) * fatorGestao;
-    const totalLinks = (links * vUnitLink) * fatorGestao;
-    const totalArch = (qtdServidoresArch * vUnitArch) * fatorGestao;
-
-    const totalMensal = totalHosts + totalNet + totalLinks + totalArch + (hasGrafana === "yes" ? 150 : 0);
-    const setupTotal = 1500 + custoSetupArch + (hasGrafana === "yes" ? 650 : 0);
-
-    const formatar = (v) => v.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
-
-    dadosZabbix = {
-        total: formatar(totalMensal),
-        setup: formatar(setupTotal),
-        infra: labelInfra,
-        arquitetura: labelArch,
-        nivel: nivel.options[nivel.selectedIndex].dataset.tier,
-        descNivel: nivel.options[nivel.selectedIndex].text
-    };
-
-    // 4. Montagem do Resumo com Tabela Detalhada
-    document.getElementById('zabbixTechDetails').innerHTML = `
-        <div class="mb-3">
-            <h6 class="fw-bold text-danger border-bottom pb-1">COMPOSIÇÃO DA SOLUÇÃO</h6>
-            <small class="d-block"><strong>Cenário:</strong> ${labelInfra}</small>
-            <small class="d-block"><strong>Suporte:</strong> ${dadosZabbix.descNivel}</small>
-        </div>
-
-        <div class="table-responsive">
-            <table class="table table-sm table-borderless small align-middle">
-                <thead class="border-bottom">
-                    <tr class="text-muted">
-                        <th>Item (Recorrência)</th>
-                        <th>Qtd</th>
-                        <th>Unit.</th>
-                        <th class="text-end">Subtotal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Arquitetura: ${labelArch}</td>
-                        <td>${qtdServidoresArch}</td>
-                        <td>${formatar(vUnitArch)}</td>
-                        <td class="text-end">${formatar(totalArch)}</td>
-                    </tr>
-                    <tr>
-                        <td>Monitoramento Servidores/VMs</td>
-                        <td>${hosts}</td>
-                        <td>${formatar(vUnitHost)}</td>
-                        <td class="text-end">${formatar(totalHosts)}</td>
-                    </tr>
-                    <tr>
-                        <td>Monitoramento Ativos Rede</td>
-                        <td>${network}</td>
-                        <td>${formatar(vUnitNet)}</td>
-                        <td class="text-end">${formatar(totalNet)}</td>
-                    </tr>
-                    <tr>
-                        <td>Monitoramento Links</td>
-                        <td>${links}</td>
-                        <td>${formatar(vUnitLink)}</td>
-                        <td class="text-end">${formatar(totalLinks)}</td>
-                    </tr>
-                    ${hasGrafana === "yes" ? `<tr><td>Integração Grafana</td><td>1</td><td>R$ 150,00</td><td class="text-end">R$ 150,00</td></tr>` : ''}
-                </tbody>
-            </table>
-        </div>
-        <p class="text-muted mt-2" style="font-size: 0.7rem;">* Os valores mensais são ajustados conforme o nível de gestão e multiplicadores de infraestrutura.</p>
-    `;
-
-    document.getElementById('zabTotalValue').innerText = dadosZabbix.total;
-    document.getElementById('zabSetupRef').innerText = `Setup de Implantação: ${dadosZabbix.setup}`;
-    document.getElementById('zabbixResultArea').style.display = 'block';
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById('btnCalcularZabbix').addEventListener('click', calcularZabbix);
-    document.getElementById('sendZabbixQuote').addEventListener('click', function() {
-        const empresa = document.getElementById('zabCompany').value;
-        const email = document.getElementById('zabEmail').value;
-        if(!empresa || !email.includes('@')) { alert('Dados inválidos.'); return; }
-        const destinatario = "contato@glctech.com.br";
-        const assunto = `SIMULAÇÃO ZABBIX: ${empresa.toUpperCase()}`;
-        const corpo = `Olá GLCTech,\n\nNova simulação:\nArquitetura: ${dadosZabbix.arquitetura}\nGestão: ${dadosZabbix.nivel}\nSetup: ${dadosZabbix.setup}\nMensal: ${dadosZabbix.total}`;
-        window.open(`mailto:${destinatario}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`, '_blank');
-    });
-});
-/**
- * Event Listener para Envio de Proposta via Mailto
- */
-document.getElementById('sendZabbixQuote').addEventListener('click', function() {
-    const empresa = document.getElementById('zabCompany').value;
-    const email = document.getElementById('zabEmail').value;
-
-    if(!empresa || !email.includes('@')) {
-        alert('Por favor, informe o nome da empresa e um e-mail válido.');
-        return;
-    }
-
-    const destinatario = "contato@glctech.com.br";
-    const assunto = `COTAÇÃO ZABBIX: ${empresa.toUpperCase()} - ${dadosZabbix.arquitetura}`;
-    
-    const corpo = 
-`Olá Equipe Comercial GLCTech,
-
-Uma nova simulação de monitoramento Zabbix foi gerada através do site:
-
-DADOS DO CLIENTE:
-- Empresa: ${empresa.toUpperCase()}
-- E-mail: ${email}
-
-ESPECIFICAÇÕES TÉCNICAS:
-- Infraestrutura: ${dadosZabbix.infra}
-- Arquitetura de Instalação: ${dadosZabbix.arquitetura}
-- Integração Grafana: ${dadosZabbix.grafana}
-- Nível de Suporte: ${dadosZabbix.nivel}
-
-DETALHES DO ESCOPO:
-${dadosZabbix.escopo}
-
---------------------------------------------------
-INVESTIMENTO ESTIMADO:
-SETUP (Implantação): ${dadosZabbix.setup}
-MENSALIDADE (Gestão): ${dadosZabbix.total}
---------------------------------------------------
-
-Por favor, entrem em contacto com o cliente para formalizar a proposta.`;
-
-    window.open(`mailto:${destinatario}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`, '_blank');
-});
-
-
+    const msg = encodeURIComponent(`Olá! Simulei meu ambiente Zabbix: ${hosts} hosts, ${infraLabels[document.getElementById('infra').value]}, suporte ${supportLabels[document.getElementById('support').value]}. Estimativa: R$ ${total.toLocaleString('pt-BR')}/mês. Gostaria de uma proposta formal.`);
+    document.getElementById('result-cta').href = `https://wa.me/5511911517501?text=${msg}`;
+  }
 </script>
-
-
-  <!-- ======= SCRIPT DO MENU HAMBÚRGUER ======= -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const menuToggle = document.querySelector(".menu-toggle");
-      const nav = document.querySelector(".nav");
-      const navLinks = document.querySelectorAll(".nav a");
-
-      if (menuToggle && nav) {
-        // Toggle menu
-        menuToggle.addEventListener("click", () => {
-          const isActive = nav.classList.toggle("active");
-          menuToggle.classList.toggle("active", isActive);
-          menuToggle.setAttribute("aria-expanded", isActive);
-        });
-
-        // Fecha o menu ao clicar em um link
-        navLinks.forEach(link => {
-          link.addEventListener("click", () => {
-            nav.classList.remove("active");
-            menuToggle.classList.remove("active");
-            menuToggle.setAttribute("aria-expanded", "false");
-          });
-        });
-      }
-
-      // ======= ATIVAR LINK DO MENU CONFORME SCROLL =======
-      const sections = document.querySelectorAll("section[id]");
-
-      function activateMenuOnScroll() {
-        const scrollY = window.pageYOffset;
-        sections.forEach(section => {
-          const sectionTop = section.offsetTop - 120;
-          const sectionHeight = section.offsetHeight;
-          const sectionId = section.getAttribute("id");
-          const currentLink = document.querySelector(`.nav a[href="#${sectionId}"]`);
-
-          if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-            navLinks.forEach(link => link.classList.remove("active"));
-            if (currentLink) currentLink.classList.add("active");
-          }
-        });
-      }
-
-      window.addEventListener("scroll", activateMenuOnScroll);
-    });
-  </script>
-<!-- Start of HubSpot Embed Code -->
-<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/50295618.js"></script>
-<!-- End of HubSpot Embed Code -->
 </body>
 </html>
