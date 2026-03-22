@@ -4,9 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GLCTech — Monitoramento e Segurança em TI</title>
+<meta name="description" content="GLCTech: especialistas em monitoramento de infraestrutura com Zabbix, segurança com Kaspersky e backup com Veeam. Suporte 24/7 para ambientes críticos de TI.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="GLCTech — Monitoramento e Segurança em TI">
+<meta property="og:description" content="Especialistas em Zabbix, Kaspersky e Veeam. Monitoramento proativo e suporte 24/7.">
+<meta property="og:image" content="https://glctech.com.br/assets/logo/glc2.png">
+<meta property="og:url" content="https://glctech.com.br">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://glctech.com.br">
+<!-- Preload recursos críticos -->
+<link rel="preload" as="image" href="https://glctech.com.br/assets/logo/logo.png" fetchpriority="high">
+<link rel="preload" as="image" href="./assets/hero/zabbix_fk.png" fetchpriority="high">
+<!-- Fontes: não bloqueantes + display=swap + pesos reduzidos -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap"
+  media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap"></noscript>
+<!-- Font Awesome: não bloqueante -->
+<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -587,7 +607,7 @@
 <nav>
   <div class="nav-inner">
     <a href="#hero" class="nav-logo">
-      <img src="https://glctech.com.br/assets/logo/logo4.png" alt="GLCTech — Monitoramento e Segurança em TI">
+      <img src="https://glctech.com.br/assets/logo/logo.png" alt="GLCTech — Monitoramento e Segurança em TI" width="160" height="42" loading="eager" fetchpriority="high" decoding="async">
     </a>
     <ul class="nav-links">
       <li><a href="#about">Sobre</a></li>
@@ -639,7 +659,7 @@
           <span class="hero-img-label">GLCTech · Dashboard Zabbix</span>
           <div class="hero-img-live"><div class="hero-status-dot"></div>Ao vivo</div>
         </div>
-        <img src="./assets/hero/zabbix_fk.png" alt="Dashboard Zabbix GLCTech" class="hero-zabbix-img">
+        <img src="./assets/hero/zabbix_fk.png" alt="Dashboard Zabbix GLCTech" class="hero-zabbix-img" width="520" height="360" loading="eager" fetchpriority="high" decoding="async">
       </div>
     </div>
   </div>
@@ -676,7 +696,7 @@
   <div class="container">
     <div class="about-grid">
       <div class="about-img-wrap">
-        <img src="https://glctech.com.br/assets/hero/escritorio.png" alt="Equipe GLCTech">
+        <img src="https://glctech.com.br/assets/hero/escritorio.png" alt="Equipe GLCTech" width="560" height="420" loading="lazy" decoding="async">
         <div class="about-img-badge"hidden>
           <div class="about-img-badge-num">+50</div>
           <div class="about-img-badge-text">Projetos Entregues</div>
@@ -824,7 +844,7 @@
     </div>
     <div class="team-grid">
       <div class="team-card">
-        <img src="https://glctech.com.br/assets/team/eu3.png" alt="André Luiz Cézar" class="team-card-img face-fix">
+        <img src="https://glctech.com.br/assets/team/eu3.png" alt="André Luiz Cézar" class="team-card-img face-fix" width="300" height="300" loading="lazy" decoding="async">
         <div class="team-card-body">
           <div class="team-card-role">CEO &amp; Fundador</div>
           <h3>André Luiz Cézar</h3>
@@ -832,7 +852,7 @@
         </div>
       </div>
       <div class="team-card">
-        <img src="https://glctech.com.br/assets/team/tchize.png" alt="Tchize Matias" class="team-card-img">
+        <img src="https://glctech.com.br/assets/team/tchize.png" alt="Tchize Matias" class="team-card-img" width="300" height="300" loading="lazy" decoding="async">
         <div class="team-card-body">
           <div class="team-card-role">Co-Founder & Dev Operations</div>
           <h3>Tchize Matias</h3>
@@ -841,7 +861,7 @@
       </div>
       <!-- Kawan Pablo — temporariamente oculto -->
       <div class="team-card" style="display:none;" aria-hidden="true">
-        <img src="https://glctech.com.br/assets/team/kawan.png" alt="Kawan Pablo" class="team-card-img">
+        <img src="https://glctech.com.br/assets/team/kawan.png" alt="Kawan Pablo" class="team-card-img" width="300" height="300" loading="lazy" decoding="async">
         <div class="team-card-body">
           <div class="team-card-role">Arquiteto Clou</div>
           <h3>Kawan Pablo</h3>
@@ -985,87 +1005,136 @@
  
 <script>
 (function() {
-  const API_BASE = 'https://api.rss2json.com/v1/api.json?api_key=&order_by=pubDate&count=3&rss_url=';
-  const FEEDS = [
-    { url:'https://pox.globo.com/rss/techtudo/',             source:'techtudo', label:'TechTudo'  },
-    { url:'https://www.tecmundo.com.br/seguranca/rss',        source:'tecmundo', label:'TecMundo'  }
+  var API_BASE   = 'https://api.rss2json.com/v1/api.json?api_key=&order_by=pubDate&count=3&rss_url=';
+  var FEEDS      = [
+    { url:'https://pox.globo.com/rss/techtudo/',      source:'techtudo', label:'TechTudo'           },
+    { url:'https://www.tecmundo.com.br/seguranca/rss', source:'tecmundo', label:'TecMundo Segurança' }
   ];
- 
-  const skeleton   = document.getElementById('blog-skeleton');
-  const feedEl     = document.getElementById('blog-feed');
-  const errorEl    = document.getElementById('blog-error');
-  const statusDot  = document.getElementById('rss-status-dot');
-  const statusText = document.getElementById('rss-status-text');
- 
-  let allItems = [], loaded = 0, failed = 0;
-  let currentFilter = 'all';
- 
-  function formatDate(s) { const d=new Date(s); return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'}); }
-  function stripHtml(h) { const t=document.createElement('div'); t.innerHTML=h; return t.textContent||t.innerText||''; }
-  function trunc(s,n) { s=(s||'').trim(); return s.length>n?s.substring(0,n)+'...':s; }
+  var CACHE_KEY  = 'glc_rss_v3';
+  var CACHE_TTL  = 30 * 60 * 1000; // 30 minutos
+  var TIMEOUT_MS = 6000;            // 6s por feed
+
+  var skeleton   = document.getElementById('blog-skeleton');
+  var feedEl     = document.getElementById('blog-feed');
+  var errorEl    = document.getElementById('blog-error');
+  var statusDot  = document.getElementById('rss-status-dot');
+  var statusText = document.getElementById('rss-status-text');
+
+  var allItems     = [];
+  var currentFilter = 'all';
+
+  /* ── helpers ── */
+  function formatDate(s) {
+    var d = new Date(s);
+    return isNaN(d) ? '' : d.toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
+  }
+  function stripHtml(h) { var t=document.createElement('div'); t.innerHTML=h||''; return (t.textContent||t.innerText||'').replace(/\s+/g,' ').trim(); }
+  function trunc(s,n)   { s=(s||'').trim(); return s.length>n ? s.substring(0,n)+'…' : s; }
   function extractImg(item) {
-    if (item.thumbnail&&item.thumbnail.length>5) return item.thumbnail;
-    if (item.enclosure&&item.enclosure.link) return item.enclosure.link;
-    const m=item.content?item.content.match(/<img[^>]+src=["']([^"']+)["']/i):null; return m?m[1]:null;
+    if (item.thumbnail && item.thumbnail.length>10) return item.thumbnail;
+    if (item.enclosure && item.enclosure.link)      return item.enclosure.link;
+    var m = (item.content||'').match(/<img[^>]+src=["']([^"']+)["']/i);
+    return m ? m[1] : null;
   }
-  function getCat(item) { return (item.categories&&item.categories.length>0)?item.categories[0]:'Segurança'; }
- 
+  function getCat(item) { return (item.categories&&item.categories.length>0) ? item.categories[0] : 'Segurança'; }
+
+  /* ── cache ── */
+  function readCache() {
+    try {
+      var raw = localStorage.getItem(CACHE_KEY);
+      if (!raw) return null;
+      var obj = JSON.parse(raw);
+      return (Date.now() - obj.ts < CACHE_TTL) ? obj.items : null;
+    } catch(e) { return null; }
+  }
+  function writeCache(items) {
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify({ts:Date.now(), items:items})); } catch(e){}
+  }
+
+  /* ── fetch com timeout ── */
+  function fetchFeed(url) {
+    var ctrl  = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function(){ ctrl.abort(); }, TIMEOUT_MS) : null;
+    return fetch(url, ctrl ? {signal:ctrl.signal} : {})
+      .then(function(r){ if(timer) clearTimeout(timer); return r.json(); })
+      .catch(function(e){ if(timer) clearTimeout(timer); throw e; });
+  }
+
+  /* ── card ── */
   function buildCard(item) {
-    const img=extractImg(item);
-    const imgBlock=img
-      ? '<img src="'+img+'" alt="'+item.title.replace(/"/g,'&quot;')+'" class="blog-card-thumb" loading="lazy" onerror="this.parentNode.innerHTML='<div class=\'blog-card-no-thumb\'><i class=\'fa-regular fa-newspaper\'></i></div>'">'
+    var img = extractImg(item);
+    var imgBlock = img
+      ? '<img src="'+img+'" alt="'+trunc(item.title,60).replace(/"/g,'&quot;')+'" class="blog-card-thumb" loading="lazy" width="400" height="225" decoding="async" onerror="this.parentNode.innerHTML='<div class=\"blog-card-no-thumb\"><i class=\"fa-regular fa-newspaper\"></i></div>'">'
       : '<div class="blog-card-no-thumb"><i class="fa-regular fa-newspaper"></i></div>';
-    return '<a href="'+item.link+'" target="_blank" rel="noopener" class="blog-card" data-source="'+item._source+'">'+
-      imgBlock+
-      '<span class="blog-source-badge '+item._source+'">'+item._label+'</span>'+
-      '<div class="blog-card-cat">'+getCat(item)+'</div>'+
-      '<div class="blog-card-body">'+
-        '<div class="blog-card-date">'+formatDate(item.pubDate)+'</div>'+
-        '<h3>'+trunc(item.title,75)+'</h3>'+
-        '<p>'+trunc(stripHtml(item.description||''),110)+'</p>'+
-      '</div></a>';
+    return '<a href="'+item.link+'" target="_blank" rel="noopener" class="blog-card" data-source="'+item._source+'">'
+      +imgBlock
+      +'<span class="blog-source-badge '+item._source+'">'+item._label+'</span>'
+      +'<div class="blog-card-cat">'+getCat(item)+'</div>'
+      +'<div class="blog-card-body">'
+        +'<div class="blog-card-date">'+formatDate(item.pubDate)+'</div>'
+        +'<h3>'+trunc(item.title,75)+'</h3>'
+        +'<p>'+trunc(stripHtml(item.description),110)+'</p>'
+      +'</div></a>';
   }
- 
+
+  /* ── filtro ── */
   window.filterFeed = function(f) {
     currentFilter = f;
-    ['all','techtudo','tecmundo'].forEach(t => {
-      const b=document.getElementById('tab-'+t);
-      if(b) b.className='feed-tab'+(t===f?' feed-tab-active':'');
+    ['all','techtudo','tecmundo'].forEach(function(t){
+      var b = document.getElementById('tab-'+t);
+      if (b) b.className = 'feed-tab' + (t===f ? ' feed-tab-active' : '');
     });
-    const filtered = f==='all' ? allItems : allItems.filter(i=>i._source===f);
+    var filtered = f==='all' ? allItems : allItems.filter(function(i){ return i._source===f; });
     feedEl.innerHTML = filtered.map(buildCard).join('');
   };
- 
-  function onDone() {
-    loaded++;
-    if (loaded+failed < FEEDS.length) return;
-    skeleton.style.display='none';
-    if (allItems.length===0) {
-      errorEl.style.display='block';
-      statusDot.style.background='var(--red)';
-      statusText.textContent='Feeds indisponíveis';
-    } else {
-      allItems.sort((a,b)=>new Date(b.pubDate)-new Date(a.pubDate));
-      window.filterFeed('all');
-      feedEl.style.display='grid';
-      const ok = FEEDS.length - failed;
-      statusDot.style.background='#4ade80';
-      statusText.textContent = ok===FEEDS.length ? '2 fontes ativas' : '1 fonte ativa';
+
+  /* ── render ── */
+  function render(items, fromCache) {
+    skeleton.style.display = 'none';
+    if (!items || items.length===0) {
+      errorEl.style.display = 'block';
+      statusDot.style.background = 'var(--red)';
+      statusText.textContent = 'Feeds indisponíveis';
+      return;
     }
+    allItems = items;
+    window.filterFeed(currentFilter);
+    feedEl.style.display = 'grid';
+    var sources = [...new Set(items.map(function(i){ return i._source; }))].length;
+    statusDot.style.background = '#4ade80';
+    statusText.textContent = (fromCache ? '📦 cache · ' : '') + sources + (sources===2 ? ' fontes ativas' : ' fonte ativa');
   }
- 
-  FEEDS.forEach(feed => {
-    fetch(API_BASE + encodeURIComponent(feed.url))
-      .then(r=>r.json())
-      .then(data => {
-        if (data.status==='ok'&&data.items&&data.items.length>0) {
-          data.items.forEach(i=>{ i._source=feed.source; i._label=feed.label; });
-          allItems = allItems.concat(data.items);
-          onDone();
-        } else { failed++; onDone(); }
-      })
-      .catch(()=>{ failed++; onDone(); });
-  });
+
+  /* ── load ── */
+  function load() {
+    var cached = readCache();
+    if (cached && cached.length > 0) { render(cached, true); return; }
+
+    Promise.all(FEEDS.map(function(feed) {
+      return fetchFeed(API_BASE + encodeURIComponent(feed.url))
+        .then(function(data) {
+          if (data.status!=='ok' || !data.items || data.items.length===0) return [];
+          return data.items.map(function(i){ i._source=feed.source; i._label=feed.label; return i; });
+        })
+        .catch(function(){ return []; });
+    })).then(function(results) {
+      var merged = [].concat.apply([], results);
+      merged.sort(function(a,b){ return new Date(b.pubDate)-new Date(a.pubDate); });
+      writeCache(merged);
+      render(merged, false);
+    });
+  }
+
+  /* ── IntersectionObserver: só carrega quando visível ── */
+  var section = document.getElementById('blog');
+  if (typeof IntersectionObserver !== 'undefined' && section) {
+    var obs = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) { obs.disconnect(); load(); }
+    }, { rootMargin: '200px' });
+    obs.observe(section);
+  } else {
+    load();
+  }
 })();</script>
 
 <!-- CTA BANNER -->
@@ -1087,7 +1156,7 @@
         <div class="rule"></div>
         <p>Entre em contato com nossa equipe e descubra como a GLCTech pode otimizar sua infraestrutura de TI. Resposta em até 24h úteis.</p>
         <div class="contact-items">
-          <a href="mailto:contato@glctech.com.br" class="contact-item">
+          <a href="/cdn-cgi/l/email-protection#cfaca0a1bbaebba08fa8a3acbbaaaca7e1aca0a2e1adbd" class="contact-item">
             <div class="contact-item-icon"><i class="fa-solid fa-envelope"></i></div>
             <div>
               <div class="contact-item-label">E-mail</div>
@@ -1163,7 +1232,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="https://glctech.com.br/assets/logo/logo.png" alt="GLCTech">
+        <img src="https://glctech.com.br/assets/logo/logo.png" alt="GLCTech" width="160" height="42" loading="lazy" decoding="async">
         <p>Monitoramento inteligente e segurança de TI para empresas que exigem alta performance e continuidade operacional.</p>
       </div>
       <div class="footer-col">
@@ -1202,7 +1271,7 @@
 </footer>
 
 <!-- EmailJS -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
   .field-error { display:block; font-size:12px; color:var(--red); margin-top:4px; min-height:16px; font-family:var(--font-display); }
   input.error, textarea.error { border-color:var(--red) !important; }
@@ -1308,12 +1377,4 @@
   document.addEventListener('click', function(e) {
     if (!menuOpen) return;
     var menu = document.getElementById('mobile-menu');
-    var btn = document.getElementById('hamburger');
-    if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
-      closeMenu();
-    }
-  });
-</script>
-
-</body>
-</html>
+    var btn = document.getElementB
