@@ -587,7 +587,7 @@
 <nav>
   <div class="nav-inner">
     <a href="#hero" class="nav-logo">
-      <img src="https://glctech.com.br/assets/logo/logo4.webp" alt="GLCTech — Monitoramento e Segurança em TI">
+      <img src="https://glctech.com.br/assets/logo/logo4.png" alt="GLCTech — Monitoramento e Segurança em TI">
     </a>
     <ul class="nav-links">
       <li><a href="#about">Sobre</a></li>
@@ -639,7 +639,7 @@
           <span class="hero-img-label">GLCTech · Dashboard Zabbix</span>
           <div class="hero-img-live"><div class="hero-status-dot"></div>Ao vivo</div>
         </div>
-        <img src="./assets/hero/zabbix_fk.webp" alt="Dashboard Zabbix GLCTech" class="hero-zabbix-img">
+        <img src="./assets/hero/zabbix_fk.png" alt="Dashboard Zabbix GLCTech" class="hero-zabbix-img">
       </div>
     </div>
   </div>
@@ -676,7 +676,7 @@
   <div class="container">
     <div class="about-grid">
       <div class="about-img-wrap">
-        <img src="https://glctech.com.br/assets/hero/escritorio.webp" alt="Equipe GLCTech">
+        <img src="https://glctech.com.br/assets/hero/escritorio.png" alt="Equipe GLCTech">
         <div class="about-img-badge"hidden>
           <div class="about-img-badge-num">+50</div>
           <div class="about-img-badge-text">Projetos Entregues</div>
@@ -824,7 +824,7 @@
     </div>
     <div class="team-grid">
       <div class="team-card">
-        <img src="https://glctech.com.br/assets/team/eu3.webp" alt="André Luiz Cézar" class="team-card-img face-fix">
+        <img src="https://glctech.com.br/assets/team/eu3.png" alt="André Luiz Cézar" class="team-card-img face-fix">
         <div class="team-card-body">
           <div class="team-card-role">CEO &amp; Fundador</div>
           <h3>André Luiz Cézar</h3>
@@ -832,7 +832,7 @@
         </div>
       </div>
       <div class="team-card">
-        <img src="https://glctech.com.br/assets/team/tchize.webp" alt="Tchize Matias" class="team-card-img">
+        <img src="https://glctech.com.br/assets/team/tchize.png" alt="Tchize Matias" class="team-card-img">
         <div class="team-card-body">
           <div class="team-card-role">Co-Founder & Dev Operations</div>
           <h3>Tchize Matias</h3>
@@ -841,7 +841,7 @@
       </div>
       <!-- Kawan Pablo — temporariamente oculto -->
       <div class="team-card" style="display:none;" aria-hidden="true">
-        <img src="https://glctech.com.br/assets/team/kawan.webp" alt="Kawan Pablo" class="team-card-img">
+        <img src="https://glctech.com.br/assets/team/kawan.png" alt="Kawan Pablo" class="team-card-img">
         <div class="team-card-body">
           <div class="team-card-role">Arquiteto Clou</div>
           <h3>Kawan Pablo</h3>
@@ -984,88 +984,223 @@
 </style>
  
 <script>
-(function() {
-  const API_BASE = 'https://api.rss2json.com/v1/api.json?api_key=&order_by=pubDate&count=3&rss_url=';
-  const FEEDS = [
-    { url:'https://pox.globo.com/rss/techtudo/',             source:'techtudo', label:'TechTudo'  },
-    { url:'https://www.tecmundo.com.br/seguranca/rss',        source:'tecmundo', label:'TecMundo'  }
+(function () {
+  // ── CONFIG ──────────────────────────────────────────────────
+  var FEEDS = [
+    { url: 'https://pox.globo.com/rss/techtudo/',        source: 'techtudo', label: 'TechTudo'           },
+    { url: 'https://www.tecmundo.com.br/seguranca/rss',  source: 'tecmundo', label: 'TecMundo Segurança' }
   ];
- 
-  const skeleton   = document.getElementById('blog-skeleton');
-  const feedEl     = document.getElementById('blog-feed');
-  const errorEl    = document.getElementById('blog-error');
-  const statusDot  = document.getElementById('rss-status-dot');
-  const statusText = document.getElementById('rss-status-text');
- 
-  let allItems = [], loaded = 0, failed = 0;
-  let currentFilter = 'all';
- 
-  function formatDate(s) { const d=new Date(s); return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'}); }
-  function stripHtml(h) { const t=document.createElement('div'); t.innerHTML=h; return t.textContent||t.innerText||''; }
-  function trunc(s,n) { s=(s||'').trim(); return s.length>n?s.substring(0,n)+'...':s; }
+
+  // Múltiplos proxies de fallback — tenta cada um até funcionar
+  var PROXIES = [
+    function(url) {
+      return 'https://api.rss2json.com/v1/api.json?api_key=&order_by=pubDate&count=3&rss_url=' + encodeURIComponent(url);
+    },
+    function(url) {
+      return 'https://api.allorigins.win/get?url=' + encodeURIComponent(url);
+    },
+    function(url) {
+      return 'https://corsproxy.io/?' + encodeURIComponent(url);
+    }
+  ];
+
+  var CACHE_KEY = 'glc_rss_v4';
+  var CACHE_TTL = 20 * 60 * 1000; // 20 min
+  var TIMEOUT   = 7000;
+
+  // ── DOM ─────────────────────────────────────────────────────
+  var skeleton  = document.getElementById('blog-skeleton');
+  var feedEl    = document.getElementById('blog-feed');
+  var errorEl   = document.getElementById('blog-error');
+  var statusDot = document.getElementById('rss-status-dot');
+  var statusTxt = document.getElementById('rss-status-text');
+
+  var allItems     = [];
+  var currentFilter = 'all';
+
+  // ── UTILS ───────────────────────────────────────────────────
+  function formatDate(s) {
+    var d = new Date(s);
+    return isNaN(d) ? '' : d.toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
+  }
+  function stripHtml(h) {
+    var t = document.createElement('div'); t.innerHTML = h || '';
+    return (t.textContent || t.innerText || '').replace(/\s+/g, ' ').trim();
+  }
+  function trunc(s, n) { s = (s||'').trim(); return s.length > n ? s.slice(0,n) + '…' : s; }
   function extractImg(item) {
-    if (item.thumbnail&&item.thumbnail.length>5) return item.thumbnail;
-    if (item.enclosure&&item.enclosure.link) return item.enclosure.link;
-    const m=item.content?item.content.match(/<img[^>]+src=["']([^"']+)["']/i):null; return m?m[1]:null;
+    if (item.thumbnail && item.thumbnail.length > 10) return item.thumbnail;
+    if (item.enclosure && item.enclosure.link)        return item.enclosure.link;
+    var m = (item.content||'').match(/<img[^>]+src=["']([^"']+)["']/i);
+    return m ? m[1] : null;
   }
-  function getCat(item) { return (item.categories&&item.categories.length>0)?item.categories[0]:'Segurança'; }
- 
+  function getCat(item) { return (item.categories && item.categories.length) ? item.categories[0] : 'Segurança'; }
+
+  // ── CACHE ───────────────────────────────────────────────────
+  function readCache() {
+    try {
+      var raw = localStorage.getItem(CACHE_KEY);
+      if (!raw) return null;
+      var obj = JSON.parse(raw);
+      return (Date.now() - obj.ts < CACHE_TTL) ? obj.items : null;
+    } catch(e) { return null; }
+  }
+  function writeCache(items) {
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), items: items })); } catch(e) {}
+  }
+
+  // ── FETCH COM TIMEOUT ───────────────────────────────────────
+  function fetchWithTimeout(url) {
+    return new Promise(function(resolve, reject) {
+      var done = false;
+      var timer = setTimeout(function() {
+        if (!done) { done = true; reject(new Error('timeout')); }
+      }, TIMEOUT);
+      fetch(url).then(function(r) {
+        if (!done) { done = true; clearTimeout(timer); resolve(r); }
+      }).catch(function(e) {
+        if (!done) { done = true; clearTimeout(timer); reject(e); }
+      });
+    });
+  }
+
+  // ── PARSE ALLORIGINS (retorna XML como texto) ───────────────
+  function parseXmlItems(xmlText, source, label) {
+    var items = [];
+    try {
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(xmlText, 'text/xml');
+      var nodes = doc.getElementsByTagName('item');
+      for (var i = 0; i < Math.min(nodes.length, 3); i++) {
+        var node = nodes[i];
+        var get = function(tag) { var el = node.querySelector(tag); return el ? el.textContent.trim() : ''; };
+        items.push({
+          title:       get('title'),
+          link:        get('link'),
+          pubDate:     get('pubDate'),
+          description: get('description'),
+          thumbnail:   '',
+          enclosure:   { link: node.querySelector('enclosure') ? node.querySelector('enclosure').getAttribute('url') : '' },
+          content:     (function(){ var el = node.getElementsByTagName('content:encoded')[0]; return el ? el.textContent : ''; })() || get('description'),
+          categories:  (function(){ var cats=[]; var els=node.getElementsByTagName('category'); for(var k=0;k<els.length;k++) cats.push(els[k].textContent.trim()); return cats; })(),
+          _source:     source,
+          _label:      label
+        });
+      }
+    } catch(e) {}
+    return items;
+  }
+
+  // ── FETCH UM FEED COM FALLBACK DE PROXIES ──────────────────
+  function fetchFeed(feed) {
+    // Tenta rss2json primeiro (JSON nativo)
+    return fetchWithTimeout(PROXIES[0](feed.url))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.status === 'ok' && data.items && data.items.length > 0) {
+          data.items.forEach(function(i) { i._source = feed.source; i._label = feed.label; });
+          return data.items.slice(0, 3);
+        }
+        throw new Error('rss2json empty');
+      })
+      .catch(function() {
+        // Fallback: allorigins (retorna XML bruto)
+        return fetchWithTimeout(PROXIES[1](feed.url))
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            var items = parseXmlItems(data.contents || '', feed.source, feed.label);
+            if (items.length > 0) return items;
+            throw new Error('allorigins empty');
+          })
+          .catch(function() {
+            // Fallback: corsproxy.io (retorna XML bruto)
+            return fetchWithTimeout(PROXIES[2](feed.url))
+              .then(function(r) { return r.text(); })
+              .then(function(text) {
+                var items = parseXmlItems(text, feed.source, feed.label);
+                if (items.length > 0) return items;
+                return [];
+              })
+              .catch(function() { return []; });
+          });
+      });
+  }
+
+  // ── CARD ────────────────────────────────────────────────────
   function buildCard(item) {
-    const img=extractImg(item);
-    const imgBlock=img
-      ? '<img src="'+img+'" alt="'+item.title.replace(/"/g,'&quot;')+'" class="blog-card-thumb" loading="lazy" onerror="this.parentNode.innerHTML='<div class=\'blog-card-no-thumb\'><i class=\'fa-regular fa-newspaper\'></i></div>'">'
+    var img = extractImg(item);
+    var imgBlock = img
+      ? '<img src="'+img+'" alt="'+trunc(item.title,60).replace(/"/g,'&quot;')+'" class="blog-card-thumb" loading="lazy" width="400" height="225" decoding="async" onerror="this.parentNode.innerHTML='<div class=\"blog-card-no-thumb\"><i class=\"fa-regular fa-newspaper\"></i></div>'">'
       : '<div class="blog-card-no-thumb"><i class="fa-regular fa-newspaper"></i></div>';
-    return '<a href="'+item.link+'" target="_blank" rel="noopener" class="blog-card" data-source="'+item._source+'">'+
-      imgBlock+
-      '<span class="blog-source-badge '+item._source+'">'+item._label+'</span>'+
-      '<div class="blog-card-cat">'+getCat(item)+'</div>'+
-      '<div class="blog-card-body">'+
-        '<div class="blog-card-date">'+formatDate(item.pubDate)+'</div>'+
-        '<h3>'+trunc(item.title,75)+'</h3>'+
-        '<p>'+trunc(stripHtml(item.description||''),110)+'</p>'+
-      '</div></a>';
+    return '<a href="'+item.link+'" target="_blank" rel="noopener" class="blog-card" data-source="'+item._source+'">'
+      + imgBlock
+      + '<span class="blog-source-badge '+item._source+'">'+item._label+'</span>'
+      + '<div class="blog-card-cat">'+getCat(item)+'</div>'
+      + '<div class="blog-card-body">'
+        + '<div class="blog-card-date">'+formatDate(item.pubDate)+'</div>'
+        + '<h3>'+trunc(item.title,75)+'</h3>'
+        + '<p>'+trunc(stripHtml(item.description),110)+'</p>'
+      + '</div></a>';
   }
- 
+
+  // ── FILTRO ──────────────────────────────────────────────────
   window.filterFeed = function(f) {
     currentFilter = f;
-    ['all','techtudo','tecmundo'].forEach(t => {
-      const b=document.getElementById('tab-'+t);
-      if(b) b.className='feed-tab'+(t===f?' feed-tab-active':'');
+    ['all','techtudo','tecmundo'].forEach(function(t) {
+      var b = document.getElementById('tab-'+t);
+      if (b) b.className = 'feed-tab' + (t === f ? ' feed-tab-active' : '');
     });
-    const filtered = f==='all' ? allItems : allItems.filter(i=>i._source===f);
+    var filtered = f === 'all' ? allItems : allItems.filter(function(i){ return i._source === f; });
     feedEl.innerHTML = filtered.map(buildCard).join('');
   };
- 
-  function onDone() {
-    loaded++;
-    if (loaded+failed < FEEDS.length) return;
-    skeleton.style.display='none';
-    if (allItems.length===0) {
-      errorEl.style.display='block';
-      statusDot.style.background='var(--red)';
-      statusText.textContent='Feeds indisponíveis';
-    } else {
-      allItems.sort((a,b)=>new Date(b.pubDate)-new Date(a.pubDate));
-      window.filterFeed('all');
-      feedEl.style.display='grid';
-      const ok = FEEDS.length - failed;
-      statusDot.style.background='#4ade80';
-      statusText.textContent = ok===FEEDS.length ? '2 fontes ativas' : '1 fonte ativa';
+
+  // ── RENDER ──────────────────────────────────────────────────
+  function render(items, fromCache) {
+    skeleton.style.display = 'none';
+    if (!items || items.length === 0) {
+      errorEl.style.display = 'block';
+      statusDot.style.background = 'var(--red)';
+      statusTxt.textContent = 'Feeds indisponíveis';
+      return;
     }
+    allItems = items;
+    window.filterFeed(currentFilter);
+    feedEl.style.display = 'grid';
+    var sources = items.reduce(function(acc, i) { acc[i._source] = 1; return acc; }, {});
+    var nSrc = Object.keys(sources).length;
+    statusDot.style.background = '#4ade80';
+    statusTxt.textContent = (fromCache ? '⚡ cache · ' : '') + nSrc + (nSrc === 2 ? ' fontes ativas' : ' fonte ativa');
   }
- 
-  FEEDS.forEach(feed => {
-    fetch(API_BASE + encodeURIComponent(feed.url))
-      .then(r=>r.json())
-      .then(data => {
-        if (data.status==='ok'&&data.items&&data.items.length>0) {
-          data.items.forEach(i=>{ i._source=feed.source; i._label=feed.label; });
-          allItems = allItems.concat(data.items);
-          onDone();
-        } else { failed++; onDone(); }
-      })
-      .catch(()=>{ failed++; onDone(); });
-  });
+
+  // ── LOAD ────────────────────────────────────────────────────
+  function load() {
+    // 1. Tenta cache
+    var cached = readCache();
+    if (cached && cached.length > 0) { render(cached, true); return; }
+
+    // 2. Busca os 2 feeds em paralelo, cada um com fallback de proxies
+    Promise.all(FEEDS.map(fetchFeed)).then(function(results) {
+      var merged = [];
+      results.forEach(function(r) { if (r) merged = merged.concat(r); });
+      merged.sort(function(a, b) { return new Date(b.pubDate) - new Date(a.pubDate); });
+      writeCache(merged);
+      render(merged, false);
+    }).catch(function() {
+      render([], false);
+    });
+  }
+
+  // ── INTERSECTION OBSERVER ───────────────────────────────────
+  var section = document.getElementById('blog');
+  if (typeof IntersectionObserver !== 'undefined' && section) {
+    var obs = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) { obs.disconnect(); load(); }
+    }, { rootMargin: '300px' });
+    obs.observe(section);
+  } else {
+    setTimeout(load, 100);
+  }
+
 })();</script>
 
 <!-- CTA BANNER -->
@@ -1163,7 +1298,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="https://glctech.com.br/assets/logo/logo.webp" alt="GLCTech">
+        <img src="https://glctech.com.br/assets/logo/logo4.png" alt="GLCTech">
         <p>Monitoramento inteligente e segurança de TI para empresas que exigem alta performance e continuidade operacional.</p>
       </div>
       <div class="footer-col">
@@ -1189,7 +1324,7 @@
         <h4>Legal</h4>
         <ul class="footer-links">
           <li><a href="politica.html">Política de Privacidade</a></li>
-          <li><a
+          <li><a></a>
           <li><a href="termos.html">Termos de Uso</a></li>
         </ul>
       </div>
@@ -1202,7 +1337,7 @@
 </footer>
 
 <!-- EmailJS -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
   .field-error { display:block; font-size:12px; color:var(--red); margin-top:4px; min-height:16px; font-family:var(--font-display); }
   input.error, textarea.error { border-color:var(--red) !important; }
@@ -1308,7 +1443,7 @@
   document.addEventListener('click', function(e) {
     if (!menuOpen) return;
     var menu = document.getElementById('mobile-menu');
-    var btn = document.getElementById('hamburger');
+    var btn = document.getElementB
     if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
       closeMenu();
     }
