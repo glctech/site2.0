@@ -412,7 +412,7 @@
     <div class="hero-corner hero-corner-tr"></div>
     <div class="hero-corner hero-corner-bl"></div>
     <div class="logo-wrap">
-      <img src="https://andrelcezar.github.io/glctech/assets/logo/glc2.png" alt="GLCTech">
+      <img src="https://andrelcezar.github.io/glctech/assets/logo/glc3.png" alt="GLCTech">
     </div>
     <div class="hero-tag">CEO &amp; Fundador · Zabbix Expert</div>
   </div>
@@ -539,10 +539,20 @@
       'END:VCARD'
     ].join('\r\n');
 
-    const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+     const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = 'Andre-Cezar-GLCTech.vcf';
+    link.download = 'Tchize-Matias-GLCTech.vcf';
     document.body.appendChild(link);
     link.click();
-    document.b
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+</script>
+
+</body>
+</html>
