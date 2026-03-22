@@ -985,223 +985,235 @@
  
 <script>
 (function () {
-  // ── CONFIG ──────────────────────────────────────────────────
+ 
+  // ─────────────────────────────────────────────────────────
+  // CONFIGURAÇÃO
+  // Para funcionar melhor: crie conta GRATUITA em rss2json.com
+  // e cole sua API key abaixo (deixe '' para usar sem key)
+  var RSS2JSON_KEY = '62efwtaerreoxsqnlf3dzmt1painunkn2k6kttuu';
+  // ─────────────────────────────────────────────────────────
+ 
   var FEEDS = [
     { url: 'https://pox.globo.com/rss/techtudo/',        source: 'techtudo', label: 'TechTudo'           },
     { url: 'https://www.tecmundo.com.br/seguranca/rss',  source: 'tecmundo', label: 'TecMundo Segurança' }
   ];
-
-  // Múltiplos proxies de fallback — tenta cada um até funcionar
-  var PROXIES = [
-    function(url) {
-      return 'https://api.rss2json.com/v1/api.json?api_key=&order_by=pubDate&count=3&rss_url=' + encodeURIComponent(url);
-    },
-    function(url) {
-      return 'https://api.allorigins.win/get?url=' + encodeURIComponent(url);
-    },
-    function(url) {
-      return 'https://corsproxy.io/?' + encodeURIComponent(url);
-    }
-  ];
-
-  var CACHE_KEY = 'glc_rss_v4';
-  var CACHE_TTL = 20 * 60 * 1000; // 20 min
-  var TIMEOUT   = 7000;
-
-  // ── DOM ─────────────────────────────────────────────────────
+ 
+  var CACHE_KEY = 'glc_rss_v5';
+  var CACHE_TTL = 25 * 60 * 1000; // 25 min
+  var TIMEOUT   = 8000;
+ 
   var skeleton  = document.getElementById('blog-skeleton');
   var feedEl    = document.getElementById('blog-feed');
   var errorEl   = document.getElementById('blog-error');
   var statusDot = document.getElementById('rss-status-dot');
   var statusTxt = document.getElementById('rss-status-text');
-
-  var allItems     = [];
-  var currentFilter = 'all';
-
-  // ── UTILS ───────────────────────────────────────────────────
+  var allItems  = [];
+  var curFilter = 'all';
+ 
+  // ── UTILS ──────────────────────────────────────────────────
   function formatDate(s) {
     var d = new Date(s);
     return isNaN(d) ? '' : d.toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
   }
   function stripHtml(h) {
-    var t = document.createElement('div'); t.innerHTML = h || '';
+    var t = document.createElement('div');
+    t.innerHTML = h || '';
     return (t.textContent || t.innerText || '').replace(/\s+/g, ' ').trim();
   }
-  function trunc(s, n) { s = (s||'').trim(); return s.length > n ? s.slice(0,n) + '…' : s; }
+  function trunc(s, n) {
+    s = (s || '').trim();
+    return s.length > n ? s.slice(0, n) + '…' : s;
+  }
   function extractImg(item) {
     if (item.thumbnail && item.thumbnail.length > 10) return item.thumbnail;
     if (item.enclosure && item.enclosure.link)        return item.enclosure.link;
-    var m = (item.content||'').match(/<img[^>]+src=["']([^"']+)["']/i);
+    var m = (item.content || '').match(/<img[^>]+src=["']([^"']+)["']/i);
     return m ? m[1] : null;
   }
-  function getCat(item) { return (item.categories && item.categories.length) ? item.categories[0] : 'Segurança'; }
-
-  // ── CACHE ───────────────────────────────────────────────────
+  function getCat(item) {
+    return (item.categories && item.categories.length) ? item.categories[0] : 'Segurança';
+  }
+ 
+  // ── CACHE ──────────────────────────────────────────────────
   function readCache() {
     try {
       var raw = localStorage.getItem(CACHE_KEY);
       if (!raw) return null;
       var obj = JSON.parse(raw);
       return (Date.now() - obj.ts < CACHE_TTL) ? obj.items : null;
-    } catch(e) { return null; }
+    } catch (e) { return null; }
   }
   function writeCache(items) {
-    try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), items: items })); } catch(e) {}
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), items: items })); } catch (e) {}
   }
-
-  // ── FETCH COM TIMEOUT ───────────────────────────────────────
-  function fetchWithTimeout(url) {
-    return new Promise(function(resolve, reject) {
-      var done = false;
-      var timer = setTimeout(function() {
+ 
+  // ── FETCH COM TIMEOUT ──────────────────────────────────────
+  function tFetch(url) {
+    return new Promise(function (resolve, reject) {
+      var done  = false;
+      var timer = setTimeout(function () {
         if (!done) { done = true; reject(new Error('timeout')); }
       }, TIMEOUT);
-      fetch(url).then(function(r) {
-        if (!done) { done = true; clearTimeout(timer); resolve(r); }
-      }).catch(function(e) {
-        if (!done) { done = true; clearTimeout(timer); reject(e); }
-      });
+      fetch(url)
+        .then(function (r) { if (!done) { done = true; clearTimeout(timer); resolve(r); } })
+        .catch(function (e) { if (!done) { done = true; clearTimeout(timer); reject(e); } });
     });
   }
-
-  // ── PARSE ALLORIGINS (retorna XML como texto) ───────────────
-  function parseXmlItems(xmlText, source, label) {
+ 
+  // ── PARSER XML (fallback quando a API retorna XML bruto) ───
+  function parseXml(text, source, label) {
     var items = [];
     try {
-      var parser = new DOMParser();
-      var doc = parser.parseFromString(xmlText, 'text/xml');
+      var doc   = new DOMParser().parseFromString(text, 'text/xml');
       var nodes = doc.getElementsByTagName('item');
       for (var i = 0; i < Math.min(nodes.length, 3); i++) {
         var node = nodes[i];
-        var get = function(tag) { var el = node.querySelector(tag); return el ? el.textContent.trim() : ''; };
+        function g(tag) {
+          var el = node.getElementsByTagName(tag)[0];
+          return el ? el.textContent.trim() : '';
+        }
+        var enc = node.getElementsByTagName('content:encoded')[0];
+        var encUrl = '';
+        var encEl  = node.getElementsByTagName('enclosure')[0];
+        if (encEl) encUrl = encEl.getAttribute('url') || '';
+        var cats = [];
+        var catEls = node.getElementsByTagName('category');
+        for (var k = 0; k < catEls.length; k++) cats.push(catEls[k].textContent.trim());
         items.push({
-          title:       get('title'),
-          link:        get('link'),
-          pubDate:     get('pubDate'),
-          description: get('description'),
+          title:       g('title'),
+          link:        g('link'),
+          pubDate:     g('pubDate'),
+          description: g('description'),
           thumbnail:   '',
-          enclosure:   { link: node.querySelector('enclosure') ? node.querySelector('enclosure').getAttribute('url') : '' },
-          content:     (function(){ var el = node.getElementsByTagName('content:encoded')[0]; return el ? el.textContent : ''; })() || get('description'),
-          categories:  (function(){ var cats=[]; var els=node.getElementsByTagName('category'); for(var k=0;k<els.length;k++) cats.push(els[k].textContent.trim()); return cats; })(),
+          enclosure:   { link: encUrl },
+          content:     enc ? enc.textContent : g('description'),
+          categories:  cats,
           _source:     source,
           _label:      label
         });
       }
-    } catch(e) {}
+    } catch (e) {}
     return items;
   }
-
-  // ── FETCH UM FEED COM FALLBACK DE PROXIES ──────────────────
+ 
+  // ── FETCH UM FEED (cascata de proxies) ─────────────────────
   function fetchFeed(feed) {
-    // Tenta rss2json primeiro (JSON nativo)
-    return fetchWithTimeout(PROXIES[0](feed.url))
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        if (data.status === 'ok' && data.items && data.items.length > 0) {
-          data.items.forEach(function(i) { i._source = feed.source; i._label = feed.label; });
+    var keyParam = RSS2JSON_KEY ? ('&api_key=' + RSS2JSON_KEY) : '';
+    var r2j = 'https://api.rss2json.com/v1/api.json?order_by=pubDate&count=3'
+            + keyParam + '&rss_url=' + encodeURIComponent(feed.url);
+ 
+    // 1️⃣ rss2json (JSON pronto)
+    return tFetch(r2j).then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data.status === 'ok' && data.items && data.items.length) {
+          data.items.forEach(function (i) { i._source = feed.source; i._label = feed.label; });
           return data.items.slice(0, 3);
         }
-        throw new Error('rss2json empty');
+        throw new Error('r2j-empty');
       })
-      .catch(function() {
-        // Fallback: allorigins (retorna XML bruto)
-        return fetchWithTimeout(PROXIES[1](feed.url))
-          .then(function(r) { return r.json(); })
-          .then(function(data) {
-            var items = parseXmlItems(data.contents || '', feed.source, feed.label);
-            if (items.length > 0) return items;
-            throw new Error('allorigins empty');
-          })
-          .catch(function() {
-            // Fallback: corsproxy.io (retorna XML bruto)
-            return fetchWithTimeout(PROXIES[2](feed.url))
-              .then(function(r) { return r.text(); })
-              .then(function(text) {
-                var items = parseXmlItems(text, feed.source, feed.label);
-                if (items.length > 0) return items;
-                return [];
-              })
-              .catch(function() { return []; });
+ 
+      // 2️⃣ allorigins (CORS proxy → XML)
+      .catch(function () {
+        var u = 'https://api.allorigins.win/get?url=' + encodeURIComponent(feed.url);
+        return tFetch(u).then(function (r) { return r.json(); })
+          .then(function (d) {
+            var items = parseXml(d.contents || '', feed.source, feed.label);
+            if (items.length) return items;
+            throw new Error('allorigins-empty');
           });
-      });
+      })
+ 
+      // 3️⃣ corsproxy.io (CORS proxy → XML)
+      .catch(function () {
+        var u = 'https://corsproxy.io/?' + encodeURIComponent(feed.url);
+        return tFetch(u).then(function (r) { return r.text(); })
+          .then(function (text) {
+            var items = parseXml(text, feed.source, feed.label);
+            return items; // pode ser [] — tratado em render()
+          });
+      })
+ 
+      // falha total → array vazio
+      .catch(function () { return []; });
   }
-
-  // ── CARD ────────────────────────────────────────────────────
+ 
+  // ── CARD ───────────────────────────────────────────────────
   function buildCard(item) {
     var img = extractImg(item);
     var imgBlock = img
-      ? '<img src="'+img+'" alt="'+trunc(item.title,60).replace(/"/g,'&quot;')+'" class="blog-card-thumb" loading="lazy" width="400" height="225" decoding="async" onerror="this.parentNode.innerHTML='<div class=\"blog-card-no-thumb\"><i class=\"fa-regular fa-newspaper\"></i></div>'">'
+      ? '<img src="' + img + '" alt="' + trunc(item.title, 60).replace(/"/g, '&quot;')
+        + '" class="blog-card-thumb" loading="lazy" width="400" height="225" decoding="async"'
+        + ' onerror="this.parentNode.innerHTML='<div class=\"blog-card-no-thumb\"><i class=\"fa-regular fa-newspaper\"></i></div>'">'
       : '<div class="blog-card-no-thumb"><i class="fa-regular fa-newspaper"></i></div>';
-    return '<a href="'+item.link+'" target="_blank" rel="noopener" class="blog-card" data-source="'+item._source+'">'
+ 
+    return '<a href="' + item.link + '" target="_blank" rel="noopener" class="blog-card" data-source="' + item._source + '">'
       + imgBlock
-      + '<span class="blog-source-badge '+item._source+'">'+item._label+'</span>'
-      + '<div class="blog-card-cat">'+getCat(item)+'</div>'
+      + '<span class="blog-source-badge ' + item._source + '">' + item._label + '</span>'
+      + '<div class="blog-card-cat">' + getCat(item) + '</div>'
       + '<div class="blog-card-body">'
-        + '<div class="blog-card-date">'+formatDate(item.pubDate)+'</div>'
-        + '<h3>'+trunc(item.title,75)+'</h3>'
-        + '<p>'+trunc(stripHtml(item.description),110)+'</p>'
+        + '<div class="blog-card-date">' + formatDate(item.pubDate) + '</div>'
+        + '<h3>' + trunc(item.title, 75) + '</h3>'
+        + '<p>'  + trunc(stripHtml(item.description), 110) + '</p>'
       + '</div></a>';
   }
-
-  // ── FILTRO ──────────────────────────────────────────────────
-  window.filterFeed = function(f) {
-    currentFilter = f;
-    ['all','techtudo','tecmundo'].forEach(function(t) {
-      var b = document.getElementById('tab-'+t);
+ 
+  // ── FILTRO ─────────────────────────────────────────────────
+  window.filterFeed = function (f) {
+    curFilter = f;
+    ['all','techtudo','tecmundo'].forEach(function (t) {
+      var b = document.getElementById('tab-' + t);
       if (b) b.className = 'feed-tab' + (t === f ? ' feed-tab-active' : '');
     });
-    var filtered = f === 'all' ? allItems : allItems.filter(function(i){ return i._source === f; });
-    feedEl.innerHTML = filtered.map(buildCard).join('');
+    var list = f === 'all' ? allItems : allItems.filter(function (i) { return i._source === f; });
+    feedEl.innerHTML = list.map(buildCard).join('');
   };
-
-  // ── RENDER ──────────────────────────────────────────────────
+ 
+  // ── RENDER ─────────────────────────────────────────────────
   function render(items, fromCache) {
     skeleton.style.display = 'none';
-    if (!items || items.length === 0) {
-      errorEl.style.display = 'block';
+    if (!items || !items.length) {
+      errorEl.style.display  = 'block';
       statusDot.style.background = 'var(--red)';
-      statusTxt.textContent = 'Feeds indisponíveis';
+      statusTxt.textContent  = 'Feeds indisponíveis';
       return;
     }
     allItems = items;
-    window.filterFeed(currentFilter);
+    window.filterFeed(curFilter);
     feedEl.style.display = 'grid';
-    var sources = items.reduce(function(acc, i) { acc[i._source] = 1; return acc; }, {});
-    var nSrc = Object.keys(sources).length;
+    var srcs = {};
+    items.forEach(function (i) { srcs[i._source] = 1; });
+    var n = Object.keys(srcs).length;
     statusDot.style.background = '#4ade80';
-    statusTxt.textContent = (fromCache ? '⚡ cache · ' : '') + nSrc + (nSrc === 2 ? ' fontes ativas' : ' fonte ativa');
+    statusTxt.textContent = (fromCache ? '⚡ ' : '') + n + (n > 1 ? ' fontes ativas' : ' fonte ativa');
   }
-
-  // ── LOAD ────────────────────────────────────────────────────
+ 
+  // ── LOAD ───────────────────────────────────────────────────
   function load() {
-    // 1. Tenta cache
     var cached = readCache();
-    if (cached && cached.length > 0) { render(cached, true); return; }
-
-    // 2. Busca os 2 feeds em paralelo, cada um com fallback de proxies
-    Promise.all(FEEDS.map(fetchFeed)).then(function(results) {
+    if (cached && cached.length) { render(cached, true); return; }
+ 
+    Promise.all(FEEDS.map(fetchFeed)).then(function (results) {
       var merged = [];
-      results.forEach(function(r) { if (r) merged = merged.concat(r); });
-      merged.sort(function(a, b) { return new Date(b.pubDate) - new Date(a.pubDate); });
+      results.forEach(function (r) { if (r) merged = merged.concat(r); });
+      merged.sort(function (a, b) { return new Date(b.pubDate) - new Date(a.pubDate); });
       writeCache(merged);
       render(merged, false);
-    }).catch(function() {
-      render([], false);
-    });
+    }).catch(function () { render([], false); });
   }
-
-  // ── INTERSECTION OBSERVER ───────────────────────────────────
+ 
+  // ── INTERSECTION OBSERVER ──────────────────────────────────
   var section = document.getElementById('blog');
   if (typeof IntersectionObserver !== 'undefined' && section) {
-    var obs = new IntersectionObserver(function(entries) {
+    var obs = new IntersectionObserver(function (entries) {
       if (entries[0].isIntersecting) { obs.disconnect(); load(); }
     }, { rootMargin: '300px' });
     obs.observe(section);
   } else {
-    setTimeout(load, 100);
+    setTimeout(load, 200);
   }
-
-})();</script>
+ 
+})();
+</script>
 
 <!-- CTA BANNER -->
 <div class="cta-banner">
