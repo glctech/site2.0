@@ -1878,9 +1878,10 @@
       send:    t('form.err.send',  lang),
     };
 
-    // Atualizar seletor de idioma
-    var sel = document.getElementById('lang-switcher');
-    if (sel) sel.value = lang;
+    // Atualizar seletor de idioma customizado
+    if (window._glcSelectLang) {
+      window._glcSelectLang(lang);
+    }
 
     // Salva preferência
     localStorage.setItem('glctech_lang', lang);
@@ -1893,49 +1894,124 @@
     var flags = { pt: '🇧🇷', en: '🇺🇸', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', it: '🇮🇹' };
     var names  = { pt: 'PT', en: 'EN', de: 'DE', es: 'ES', fr: 'FR', it: 'IT' };
 
-    var wrap = document.createElement('div');
-    wrap.id = 'lang-switcher-wrap';
-    wrap.style.cssText = 'display:flex;align-items:center;gap:4px;';
+    /* ── Inject CSS once ── */
+    if (!document.getElementById('glc-lang-css')) {
+      var style = document.createElement('style');
+      style.id = 'glc-lang-css';
+      style.textContent = [
+        '#glc-lang-btn {',
+        '  display:flex; align-items:center; gap:6px; cursor:pointer;',
+        '  padding:5px 10px 5px 8px; border-radius:6px;',
+        '  border:1px solid rgba(255,255,255,0.15);',
+        '  background:rgba(30,30,30,0.85); backdrop-filter:blur(8px);',
+        '  color:#ccc; font-size:12px; font-weight:700; letter-spacing:0.06em;',
+        '  user-select:none; position:relative; white-space:nowrap;',
+        '  transition:border-color .2s,color .2s,background .2s;',
+        '}',
+        '#glc-lang-btn:hover { border-color:#CC0000; color:#fff; background:rgba(40,40,40,0.95); }',
+        '#glc-lang-btn .glc-arrow {',
+        '  display:inline-block; font-size:9px; margin-left:2px; transition:transform .2s;',
+        '}',
+        '#glc-lang-btn.open .glc-arrow { transform:rotate(180deg); }',
+        '#glc-lang-dropdown {',
+        '  display:none; position:absolute; top:calc(100% + 6px); right:0;',
+        '  background:#1a1a1a; border:1px solid rgba(255,255,255,0.15);',
+        '  border-radius:8px; overflow:hidden; min-width:110px;',
+        '  box-shadow:0 8px 32px rgba(0,0,0,0.6);',
+        '  z-index:9999;',
+        '}',
+        '#glc-lang-dropdown.open { display:block; }',
+        '.glc-lang-opt {',
+        '  display:flex; align-items:center; gap:8px; padding:9px 14px;',
+        '  background:#1a1a1a; border:0px solid rgba(255,255,255,0.15);',
+        '  cursor:pointer; color:#ccc; font-size:12px; font-weight:600;',
+        '  letter-spacing:0.05em; white-space:nowrap;',
+        '  transition:background .15s,color .15s;',
+        '}',
+        '.glc-lang-opt:hover { background:rgba(204,0,0,0.15); color:#fff; }',
+        '.glc-lang-opt.active { color:#fff; background:rgba(204,0,0,0.25); }',
+        '#glc-lang-wrap { position:relative; }',
+      ].join('\n');
+      document.head.appendChild(style);
+    }
 
-    var sel = document.createElement('select');
-    sel.id = 'lang-switcher';
-    sel.setAttribute('aria-label', 'Select language');
-    sel.style.cssText = [
-      'background:transparent',
-      'border:1px solid var(--dark-border)',
-      'color:var(--gray-dim)',
-      'font-family:var(--font-display)',
-      'font-size:12px',
-      'font-weight:600',
-      'letter-spacing:0.05em',
-      'padding:5px 8px',
-      'border-radius:var(--radius)',
-      'cursor:pointer',
-      'outline:none',
-      'transition:border-color 0.22s ease,color 0.22s ease',
-    ].join(';');
+    var wrap = document.createElement('div');
+    wrap.id = 'glc-lang-wrap';
+
+    var btn = document.createElement('div');
+    btn.id = 'glc-lang-btn';
+    btn.setAttribute('role','button');
+    btn.setAttribute('aria-label','Select language');
+    btn.setAttribute('tabindex','0');
+
+    var btnFlag = document.createElement('span');
+    btnFlag.id = 'glc-lang-flag';
+    var btnName = document.createElement('span');
+    btnName.id = 'glc-lang-name';
+    var btnArrow = document.createElement('span');
+    btnArrow.className = 'glc-arrow';
+    btnArrow.textContent = '▾';
+
+    btn.appendChild(btnFlag);
+    btn.appendChild(btnName);
+    btn.appendChild(btnArrow);
+
+    var dropdown = document.createElement('div');
+    dropdown.id = 'glc-lang-dropdown';
 
     Object.keys(names).forEach(function(code) {
-      var opt = document.createElement('option');
-      opt.value = code;
-      opt.textContent = flags[code] + ' ' + names[code];
-      sel.appendChild(opt);
+      var opt = document.createElement('div');
+      opt.className = 'glc-lang-opt';
+      opt.setAttribute('data-lang', code);
+      opt.innerHTML = '<span>' + flags[code] + '</span><span>' + names[code] + '</span>';
+      opt.addEventListener('click', function(e) {
+        e.stopPropagation();
+        selectLang(code);
+        closeDropdown();
+      });
+      dropdown.appendChild(opt);
     });
 
-    sel.addEventListener('change', function() {
-      applyLang(this.value);
-    });
+    wrap.appendChild(btn);
+    wrap.appendChild(dropdown);
 
-    sel.addEventListener('mouseover', function() {
-      this.style.borderColor = 'var(--red)';
-      this.style.color = 'var(--white)';
-    });
-    sel.addEventListener('mouseout', function() {
-      this.style.borderColor = 'var(--dark-border)';
-      this.style.color = 'var(--gray-dim)';
-    });
+    function openDropdown() {
+      btn.classList.add('open');
+      dropdown.classList.add('open');
+    }
+    function closeDropdown() {
+      btn.classList.remove('open');
+      dropdown.classList.remove('open');
+    }
+    function selectLang(code) {
+      btnFlag.textContent = flags[code];
+      btnName.textContent = names[code];
+      dropdown.querySelectorAll('.glc-lang-opt').forEach(function(o) {
+        o.classList.toggle('active', o.getAttribute('data-lang') === code);
+      });
+      applyLang(code);
+    }
 
-    wrap.appendChild(sel);
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (dropdown.classList.contains('open')) { closeDropdown(); } else { openDropdown(); }
+    });
+    btn.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
+      if (e.key === 'Escape') { closeDropdown(); }
+    });
+    document.addEventListener('click', closeDropdown);
+
+    /* ── Expose select function for applyLang to call ── */
+    window._glcSelectLang = selectLang;
+
+    /* ── Set initial state ── */
+    var initLang = detectLang();
+    btnFlag.textContent = flags[initLang] || flags.pt;
+    btnName.textContent = names[initLang] || names.pt;
+    var initOpt = dropdown.querySelector('[data-lang="' + initLang + '"]');
+    if (initOpt) initOpt.classList.add('active');
+
     return wrap;
   }
 
