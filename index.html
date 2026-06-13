@@ -12,7 +12,7 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GLCTech — Monitoramento e Segurança em TI</title>
+<title data-i18n="page.title">GLCTech — Monitoramento e Segurança em TI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -600,12 +600,12 @@
       <img src="https://glctech.com.br/assets/logo/new_logo.png" alt="GLCTech — Monitoramento e Segurança em TI">
     </a>
     <ul class="nav-links">
-      <li><a href="#about">Sobre</a></li>
-      <li><a href="#services">Serviços</a></li>
-      <li><a href="#team">Time</a></li>
-      <li><a href="#testimonials">Clientes</a></li>
-      <li><a href="https://ty0ci.share.hsforms.com/2dDZ5-CdFTKektziqcbgsTQ" target="_blank">Trabalhe Conosco</a></li>
-      <li><a href="#contact" class="nav-cta"><i class="fa-regular fa-comment-dots" style="margin-right:6px;"></i>Fale Conosco</a></li>
+      <li><a href="#about" data-i18n="nav.about">Sobre</a></li>
+      <li><a href="#services" data-i18n="nav.services">Serviços</a></li>
+      <li><a href="#team" data-i18n="nav.team">Time</a></li>
+      <li><a href="#testimonials" data-i18n="nav.clients">Clientes</a></li>
+      <li><a href="https://ty0ci.share.hsforms.com/2dDZ5-CdFTKektziqcbgsTQ" target="_blank" data-i18n="nav.careers">Trabalhe Conosco</a></li>
+      <li><a href="#contact" class="nav-cta"><i class="fa-regular fa-comment-dots" style="margin-right:6px;"></i><span data-i18n="nav.contact">Fale Conosco</span></a></li>
     </ul>
     <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
       <span></span><span></span><span></span>
@@ -615,12 +615,12 @@
 
 <!-- MOBILE DRAWER -->
 <div class="mobile-menu" id="mobile-menu">
-  <a href="#about" onclick="closeMenu()"><i class="fa-solid fa-building" style="color:var(--red);width:16px;"></i>Sobre</a>
-  <a href="#services" onclick="closeMenu()"><i class="fa-solid fa-server" style="color:var(--red);width:16px;"></i>Serviços</a>
-  <a href="#team" onclick="closeMenu()"><i class="fa-solid fa-users" style="color:var(--red);width:16px;"></i>Time</a>
-  <a href="#testimonials" onclick="closeMenu()"><i class="fa-solid fa-star" style="color:var(--red);width:16px;"></i>Clientes</a>
-  <a href="https://ty0ci.share.hsforms.com/2dDZ5-CdFTKektziqcbgsTQ" target="_blank" onclick="closeMenu()"><i class="fa-solid fa-briefcase" style="color:var(--red);width:16px;"></i>Trabalhe Conosco</a>
-  <a href="#contact" class="mob-cta" onclick="closeMenu()"><i class="fa-regular fa-comment-dots" style="margin-right:6px;"></i>Fale Conosco</a>
+  <a href="#about" onclick="closeMenu()"><i class="fa-solid fa-building" style="color:var(--red);width:16px;"></i><span data-i18n="nav.about">Sobre</span></a>
+  <a href="#services" onclick="closeMenu()"><i class="fa-solid fa-server" style="color:var(--red);width:16px;"></i><span data-i18n="nav.services">Serviços</span></a>
+  <a href="#team" onclick="closeMenu()"><i class="fa-solid fa-users" style="color:var(--red);width:16px;"></i><span data-i18n="nav.team">Time</span></a>
+  <a href="#testimonials" onclick="closeMenu()"><i class="fa-solid fa-star" style="color:var(--red);width:16px;"></i><span data-i18n="nav.clients">Clientes</span></a>
+  <a href="https://ty0ci.share.hsforms.com/2dDZ5-CdFTKektziqcbgsTQ" target="_blank" onclick="closeMenu()"><i class="fa-solid fa-briefcase" style="color:var(--red);width:16px;"></i><span data-i18n="nav.careers">Trabalhe Conosco</span></a>
+  <a href="#contact" class="mob-cta" onclick="closeMenu()"><i class="fa-regular fa-comment-dots" style="margin-right:6px;"></i><span data-i18n="nav.contact">Fale Conosco</span></a>
 </div>
 
 <!-- HERO -->
@@ -632,13 +632,13 @@
     <div class="hero-content">
       <div class="hero-badge">
         <div class="hero-badge-dot"></div>
-        Monitoramento em tempo real · Zabbix &amp; Grafana
+        <span data-i18n="hero.badge">Monitoramento em tempo real · Zabbix &amp; Grafana</span>
       </div>
-      <h1>Visibilidade Total<br>da Sua <span>Infraestrutura</span><br>de TI</h1>
-      <p>Detectamos falhas antes que impactem seu negócio. Monitoramento inteligente, segurança avançada e suporte especializado — tudo em um único parceiro.</p>
+      <h1><span data-i18n="hero.h1.line1">Visibilidade Total</span><br><span data-i18n="hero.h1.line2">da Sua</span> <span data-i18n="hero.h1.span" style="color:var(--red)">Infraestrutura</span><br><span data-i18n="hero.h1.line3">de TI</span></h1>
+      <p data-i18n="hero.p">Detectamos falhas antes que impactem seu negócio. Monitoramento inteligente, segurança avançada e suporte especializado — tudo em um único parceiro.</p>
       <div class="hero-actions">
-        <a href="#contact" class="btn-primary">Solicitar Diagnóstico <i class="fa-solid fa-arrow-right"></i></a>
-        <a href="#services" class="btn-outline">Ver Soluções</a>
+        <a href="#contact" class="btn-primary"><span data-i18n="hero.cta1">Solicitar Diagnóstico</span> <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#services" class="btn-outline" data-i18n="hero.cta2">Ver Soluções</a>
       </div>
     </div>
 
@@ -647,7 +647,7 @@
         <div class="hero-img-topbar">
           <div class="hero-img-dots"><span></span><span></span><span></span></div>
           <span class="hero-img-label">GLCTech · Dashboard Zabbix</span>
-          <div class="hero-img-live"><div class="hero-status-dot"></div>Ao vivo</div>
+          <div class="hero-img-live"><div class="hero-status-dot"></div><span data-i18n="hero.live">Ao vivo</span></div>
         </div>
         <img src="./assets/hero/zabbix_fk.webp" alt="Dashboard Zabbix GLCTech" class="hero-zabbix-img">
       </div>
@@ -661,22 +661,22 @@
     <div class="stat-item">
       <i class="fa-solid fa-server" style="color:var(--red);font-size:1.3rem;margin-bottom:0.5rem;display:block;"></i>
       <div class="stat-number">144<span>+</span></div>
-      <div class="stat-desc">Devices monitorados via SNMP</div>
+      <div class="stat-desc" data-i18n="stat.snmp">Devices monitorados via SNMP</div>
     </div>
     <div class="stat-item">
       <i class="fa-solid fa-rocket" style="color:var(--red);font-size:1.3rem;margin-bottom:0.5rem;display:block;"></i>
       <div class="stat-number">3k<span>+</span></div>
-      <div class="stat-desc">Capacidade total de monitoramento</div>
+      <div class="stat-desc" data-i18n="stat.capacity">Capacidade total de monitoramento</div>
     </div>
     <div class="stat-item">
       <i class="fa-solid fa-circle-check" style="color:var(--red);font-size:1.3rem;margin-bottom:0.5rem;display:block;"></i>
       <div class="stat-number">99<span>.9%</span></div>
-      <div class="stat-desc">SLA garantido aos clientes</div>
+      <div class="stat-desc" data-i18n="stat.sla">SLA garantido aos clientes</div>
     </div>
     <div class="stat-item">
       <i class="fa-solid fa-headset" style="color:var(--red);font-size:1.3rem;margin-bottom:0.5rem;display:block;"></i>
       <div class="stat-number">24<span>/7</span></div>
-      <div class="stat-desc">Suporte técnico contínuo</div>
+      <div class="stat-desc" data-i18n="stat.support">Suporte técnico contínuo</div>
     </div>
   </div>
 </div>
@@ -689,35 +689,35 @@
         <img src="https://glctech.com.br/assets/hero/escritorio.webp" alt="Equipe GLCTech">
         <div class="about-img-badge"hidden>
           <div class="about-img-badge-num">+50</div>
-          <div class="about-img-badge-text">Projetos Entregues</div>
+          <div class="about-img-badge-text" data-i18n="about.badge.sub">Projetos Entregues</div>
         </div>
       </div>
 
       <div class="about-content">
-        <span class="label">Sobre a GLCTech</span>
-        <h2>Especialistas que garantem a continuidade do seu negócio</h2>
+        <span class="label" data-i18n="about.label">Sobre a GLCTech</span>
+        <h2 data-i18n="about.h2">Especialistas que garantem a continuidade do seu negócio</h2>
         <div class="rule"></div>
-        <p>A GLCTech nasceu com um propósito claro: transformar o monitoramento de TI em vantagem competitiva. Nossa abordagem combina tecnologia de ponta com profundo conhecimento técnico para garantir que sua infraestrutura opere no máximo desempenho — sempre.</p>
+        <p data-i18n="about.p">A GLCTech nasceu com um propósito claro: transformar o monitoramento de TI em vantagem competitiva. Nossa abordagem combina tecnologia de ponta com profundo conhecimento técnico para garantir que sua infraestrutura opere no máximo desempenho — sempre.</p>
         <div class="about-pillars">
           <div class="pillar">
             <div class="pillar-icon"><i class="fa-solid fa-bolt"></i></div>
             <div>
-              <h4>Expertise em Zabbix</h4>
-              <p>Equipe altamente qualificada em uma das plataformas líderes de monitoramento, com soluções personalizadas para cada cliente.</p>
+              <h4 data-i18n="about.pillar1.h">Expertise em Zabbix</h4>
+              <p data-i18n="about.pillar1.p">Equipe altamente qualificada em uma das plataformas líderes de monitoramento, com soluções personalizadas para cada cliente.</p>
             </div>
           </div>
           <div class="pillar">
             <div class="pillar-icon"><i class="fa-solid fa-shield-halved"></i></div>
             <div>
-              <h4>Suporte Abrangente</h4>
-              <p>Da concepção à manutenção contínua, estamos ao seu lado em todas as etapas do projeto.</p>
+              <h4 data-i18n="about.pillar2.h">Suporte Abrangente</h4>
+              <p data-i18n="about.pillar2.p">Da concepção à manutenção contínua, estamos ao seu lado em todas as etapas do projeto.</p>
             </div>
           </div>
           <div class="pillar">
             <div class="pillar-icon"><i class="fa-solid fa-chart-line"></i></div>
             <div>
-              <h4>Inovação Tecnológica</h4>
-              <p>Utilizamos Zabbix, Grafana e as melhores ferramentas do mercado para dashboards precisos e insights acionáveis.</p>
+              <h4 data-i18n="about.pillar3.h">Inovação Tecnológica</h4>
+              <p data-i18n="about.pillar3.p">Utilizamos Zabbix, Grafana e as melhores ferramentas do mercado para dashboards precisos e insights acionáveis.</p>
             </div>
           </div>
         </div>
@@ -730,31 +730,31 @@
 <section id="services">
   <div class="container">
     <div class="section-header">
-      <span class="label">Nossas Soluções</span>
-      <h2>Tudo o que sua TI precisa,<br>em um único parceiro</h2>
-      <p>Soluções integradas de monitoramento, segurança e backup para manter sua operação estável e protegida.</p>
+      <span class="label" data-i18n="services.label">Nossas Soluções</span>
+      <h2 data-i18n-html="services.h2">Tudo o que sua TI precisa,<br>em um único parceiro</h2>
+      <p data-i18n="services.p">Soluções integradas de monitoramento, segurança e backup para manter sua operação estável e protegida.</p>
     </div>
     <div class="services-grid">
       <a href="zabbix.html" class="service-card">
-        <div class="service-num">01 — Monitoramento</div>
+        <div class="service-num" data-i18n="services.s1.num">01 — Monitoramento</div>
         <div class="service-icon"><i class="fa-solid fa-satellite-dish"></i></div>
-        <h3>Monitoramento Inteligente com Zabbix</h3>
-        <p>Acompanhe em tempo real servidores, redes e aplicações com métricas precisas, dashboards personalizados e análise proativa de incidentes.</p>
-        <span class="service-link">Saiba mais <i class="fa-solid fa-arrow-right"></i></span>
+        <h3 data-i18n="services.s1.h">Monitoramento Inteligente com Zabbix</h3>
+        <p data-i18n="services.s1.p">Acompanhe em tempo real servidores, redes e aplicações com métricas precisas, dashboards personalizados e análise proativa de incidentes.</p>
+        <span class="service-link"><span data-i18n="services.s1.link">Saiba mais</span> <i class="fa-solid fa-arrow-right"></i></span>
       </a>
       <a href="kaspersky.html" class="service-card">
-        <div class="service-num">02 — Segurança</div>
+        <div class="service-num" data-i18n="services.s2.num">02 — Segurança</div>
         <div class="service-icon"><i class="fa-solid fa-lock"></i></div>
-        <h3>Segurança Kaspersky em Tempo Real</h3>
-        <p>Monitore continuamente seus sistemas e detecte ameaças em tempo real, garantindo segurança, desempenho e conformidade em todo o ambiente.</p>
-        <span class="service-link">Saiba mais <i class="fa-solid fa-arrow-right"></i></span>
+        <h3 data-i18n="services.s2.h">Segurança Kaspersky em Tempo Real</h3>
+        <p data-i18n="services.s2.p">Monitore continuamente seus sistemas e detecte ameaças em tempo real, garantindo segurança, desempenho e conformidade em todo o ambiente.</p>
+        <span class="service-link"><span data-i18n="services.s2.link">Saiba mais</span> <i class="fa-solid fa-arrow-right"></i></span>
       </a>
       <a href="veeam.html" class="service-card">
-        <div class="service-num">03 — Backup</div>
+        <div class="service-num" data-i18n="services.s3.num">03 — Backup</div>
         <div class="service-icon"><i class="fa-solid fa-database"></i></div>
-        <h3>Backup Inteligente com Veeam</h3>
-        <p>Garanta a continuidade dos seus negócios com backups automáticos, recuperação rápida e relatórios completos sobre o status das suas cópias de segurança.</p>
-        <span class="service-link">Saiba mais <i class="fa-solid fa-arrow-right"></i></span>
+        <h3 data-i18n="services.s3.h">Backup Inteligente com Veeam</h3>
+        <p data-i18n="services.s3.p">Garanta a continuidade dos seus negócios com backups automáticos, recuperação rápida e relatórios completos sobre o status das suas cópias de segurança.</p>
+        <span class="service-link"><span data-i18n="services.s3.link">Saiba mais</span> <i class="fa-solid fa-arrow-right"></i></span>
       </a>
     </div>
   </div>
@@ -765,37 +765,37 @@
   <div class="container">
     <div class="why-grid">
       <div class="why-left">
-        <span class="label">Por que a GLCTech</span>
-        <h2>Monitoramento que vai além dos alertas</h2>
+        <span class="label" data-i18n="why.label">Por que a GLCTech</span>
+        <h2 data-i18n="why.h2">Monitoramento que vai além dos alertas</h2>
         <div class="rule"></div>
-        <p>Escolher a GLCTech é optar por uma parceira que entende que monitoramento é sobre garantir a continuidade, segurança e eficiência do negócio.</p>
+        <p data-i18n="why.p">Escolher a GLCTech é optar por uma parceira que entende que monitoramento é sobre garantir a continuidade, segurança e eficiência do negócio.</p>
         <div class="why-pillars">
           <div class="why-pillar">
             <div class="why-pillar-num">01</div>
             <div>
-              <h4>Especialização Comprovada</h4>
-              <p>Com ampla experiência em Zabbix, dominamos todo o ciclo de implantação — da arquitetura à automação, com as melhores práticas do mercado.</p>
+              <h4 data-i18n="why.p1.h">Especialização Comprovada</h4>
+              <p data-i18n="why.p1.p">Com ampla experiência em Zabbix, dominamos todo o ciclo de implantação — da arquitetura à automação, com as melhores práticas do mercado.</p>
             </div>
           </div>
           <div class="why-pillar">
             <div class="why-pillar-num">02</div>
             <div>
-              <h4>Abordagem Estratégica</h4>
-              <p>Não entregamos apenas ferramentas: criamos estratégias sob medida, transformando dados em insights acionáveis para decisões mais rápidas.</p>
+              <h4 data-i18n="why.p2.h">Abordagem Estratégica</h4>
+              <p data-i18n="why.p2.p">Não entregamos apenas ferramentas: criamos estratégias sob medida, transformando dados em insights acionáveis para decisões mais rápidas.</p>
             </div>
           </div>
           <div class="why-pillar">
             <div class="why-pillar-num">03</div>
             <div>
-              <h4>Parceria de Longo Prazo</h4>
-              <p>Suporte técnico contínuo, atualizações proativas e acompanhamento próximo — sua operação permanece estável e em constante evolução.</p>
+              <h4 data-i18n="why.p3.h">Parceria de Longo Prazo</h4>
+              <p data-i18n="why.p3.p">Suporte técnico contínuo, atualizações proativas e acompanhamento próximo — sua operação permanece estável e em constante evolução.</p>
             </div>
           </div>
           <div class="why-pillar">
             <div class="why-pillar-num">04</div>
             <div>
-              <h4>Compromisso com a Excelência</h4>
-              <p>Qualidade, transparência e inovação em cada solução. Resultados mensuráveis e um ambiente de TI robusto e confiável.</p>
+              <h4 data-i18n="why.p4.h">Compromisso com a Excelência</h4>
+              <p data-i18n="why.p4.p">Qualidade, transparência e inovação em cada solução. Resultados mensuráveis e um ambiente de TI robusto e confiável.</p>
             </div>
           </div>
         </div>
@@ -804,12 +804,12 @@
       <div>
         <div class="why-quote-card">
           <div class="why-quote-icon"><i class="fa-solid fa-quote-left" style="color:var(--red);font-size:2rem;"></i></div>
-          <blockquote>"A qualidade dos serviços prestados pela GLCTech é excepcional. Sempre atenciosos e ágeis, demonstram profundo conhecimento em sua área, oferecendo soluções eficazes para qualquer desafio."</blockquote>
+          <blockquote data-i18n="why.quote">"A qualidade dos serviços prestados pela GLCTech é excepcional. Sempre atenciosos e ágeis, demonstram profundo conhecimento em sua área, oferecendo soluções eficazes para qualquer desafio."</blockquote>
           <div class="why-quote-author">
             <div class="why-quote-avatar">MP</div>
             <div>
               <div class="why-quote-name">Matheus Pires</div>
-              <div class="why-quote-role">Presidente — Web+ Telecom</div>
+              <div class="why-quote-role" data-i18n="why.quote.role">Presidente — Web+ Telecom</div>
             </div>
           </div>
           <div class="why-tags">
@@ -829,24 +829,24 @@
 <section id="team">
   <div class="container">
     <div class="section-header">
-      <span class="label">Nosso Time</span>
-      <h2>Liderança e especialistas que<br>impulsionam a GLCTech</h2>
+      <span class="label" data-i18n="team.label">Nosso Time</span>
+      <h2 data-i18n-html="team.h2">Liderança e especialistas que<br>impulsionam a GLCTech</h2>
     </div>
     <div class="team-grid">
       <div class="team-card">
         <img src="https://glctech.com.br/assets/team/eu3.webp" alt="André Luiz Cézar" class="team-card-img face-fix">
         <div class="team-card-body">
-          <div class="team-card-role">CEO &amp; Fundador</div>
+          <div class="team-card-role" data-i18n="team.m1.role">CEO &amp; Fundador</div>
           <h3>André Luiz Cézar</h3>
-          <p>Fundador da GLCTech e especialista Zabbix, com ampla experiência em infraestrutura e monitoramento de TI. Lidera a visão estratégica da empresa unindo gestão executiva e profundo conhecimento técnico para entregar soluções de alto impacto aos clientes.</p>
+          <p data-i18n="team.m1.bio">Fundador da GLCTech e especialista Zabbix, com ampla experiência em infraestrutura e monitoramento de TI. Lidera a visão estratégica da empresa unindo gestão executiva e profundo conhecimento técnico para entregar soluções de alto impacto aos clientes.</p>
         </div>
       </div>
       <div class="team-card">
         <img src="https://glctech.com.br/assets/team/tchize.webp" alt="Tchize Matias" class="team-card-img">
         <div class="team-card-body">
-          <div class="team-card-role">Co-Founder & Dev Operations</div>
+          <div class="team-card-role" data-i18n="team.m2.role">Co-Founder &amp; Dev Operations</div>
           <h3>Tchize Matias</h3>
-          <p>Co-fundador da GLCTech, baseado em Manchester, Inglaterra. Responsável pelas operações de desenvolvimento e pela gestão de clientes internacionais. Sua presença no Reino Unido amplia o alcance da GLCTech para o mercado europeu, garantindo suporte e atendimento além das fronteiras brasileiras.</p>
+          <p data-i18n="team.m2.bio">Co-fundador da GLCTech, baseado em Manchester, Inglaterra. Responsável pelas operações de desenvolvimento e pela gestão de clientes internacionais. Sua presença no Reino Unido amplia o alcance da GLCTech para o mercado europeu, garantindo suporte e atendimento além das fronteiras brasileiras.</p>
         </div>
       </div>
       <!-- Kawan Pablo — temporariamente oculto -->
@@ -866,29 +866,29 @@
 <section id="testimonials">
   <div class="container">
     <div class="section-header">
-      <span class="label">Depoimentos</span>
-      <h2>O que nossos clientes dizem</h2>
+      <span class="label" data-i18n="testi.label">Depoimentos</span>
+      <h2 data-i18n="testi.h2">O que nossos clientes dizem</h2>
     </div>
     <div class="testimonials-grid">
       <div class="testi-card">
         <div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-        <blockquote>"Sempre que precisamos de algo, eles estão dispostos a ajudar. Possuem excelente conhecimento de sua área e entregam soluções de acordo com as nossas necessidades. Recomendo fortemente."</blockquote>
+        <blockquote data-i18n="testi.t1">"Sempre que precisamos de algo, eles estão dispostos a ajudar. Possuem excelente conhecimento de sua área e entregam soluções de acordo com as nossas necessidades. Recomendo fortemente."</blockquote>
         <div class="testi-author">
           <div class="testi-avatar">WN</div>
           <div>
             <div class="testi-name">Wilson</div>
-            <div class="testi-role">Presidente — Nordenet</div>
+            <div class="testi-role" data-i18n="testi.t1.role">Presidente — Nordenet</div>
           </div>
         </div>
       </div>
       <div class="testi-card">
         <div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-        <blockquote>"A qualidade dos serviços prestados pela GLCTech é excepcional. Sempre atenciosos e ágeis, demonstram profundo conhecimento e oferecem soluções eficazes para qualquer desafio."</blockquote>
+        <blockquote data-i18n="testi.t2">"A qualidade dos serviços prestados pela GLCTech é excepcional. Sempre atenciosos e ágeis, demonstram profundo conhecimento e oferecem soluções eficazes para qualquer desafio."</blockquote>
         <div class="testi-author">
           <div class="testi-avatar">MP</div>
           <div>
             <div class="testi-name">Matheus Pires</div>
-            <div class="testi-role">Presidente — Web+ Telecom</div>
+            <div class="testi-role" data-i18n="testi.t2.role">Presidente — Web+ Telecom</div>
           </div>
         </div>
       </div>
@@ -921,7 +921,7 @@
 <!-- PARTNERS -->
 <div id="partners">
   <div class="container">
-    <p class="partners-label">Tecnologias &amp; Parceiros de Confiança</p>
+    <p class="partners-label" data-i18n="partners.label">Tecnologias &amp; Parceiros de Confiança</p>
     <div class="partners-row">
       <div class="partner-badge"hidden>Zabbix</div>
       <div class="partner-badge">DSR9</div>
@@ -1258,9 +1258,9 @@
 <!-- CTA BANNER -->
 <div class="cta-banner">
   <div class="container cta-banner-inner">
-    <h2>Pronto para proteger sua infraestrutura?</h2>
-    <p>Fale com nossos especialistas e descubra como a GLCTech pode transformar o monitoramento da sua empresa.</p>
-    <a href="#contact" class="btn-white">Iniciar Diagnóstico Gratuito <i class="fa-solid fa-arrow-right"></i></a>
+    <h2 data-i18n="cta.h2">Pronto para proteger sua infraestrutura?</h2>
+    <p data-i18n="cta.p">Fale com nossos especialistas e descubra como a GLCTech pode transformar o monitoramento da sua empresa.</p>
+    <a href="#contact" class="btn-white"><span data-i18n="cta.btn">Iniciar Diagnóstico Gratuito</span> <i class="fa-solid fa-arrow-right"></i></a>
   </div>
 </div>
 
@@ -1269,30 +1269,30 @@
   <div class="container">
     <div class="contact-grid">
       <div class="contact-left">
-        <span class="label">Fale Conosco</span>
-        <h2>Entre em contato com nossa equipe técnica</h2>
+        <span class="label" data-i18n="contact.label">Fale Conosco</span>
+        <h2 data-i18n="contact.h2">Entre em contato com nossa equipe técnica</h2>
         <div class="rule"></div>
-        <p>Entre em contato com nossa equipe e descubra como a GLCTech pode otimizar sua infraestrutura de TI. Resposta em até 24h úteis.</p>
+        <p data-i18n="contact.p">Entre em contato com nossa equipe e descubra como a GLCTech pode otimizar sua infraestrutura de TI. Resposta em até 24h úteis.</p>
         <div class="contact-items">
           <a href="mailto:contato@glctech.com.br" class="contact-item">
             <div class="contact-item-icon"><i class="fa-solid fa-envelope"></i></div>
             <div>
-              <div class="contact-item-label">E-mail</div>
+              <div class="contact-item-label" data-i18n="contact.email.label">E-mail</div>
               <div class="contact-item-val"><span class="__cf_email__" data-cfemail="f89b97968c998c97b89f949b8c9d9b90d69b9795d69a8a">[email&#160;protected]</span></div>
             </div>
           </a>
           <a href="tel:+5511957624146" class="contact-item">
             <div class="contact-item-icon"><i class="fa-solid fa-phone"></i></div>
             <div>
-              <div class="contact-item-label">Telefone / WhatsApp</div>
+              <div class="contact-item-label" data-i18n="contact.phone.label">Telefone / WhatsApp</div>
               <div class="contact-item-val">+55 11 95762-4146</div>
             </div>
           </a>
           <div class="contact-item">
             <div class="contact-item-icon"><i class="fa-solid fa-location-dot"></i></div>
             <div>
-              <div class="contact-item-label">Localização</div>
-              <div class="contact-item-val">São Paulo, SP — Brasil</div>
+              <div class="contact-item-label" data-i18n="contact.location.label">Localização</div>
+              <div class="contact-item-val" data-i18n="contact.location.val">São Paulo, SP — Brasil</div>
             </div>
           </div>
         </div>
@@ -1302,41 +1302,41 @@
         <!-- SUCCESS STATE -->
         <div id="form-success" style="display:none; text-align:center; padding:3rem 1rem;">
           <div style="width:64px;height:64px;background:rgba(74,222,128,0.12);border:1px solid rgba(74,222,128,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;color:#4ade80;margin:0 auto 1.5rem;"><i class="fa-solid fa-circle-check"></i></div>
-          <h3 style="color:var(--white);font-size:1.3rem;margin-bottom:0.75rem;">Mensagem enviada!</h3>
-          <p style="color:var(--gray-dim);font-size:14px;line-height:1.7;">Recebemos seu contato e responderemos em at&#233; <strong style="color:var(--white)">24h &#250;teis</strong>.</p>
-          <button onclick="resetForm()" style="margin-top:1.5rem;background:transparent;border:1px solid var(--dark-border);color:var(--gray-dim);padding:10px 24px;border-radius:var(--radius);cursor:pointer;font-family:var(--font-display);font-size:13px;">Enviar nova mensagem</button>
+          <h3 style="color:var(--white);font-size:1.3rem;margin-bottom:0.75rem;" data-i18n="form.success.h">Mensagem enviada!</h3>
+          <p style="color:var(--gray-dim);font-size:14px;line-height:1.7;" data-i18n="form.success.p">Recebemos seu contato e responderemos em até <strong style="color:var(--white)">24h úteis</strong>.</p>
+          <button onclick="resetForm()" style="margin-top:1.5rem;background:transparent;border:1px solid var(--dark-border);color:var(--gray-dim);padding:10px 24px;border-radius:var(--radius);cursor:pointer;font-family:var(--font-display);font-size:13px;" data-i18n="form.success.btn">Enviar nova mensagem</button>
         </div>
  
         <!-- FORM -->
         <div id="contact-form">
           <div class="form-row">
             <div class="form-group">
-              <label for="nome">Nome *</label>
-              <input type="text" id="nome" placeholder="Seu nome">
+              <label for="nome" data-i18n="form.nome">Nome *</label>
+              <input type="text" id="nome" placeholder="Seu nome" data-i18n="form.nome.ph" data-i18n-attr="placeholder">
               <span class="field-error" id="err-nome"></span>
             </div>
             <div class="form-group">
-              <label for="empresa">Empresa</label>
-              <input type="text" id="empresa" placeholder="Nome da empresa">
+              <label for="empresa" data-i18n="form.empresa">Empresa</label>
+              <input type="text" id="empresa" placeholder="Nome da empresa" data-i18n="form.empresa.ph" data-i18n-attr="placeholder">
             </div>
           </div>
           <div class="form-group">
-            <label for="email">E-mail *</label>
-            <input type="email" id="email" placeholder="seu@email.com.br">
+            <label for="email" data-i18n="form.email">E-mail *</label>
+            <input type="email" id="email" placeholder="seu@email.com.br" data-i18n="form.email.ph" data-i18n-attr="placeholder">
             <span class="field-error" id="err-email"></span>
           </div>
           <div class="form-group">
-            <label for="telefone">Telefone</label>
-            <input type="tel" id="telefone" placeholder="(11) 99999-9999">
+            <label for="telefone" data-i18n="form.tel">Telefone</label>
+            <input type="tel" id="telefone" placeholder="(11) 99999-9999" data-i18n="form.tel.ph" data-i18n-attr="placeholder">
           </div>
           <div class="form-group">
-            <label for="mensagem">Mensagem *</label>
-            <textarea id="mensagem" placeholder="Descreva sua necessidade ou infraestrutura..."></textarea>
+            <label for="mensagem" data-i18n="form.msg">Mensagem *</label>
+            <textarea id="mensagem" placeholder="Descreva sua necessidade ou infraestrutura..." data-i18n="form.msg.ph" data-i18n-attr="placeholder"></textarea>
             <span class="field-error" id="err-mensagem"></span>
           </div>
           <button class="form-submit" id="btn-submit" onclick="sendEmail()">
-            <span id="btn-text"><i class="fa-solid fa-paper-plane" style="margin-right:8px;"></i>Enviar Mensagem</span>
-            <span id="btn-loading" style="display:none;">Enviando...</span>
+            <span id="btn-text"><i class="fa-solid fa-paper-plane" style="margin-right:8px;"></i><span data-i18n="form.submit">Enviar Mensagem</span></span>
+            <span id="btn-loading" style="display:none;" data-i18n="form.sending">Enviando...</span>
           </button>
           <p id="form-error-msg" style="display:none;color:var(--red);font-size:13px;margin-top:0.8rem;text-align:center;"></p>
         </div>
@@ -1351,20 +1351,20 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <img src="https://glctech.com.br/assets/logo/new_logo.png" alt="GLCTech">
-        <p>Monitoramento inteligente e segurança de TI para empresas que exigem alta performance e continuidade operacional.</p>
+        <p data-i18n="footer.p">Monitoramento inteligente e segurança de TI para empresas que exigem alta performance e continuidade operacional.</p>
       </div>
       <div class="footer-col">
-        <h4>Navegação</h4>
+        <h4 data-i18n="footer.nav.title">Navegação</h4>
         <ul class="footer-links">
-          <li><a href="#about">Sobre</a></li>
-          <li><a href="#services">Serviços</a></li>
-          <li><a href="#team">Time</a></li>
-          <li><a href="#testimonials">Clientes</a></li>
-          <li><a href="#blog">Blog</a></li>
+          <li><a href="#about" data-i18n="footer.nav.about">Sobre</a></li>
+          <li><a href="#services" data-i18n="footer.nav.services">Serviços</a></li>
+          <li><a href="#team" data-i18n="footer.nav.team">Time</a></li>
+          <li><a href="#testimonials" data-i18n="footer.nav.clients">Clientes</a></li>
+          <li><a href="#blog" data-i18n="footer.nav.blog">Blog</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Serviços</h4>
+        <h4 data-i18n="footer.svc.title">Serviços</h4>
         <ul class="footer-links">
           <li><a href="zabbix.html">Zabbix</a></li>
           <li><a href="kaspersky.html">Kaspersky</a></li>
@@ -1373,17 +1373,17 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Legal</h4>
+        <h4 data-i18n="footer.legal.title">Legal</h4>
         <ul class="footer-links">
-          <li><a href="politica.html">Política de Privacidade</a></li>
+          <li><a href="politica.html" data-i18n="footer.legal.privacy">Política de Privacidade</a></li>
           <li><a
-          <li><a href="termos.html">Termos de Uso</a></li>
+          <li><a href="termos.html" data-i18n="footer.legal.terms">Termos de Uso</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 GLCTech Tecnologia. Todos os direitos reservados.</span>
-      <span>São Paulo, SP — Brasil</span>
+      <span data-i18n="footer.copy">© 2025 GLCTech Tecnologia. Todos os direitos reservados.</span>
+      <span data-i18n="footer.location">São Paulo, SP — Brasil</span>
     </div>
   </div>
 </footer>
@@ -1418,13 +1418,14 @@
 
   function validateForm() {
     var valid = true;
+    var errs = window._i18n_errors || {};
     var nome = document.getElementById('nome').value.trim();
     var email = document.getElementById('email').value.trim();
     var mensagem = document.getElementById('mensagem').value.trim();
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!nome) { document.getElementById('err-nome').textContent = 'Por favor, informe seu nome.'; document.getElementById('nome').classList.add('error'); valid = false; }
-    if (!email || !emailRegex.test(email)) { document.getElementById('err-email').textContent = 'Informe um e-mail válido.'; document.getElementById('email').classList.add('error'); valid = false; }
-    if (!mensagem) { document.getElementById('err-mensagem').textContent = 'Por favor, escreva uma mensagem.'; document.getElementById('mensagem').classList.add('error'); valid = false; }
+    if (!nome) { document.getElementById('err-nome').textContent = errs.nome || 'Por favor, informe seu nome.'; document.getElementById('nome').classList.add('error'); valid = false; }
+    if (!email || !emailRegex.test(email)) { document.getElementById('err-email').textContent = errs.email || 'Informe um e-mail válido.'; document.getElementById('email').classList.add('error'); valid = false; }
+    if (!mensagem) { document.getElementById('err-mensagem').textContent = errs.msg || 'Por favor, escreva uma mensagem.'; document.getElementById('mensagem').classList.add('error'); valid = false; }
     return valid;
   }
 
@@ -1473,7 +1474,7 @@
     })
     .catch(function() {
       var errMsg = document.getElementById('form-error-msg');
-      errMsg.textContent = 'Erro ao enviar. Tente novamente ou ligue: +55 11 95762-4146';
+      errMsg.textContent = (window._i18n_errors && window._i18n_errors.send) || 'Erro ao enviar. Tente novamente ou ligue: +55 11 95762-4146';
       errMsg.style.display = 'block';
     })
     .finally(function() {
@@ -1491,6 +1492,8 @@
     document.getElementById('contact-form').style.display = 'block';
   }
 </script>
+
+<script src="scripts/i18n.js"></script>
 
 <!-- Hamburger JS -->
 <script>
