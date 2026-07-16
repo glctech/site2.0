@@ -1983,12 +1983,15 @@
       btn.classList.remove('open');
       dropdown.classList.remove('open');
     }
-    function selectLang(code) {
+    function syncSwitcherUI(code) {
       btnFlag.textContent = flags[code];
       btnName.textContent = names[code];
       dropdown.querySelectorAll('.glc-lang-opt').forEach(function(o) {
         o.classList.toggle('active', o.getAttribute('data-lang') === code);
       });
+    }
+    function selectLang(code) {
+      syncSwitcherUI(code);
       applyLang(code);
     }
 
@@ -2002,8 +2005,8 @@
     });
     document.addEventListener('click', closeDropdown);
 
-    /* ── Expose select function for applyLang to call ── */
-    window._glcSelectLang = selectLang;
+    /* ── Expose UI-sync function for applyLang to call (must NOT call applyLang back) ── */
+    window._glcSelectLang = syncSwitcherUI;
 
     /* ── Set initial state ── */
     var initLang = detectLang();
@@ -2037,14 +2040,6 @@
   }
 
   // Expor para uso externo (inclui _translations para merge das chaves extras)
-  window.glcI18n = { apply: applyLang, t: t, _translations: translations };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-
   window.glcI18n = { apply: applyLang, t: t, _translations: translations };
 
 })();

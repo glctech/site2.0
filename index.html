@@ -687,7 +687,7 @@
     <div class="about-grid">
       <div class="about-img-wrap">
         <img src="https://glctech.com.br/assets/hero/escritorio.webp" alt="Equipe GLCTech">
-        <div class="about-img-badge"hidden>
+        <div class="about-img-badge" hidden>
           <div class="about-img-badge-num">+50</div>
           <div class="about-img-badge-text" data-i18n="about.badge.sub">Projetos Entregues</div>
         </div>
@@ -892,7 +892,7 @@
           </div>
         </div>
       </div>
-      <div class="testi-card"hidden>
+      <div class="testi-card" hidden>
         <div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
         <blockquote>"Excelente consultoria. Além do monitoramento, nos ajudaram a otimizar custos e melhorar a segurança de rede com Kaspersky. Parceiros de verdade."</blockquote>
         <div class="testi-author">
@@ -903,7 +903,7 @@
           </div>
         </div>
       </div>
-      <div class="testi-card"hidden>
+      <div class="testi-card" hidden>
         <div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
         <blockquote>"A GLCTech transformou nossa visibilidade de infraestrutura. Os dashboards em Grafana nos permitem tomar decisões muito mais rápidas e embasadas."</blockquote>
         <div class="testi-author">
@@ -923,7 +923,7 @@
   <div class="container">
     <p class="partners-label" data-i18n="partners.label">Tecnologias &amp; Parceiros de Confiança</p>
     <div class="partners-row">
-      <div class="partner-badge"hidden>Zabbix</div>
+      <div class="partner-badge" hidden>Zabbix</div>
       <div class="partner-badge">DSR9</div>
       <div class="partner-badge">Kaspersky</div>
       <div class="partner-badge">Veeam</div>
@@ -1148,12 +1148,16 @@
   }
 
   // ── CARD ───────────────────────────────────────────────────
+  window.glcImgFallback = function (el) {
+    el.parentNode.innerHTML = '<div class="blog-card-no-thumb"><i class="fa-regular fa-newspaper"></i></div>';
+  };
+
   function buildCard(item) {
     var img = extractImg(item);
     var imgBlock = img
       ? '<img src="' + img + '" alt="' + trunc(item.title, 60).replace(/"/g, '&quot;')
         + '" class="blog-card-thumb" loading="lazy" width="400" height="225" decoding="async"'
-        + ' onerror="this.parentNode.innerHTML='<div class=\"blog-card-no-thumb\"><i class=\"fa-regular fa-newspaper\"></i></div>'">'
+        + ' onerror="window.glcImgFallback(this)">'
       : '<div class="blog-card-no-thumb"><i class="fa-regular fa-newspaper"></i></div>';
 
     return '<a href="' + item.link + '" target="_blank" rel="noopener" class="blog-card" data-source="' + item._source + '">'
@@ -1376,7 +1380,6 @@
         <h4 data-i18n="footer.legal.title">Legal</h4>
         <ul class="footer-links">
           <li><a href="politica.html" data-i18n="footer.legal.privacy">Política de Privacidade</a></li>
-          <li><a
           <li><a href="termos.html" data-i18n="footer.legal.terms">Termos de Uso</a></li>
         </ul>
       </div>
@@ -1526,4 +1529,15 @@
   document.addEventListener('click', function(e) {
     if (!menuOpen) return;
     var menu = document.getElementById('mobile-menu');
-    var btn = document.getElementB
+    var btn = document.getElementById('hamburger');
+    if (menu && !menu.contains(e.target) && btn && !btn.contains(e.target)) {
+      closeMenu();
+    }
+  });
+</script>
+
+<!-- Tidio Chat -->
+<script src="//code.tidio.co/z471nxc3tjaciumkzzasuoe928m5odks.js" async></script>
+
+</body>
+</html>
