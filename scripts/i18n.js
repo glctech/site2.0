@@ -1983,12 +1983,18 @@
       btn.classList.remove('open');
       dropdown.classList.remove('open');
     }
-    function selectLang(code) {
+    // Atualiza APENAS o estado visual do seletor (sem reaplicar a tradução).
+    // Chamado por applyLang() para manter bandeira/nome/ativo em sincronia.
+    function syncSwitcherUI(code) {
       btnFlag.textContent = flags[code];
       btnName.textContent = names[code];
       dropdown.querySelectorAll('.glc-lang-opt').forEach(function(o) {
         o.classList.toggle('active', o.getAttribute('data-lang') === code);
       });
+    }
+    // Seleção pelo usuário: atualiza a UI e aplica a tradução.
+    function selectLang(code) {
+      syncSwitcherUI(code);
       applyLang(code);
     }
 
@@ -2002,8 +2008,9 @@
     });
     document.addEventListener('click', closeDropdown);
 
-    /* ── Expose select function for applyLang to call ── */
-    window._glcSelectLang = selectLang;
+    /* ── Expose UI-sync (NÃO reaplica tradução) para applyLang chamar ──
+       Evita a recursão infinita applyLang() → selectLang() → applyLang(). ── */
+    window._glcSelectLang = syncSwitcherUI;
 
     /* ── Set initial state ── */
     var initLang = detectLang();
@@ -2037,14 +2044,6 @@
   }
 
   // Expor para uso externo (inclui _translations para merge das chaves extras)
-  window.glcI18n = { apply: applyLang, t: t, _translations: translations };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-
   window.glcI18n = { apply: applyLang, t: t, _translations: translations };
 
 })();

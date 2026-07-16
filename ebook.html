@@ -270,7 +270,7 @@
             <div class="ebook-visual">
                 <!-- IMAGEM DA CAPA DO E-BOOK INSERIDA AQUI -->
                 <img 
-                    src="http://glctech.com.br/assets/hero/ebook.png" 
+                    src="https://glctech.com.br/assets/hero/ebook.png"
                     alt="Capa do E-book Zabbix para Pequenas e Médias Empresas" 
                     class="ebook-cover"
                 >
@@ -299,45 +299,10 @@
         <span>© 2025 GLCTech monitoramento e Segurança em TI. Todos os direitos reservados.</span>
     </footer>
 
-    <script>
-        document.getElementById('download-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const formCard = document.querySelector('.form-card');
-            const errorMessage = document.getElementById('error-message');
-            const successMessage = document.getElementById('success-message');
+    </div><!-- /.landing-container -->
 
-            // Reset messages
-            errorMessage.style.display = 'none';
-            successMessage.style.display = 'none';
-
-            // Simple validation
-            if (name === "" || email === "") {
-                errorMessage.textContent = "❌ Por favor, preencha todos os campos.";
-                errorMessage.style.display = 'block';
-
-                setTimeout(() => {
-                    errorMessage.style.display = 'none';
-                }, 3000); 
-                return;
-            }
-
-            // In a real application, you would send this data to a CRM/Email Marketing platform
-            // Example of simulated data submission:
-            console.log('Dados submetidos para captura:');
-            console.log('Nome:', name);
-            console.log('E-mail:', email);
-
-            // Hide form
-            document.getElementById('download-form').style.display = 'none';
-
-            // Show success message
-            successMessage.style.display = 'block';
-
-            // In a real scenario, after success, you would redirect the user or trigger the email sending.
-        });
-    </script>
+    <!-- A captura de leads é feita pelo formulário JotForm embutido acima.
+         O antigo handler customizado (#download-form) foi removido: os elementos
+         que ele referenciava não existem mais e o script lançava TypeError. -->
 </body>
 </html>
