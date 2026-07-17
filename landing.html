@@ -200,7 +200,19 @@
 
             <div class="form-area">
                 <h2>Solicite seu Diagnóstico Gratuito Agora!</h2>
-                <form action="https://www.automationanywhere.com/br/rpa/crm-automation" method="POST">
+                <!-- SUCESSO -->
+                <div id="diag-success" style="display:none; text-align:center; padding:20px 10px;">
+                    <div style="font-size:2.4rem; color:var(--red); margin-bottom:10px;">✓</div>
+                    <h3 style="color:var(--dark); margin-bottom:8px;">Solicitação enviada!</h3>
+                    <p style="color:#555; font-size:0.95em;">Recebemos seu pedido de diagnóstico e nossa equipe entrará em contato em breve.</p>
+                </div>
+                <form id="diag-form" action="https://api.web3forms.com/submit" method="POST">
+                    <!-- Web3Forms (mesma chave/inbox do formulário de contato) -->
+                    <input type="hidden" name="access_key" value="524f9ef9-fb3d-467b-8eee-7b4930e40520">
+                    <input type="hidden" name="subject" value="Novo pedido de Diagnóstico Gratuito — Landing">
+                    <input type="hidden" name="from_name" value="GLCTech Landing">
+                    <!-- Honeypot anti-spam -->
+                    <input type="checkbox" name="botcheck" tabindex="-1" style="display:none;" aria-hidden="true">
                     <div class="form-group">
                         <label for="nome">Nome Completo*</label>
                         <input type="text" id="nome" name="nome" required>
@@ -222,7 +234,8 @@
                         <input type="text" id="servidores" name="servidores" placeholder="Ex: 5 Servidores ou 150 Usuários" required>
                     </div>
 
-                    <button type="submit" class="submit-btn">QUERO MINHA AVALIAÇÃO GRÁTIS!</button>
+                    <button type="submit" class="submit-btn" id="diag-submit">QUERO MINHA AVALIAÇÃO GRÁTIS!</button>
+                    <p id="diag-error" style="display:none; text-align:center; font-size:0.85em; margin-top:10px; color:var(--red);"></p>
                     <p style="text-align: center; font-size: 0.8em; margin-top: 10px; color: #555;">Garantimos a privacidade de seus dados. Sem SPAM.</p>
                 </form>
             </div>
@@ -232,6 +245,46 @@
             &copy; 2025 GLCTech Tecnologia. Todos os direitos reservados. | <a href="./politica.html">Política de Privacidade</a>
         </footer>
     </div>
+
+<!-- Envio do formulário via Web3Forms (sem recarregar a página) -->
+<script>
+(function () {
+  var form = document.getElementById('diag-form');
+  if (!form) return;
+  var btn     = document.getElementById('diag-submit');
+  var errEl   = document.getElementById('diag-error');
+  var okEl    = document.getElementById('diag-success');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    errEl.style.display = 'none';
+    var original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data.success) {
+          form.style.display = 'none';
+          okEl.style.display = 'block';
+        } else {
+          throw new Error(data.message || 'Falha no envio');
+        }
+      })
+      .catch(function () {
+        errEl.textContent = 'Não foi possível enviar. Tente novamente ou ligue para +55 11 95762-4146.';
+        errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = original;
+      });
+  });
+})();
+</script>
 
 </body>
 </html>

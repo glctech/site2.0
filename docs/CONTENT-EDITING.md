@@ -55,20 +55,20 @@ File: `index.html`, the `.stats-strip` block. Each stat is:
 ```html
 <div class="stat-item">
   <i class="fa-solid fa-server" …></i>
-  <div class="stat-number">144<span>+</span></div>
+  <div class="stat-number"><span data-stat="devices">144</span><span>+</span></div>
   <div class="stat-desc" data-i18n="stat.snmp">Devices monitorados via SNMP</div>
 </div>
 ```
 
-- The **number** (`144`, `3k`, `99`, `24`) is plain HTML — edit it directly.
-- The **description** is translated — edit `stat.snmp` / `stat.capacity` /
+- The **descriptions** are translated — edit `stat.snmp` / `stat.capacity` /
   `stat.sla` / `stat.support` in `scripts/i18n.js`.
-
-> **Want the device count to update automatically from Zabbix instead?** That's
-> the stats pipeline — see
-> [`ARCHITECTURE.md`](ARCHITECTURE.md#stats-pipeline-zabbix--json). It needs a
-> GitHub Action + a `data-stat="devices"` hook + the `stats-snippet.html`
-> script; it is not wired up today.
+- The `3k`, `99`, `24` **numbers** are plain HTML — edit them directly.
+- The **first number is live**: `<span data-stat="devices">144</span>` is
+  auto-updated from Zabbix by the inline stats script (the `144` is just the
+  fallback shown if the data doesn't load). To change what it shows, update the
+  pipeline, not the HTML — see
+  [`ARCHITECTURE.md`](ARCHITECTURE.md#stats-pipeline-zabbix--json). To make it a
+  plain static number again, remove the `data-stat="devices"` attribute.
 
 ---
 

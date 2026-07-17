@@ -153,11 +153,14 @@ value is safe to be public, and how to change it.
 
 ---
 
-## `landing.html` form target
+## `landing.html` form (Web3Forms)
 
-⚠️ **Needs verification.** The `<form>` in `landing.html` currently POSTs to
-`https://www.automationanywhere.com/br/rpa/crm-automation`, which does not look
-like a GLCTech lead endpoint. If that page is used for real lead capture, point
-the form at the intended destination (e.g. a Web3Forms access key like the
-contact form, a HubSpot form, or the real CRM endpoint). Flagged here so it
-isn't mistaken for a working integration.
+The "Free Diagnostic" form on `landing.html` submits to **Web3Forms**, reusing
+the **same access key and inbox** as the contact form (→ `contato@glctech.com.br`).
+A small JS handler posts the form without a page reload and shows an inline
+success/error state; the `<form>`'s native `action="https://api.web3forms.com/submit"`
+is kept as a no-JS fallback. To change the destination, swap the access key (and
+`subject`) — see [Web3Forms](#web3forms-contact-form).
+
+> Previously this form POSTed to an unrelated `automationanywhere.com` URL
+> (a placeholder), so its leads went nowhere — that's now fixed.

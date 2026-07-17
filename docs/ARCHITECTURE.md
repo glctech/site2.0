@@ -52,10 +52,10 @@ first for the high-level mental model.
 | `mailmkt.html` | HTML **e-mail** template (table layout) | — | Rendered inside e-mail clients, not the browser |
 | `stats-snippet.html` | Reusable snippet to display live Zabbix stats | — | Reads `assets/data/stats.json` |
 
-> **`landing.html` note:** its `<form>` currently POSTs to a third-party URL
-> (`automationanywhere.com/...`) that looks like a placeholder rather than a
-> GLCTech endpoint. If lead capture on that page matters, verify/replace the
-> form target. See [`INTEGRATIONS.md`](INTEGRATIONS.md).
+> **`landing.html` note:** its "Free Diagnostic" `<form>` submits to
+> **Web3Forms** (same access key/inbox as the contact form → `contato@glctech.com.br`)
+> via a small JS handler, with a native HTML POST fallback if JS is disabled.
+> See [`INTEGRATIONS.md`](INTEGRATIONS.md#web3forms-contact-form).
 
 > **`mailmkt.html` is an e-mail, not a web page.** It uses table-based layout
 > and inline styles because e-mail clients don't support modern CSS. Don't
@@ -258,35 +258,41 @@ other pages to make it site-wide. See
 
 ## Stats pipeline (Zabbix → JSON)
 
-There's an **optional, currently-not-wired** pipeline to show *live* monitored
-device counts instead of the hard-coded `144+`.
+The homepage "devices monitored" counter is driven by a **live pipeline**: a
+scheduled GitHub Action pulls numbers from Zabbix into a committed JSON file,
+which the homepage reads and animates on load.
 
 ```mermaid
 flowchart LR
-    CRON[Scheduler / GitHub Action<br/>NOT YET CONFIGURED] --> PY[scripts/fetch_zabbix_stats.py]
+    CRON[GitHub Action<br/>.github/workflows/zabbix-stats.yml<br/>daily + manual] --> PY[scripts/fetch_zabbix_stats.py]
     PY -->|Zabbix 7.x JSON-RPC| ZBX[(Zabbix server)]
-    PY -->|writes| JSON[assets/data/stats.json]
-    JSON -->|fetched by| SNIP[stats-snippet.html script]
-    SNIP -->|animates counter into| EL["element with data-stat='devices'"]
+    PY -->|writes + commits| JSON[assets/data/stats.json]
+    JSON -->|fetched by inline script in| IDX[index.html]
+    IDX -->|animates counter into| EL["span with data-stat='devices'"]
 ```
 
-**Current state — read carefully:**
+**How it's wired:**
 
-- `scripts/fetch_zabbix_stats.py` works: given `ZABBIX_URL`, `ZABBIX_USER`,
-  `ZABBIX_PASS` env vars it logs into a Zabbix 7.x server, counts enabled hosts
-  and active problems, and writes `assets/data/stats.json`.
-- `assets/data/stats.json` exists with real numbers (committed manually).
-- `stats-snippet.html` is a ready-to-paste script that fetches that JSON and
-  animates the number into any element matching `[data-stat="devices"]`.
-- **But the loop is not closed:** there is **no GitHub Actions workflow** to run
-  the Python on a schedule, and `index.html` neither includes the snippet nor
-  has a `data-stat="devices"` element. The homepage stat is the static `144+`.
+- **Workflow** — `.github/workflows/zabbix-stats.yml` runs daily (and on manual
+  `workflow_dispatch`), executes `scripts/fetch_zabbix_stats.py`, and commits
+  `assets/data/stats.json` if it changed. It **skips gracefully** (job succeeds,
+  does nothing) until the Zabbix secrets are configured, so it never fails
+  noisily.
+- **Script** — `scripts/fetch_zabbix_stats.py`, given `ZABBIX_URL`,
+  `ZABBIX_USER`, `ZABBIX_PASS`, logs into a Zabbix 7.x server, counts enabled
+  hosts + active problems, and writes `assets/data/stats.json`.
+- **Front-end** — `index.html` has `<span data-stat="devices">144</span>` (the
+  `144` is the fallback) and an inline script near the bottom that fetches
+  `stats.json` and animates the span to the live device count. If the fetch
+  fails, the static fallback stays.
+- **`stats-snippet.html`** remains as a standalone, copy-pasteable version of
+  that front-end script if you want the same counter on another page.
 
-**To make stats live** you would: (1) add a GitHub Action that runs the script
-with Zabbix secrets and commits `stats.json`; (2) add `data-stat="devices"` to
-the stat element in `index.html`; (3) paste the `stats-snippet.html` script
-before `</body>`. Treat the Zabbix credentials as **GitHub Actions secrets** —
-never commit them.
+**To activate the live numbers:** add repository secrets `ZABBIX_URL`,
+`ZABBIX_USER`, `ZABBIX_PASS` (Settings → Secrets and variables → Actions). Until
+then the homepage shows the committed `stats.json` value (or the `144` fallback).
+Treat the Zabbix credentials as **secrets** — never commit them. See
+[`INTEGRATIONS.md`](INTEGRATIONS.md#zabbix-api-stats-pipeline).
 
 ---
 
@@ -302,9 +308,9 @@ never commit them.
 
 ## Gotchas & things that will bite you
 
-- **Legacy translation files are dead.** `js/i18n.js`, `lang.js`,
-  `lang/*.json` are not loaded by anything. Editing them does nothing on the
-  live site. Only `scripts/i18n.js` matters. See [`I18N.md`](I18N.md).
+- **Only one translation system.** `scripts/i18n.js` is it. Three earlier dead
+  attempts (`js/i18n.js`, `lang.js`, `lang/*.json`) were removed. See
+  [`I18N.md`](I18N.md).
 - **Duplicated nav/footer.** No includes — update shared chrome on every page.
 - **Publish = merge to `glctech2.0`.** No staging. Preview locally.
 - **`CNAME` must stay** or the custom domain breaks.

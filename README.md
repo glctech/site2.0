@@ -103,9 +103,13 @@ site2.0/
 │   ── Shared / support ──
 ├── stats-snippet.html        # Copy-paste snippet that renders live Zabbix stats
 │
+├── .github/
+│   └── workflows/
+│       └── zabbix-stats.yml  # Scheduled job: refresh assets/data/stats.json from Zabbix
+│
 ├── scripts/
 │   ├── i18n.js               # ★ ACTIVE translation engine (all pages load this)
-│   ├── fetch_zabbix_stats.py # Zabbix API → assets/data/stats.json
+│   ├── fetch_zabbix_stats.py # Zabbix API → assets/data/stats.json (run by the workflow)
 │   └── script.js             # Small legacy nav toggle (not used by current pages)
 │
 ├── css/
@@ -115,19 +119,15 @@ site2.0/
 │   ├── logo/  team/  services/  hero/  partner/  flags/  linkedin.png
 │   └── data/stats.json       # Generated Zabbix numbers (see stats pipeline)
 │
-├── kaspersky/                # Kaspersky product icon images
-│
-└── ── Legacy / DO NOT USE (kept for history) ──
-    ├── js/i18n.js            # Old i18n attempt — NOT loaded anywhere
-    ├── lang.js               # Old nested-object translations — NOT loaded
-    └── lang/{en,pt}.json     # Old per-file translations — NOT loaded
+└── kaspersky/                # Kaspersky product icon images
 ```
 
-> ⚠️ **`js/i18n.js`, `lang.js`, and `lang/*.json` are dead code.** They use a
-> different key scheme (`nav_about`, `nav.home`) than the live pages
-> (`data-i18n="nav.about"`) and are not referenced by any page. The **only**
-> translation system in use is `scripts/i18n.js`. Don't edit the legacy files
-> expecting a change on the site. Details in [`docs/I18N.md`](docs/I18N.md).
+> ℹ️ **There is exactly one translation system: `scripts/i18n.js`.** Three
+> earlier dead attempts (`js/i18n.js`, `lang.js`, `lang/*.json`) were removed —
+> they used a different key scheme (`nav_about`) than the live pages
+> (`data-i18n="nav.about"`) and were loaded by nothing. If you find references
+> to them in old branches or history, ignore them. Details in
+> [`docs/I18N.md`](docs/I18N.md).
 
 ---
 
@@ -201,7 +201,7 @@ flowchart LR
 | Document | What's inside |
 |----------|---------------|
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Page-by-page tour, the shared design system, and every JS subsystem (i18n, blog feed, contact form, mobile nav, chatbot, stats pipeline) with data-flow diagrams. |
-| [`docs/I18N.md`](docs/I18N.md) | Deep dive on the translation engine: detection order, the `data-i18n` attributes, how to add a key or a language, and the legacy files to ignore. |
+| [`docs/I18N.md`](docs/I18N.md) | Deep dive on the translation engine: detection order, the `data-i18n` attributes, how to add a key or a language, and the removed legacy files. |
 | [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md) | Every third-party service, where its key/ID lives, how to rotate it, and security notes. |
 | [`docs/CONTENT-EDITING.md`](docs/CONTENT-EDITING.md) | Task-oriented recipes for editing copy, images, testimonials, services and team without touching the plumbing. |
 
