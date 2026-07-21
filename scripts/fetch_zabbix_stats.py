@@ -12,9 +12,9 @@ import json
 import requests
 from datetime import datetime, timezone
 
-ZABBIX_URL  = os.environ["ZABBIX_URL"].rstrip("/")
-ZABBIX_USER = os.environ["ZABBIX_USER"]
-ZABBIX_PASS = os.environ["ZABBIX_PASS"]
+ZABBIX_URL  = os.environ["http://monitor.dsr9.com"].rstrip("/")
+ZABBIX_USER = os.environ["efestus"]
+ZABBIX_PASS = os.environ["kadmus#2025"]
 OUTPUT_FILE = "assets/data/stats.json"
 
 API_URL = f"{ZABBIX_URL}/api_jsonrpc.php"
