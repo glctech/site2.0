@@ -241,7 +241,6 @@ RSS2JSON API key lives in the IIFE (`RSS2JSON_KEY`).
 
 Loaded **asynchronously** just before `</body>` so it never blocks rendering.
 A small companion script makes it feel native:
-
 - Sets `document.tidioChatLang` from the site's detected language (same
   `localStorage['glctech_lang']` key as i18n) **before** the widget loads, so
   the chat opens in the visitor's language.
@@ -253,6 +252,44 @@ The widget's colors/avatar/greeting are configured in the **Tidio dashboard**
 on `index.html` only; add the same two `<script>` blocks before `</body>` on
 other pages to make it site-wide. See
 [`INTEGRATIONS.md`](INTEGRATIONS.md#tidio-ai-chatbot).
+
+#### 6.1 Flow: Proactive Welcome Message
+
+In addition to the reactive widget above, a proactive automation flow is configured in the **Tidio Flows** dashboard (no-code, not part of the site's codebase).
+
+**Status:** Draft — currently being built in the Tidio dashboard, not yet activated in production.
+
+```mermaid
+flowchart TD
+    A([Trigger: First visit on site]) --> B[/Send a chat message/]
+    B --> C{Decision: buttons}
+    C --> D[/Send a chat message/]
+```
+
+**Node breakdown:**
+
+| # | Type | Node | Description |
+|---|------|------|-------------|
+| 1 | Trigger | `First visit on site` | Fires the flow when a visitor accesses the site for the first time (no prior Tidio cookie/session). |
+| 2 | Action | `Send a chat message` | Proactive welcome message, opening the conversation and introducing GLCTech's virtual assistant. |
+| 3 | Action | `Decision (buttons)` | Presents button options for the visitor to indicate their interest (e.g. Monitoring, Security, Backup, Talk to a specialist). |
+| 4 | Action | `Send a chat message` | Follow-up message, conditioned on the option selected in the decision node (branch under construction — flagged with an alert icon in the editor). |
+
+> ⚠️ **Configuration pending:** the `Decision (buttons)` node does not yet have all branches connected to downstream actions (lead capture form, per-solution routing). See section 6.2.
+
+#### 6.2 Next steps
+
+- [ ] Connect each button in the `Decision (buttons)` node to a solution-specific message (Zabbix / Kaspersky / Veeam);
+- [ ] Add a `Send a form` node at the end of each branch, to capture name, email, and company;
+- [ ] Add an interest tag (`Add a tag`) per branch, for CRM segmentation;
+- [ ] Configure a `Chat status` condition (Online/Offline) to redirect the flow outside of support hours;
+- [ ] Activate the flow (`Activate`) after testing via the `Test` button.
+
+#### 6.3 Flow environment
+
+- **Platform:** Tidio (Flows)
+- **Flow name:** `Proactive Welcome Message`
+- **Last edited:** Draft, 07/21/2026
 
 ---
 
