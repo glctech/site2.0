@@ -1846,7 +1846,17 @@
 
     // Atualiza <html lang="...">
     document.documentElement.lang = dict['page.lang'] || lang;
-    document.title = dict['page.title'] || document.title;
+
+    // Traduz o <title> usando a chave própria da página (data-i18n do <title>),
+    // com fallback para 'page.title'. Se a chave não existir no dicionário,
+    // mantém o texto estático original do HTML em vez de sobrescrevê-lo.
+    var titleEl = document.querySelector('title[data-i18n]');
+    var titleKey = titleEl ? titleEl.getAttribute('data-i18n') : 'page.title';
+    if (dict[titleKey] !== undefined) {
+      document.title = dict[titleKey];
+    } else if (translations['pt'][titleKey] !== undefined) {
+      document.title = translations['pt'][titleKey];
+    }
 
     // Traduz todos os elementos com data-i18n
     var els = document.querySelectorAll('[data-i18n],[data-i18n-html],[data-i18n-attr]');
