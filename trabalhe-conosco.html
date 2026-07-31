@@ -634,11 +634,16 @@
 </footer>
 
 <script>
-  /* ── Candidatura — Web3Forms ──────────────────────────────────────────────
-     Chave de acesso Web3Forms própria, criada para rh@glctech.com.br
-     (mesmo provedor usado no formulário de contato da home).
+  /* ── Candidatura — FormSubmit.co ──────────────────────────────────────────
+     O Web3Forms bloqueia anexos de arquivo no plano gratuito ("Pro feature").
+     Como este formulário exige currículo em PDF, usamos o FormSubmit.co, que
+     anexa arquivos sem custo — mesmo esquema sem backend, sem chave de API,
+     só o e-mail de destino na própria URL.
+     ATIVAÇÃO (só na primeira vez): o primeiro envio real dispara um e-mail de
+     confirmação para rh@glctech.com.br com um link "Activate Form" — precisa
+     clicar nele uma única vez para os envios seguintes caírem na caixa.
   ─────────────────────────────────────────────────────────────────────────── */
-  var W3F_ACCESS_KEY_RH = '535c4f16-8fb6-4655-a853-60722b40718a';
+  var FORMSUBMIT_EMAIL = 'rh@glctech.com.br';
   var MAX_FILE_MB = 5;
 
   function candidatar(vaga) {
@@ -725,19 +730,19 @@
     btnLoading.style.display = 'inline';
 
     var formData = new FormData(form);
-    formData.set('access_key', W3F_ACCESS_KEY_RH);
-    formData.set('subject', 'Nova candidatura — ' + formData.get('vaga') + ' — ' + formData.get('nome'));
-    formData.set('from_name', 'GLCTech — Trabalhe Conosco');
-    formData.set('replyto', formData.get('email'));
+    formData.set('_subject', 'Nova candidatura — ' + formData.get('vaga') + ' — ' + formData.get('nome'));
+    formData.set('_replyto', formData.get('email'));
+    formData.set('_template', 'table');
+    formData.set('_captcha', 'false');
 
-    fetch('https://api.web3forms.com/submit', {
+    fetch('https://formsubmit.co/ajax/' + FORMSUBMIT_EMAIL, {
       method: 'POST',
       headers: { 'Accept': 'application/json' },
       body: formData
     })
       .then(function (res) { return res.json(); })
       .then(function (data) {
-        if (data.success) {
+        if (String(data.success) === 'true') {
           form.style.display = 'none';
           document.getElementById('form-success').style.display = 'block';
         } else {
