@@ -26,12 +26,12 @@ jobs:
       - name: Instalar dependências
         run: pip install requests
 
-       - name: Buscar stats do Zabbix
+      - name: Buscar stats do Zabbix
         env:
           ZABBIX_URL:   ${{ secrets.ZABBIX_URL }}
           ZABBIX_TOKEN: ${{ secrets.ZABBIX_TOKEN }}
         run: python scripts/fetch_zabbix_stats.py
-
+        
       - name: Commitar stats.json atualizado
         run: |
           git config user.name  "github-actions[bot]"
