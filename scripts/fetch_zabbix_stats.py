@@ -6,48 +6,51 @@ No Zabbix 7.x:
   - Auth: header "Authorization: Bearer <token>" (não campo "auth" no body)
   - Logout: user.logout sem parâmetros
 """
-
 import os
 import json
 import requests
 from datetime import datetime, timezone
 
-ZABBIX_URL  = os.environ["ZABBIX_URL"].rstrip("/")
-ZABBIX_USER = os.environ["ZABBIX_USER"]
-ZABBIX_PASS = os.environ["ZABBIX_PASS"]
-OUTPUT_FILE = "assets/data/stats.json"
+# .strip() remove espaços/quebras de linha invisíveis que podem vir do
+# GitHub Secrets (ex: colado com \n no final, ou espaço extra)
+ZABBIX_URL  = os.environ["ZABBIX_URL"].strip().rstrip("/")
+ZABBIX_USER = os.environ["ZABBIX_USER"].strip()
+ZABBIX_PASS = os.environ["ZABBIX_PASS"].strip()
 
+OUTPUT_FILE = "assets/data/stats.json"
 API_URL = f"{ZABBIX_URL}/api_jsonrpc.php"
+
 _req_id = 0
 
 
 def rpc(method, params, token=None):
     global _req_id
     _req_id += 1
-
     headers = {"Content-Type": "application/json-rpc"}
     if token:
         headers["Authorization"] = f"Bearer {token}"
-
     payload = {
         "jsonrpc": "2.0",
         "method":  method,
         "params":  params,
         "id":      _req_id,
     }
-
     resp = requests.post(API_URL, json=payload, headers=headers, timeout=15)
     resp.raise_for_status()
     data = resp.json()
-
     if "error" in data:
         raise RuntimeError(f"Zabbix API erro [{data['error']['code']}]: {data['error']['data']}")
-
     return data["result"]
 
 
 def main():
     print(f"[zabbix] Conectando em {ZABBIX_URL} ...")
+
+    # --- DEBUG SEGURO: não expõe a senha, só confirma integridade dos secrets ---
+    print(f"[debug] ZABBIX_USER repr: {ZABBIX_USER!r} (len={len(ZABBIX_USER)})")
+    print(f"[debug] ZABBIX_PASS length: {len(ZABBIX_PASS)} (esperado: 11 se for 'kadmus#2025')")
+    print(f"[debug] ZABBIX_URL: {ZABBIX_URL!r}")
+    # -----------------------------------------------------------------------------
 
     # Versão da API (sem auth)
     version = rpc("apiinfo.version", {})
@@ -94,7 +97,6 @@ def main():
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     with open(OUTPUT_FILE, "w") as f:
         json.dump(stats, f, indent=2)
-
     print(f"[zabbix] ✓ {OUTPUT_FILE} salvo: {stats}")
 
 
