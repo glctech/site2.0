@@ -21,13 +21,12 @@ API_URL = f"{ZABBIX_URL}/api_jsonrpc.php"
 _req_id = 0
 
 
-def rpc(method, params):
+def rpc(method, params, use_auth=True):
     global _req_id
     _req_id += 1
-    headers = {
-        "Content-Type": "application/json-rpc",
-        "Authorization": f"Bearer {ZABBIX_TOKEN}",
-    }
+    headers = {"Content-Type": "application/json-rpc"}
+    if use_auth:
+        headers["Authorization"] = f"Bearer {ZABBIX_TOKEN}"
     payload = {
         "jsonrpc": "2.0",
         "method":  method,
@@ -46,8 +45,8 @@ def main():
     print(f"[zabbix] Conectando em {ZABBIX_URL} ...")
     print(f"[debug] ZABBIX_TOKEN length: {len(ZABBIX_TOKEN)}")
 
-    # Versão da API — não exige auth, mas serve pra validar conectividade
-    version = rpc("apiinfo.version", {})
+    # Versão da API — Zabbix exige que esta chamada NÃO tenha header de auth
+    version = rpc("apiinfo.version", {}, use_auth=False)
     print(f"[zabbix] Versão da API: {version}")
 
     # Total de hosts monitorados (status=0 = enabled)
