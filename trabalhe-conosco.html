@@ -634,16 +634,16 @@
 </footer>
 
 <script>
-  /* ── Candidatura — Web3Forms ──────────────────────────────────────────────
-     COMO ATIVAR:
-     1. Acesse https://web3forms.com
-     2. Digite rh@glctech.com.br e clique em "Create Access Key"
-     3. Confirme o e-mail que chegar na caixa de entrada de rh@glctech.com.br
-     4. Copie a chave gerada e cole abaixo em W3F_ACCESS_KEY_RH
-     Enquanto a chave não for configurada, o envio de candidaturas ficará
-     indisponível e o formulário mostrará uma mensagem de erro amigável.
+  /* ── Candidatura — FormSubmit.co ──────────────────────────────────────────
+     O Web3Forms bloqueia anexos de arquivo no plano gratuito ("Pro feature").
+     Como este formulário exige currículo em PDF, usamos o FormSubmit.co, que
+     anexa arquivos sem custo — mesmo esquema sem backend, sem chave de API,
+     só o e-mail de destino na própria URL.
+     ATIVAÇÃO (só na primeira vez): o primeiro envio real dispara um e-mail de
+     confirmação para rh@glctech.com.br com um link "Activate Form" — precisa
+     clicar nele uma única vez para os envios seguintes caírem na caixa.
   ─────────────────────────────────────────────────────────────────────────── */
-  var W3F_ACCESS_KEY_RH = 'COLE_AQUI_A_CHAVE_WEB3FORMS_DE_RH';
+  var FORMSUBMIT_EMAIL = 'rh@glctech.com.br';
   var MAX_FILE_MB = 5;
 
   function candidatar(vaga) {
@@ -721,13 +721,6 @@
     clearFieldErrors();
     if (!validateCandidatura()) return;
 
-    if (!W3F_ACCESS_KEY_RH || W3F_ACCESS_KEY_RH.indexOf('COLE_AQUI') === 0) {
-      var msg = document.getElementById('c-form-error-msg');
-      msg.textContent = 'Envio temporariamente indisponível. Por favor, envie sua candidatura para rh@glctech.com.br.';
-      msg.style.display = 'block';
-      return;
-    }
-
     var form = this;
     var btn = document.getElementById('c-btn-submit');
     var btnText = document.getElementById('c-btn-text');
@@ -737,18 +730,19 @@
     btnLoading.style.display = 'inline';
 
     var formData = new FormData(form);
-    formData.set('access_key', W3F_ACCESS_KEY_RH);
-    formData.set('subject', 'Nova candidatura — ' + formData.get('vaga') + ' — ' + formData.get('nome'));
-    formData.set('from_name', 'GLCTech — Trabalhe Conosco');
+    formData.set('_subject', 'Nova candidatura — ' + formData.get('vaga') + ' — ' + formData.get('nome'));
+    formData.set('_replyto', formData.get('email'));
+    formData.set('_template', 'table');
+    formData.set('_captcha', 'false');
 
-    fetch('https://api.web3forms.com/submit', {
+    fetch('https://formsubmit.co/ajax/' + FORMSUBMIT_EMAIL, {
       method: 'POST',
       headers: { 'Accept': 'application/json' },
       body: formData
     })
       .then(function (res) { return res.json(); })
       .then(function (data) {
-        if (data.success) {
+        if (String(data.success) === 'true') {
           form.style.display = 'none';
           document.getElementById('form-success').style.display = 'block';
         } else {
