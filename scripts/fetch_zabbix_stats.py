@@ -1,21 +1,19 @@
 #!/usr/bin/env python3
 """
-fetch_zabbix_stats.py — Zabbix 7.x
-No Zabbix 7.x:
-  - Login: campo "username" (não "user")
-  - Auth: header "Authorization: Bearer <token>" (não campo "auth" no body)
-  - Logout: user.logout sem parâmetros
+fetch_zabbix_stats.py — Zabbix 7.x (autenticação via API Token)
+
+No Zabbix 7.x com API Token:
+  - NÃO é necessário user.login / user.logout
+  - Basta enviar o token direto no header "Authorization: Bearer <token>"
+  - Isso evita o bloqueio temporário por tentativas de login (-32500)
 """
 import os
 import json
 import requests
 from datetime import datetime, timezone
 
-# .strip() remove espaços/quebras de linha invisíveis que podem vir do
-# GitHub Secrets (ex: colado com \n no final, ou espaço extra)
-ZABBIX_URL  = os.environ["ZABBIX_URL"].strip().rstrip("/")
-ZABBIX_USER = os.environ["ZABBIX_USER"].strip()
-ZABBIX_PASS = os.environ["ZABBIX_PASS"].strip()
+ZABBIX_URL   = os.environ["ZABBIX_URL"].strip().rstrip("/")
+ZABBIX_TOKEN = os.environ["ZABBIX_TOKEN"].strip()
 
 OUTPUT_FILE = "assets/data/stats.json"
 API_URL = f"{ZABBIX_URL}/api_jsonrpc.php"
@@ -23,12 +21,13 @@ API_URL = f"{ZABBIX_URL}/api_jsonrpc.php"
 _req_id = 0
 
 
-def rpc(method, params, token=None):
+def rpc(method, params):
     global _req_id
     _req_id += 1
-    headers = {"Content-Type": "application/json-rpc"}
-    if token:
-        headers["Authorization"] = f"Bearer {token}"
+    headers = {
+        "Content-Type": "application/json-rpc",
+        "Authorization": f"Bearer {ZABBIX_TOKEN}",
+    }
     payload = {
         "jsonrpc": "2.0",
         "method":  method,
@@ -45,29 +44,17 @@ def rpc(method, params, token=None):
 
 def main():
     print(f"[zabbix] Conectando em {ZABBIX_URL} ...")
+    print(f"[debug] ZABBIX_TOKEN length: {len(ZABBIX_TOKEN)}")
 
-    # --- DEBUG SEGURO: não expõe a senha, só confirma integridade dos secrets ---
-    print(f"[debug] ZABBIX_USER repr: {ZABBIX_USER!r} (len={len(ZABBIX_USER)})")
-    print(f"[debug] ZABBIX_PASS length: {len(ZABBIX_PASS)} (esperado: 11 se for 'kadmus#2025')")
-    print(f"[debug] ZABBIX_URL: {ZABBIX_URL!r}")
-    # -----------------------------------------------------------------------------
-
-    # Versão da API (sem auth)
+    # Versão da API — não exige auth, mas serve pra validar conectividade
     version = rpc("apiinfo.version", {})
     print(f"[zabbix] Versão da API: {version}")
-
-    # Login
-    token = rpc("user.login", {
-        "username": ZABBIX_USER,
-        "password": ZABBIX_PASS,
-    })
-    print(f"[zabbix] Login OK — token: {token[:8]}...")
 
     # Total de hosts monitorados (status=0 = enabled)
     total_devices = int(rpc("host.get", {
         "countOutput": True,
         "filter": {"status": 0},
-    }, token=token))
+    }))
     print(f"[zabbix] Hosts monitorados: {total_devices}")
 
     # Problemas ativos
@@ -75,18 +62,13 @@ def main():
         total_problems = int(rpc("problem.get", {
             "countOutput": True,
             "recent":      True,
-        }, token=token))
+        }))
     except Exception as e:
         print(f"[zabbix] Aviso — problem.get falhou: {e}")
         total_problems = 0
     print(f"[zabbix] Problemas ativos: {total_problems}")
 
-    # Logout
-    try:
-        rpc("user.logout", {}, token=token)
-        print("[zabbix] Logout OK")
-    except Exception:
-        pass
+    # Não há logout necessário com API Token — ele não expira por sessão
 
     # Salvar JSON
     stats = {
