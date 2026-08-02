@@ -1,63 +1,42 @@
-name: Update Zabbix stats
-
-# Atualiza assets/data/stats.json com números ao vivo do Zabbix.
-# Requer os secrets do repositório: ZABBIX_URL, ZABBIX_USER, ZABBIX_PASS.
-# Sem esses secrets o job termina com sucesso, sem falhar (skip).
+name: Atualizar Stats Zabbix
 
 on:
   schedule:
-    - cron: '0 6 * * *'   # diariamente às 06:00 UTC
-  workflow_dispatch: {}    # permite execução manual pela aba Actions
+    - cron: '0 * * * *'   # toda hora
+  workflow_dispatch:        # permite rodar manualmente
 
-permissions:
-  contents: write
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true   # usa Node.js 24
 
 jobs:
-  update-stats:
+  fetch-stats:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
-      - name: Checkout
+      - name: Checkout repositório
         uses: actions/checkout@v4
 
-      - name: Check Zabbix secrets
-        id: check
-        env:
-          ZABBIX_URL: ${{ secrets.ZABBIX_URL }}
-        run: |
-          if [ -z "$ZABBIX_URL" ]; then
-            echo "::notice::Zabbix secrets ausentes — pulando. Configure ZABBIX_URL/ZABBIX_USER/ZABBIX_PASS em Settings → Secrets para ativar."
-            echo "configured=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "configured=true" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Set up Python
-        if: steps.check.outputs.configured == 'true'
+      - name: Instalar Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.12'
 
-      - name: Install dependencies
-        if: steps.check.outputs.configured == 'true'
+      - name: Instalar dependências
         run: pip install requests
 
-      - name: Fetch stats from Zabbix
-        if: steps.check.outputs.configured == 'true'
+      - name: Buscar stats do Zabbix
         env:
           ZABBIX_URL:  ${{ secrets.ZABBIX_URL }}
           ZABBIX_USER: ${{ secrets.ZABBIX_USER }}
           ZABBIX_PASS: ${{ secrets.ZABBIX_PASS }}
         run: python scripts/fetch_zabbix_stats.py
 
-      - name: Commit updated stats.json
-        if: steps.check.outputs.configured == 'true'
+      - name: Commitar stats.json atualizado
         run: |
-          if git diff --quiet -- assets/data/stats.json; then
-            echo "Sem alterações em stats.json"
-          else
-            git config user.name  "github-actions[bot]"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add assets/data/stats.json
-            git commit -m "chore: update Zabbix stats [skip ci]"
-            git push
-          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/data/stats.json
+          git diff --cached --quiet || git commit -m "chore: atualiza stats Zabbix [skip ci]"
+          git push
