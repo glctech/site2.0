@@ -206,11 +206,9 @@
                     <h3 style="color:var(--dark); margin-bottom:8px;">Solicitação enviada!</h3>
                     <p style="color:#555; font-size:0.95em;">Recebemos seu pedido de diagnóstico e nossa equipe entrará em contato em breve.</p>
                 </div>
-                <form id="diag-form" action="https://api.web3forms.com/submit" method="POST">
-                    <!-- Web3Forms (mesma chave/inbox do formulário de contato) -->
-                    <input type="hidden" name="access_key" value="524f9ef9-fb3d-467b-8eee-7b4930e40520">
-                    <input type="hidden" name="subject" value="Novo pedido de Diagnóstico Gratuito — Landing">
-                    <input type="hidden" name="from_name" value="GLCTech Landing">
+                <form id="diag-form" action="/api/send-email" method="POST" enctype="multipart/form-data">
+                    <!-- Envio via Zoho Mail (Cloudflare Pages Function /api/send-email) -->
+                    <input type="hidden" name="form_type" value="diagnostico">
                     <!-- Honeypot anti-spam -->
                     <input type="checkbox" name="botcheck" tabindex="-1" style="display:none;" aria-hidden="true">
                     <div class="form-group">
@@ -246,7 +244,7 @@
         </footer>
     </div>
 
-<!-- Envio do formulário via Web3Forms (sem recarregar a página) -->
+<!-- Envio do formulário via Zoho Mail, sem recarregar a página -->
 <script>
 (function () {
   var form = document.getElementById('diag-form');
@@ -262,7 +260,7 @@
     btn.disabled = true;
     btn.textContent = 'Enviando...';
 
-    fetch('https://api.web3forms.com/submit', {
+    fetch('/api/send-email', {
       method: 'POST',
       headers: { 'Accept': 'application/json' },
       body: new FormData(form)

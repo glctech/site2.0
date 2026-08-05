@@ -11,14 +11,12 @@ value is safe to be public, and how to change it.
 
 - [At a glance](#at-a-glance)
 - [Google Analytics 4](#google-analytics-4)
-- [Web3Forms (contact form)](#web3forms-contact-form)
-- [HubSpot (careers form)](#hubspot-careers-form)
+- [Zoho Mail (contact, diagnostic & careers forms)](#zoho-mail-contact-diagnostic--careers-forms)
 - [JotForm (e-book capture)](#jotform-e-book-capture)
 - [RSS2JSON + CORS proxies (blog feed)](#rss2json--cors-proxies-blog-feed)
 - [Tidio AI chatbot](#tidio-ai-chatbot)
 - [Zabbix API (stats pipeline)](#zabbix-api-stats-pipeline)
 - [Google Fonts & Font Awesome](#google-fonts--font-awesome)
-- [`landing.html` form target](#landinghtml-form-target)
 
 ---
 
@@ -27,8 +25,7 @@ value is safe to be public, and how to change it.
 | Service | Purpose | Identifier lives in | Public? |
 |---------|---------|---------------------|:---:|
 | Google Analytics 4 | Traffic analytics | `G-7VH0J5XFYK` in each page `<head>` | ✅ public by design |
-| Web3Forms | Contact form → e-mail | `W3F_ACCESS_KEY` in `index.html` | ✅ public submission key |
-| HubSpot | "Trabalhe Conosco" form | `hsforms.com` link in nav/footer | ✅ public link |
+| Zoho Mail SMTP | All 3 forms (contato, diagnóstico, candidatura) → e-mail via `/api/send-email` | **Pages env vars**, not in repo | 🔒 **secret** |
 | JotForm | E-book lead capture | iframe `src` in `ebook.html` | ✅ public embed |
 | RSS2JSON | Blog feed JSON | `RSS2JSON_KEY` in `index.html` blog IIFE | ✅ public API key |
 | Tidio | AI chatbot | script URL id in `index.html` | ✅ public widget id |
@@ -48,31 +45,60 @@ value is safe to be public, and how to change it.
 
 ---
 
-## Web3Forms (contact form)
+## Zoho Mail (contact, diagnostic & careers forms)
 
-- **What:** turns the `#contact` form on `index.html` into e-mail without a
-  backend. See the flow in [`ARCHITECTURE.md`](ARCHITECTURE.md#4-contact-form--web3forms).
-- **Key:** `var W3F_ACCESS_KEY = '…'` in the Web3Forms `<script>` near the
-  bottom of `index.html`.
-- **Endpoint:** `POST https://api.web3forms.com/submit` (JSON).
-- **Where the mail goes:** the inbox that owns the access key
-  (`contato@glctech.com.br`). To change the destination you create a new access
-  key at <https://web3forms.com> for the desired address and replace the value.
-- **Public?** Yes — the access key only allows *submitting* the form, not
-  reading submissions. Safe in client code.
-- **Gotcha:** the form's inline error strings are localized through
-  `window._i18n_errors` (populated by i18n). New error messages need keys in
-  `scripts/i18n.js` (`form.err.*`).
-
----
-
-## HubSpot (careers form)
-
-- **What:** the "Trabalhe Conosco" link opens a hosted HubSpot form.
-- **Where:** `https://ty0ci.share.hsforms.com/…` in the nav, mobile drawer, and
-  footer of `index.html` (and possibly other pages).
-- **To change:** replace the share URL. It's an external hosted form — nothing
-  to configure in this repo beyond the link.
+- **What:** all three forms on the site — `#contact` on `index.html`, the
+  "Diagnóstico Gratuito" form on `landing.html`, and the "candidatura" form
+  (with PDF résumé attachment) on `trabalhe-conosco.html` — now submit to our
+  **own** endpoint, `POST /api/send-email`, a Cloudflare Pages Function
+  (`functions/api/send-email.js`). That function authenticates directly
+  against a Zoho Mail mailbox over SMTP (implicit TLS, port 465) and sends the
+  e-mail itself — no Web3Forms, no FormSubmit.co, no HubSpot embed, and no
+  third-party attachment-size/plan limits.
+- **Files:**
+  - `functions/api/send-email.js` — validates the incoming form (`form_type`
+    = `contact` | `diagnostico` | `candidatura`), builds the subject/body per
+    form, and (for `candidatura`) attaches the uploaded PDF.
+  - `functions/api/_lib/smtp.mjs` — a minimal hand-rolled SMTP client built on
+    Cloudflare's `cloudflare:sockets` TCP API. Only supports **port 465
+    (implicit TLS/SSL)**, matching the first option in Zoho's own SMTP
+    settings screen (`smtppro.zoho.com`, 465 SSL). STARTTLS/587 is not
+    implemented.
+- **Required Pages environment variables** (Pages project → *Settings →
+  Environment variables*, marked as **secret**, same place `ZABBIX_*` already
+  live):
+  - `ZOHO_SMTP_USER` — the mailbox that authenticates and sends, e.g.
+    `contato@glctech.com.br`.
+  - `ZOHO_SMTP_PASS` — a Zoho **app-specific password** for that mailbox
+    (Zoho Mail → *My Account → Security → App Passwords*). Don't use the
+    normal mailbox login password.
+- **Optional environment variables:**
+  - `ZOHO_SMTP_HOST` (default `smtppro.zoho.com`) / `ZOHO_SMTP_PORT` (default
+    `465`, must stay `465`).
+  - `ZOHO_FROM_NAME` (default `Site GLCTech`) — display name on the `From:` header.
+  - `ZOHO_MAIL_TO_CONTATO` (default `contato@glctech.com.br`) — destination for
+    the contact + diagnostic forms.
+  - `ZOHO_MAIL_TO_RH` (default `rh@glctech.com.br`) — destination for the
+    careers/candidatura form.
+- **To change the sending mailbox or a destination inbox:** just update the
+  relevant env var in the Pages dashboard and redeploy — nothing in the HTML
+  needs to change.
+- **Public?** No — everything lives server-side in Pages env vars. The
+  front-end only knows about `/api/send-email` (same-origin, no key shipped
+  to the browser).
+- **Anti-spam:** each form still ships a hidden honeypot field
+  (`botcheck`); the function silently accepts (HTTP 200, no e-mail sent) if
+  it's filled in, matching the previous Web3Forms behavior.
+- **Gotcha:** `smtp.mjs` requires the `cloudflare:sockets` TCP Sockets API,
+  which needs a reasonably recent *Compatibility date* on the Pages project
+  (Settings → Functions). If deploys start failing on this endpoint, check
+  that setting first.
+- **Careers form résumé attachment:** previously blocked because Web3Forms'
+  free plan treats attachments as a paid feature (worked around at the time
+  with FormSubmit.co). Now the endpoint reads the uploaded PDF
+  (`<input name="curriculo">`), validates type (`application/pdf`) and size
+  (≤5MB) server-side too, and attaches it as a real MIME part in the outgoing
+  e-mail — no external service or "activate this form" step involved.
 
 ---
 
@@ -150,17 +176,3 @@ value is safe to be public, and how to change it.
 - **Icons:** Font Awesome 6 via `cdnjs.cloudflare.com` `<link>`.
 - Purely presentational CDNs; no keys. If you need offline/self-hosted assets
   later, download and reference locally, but that's not the current setup.
-
----
-
-## `landing.html` form (Web3Forms)
-
-The "Free Diagnostic" form on `landing.html` submits to **Web3Forms**, reusing
-the **same access key and inbox** as the contact form (→ `contato@glctech.com.br`).
-A small JS handler posts the form without a page reload and shows an inline
-success/error state; the `<form>`'s native `action="https://api.web3forms.com/submit"`
-is kept as a no-JS fallback. To change the destination, swap the access key (and
-`subject`) — see [Web3Forms](#web3forms-contact-form).
-
-> Previously this form POSTed to an unrelated `automationanywhere.com` URL
-> (a placeholder), so its leads went nowhere — that's now fixed.

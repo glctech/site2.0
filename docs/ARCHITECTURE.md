@@ -12,7 +12,7 @@ first for the high-level mental model.
   - [1. Internationalization (i18n)](#1-internationalization-i18n)
   - [2. Language switcher](#2-language-switcher)
   - [3. Mobile navigation](#3-mobile-navigation)
-  - [4. Contact form → Web3Forms](#4-contact-form--web3forms)
+  - [4. Contact form → Zoho Mail](#4-contact-form--zoho-mail)
   - [5. Blog RSS feed (hidden)](#5-blog-rss-feed-hidden)
   - [6. Tidio AI chatbot](#6-tidio-ai-chatbot)
 - [Stats pipeline (Zabbix → JSON)](#stats-pipeline-zabbix--json)
@@ -40,22 +40,23 @@ first for the high-level mental model.
 
 | Page | Purpose | Loads `i18n.js`? | Notable integrations |
 |------|---------|:---:|----------------------|
-| `index.html` | Main one-page site (all sections) | ✅ | GA4, Web3Forms (contact), RSS blog feed, Tidio chat |
+| `index.html` | Main one-page site (all sections) | ✅ | GA4, Zoho Mail (contact, via `/api/send-email`), RSS blog feed, Tidio chat |
 | `zabbix.html` | Monitoring service detail | ✅ | GA4 |
 | `kaspersky.html` | Security service detail | ✅ | GA4 |
 | `veeam.html` | Backup service detail | ✅ | GA4 |
 | `politica.html` | Privacy policy | ✅ | GA4 |
 | `termos.html` | Terms of use | ✅ | GA4 |
 | `andre.html` / `tchize.html` / `kawan.html` | Individual team-member profiles | — | — |
-| `landing.html` | "Free IT diagnostic" campaign landing | — | HTML form (see note) |
+| `landing.html` | "Free IT diagnostic" campaign landing | — | Zoho Mail form (see note) |
 | `ebook.html` | Zabbix e-book lead magnet | — | JotForm embed |
 | `mailmkt.html` | HTML **e-mail** template (table layout) | — | Rendered inside e-mail clients, not the browser |
 | `stats-snippet.html` | Reusable snippet to display live Zabbix stats | — | Reads `assets/data/stats.json` |
 
 > **`landing.html` note:** its "Free Diagnostic" `<form>` submits to
-> **Web3Forms** (same access key/inbox as the contact form → `contato@glctech.com.br`)
-> via a small JS handler, with a native HTML POST fallback if JS is disabled.
-> See [`INTEGRATIONS.md`](INTEGRATIONS.md#web3forms-contact-form).
+> `/api/send-email` (same Zoho Mail endpoint as the contact form, destination
+> `contato@glctech.com.br`) via a small JS handler, with a native HTML POST
+> fallback if JS is disabled. See
+> [`INTEGRATIONS.md`](INTEGRATIONS.md#zoho-mail-contact-diagnostic--careers-forms).
 
 > **`mailmkt.html` is an e-mail, not a web page.** It uses table-based layout
 > and inline styles because e-mail clients don't support modern CSS. Don't
@@ -138,11 +139,11 @@ flowchart TD
     BLOG --> CTA[cta-banner]
     CTA --> CONTACT[#contact — form + details]
     CONTACT --> FOOT[footer]
-    FOOT --> SCRIPTS[bottom scripts:<br/>blog IIFE, Web3Forms, i18n.js,<br/>mobile nav, Tidio]
+    FOOT --> SCRIPTS[bottom scripts:<br/>blog IIFE, Zoho Mail send handler, i18n.js,<br/>mobile nav, Tidio]
 ```
 
 **Order matters for the scripts at the bottom:** the blog feed IIFE, the
-Web3Forms contact handler, then `scripts/i18n.js`, then the mobile-nav handlers,
+Zoho Mail contact handler, then `scripts/i18n.js`, then the mobile-nav handlers,
 then the Tidio loader. `i18n.js` runs after the DOM exists and translates
 in place.
 
@@ -186,31 +187,37 @@ add/remove an `.open` class on the hamburger and `#mobile-menu`, and lock body
 scroll while open. A document-level click listener closes the drawer when you
 click outside it.
 
-### 4. Contact form → Web3Forms
+### 4. Contact form → Zoho Mail
 
-The `#contact` form is submitted with JS (no page reload) to the **Web3Forms**
-API, which forwards the message to GLCTech's inbox.
+The `#contact` form is submitted with JS (no page reload) to `/api/send-email`,
+a Cloudflare Pages Function that authenticates to a Zoho Mail mailbox over
+SMTP and sends the message straight to GLCTech's inbox — no third-party form
+service involved. Full details in
+[`INTEGRATIONS.md`](INTEGRATIONS.md#zoho-mail-contact-diagnostic--careers-forms).
 
 ```mermaid
 sequenceDiagram
     participant U as Visitor
     participant P as index.html (sendEmail)
-    participant W as api.web3forms.com
+    participant F as /api/send-email (Pages Function)
+    participant Z as Zoho SMTP (smtppro.zoho.com:465)
     participant M as GLCTech inbox
     U->>P: Click "Enviar Mensagem"
     P->>P: clearErrors() + validateForm()
     alt invalid
         P-->>U: Inline field errors (localized)
     else valid
-        P->>W: POST JSON { access_key, name, email, message, … }
-        W->>M: Deliver e-mail
-        W-->>P: { success: true }
+        P->>F: POST FormData { form_type: contact, nome, email, mensagem, … }
+        F->>Z: SMTP AUTH LOGIN + MAIL/RCPT/DATA
+        Z->>M: Deliver e-mail
+        F-->>P: { success: true }
         P-->>U: Show success state
     end
 ```
 
-- Access key: `W3F_ACCESS_KEY` in the page's script. It's a **public**
-  submission key (safe in client code). See [`INTEGRATIONS.md`](INTEGRATIONS.md#web3forms-contact-form).
+- Credentials: `ZOHO_SMTP_USER` / `ZOHO_SMTP_PASS`, set as **secret** Pages
+  environment variables — never shipped to the browser. See
+  [`INTEGRATIONS.md`](INTEGRATIONS.md#zoho-mail-contact-diagnostic--careers-forms).
 - Validation errors are localized via `window._i18n_errors`, populated by
   `applyLang()` — that's the coupling between the form and i18n.
 

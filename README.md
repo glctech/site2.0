@@ -67,7 +67,7 @@ Then open `http://localhost:8080/index.html`.
 | Analytics        | Google Analytics 4 (`gtag.js`)                     | |
 | Forms            | Web3Forms, HubSpot, JotForm                        | See [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md) |
 | Chat             | Tidio AI chatbot                                    | On `index.html` |
-| Stats pipeline   | Python + Zabbix API → `assets/data/stats.json`     | See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#stats-pipeline-zabbix--json) |
+| Stats pipeline   | Python + Zabbix API (API Token auth) → `assets/data/stats.json` | See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#stats-pipeline-zabbix--json) |
 
 ---
 
@@ -105,7 +105,7 @@ site2.0/
 │
 ├── .github/
 │   └── workflows/
-│       └── zabbix-stats.yml  # Scheduled job: refresh assets/data/stats.json from Zabbix
+│       └── atualizar-stats-zabbix.yml  # Scheduled job: refresh assets/data/stats.json from Zabbix
 │
 ├── scripts/
 │   ├── i18n.js               # ★ ACTIVE translation engine (all pages load this)
@@ -221,3 +221,8 @@ flowchart LR
   browser, treat every key in the HTML as public (see
   [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md) for which keys are safe to
   expose and which must stay in GitHub Actions).
+- **Zabbix stats pipeline secrets:** `ZABBIX_URL` and `ZABBIX_TOKEN` live only
+  in GitHub Actions Secrets, never in the frontend. Authentication uses a
+  Zabbix **API Token** (not username/password) — see
+  [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#stats-pipeline-zabbix--json)
+  for how to rotate it.
