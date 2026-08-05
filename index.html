@@ -1395,14 +1395,12 @@
   #btn-submit:disabled { opacity:0.6; cursor:not-allowed; }
 </style>
 <script>
-  /* ── Web3Forms ─────────────────────────────────────────────────────────────
-     COMO ATIVAR:
-     1. Acesse https://web3forms.com
-     2. Digite contato@glctech.com.br e clique em "Create Access Key"
-     3. Confirme o e-mail que chegar na caixa de entrada
-     4. Copie a chave gerada e cole abaixo em W3F_ACCESS_KEY
+  /* ── Envio via Zoho Mail ───────────────────────────────────────────────────
+     O formulário posta para /api/send-email (Cloudflare Pages Function), que
+     autentica na caixa Zoho via SMTP e envia o e-mail diretamente — sem
+     depender de serviço de terceiro. Configuração fica nas variáveis de
+     ambiente do projeto Pages (ver docs/INTEGRATIONS.md).
   ─────────────────────────────────────────────────────────────────────────── */
-  var W3F_ACCESS_KEY = '524f9ef9-fb3d-467b-8eee-7b4930e40520';
 
   function clearErrors() {
     ['nome','email','mensagem'].forEach(function(f) {
@@ -1445,22 +1443,17 @@
     var telefone = document.getElementById('telefone').value.trim() || 'Não informado';
     var mensagem = document.getElementById('mensagem').value.trim();
 
-    var payload = {
-      access_key: W3F_ACCESS_KEY,
-      subject: 'Novo contato pelo site — ' + nome,
-      from_name: 'GLCTech Site',
-      replyto: email,
-      nome: nome,
-      empresa: empresa,
-      email: email,
-      telefone: telefone,
-      message: 'Nome: ' + nome + '\nEmpresa: ' + empresa + '\nE-mail: ' + email + '\nTelefone: ' + telefone + '\n\nMensagem:\n' + mensagem
-    };
+    var fd = new FormData();
+    fd.append('form_type', 'contact');
+    fd.append('nome', nome);
+    fd.append('empresa', empresa);
+    fd.append('email', email);
+    fd.append('telefone', telefone);
+    fd.append('mensagem', mensagem);
 
-    fetch('https://api.web3forms.com/submit', {
+    fetch('/api/send-email', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(payload)
+      body: fd
     })
     .then(function(res) { return res.json(); })
     .then(function(data) {

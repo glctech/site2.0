@@ -634,16 +634,13 @@
 </footer>
 
 <script>
-  /* ── Candidatura — FormSubmit.co ──────────────────────────────────────────
-     O Web3Forms bloqueia anexos de arquivo no plano gratuito ("Pro feature").
-     Como este formulário exige currículo em PDF, usamos o FormSubmit.co, que
-     anexa arquivos sem custo — mesmo esquema sem backend, sem chave de API,
-     só o e-mail de destino na própria URL.
-     ATIVAÇÃO (só na primeira vez): o primeiro envio real dispara um e-mail de
-     confirmação para rh@glctech.com.br com um link "Activate Form" — precisa
-     clicar nele uma única vez para os envios seguintes caírem na caixa.
+  /* ── Candidatura — envio via Zoho Mail ────────────────────────────────────
+     O formulário (com o anexo do currículo em PDF) posta para
+     /api/send-email, uma Cloudflare Pages Function que autentica na caixa
+     rh@glctech.com.br via SMTP do Zoho e envia o e-mail com o anexo de
+     verdade — sem limite de plano gratuito de terceiro e sem passo de
+     "ativação" de formulário. Ver docs/INTEGRATIONS.md.
   ─────────────────────────────────────────────────────────────────────────── */
-  var FORMSUBMIT_EMAIL = 'rh@glctech.com.br';
   var MAX_FILE_MB = 5;
 
   function candidatar(vaga) {
@@ -730,19 +727,16 @@
     btnLoading.style.display = 'inline';
 
     var formData = new FormData(form);
-    formData.set('_subject', 'Nova candidatura — ' + formData.get('vaga') + ' — ' + formData.get('nome'));
-    formData.set('_replyto', formData.get('email'));
-    formData.set('_template', 'table');
-    formData.set('_captcha', 'false');
+    formData.set('form_type', 'candidatura');
 
-    fetch('https://formsubmit.co/ajax/' + FORMSUBMIT_EMAIL, {
+    fetch('/api/send-email', {
       method: 'POST',
       headers: { 'Accept': 'application/json' },
       body: formData
     })
       .then(function (res) { return res.json(); })
       .then(function (data) {
-        if (String(data.success) === 'true') {
+        if (data.success) {
           form.style.display = 'none';
           document.getElementById('form-success').style.display = 'block';
         } else {
