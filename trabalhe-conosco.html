@@ -634,6 +634,16 @@
 </footer>
 
 <script>
+  /* ── Candidatura — FormSubmit.co ──────────────────────────────────────────
+     O Web3Forms bloqueia anexos de arquivo no plano gratuito ("Pro feature").
+     Como este formulário exige currículo em PDF, usamos o FormSubmit.co, que
+     anexa arquivos sem custo — mesmo esquema sem backend, sem chave de API,
+     só o e-mail de destino na própria URL.
+     ATIVAÇÃO (só na primeira vez): o primeiro envio real dispara um e-mail de
+     confirmação para rh@glctech.com.br com um link "Activate Form" — precisa
+     clicar nele uma única vez para os envios seguintes caírem na caixa.
+  ─────────────────────────────────────────────────────────────────────────── */
+  var FORMSUBMIT_EMAIL = 'rh@glctech.com.br';
   /* ── Candidatura — envio via Zoho Mail ────────────────────────────────────
      O formulário (com o anexo do currículo em PDF) posta para
      /api/send-email, uma Cloudflare Pages Function que autentica na caixa
@@ -736,7 +746,7 @@
     })
       .then(function (res) { return res.json(); })
       .then(function (data) {
-        if (data.success) {
+        if (String(data.success) === 'true') {
           form.style.display = 'none';
           document.getElementById('form-success').style.display = 'block';
         } else {
