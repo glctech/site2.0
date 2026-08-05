@@ -1,0 +1,37 @@
+{
+  "$schema": "./schema/services.schema.json",
+  "section": {
+    "label":   { "i18n": "services.label", "text": "Nossas Soluções" },
+    "heading": { "i18n": "services.h2",    "html": "Tudo o que sua TI precisa,<br>em um único parceiro" },
+    "intro":   { "i18n": "services.p",     "text": "Soluções integradas de monitoramento, segurança e backup para manter sua operação estável e protegida." }
+  },
+  "items": [
+    {
+      "id": "zabbix",
+      "num":   { "i18n": "services.s1.num",  "text": "01 — Monitoramento" },
+      "href":  "zabbix.html",
+      "icon":  "fa-solid fa-satellite-dish",
+      "title": { "i18n": "services.s1.h",    "text": "Monitoramento Inteligente com Zabbix" },
+      "body":  { "i18n": "services.s1.p",    "text": "Acompanhe em tempo real servidores, redes e aplicações com métricas precisas, dashboards personalizados e análise proativa de incidentes." },
+      "link":  { "i18n": "services.s1.link", "text": "Saiba mais" }
+    },
+    {
+      "id": "kaspersky",
+      "num":   { "i18n": "services.s2.num",  "text": "02 — Segurança" },
+      "href":  "kaspersky.html",
+      "icon":  "fa-solid fa-lock",
+      "title": { "i18n": "services.s2.h",    "text": "Segurança Kaspersky em Tempo Real" },
+      "body":  { "i18n": "services.s2.p",    "text": "Monitore continuamente seus sistemas e detecte ameaças em tempo real, garantindo segurança, desempenho e conformidade em todo o ambiente." },
+      "link":  { "i18n": "services.s2.link", "text": "Saiba mais" }
+    },
+    {
+      "id": "veeam",
+      "num":   { "i18n": "services.s3.num",  "text": "03 — Backup" },
+      "href":  "veeam.html",
+      "icon":  "fa-solid fa-database",
+      "title": { "i18n": "services.s3.h",    "text": "Backup Inteligente com Veeam" },
+      "body":  { "i18n": "services.s3.p",    "text": "Garanta a continuidade dos seus negócios com backups automáticos, recuperação rápida e relatórios completos sobre o status das suas cópias de segurança." },
+      "link":  { "i18n": "services.s3.link", "text": "Saiba mais" }
+    }
+  ]
+}

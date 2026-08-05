@@ -1564,15 +1564,27 @@
     requestAnimationFrame(step);
   }
 
-  fetch('/assets/data/stats.json?v=' + Date.now())
-    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+  // Decoupled: tenta o endpoint /api/stats (dados ao vivo, cacheado no edge) e,
+  // se indisponível, recorre ao arquivo committado /assets/data/stats.json.
+  // Ambos retornam { devices, problems, updated_at }. Nunca quebra: o valor
+  // estático do HTML permanece se as duas fontes falharem.
+  function getStats() {
+    return fetch('/api/stats')
+      .then(function (r) { if (!r.ok) throw new Error('api ' + r.status); return r.json(); })
+      .catch(function () {
+        return fetch('/assets/data/stats.json?v=' + Date.now())
+          .then(function (r) { if (!r.ok) throw new Error('json ' + r.status); return r.json(); });
+      });
+  }
+
+  getStats()
     .then(function (data) {
       var devices = parseInt(data.devices, 10);
       if (!isNaN(devices) && devices > 0) animate(devices, 1200);
     })
     .catch(function (e) {
       // mantém o valor estático do HTML
-      console.warn('[stats] stats.json indisponível:', e.message);
+      console.warn('[stats] indisponível:', e.message);
     });
 })();
 </script>
