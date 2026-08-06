@@ -112,7 +112,7 @@
 
 <nav>
   <div class="nav-inner">
-    <a href="index.html"><img src="https://glctech.com.br/assets/logo/new_logo.png" alt="GLCTech" style="height: 70px;display:block;"></a>
+    <a href="index.html"><img src="/assets/logo/new_logo.png" alt="GLCTech" style="height: 70px;display:block;"></a>
     <ul class="nav-links">
       <li><a href="index.html" data-i18n="nav.home">Início</a></li>
       <li><a href="index.html#about" data-i18n="nav.about">Sobre</a></li>
@@ -273,7 +273,7 @@
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <img src="https://glctech.com.br/assets/logo/new_logo.png" alt="GLCTech">
+      <img src="/assets/logo/new_logo.png" alt="GLCTech" loading="lazy" decoding="async">
       <p data-i18n="footer.p">Monitoramento inteligente e segurança de TI para empresas que exigem alta performance e continuidade operacional.</p>
     </div>
     <div class="footer-col">
@@ -309,7 +309,39 @@
 </footer>
 
 <script src="scripts/i18n.js"></script>
-<!-- Tidio Chat -->
+<!-- ─────────────────────────────────────────────────────────────
+     AI CHATBOT (Tidio) — GLCTech
+     Integração nativa:
+       • Carregado de forma assíncrona (não bloqueia a renderização).
+       • Herda o idioma detectado pelo site (pt/en/de/es/fr/it), para
+         que o atendimento por IA fale a mesma língua da página.
+       • Expõe window.glcOpenChat() para abrir o chat a partir de
+         qualquer botão da marca.
+     Obs.: a identidade visual (cor #e6262c, avatar, saudação) deve ser
+     configurada no painel Tidio para combinar com a marca GLCTech.
+────────────────────────────────────────────────────────────────── -->
+<script>
+  (function () {
+    // Sincroniza o idioma do chat com o idioma do site (mesma chave do i18n)
+    try {
+      var supported = ['pt', 'en', 'de', 'es', 'fr', 'it'];
+      var lang = localStorage.getItem('glctech_lang');
+      if (!lang || supported.indexOf(lang) === -1) {
+        var nav = (navigator.language || 'pt').toLowerCase().split('-')[0];
+        lang = supported.indexOf(nav) > -1 ? nav : 'pt';
+      }
+      document.tidioChatLang = lang;
+    } catch (e) { /* localStorage indisponível — usa idioma padrão do Tidio */ }
+
+    // Atalho bespoke: abre o chat a partir dos CTAs do site quando pronto
+    document.addEventListener('tidioChat-ready', function () {
+      window.glcOpenChat = function () {
+        if (window.tidioChatApi) window.tidioChatApi.open();
+      };
+    });
+  })();
+</script>
 <script src="//code.tidio.co/z471nxc3tjaciumkzzasuoe928m5odks.js" async></script>
+
 </body>
 </html>

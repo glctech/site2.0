@@ -214,9 +214,15 @@ flowchart LR
 - **Design tokens:** colors/fonts are defined as CSS custom properties at the
   top of each page's `:root { … }`. The brand red is **`#e6262c`**. Reuse the
   variables (`var(--red)`, `var(--dark)`, …) instead of hard-coding values.
-- **Absolute vs relative asset paths:** pages mix `https://glctech.com.br/assets/...`
-  and `./assets/...`. Both work in production; prefer root-relative or absolute
-  for consistency when adding new references.
+- **Asset paths are root-relative** (`/assets/...` or `./assets/...`) on every
+  page — this matters now that the site is also served live from a second
+  domain (`glctechsec.com`, for the European market) without a redirect, so a
+  hardcoded `https://glctech.com.br/...` URL would force an extra cross-domain
+  hop for visitors on the other domain. Keep new references relative. The only
+  intentionally **absolute** URLs (to `glctech.com.br`, the canonical domain)
+  are `mailmkt.html` (an e-mail has no "current origin") and `<link rel="canonical">`
+  / `og:url` / `og:image` / `twitter:image` meta tags (social crawlers and
+  canonicalization need an absolute URL).
 - **No secrets that aren't already public:** because everything ships to the
   browser, treat every key in the HTML as public (see
   [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md) for which keys are safe to

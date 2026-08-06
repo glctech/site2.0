@@ -167,9 +167,11 @@ Images live under `assets/` (`logo/`, `team/`, `services/`, `hero/`,
 - Prefer **`.webp`** for photos (smaller); several `<img>` tags reference
   `.webp` with the design assuming that format.
 - Keep the **same filename** to swap an image everywhere at once, or update each
-  `src`. Pages reference images by both absolute
-  (`https://glctech.com.br/assets/...`) and relative (`./assets/...`) URLs — grep
-  the filename to find all uses.
+  `src`. Pages reference images with root-relative URLs (`/assets/...` or
+  `./assets/...`) — grep the filename to find all uses. Don't hardcode
+  `https://glctech.com.br/assets/...` in a new `<img>`: the site is also served
+  live from `glctechsec.com` without a redirect, so an absolute URL to the other
+  domain adds a needless cross-domain hop for those visitors.
 - Update the `alt` text (and its translation if keyed) when the content changes.
 
 ---
