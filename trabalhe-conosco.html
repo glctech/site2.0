@@ -739,7 +739,11 @@
     var formData = new FormData(form);
     formData.set('form_type', 'candidatura');
 
-    fetch('/api/send-email', {
+    // Absolute URL: glctech.com.br redirects to glctechsec.com, which sits
+    // behind a CDN (separate Cloudflare account) that blocks POST at the
+    // edge. Hitting the Worker's own domain directly sidesteps that; the
+    // endpoint sends CORS headers to allow it. See docs/INTEGRATIONS.md.
+    fetch('https://site2-0.aluiz-cez.workers.dev/api/send-email', {
       method: 'POST',
       headers: { 'Accept': 'application/json' },
       body: formData

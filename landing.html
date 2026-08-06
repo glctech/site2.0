@@ -206,8 +206,11 @@
                     <h3 style="color:var(--dark); margin-bottom:8px;">Solicitação enviada!</h3>
                     <p style="color:#555; font-size:0.95em;">Recebemos seu pedido de diagnóstico e nossa equipe entrará em contato em breve.</p>
                 </div>
-                <form id="diag-form" action="/api/send-email" method="POST" enctype="multipart/form-data">
-                    <!-- Envio via Zoho Mail (Cloudflare Pages Function /api/send-email) -->
+                <form id="diag-form" action="https://site2-0.aluiz-cez.workers.dev/api/send-email" method="POST" enctype="multipart/form-data">
+                    <!-- Envio via Zoho Mail (Cloudflare Pages Function /api/send-email).
+                         Absolute action: glctech.com.br redirects to glctechsec.com, which
+                         sits behind a CDN (separate Cloudflare account) that blocks POST at
+                         the edge — see docs/INTEGRATIONS.md. -->
                     <input type="hidden" name="form_type" value="diagnostico">
                     <!-- Honeypot anti-spam -->
                     <input type="checkbox" name="botcheck" tabindex="-1" style="display:none;" aria-hidden="true">
@@ -260,7 +263,7 @@
     btn.disabled = true;
     btn.textContent = 'Enviando...';
 
-    fetch('/api/send-email', {
+    fetch('https://site2-0.aluiz-cez.workers.dev/api/send-email', {
       method: 'POST',
       headers: { 'Accept': 'application/json' },
       body: new FormData(form)

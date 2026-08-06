@@ -84,8 +84,26 @@ value is safe to be public, and how to change it.
   relevant env var in the Pages dashboard and redeploy — nothing in the HTML
   needs to change.
 - **Public?** No — everything lives server-side in Pages env vars. The
-  front-end only knows about `/api/send-email` (same-origin, no key shipped
-  to the browser).
+  front-end only knows about `/api/send-email` (no key shipped to the
+  browser).
+- **⚠️ Cross-origin workaround (as of Aug 2026):** the canonical domain
+  `glctech.com.br` 302-redirects to `glctechsec.com` (the international/EU
+  domain — see [`ARCHITECTURE.md`](ARCHITECTURE.md)). `glctechsec.com` lives
+  in a **separate Cloudflare account** and is fronted by a CDN (Fastly) that
+  only allows `GET`/`HEAD` at the edge — any `POST` to it, including
+  `/api/send-email`, gets a bare `405` before it ever reaches our Worker.
+  Until whoever manages that Fastly/Cloudflare setup either allows `POST` for
+  `/api/*` or routes that path straight to the Worker instead of caching it,
+  all three forms call the Worker's own domain directly —
+  `https://site2-0.aluiz-cez.workers.dev/api/send-email` — as an **absolute,
+  cross-origin URL** (in `index.html`, `landing.html`'s `<form action>` and JS
+  fallback, and `trabalhe-conosco.html`), instead of the same-origin relative
+  path. `send-email.js` sends `Access-Control-Allow-Origin: *` (plus an
+  `onRequestOptions` handler) so the cross-origin `fetch()`/form submit is
+  allowed. **Once the CDN is fixed to pass `POST /api/*` through**, these can
+  revert to the relative `/api/send-email` path and the CORS headers can come
+  out — grep the repo for `site2-0.aluiz-cez.workers.dev` to find every place
+  to change back.
 - **Anti-spam:** each form still ships a hidden honeypot field
   (`botcheck`); the function silently accepts (HTTP 200, no e-mail sent) if
   it's filled in, matching the previous Web3Forms behavior.
