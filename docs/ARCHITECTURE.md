@@ -255,9 +255,11 @@ A small companion script makes it feel native:
   button can open the chat programmatically.
 
 The widget's colors/avatar/greeting are configured in the **Tidio dashboard**
-(not in code) — theme them to the brand red `#e6262c`. Currently the chatbot is
-on `index.html` only; add the same two `<script>` blocks before `</body>` on
-other pages to make it site-wide. See
+(not in code) — theme them to the brand red `#e6262c`. The chatbot is site-wide:
+`index.html`, the service pages (`zabbix.html`, `kaspersky.html`, `veeam.html`),
+the legal pages (`politica.html`, `termos.html`) and `trabalhe-conosco.html` all
+carry the same two `<script>` blocks before `</body>`. Add the same pair to any
+new main page to keep it consistent. See
 [`INTEGRATIONS.md`](INTEGRATIONS.md#tidio-ai-chatbot).
 
 #### 6.1 Flow: Proactive Welcome Message

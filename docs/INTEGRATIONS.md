@@ -142,8 +142,9 @@ value is safe to be public, and how to change it.
 - **Branding lives in the Tidio dashboard**, not in code — set colors (brand
   red **`#e6262c`**), avatar, greeting, and automation there so it matches the
   site.
-- **Make it site-wide:** copy the same two `<script>` blocks before `</body>`
-  on the other pages (service/legal pages). Today it's on `index.html` only.
+- **Site-wide:** the same two `<script>` blocks before `</body>` are on
+  `index.html`, the service pages, the legal pages, and `trabalhe-conosco.html`.
+  Copy the same pair onto any new main page to keep it consistent.
 - **Open the chat from a site button:**
   ```html
   <button onclick="window.glcOpenChat && window.glcOpenChat()">Fale com a IA</button>
