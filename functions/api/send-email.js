@@ -25,10 +25,20 @@ import { sendZohoMail } from './_lib/smtp.mjs';
 
 const MAX_ATTACHMENT_BYTES = 5 * 1024 * 1024; // 5MB, matches the front-end hint
 
+// CORS: glctech.com.br redirects to glctechsec.com, which is fronted by a
+// CDN (in a separate Cloudflare account) that blocks POST at the edge. Until
+// that's fixed there, the front-end calls this endpoint's own Worker domain
+// directly (cross-origin), so every response needs to allow that.
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
 function json(body, status) {
   return new Response(JSON.stringify(body), {
     status: status || 200,
-    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    headers: { 'Content-Type': 'application/json; charset=utf-8', ...CORS_HEADERS },
   });
 }
 
@@ -155,4 +165,8 @@ export async function onRequestPost(context) {
 
 export async function onRequestGet() {
   return json({ success: false, message: 'Método não permitido.' }, 405);
+}
+
+export async function onRequestOptions() {
+  return new Response(null, { status: 204, headers: CORS_HEADERS });
 }
