@@ -35,10 +35,20 @@ const CORS_HEADERS = {
   'Access-Control-Allow-Headers': 'Content-Type',
 };
 
+// Baseline security headers for this JSON endpoint. The static HTML pages
+// aren't served through this Worker right now (see docs/ARCHITECTURE.md —
+// glctech.com.br is currently fronted by another CDN), so this is the only
+// response this repo can actually attach headers to.
+const SECURITY_HEADERS = {
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'X-Frame-Options': 'DENY',
+};
+
 function json(body, status) {
   return new Response(JSON.stringify(body), {
     status: status || 200,
-    headers: { 'Content-Type': 'application/json; charset=utf-8', ...CORS_HEADERS },
+    headers: { 'Content-Type': 'application/json; charset=utf-8', ...CORS_HEADERS, ...SECURITY_HEADERS },
   });
 }
 
