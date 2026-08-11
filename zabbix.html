@@ -432,9 +432,10 @@
     fr: { symbol: '€',  code: 'EUR', locale: 'fr-FR', rate: 0.17,   period: '/mois', year: '/an'  },
     it: { symbol: '€',  code: 'EUR', locale: 'it-IT', rate: 0.17,   period: '/mese', year: '/anno'},
   };
+  // Site is Portuguese-only (glctechsec.com now covers other locales), so
+  // pricing always shows in BRL — no more switching this via language.
   function getCurr() {
-    const lang = window._currentLang || localStorage.getItem('glctech_lang') || 'pt';
-    return CURRENCY[lang] || CURRENCY.pt;
+    return CURRENCY.pt;
   }
   function fmtMoney(valueInBRL, period) {
     const c = getCurr();
@@ -478,7 +479,6 @@
     document.getElementById('result-cta').href = 'https://wa.me/5511911517501?text=' + msg;
   }
 
-  // Update plan cards with correct currency when language changes
   function updatePlanPrices() {
     const p1 = document.getElementById('plan1-price');
     const p2 = document.getElementById('plan2-price');
@@ -487,14 +487,8 @@
     // Plan 3 is "on request" — no price to convert
   }
 
-  // Hook into language switcher
-  document.addEventListener('DOMContentLoaded', function() {
-    updatePlanPrices();
-    const sel = document.getElementById('lang-switcher');
-    if (sel) sel.addEventListener('change', function() { setTimeout(updatePlanPrices, 50); });
-  });
+  document.addEventListener('DOMContentLoaded', updatePlanPrices);
 </script>
-<script src="scripts/i18n.js"></script>
 <!-- ─────────────────────────────────────────────────────────────
      AI CHATBOT (Tidio) — GLCTech
      Integração nativa:

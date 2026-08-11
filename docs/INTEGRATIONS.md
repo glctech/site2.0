@@ -11,12 +11,12 @@ value is safe to be public, and how to change it.
 
 - [At a glance](#at-a-glance)
 - [Google Analytics 4](#google-analytics-4)
-- [Zoho Mail (contact, diagnostic & careers forms)](#zoho-mail-contact-diagnostic--careers-forms)
-- [JotForm (e-book capture)](#jotform-e-book-capture)
+- [Zoho Mail (contact & careers forms)](#zoho-mail-contact--careers-forms)
 - [RSS2JSON + CORS proxies (blog feed)](#rss2json--cors-proxies-blog-feed)
 - [Tidio AI chatbot](#tidio-ai-chatbot)
 - [Zabbix API (stats pipeline)](#zabbix-api-stats-pipeline)
 - [Google Fonts & Font Awesome](#google-fonts--font-awesome)
+- [Internationalization (retired)](#internationalization-retired)
 
 ---
 
@@ -25,8 +25,7 @@ value is safe to be public, and how to change it.
 | Service | Purpose | Identifier lives in | Public? |
 |---------|---------|---------------------|:---:|
 | Google Analytics 4 | Traffic analytics | `G-7VH0J5XFYK` in each page `<head>` | ✅ public by design |
-| Zoho Mail SMTP | All 3 forms (contato, diagnóstico, candidatura) → e-mail via `/api/send-email` | **Pages env vars**, not in repo | 🔒 **secret** |
-| JotForm | E-book lead capture | iframe `src` in `ebook.html` | ✅ public embed |
+| Zoho Mail SMTP | Contact + candidatura forms → e-mail via `/api/send-email` | **Pages env vars**, not in repo | 🔒 **secret** |
 | RSS2JSON | Blog feed JSON | `RSS2JSON_KEY` in `index.html` blog IIFE | ✅ public API key |
 | Tidio | AI chatbot | script URL id in `index.html` | ✅ public widget id |
 | Zabbix API | Live device stats | **env vars**, not in repo | 🔒 **secret** |
@@ -45,20 +44,19 @@ value is safe to be public, and how to change it.
 
 ---
 
-## Zoho Mail (contact, diagnostic & careers forms)
+## Zoho Mail (contact & careers forms)
 
-- **What:** all three forms on the site — `#contact` on `index.html`, the
-  "Diagnóstico Gratuito" form on `landing.html`, and the "candidatura" form
-  (with PDF résumé attachment) on `trabalhe-conosco.html` — now submit to our
-  **own** endpoint, `POST /api/send-email`, a Cloudflare Pages Function
-  (`functions/api/send-email.js`). That function authenticates directly
-  against a Zoho Mail mailbox over SMTP (implicit TLS, port 465) and sends the
-  e-mail itself — no Web3Forms, no FormSubmit.co, no HubSpot embed, and no
-  third-party attachment-size/plan limits.
+- **What:** both forms on the site — `#contact` on `index.html` and the
+  "candidatura" form (with PDF résumé attachment) on `trabalhe-conosco.html` —
+  submit to our **own** endpoint, `POST /api/send-email`, a Cloudflare Pages
+  Function (`functions/api/send-email.js`). That function authenticates
+  directly against a Zoho Mail mailbox over SMTP (implicit TLS, port 465) and
+  sends the e-mail itself — no Web3Forms, no FormSubmit.co, no HubSpot embed,
+  and no third-party attachment-size/plan limits.
 - **Files:**
   - `functions/api/send-email.js` — validates the incoming form (`form_type`
-    = `contact` | `diagnostico` | `candidatura`), builds the subject/body per
-    form, and (for `candidatura`) attaches the uploaded PDF.
+    = `contact` | `candidatura`), builds the subject/body per form, and (for
+    `candidatura`) attaches the uploaded PDF.
   - `functions/api/_lib/smtp.mjs` — a minimal hand-rolled SMTP client built on
     Cloudflare's `cloudflare:sockets` TCP API. Only supports **port 465
     (implicit TLS/SSL)**, matching the first option in Zoho's own SMTP
@@ -77,7 +75,7 @@ value is safe to be public, and how to change it.
     `465`, must stay `465`).
   - `ZOHO_FROM_NAME` (default `Site GLCTech`) — display name on the `From:` header.
   - `ZOHO_MAIL_TO_CONTATO` (default `contato@glctech.com.br`) — destination for
-    the contact + diagnostic forms.
+    the contact form.
   - `ZOHO_MAIL_TO_RH` (default `rh@glctech.com.br`) — destination for the
     careers/candidatura form.
 - **To change the sending mailbox or a destination inbox:** just update the
@@ -94,11 +92,11 @@ value is safe to be public, and how to change it.
   `/api/send-email`, gets a bare `405` before it ever reaches our Worker.
   Until whoever manages that Fastly/Cloudflare setup either allows `POST` for
   `/api/*` or routes that path straight to the Worker instead of caching it,
-  all three forms call the Worker's own domain directly —
+  both forms call the Worker's own domain directly —
   `https://site2-0.aluiz-cez.workers.dev/api/send-email` — as an **absolute,
-  cross-origin URL** (in `index.html`, `landing.html`'s `<form action>` and JS
-  fallback, and `trabalhe-conosco.html`), instead of the same-origin relative
-  path. `send-email.js` sends `Access-Control-Allow-Origin: *` (plus an
+  cross-origin URL** (in `index.html` and `trabalhe-conosco.html`), instead of
+  the same-origin relative path. `send-email.js` sends
+  `Access-Control-Allow-Origin: *` (plus an
   `onRequestOptions` handler) so the cross-origin `fetch()`/form submit is
   allowed. **Once the CDN is fixed to pass `POST /api/*` through**, these can
   revert to the relative `/api/send-email` path and the CORS headers can come
@@ -120,26 +118,11 @@ value is safe to be public, and how to change it.
 
 ---
 
-## JotForm (e-book capture)
-
-- **What:** the lead-capture form on `ebook.html` that gates the Zabbix e-book
-  download.
-- **Where:** an `<iframe id="JotFormIFrame-…" src="https://form.jotform.com/…">`
-  in `ebook.html`, plus JotForm's embed-handler script.
-- **To change:** replace the form id in both the iframe `src` and the
-  `jotformEmbedHandler(...)` call. Manage fields/notifications in the JotForm
-  dashboard.
-- **History:** `ebook.html` used to have a hand-rolled form with a custom JS
-  submit handler. That was replaced by the JotForm embed; the old dead handler
-  was removed. Don't re-add client-side form logic here — JotForm owns it.
-
----
-
 ## RSS2JSON + CORS proxies (blog feed)
 
 - **What:** the (currently hidden) `#blog` section fetches news from TechTudo
   and TecMundo. Full logic in
-  [`ARCHITECTURE.md`](ARCHITECTURE.md#5-blog-rss-feed-hidden).
+  [`ARCHITECTURE.md`](ARCHITECTURE.md#3-blog-rss-feed-hidden).
 - **Primary API:** `api.rss2json.com` with `RSS2JSON_KEY` (in the blog IIFE).
 - **Fallback proxies:** `api.allorigins.win`, then `corsproxy.io` (parse raw
   XML) — used only if RSS2JSON fails.
@@ -153,7 +136,9 @@ value is safe to be public, and how to change it.
 - **What:** the floating AI chat widget.
 - **Where:** two `<script>` blocks just before `</body>` in `index.html`:
   1. a small companion script that sets `document.tidioChatLang` (from
-     `localStorage['glctech_lang']`) and exposes `window.glcOpenChat()`;
+     `localStorage['glctech_lang']`, a leftover key nothing writes anymore
+     since i18n was retired — see below — so this always falls through to
+     its own `navigator.language` detection) and exposes `window.glcOpenChat()`;
   2. the loader: `<script src="//code.tidio.co/<id>.js" async></script>`.
 - **To change the account/widget:** replace the `<id>` in the loader URL with
   the one from your Tidio project's install snippet.
@@ -195,3 +180,23 @@ value is safe to be public, and how to change it.
 - **Icons:** Font Awesome 6 via `cdnjs.cloudflare.com` `<link>`.
 - Purely presentational CDNs; no keys. If you need offline/self-hosted assets
   later, download and reference locally, but that's not the current setup.
+
+---
+
+## Internationalization (retired)
+
+- **What it was:** `scripts/i18n.js`, a self-contained dictionary + switcher
+  covering six languages (`pt`, `en`, `de`, `es`, `fr`, `it`), loaded on
+  `index.html`, the service pages, the legal pages, and
+  `trabalhe-conosco.html`.
+- **Why it's gone:** the company stood up `glctechsec.com` as a dedicated site
+  for English/European visitors, so this site no longer needs to self-translate
+  — it's Portuguese-only now.
+- **What changed:** the `<script src="scripts/i18n.js">` include was removed
+  from every page, and `scripts/i18n.js` + `docs/I18N.md` were deleted. Pages
+  still carry inert `data-i18n` / `data-i18n-attr` / `data-i18n-html`
+  attributes from that era — they're harmless (nothing reads them) and don't
+  need to be cleaned up just to touch nearby content.
+- **If it ever needs to come back:** `git log` / `git show` on a commit from
+  before this retirement has the full `scripts/i18n.js` and `docs/I18N.md` —
+  don't rebuild it from scratch.

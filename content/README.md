@@ -28,10 +28,12 @@ A leaf is either a **plain string** or a **content node** object:
 
 Rules:
 - Provide **either** `text` **or** `html`, not both (`html` wins if both exist).
-- `i18n` is the bridge to the existing translation engine: `content.js` copies
-  it onto the element as `data-i18n` (or `data-i18n-html`) so language switching
-  keeps working. Content files carry the **Portuguese default**; translations
-  stay in `scripts/i18n.js`.
+- `i18n` **is now a no-op**: it used to bridge to `scripts/i18n.js` (copying
+  itself onto the element as `data-i18n`/`data-i18n-html`), but that
+  multi-language system was retired — the site is Portuguese-only now
+  (`glctechsec.com` covers other locales). `content.js` still sets the
+  attribute for backwards compatibility, but nothing reads it. New content
+  nodes don't need an `i18n` key.
 
 ## Binding content in HTML
 
@@ -49,9 +51,6 @@ static markup, so binding pages is safe and incremental.
 
 ## Adding content
 
-1. Add the key to the relevant JSON file (use a content node if it needs a link
-   or a translation key).
+1. Add the key to the relevant JSON file (use a content node if it needs a link).
 2. Add `data-content="file.path"` to the target element (leave it empty, or keep
    fallback copy inside — it's replaced on load).
-3. If it's user-visible copy, add the matching `i18n` key in `scripts/i18n.js`
-   for the other five languages.

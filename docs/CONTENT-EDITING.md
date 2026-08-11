@@ -1,16 +1,18 @@
 # Content editing recipes
 
 Task-oriented guide for changing **what the site says and shows** without
-needing to understand the plumbing. If a recipe touches translations, it links
-to [`I18N.md`](I18N.md).
+needing to understand the plumbing.
 
 > **Before you start:** preview locally (`python3 -m http.server 8080`), because
-> merging to `glctech2.0` publishes straight to production. And remember most
-> visible strings are **translated** — changing the Portuguese HTML alone can be
-> visually overridden by `scripts/i18n.js` on load. When in doubt, change both
-> the HTML text *and* the dictionary value (see each recipe).
+> merging to `glctech2.0` publishes straight to production.
 
-- [Understand the "text vs translation" rule first](#understand-the-text-vs-translation-rule-first)
+> **About `data-i18n*` attributes:** many elements below still carry
+> `data-i18n`/`data-i18n-attr`/`data-i18n-html` attributes from the retired
+> multi-language system (see
+> [`ARCHITECTURE.md`](ARCHITECTURE.md#javascript-subsystems)). Nothing reads
+> them anymore — the site is Portuguese-only now — so just **edit the visible
+> HTML text directly**. You don't need to touch or remove the attribute.
+
 - [Edit hero / headline copy](#edit-hero--headline-copy)
 - [Change the stat numbers (144+, 3k+, …)](#change-the-stat-numbers-144-3k-)
 - [Add / edit / hide a testimonial](#add--edit--hide-a-testimonial)
@@ -24,27 +26,10 @@ to [`I18N.md`](I18N.md).
 
 ---
 
-## Understand the "text vs translation" rule first
-
-Any element with a `data-i18n*` attribute has its text **replaced at load** by
-`scripts/i18n.js`. So:
-
-- **Element has `data-i18n="…"`** → change the value in the dictionary in
-  `scripts/i18n.js` for each language (and, to keep the no-JS view correct,
-  update the Portuguese HTML too). See [`I18N.md` recipes](I18N.md#recipes).
-- **Element has NO `data-i18n`** (e.g. proper names, phone numbers) → just edit
-  the HTML; it's shown as-is.
-
-You can tell which is which by looking at the tag in the HTML.
-
----
-
 ## Edit hero / headline copy
 
-File: `index.html`, `<section id="hero">`. The headline and paragraph use
-`data-i18n` keys (`hero.h1.*`, `hero.p`, `hero.cta1`, `hero.cta2`). Update those
-keys in `scripts/i18n.js`. The badge, "Ao vivo" label, etc. are also keyed
-(`hero.badge`, `hero.live`).
+File: `index.html`, `<section id="hero">`. Edit the headline, paragraph, and
+CTA button text directly in the HTML.
 
 ---
 
@@ -60,9 +45,8 @@ File: `index.html`, the `.stats-strip` block. Each stat is:
 </div>
 ```
 
-- The **descriptions** are translated — edit `stat.snmp` / `stat.capacity` /
-  `stat.sla` / `stat.support` in `scripts/i18n.js`.
-- The `3k`, `99`, `24` **numbers** are plain HTML — edit them directly.
+- The **descriptions** and the `3k`, `99`, `24` **numbers** are all plain
+  HTML — edit them directly.
 - The **first number is live**: `<span data-stat="devices">144</span>` is
   auto-updated from Zabbix by the inline stats script (the `144` is just the
   fallback shown if the data doesn't load). To change what it shows, update the
@@ -91,12 +75,11 @@ Each card:
 </div>
 ```
 
-- **Add one:** copy a card, give it a fresh key (`testi.t3`, `testi.t3.role`),
-  add those keys to `scripts/i18n.js`, set the name/initials in the HTML.
+- **Add one:** copy a card and edit its quote, name, role, and avatar
+  initials directly in the HTML.
 - **Hide one:** add the `hidden` attribute to the `.testi-card`
   (`<div class="testi-card" hidden>`). Two extra cards are already present but
   hidden this way, ready to enable.
-- The name and avatar initials are plain HTML (not translated).
 
 ---
 
@@ -106,12 +89,11 @@ Two places, keep them consistent:
 
 1. **The card on the homepage** — `index.html`, `<section id="services">`. Each
    `.service-card` links to its detail page (`zabbix.html`, `kaspersky.html`,
-   `veeam.html`) and uses `services.s1.*` / `s2` / `s3` keys.
+   `veeam.html`).
 2. **The detail page itself** — `zabbix.html` / `kaspersky.html` / `veeam.html`,
-   which have their own `data-i18n` keys and inline styles.
+   which have their own copy and inline styles.
 
-Copy changes go in `scripts/i18n.js`. Structural/visual changes go in the
-respective page's HTML/`<style>`.
+Edit the copy directly in each page's HTML.
 
 ---
 
@@ -123,21 +105,18 @@ File: `index.html`, `<section id="team">` → `.team-grid`. Card shape:
 <div class="team-card">
   <img src="…/team/eu3.webp" alt="André Luiz Cézar" class="team-card-img face-fix">
   <div class="team-card-body">
-    <div class="team-card-role" data-i18n="team.m1.role">CEO &amp; Fundador</div>
+    <div class="team-card-role">CEO &amp; Fundador</div>
     <h3>André Luiz Cézar</h3>
-    <p data-i18n="team.m1.bio">…</p>
+    <p>…</p>
   </div>
 </div>
 ```
 
-- **Name** and **photo** are plain HTML; **role** and **bio** are translated
-  (`team.mN.*`).
+- **Name**, **role**, and **bio** are all plain HTML — edit them directly.
 - A **Kawan Pablo** card already exists but is hidden with
-  `style="display:none;"`. To show it, remove that style (and give it `team.m3.*`
-  keys if you want it translated).
+  `style="display:none;"`. To show it, remove that style.
 - `.face-fix` nudges the photo crop upward for better face framing — add it if a
   new portrait crops badly.
-- Individual profile pages exist too: `andre.html`, `tchize.html`, `kawan.html`.
 
 ---
 
@@ -145,7 +124,7 @@ File: `index.html`, `<section id="team">` → `.team-grid`. Card shape:
 
 File: `index.html`, `#partners` → `.partners-row`. Each is a
 `<div class="partner-badge">Name</div>`. Add/remove/reorder freely; one (Zabbix)
-is currently `hidden`. The section heading is translated (`partners.label`).
+is currently `hidden`.
 
 ---
 
@@ -153,7 +132,7 @@ is currently `hidden`. The section heading is translated (`partners.label`).
 
 File: `index.html`. Find `<section id="blog" hidden>` and remove the `hidden`
 attribute. The feed logic and fallbacks are already built (see
-[`ARCHITECTURE.md`](ARCHITECTURE.md#5-blog-rss-feed-hidden)). It pulls live news
+[`ARCHITECTURE.md`](ARCHITECTURE.md#3-blog-rss-feed-hidden)). It pulls live news
 from TechTudo + TecMundo and caches for 25 minutes. No other change needed to
 turn it on, but test it — third-party feeds/proxies can be flaky.
 
@@ -183,17 +162,17 @@ File: `index.html`, `#contact` → `.contact-items`.
 - **E-mail:** the `mailto:` link and the visible address
   (`contato@glctech.com.br`). The visible value is plain text.
 - **Phone/WhatsApp:** the `tel:+55…` link and the visible number.
-- **Location:** translated (`contact.location.val`).
+- **Location:** plain HTML — edit directly.
 
 Also update the footer and any service pages if the same details appear there.
-Changing where contact-form submissions are e-mailed is a Web3Forms change —
-see [`INTEGRATIONS.md`](INTEGRATIONS.md#web3forms-contact-form).
+Changing where contact-form submissions are e-mailed is a Zoho Mail env-var
+change, not an HTML change — see
+[`INTEGRATIONS.md`](INTEGRATIONS.md#zoho-mail-contact--careers-forms).
 
 ---
 
 ## Edit legal pages
 
-`politica.html` (privacy) and `termos.html` (terms of use) are standalone pages
-that also load `scripts/i18n.js`. Edit their body copy in the HTML; translated
-strings use `data-i18n` keys defined in `scripts/i18n.js`. Keep the "last
-updated" date current when you change legal text.
+`politica.html` (privacy) and `termos.html` (terms of use) are standalone
+pages. Edit their body copy directly in the HTML. Keep the "last updated" date
+current when you change legal text.

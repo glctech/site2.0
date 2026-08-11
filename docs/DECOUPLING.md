@@ -77,14 +77,17 @@ plain string or a **content node** `{ text | html, i18n?, href? }`.
 <a  data-content="site.contact.email" data-content-attr="href:mailto"></a>
 ```
 
-### Cooperates with i18n — no rewrite of the translation engine
+### i18n note (update: the translation engine was retired)
 
-`scripts/i18n.js` stays the single source of truth for **language**; the content
-layer is the single source of truth for **structure/default copy**. When a
-content node carries an `i18n` key, `content.js` copies it onto the element as
-`data-i18n`, so the existing engine translates the freshly injected node. Content
-files therefore hold the Portuguese default; translations remain in `i18n.js`
-(and can later move behind `/api/content/{page}/{lang}` in Phase 4).
+This section originally described how the content layer cooperated with
+`scripts/i18n.js` (content node's `i18n` key → `data-i18n` attribute → engine
+translates it). That engine has since been **retired** — the site is
+Portuguese-only now, since `glctechsec.com` covers other locales — so
+`content.js` still sets the `i18n` key as a `data-i18n` attribute for
+backwards compatibility, but nothing reads it anymore. Content files hold the
+Portuguese default and that's the only copy that ships. Phase 4's
+`/api/content/{page}/{lang}` idea (below) is moot for the same reason unless
+per-language content becomes relevant again.
 
 ### Non-destructive rollout
 
@@ -213,8 +216,9 @@ works on **plain GitHub Pages**, since it's just static JSON + a script.
 - **Hosting move** (Pages → Cloudflare/Netlify/Vercel) is required for any
   `/api/*`. Phase 0 does not require it.
 - **Keep `CNAME`** and re-wire GA4 on the new host.
-- **Non-goal:** rewriting the i18n engine or the email/HTML template
-  (`mailmkt.html`). Those stay as-is.
+- **Non-goal:** rewriting the email/HTML template (`mailmkt.html`) — it stays
+  as-is. (The i18n engine this used to mention was retired — see the note
+  above.)
 - **Ops:** an owned back-end means owning uptime, CORS, and secrets. The
   fail-soft fallbacks are deliberate so a back-end outage degrades to today's
   static behavior rather than a broken page.

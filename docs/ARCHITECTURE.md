@@ -9,12 +9,10 @@ first for the high-level mental model.
 - [The shared design system](#the-shared-design-system)
 - [`index.html` anatomy](#indexhtml-anatomy)
 - [JavaScript subsystems](#javascript-subsystems)
-  - [1. Internationalization (i18n)](#1-internationalization-i18n)
-  - [2. Language switcher](#2-language-switcher)
-  - [3. Mobile navigation](#3-mobile-navigation)
-  - [4. Contact form → Zoho Mail](#4-contact-form--zoho-mail)
-  - [5. Blog RSS feed (hidden)](#5-blog-rss-feed-hidden)
-  - [6. Tidio AI chatbot](#6-tidio-ai-chatbot)
+  - [1. Mobile navigation](#1-mobile-navigation)
+  - [2. Contact form → Zoho Mail](#2-contact-form--zoho-mail)
+  - [3. Blog RSS feed (hidden)](#3-blog-rss-feed-hidden)
+  - [4. Tidio AI chatbot](#4-tidio-ai-chatbot)
 - [Stats pipeline (Zabbix → JSON)](#stats-pipeline-zabbix--json)
 - [Data files](#data-files)
 - [Gotchas & things that will bite you](#gotchas--things-that-will-bite-you)
@@ -29,8 +27,10 @@ first for the high-level mental model.
 - **Per-page self-containment.** A page's CSS lives in a `<style>` block in its
   own `<head>`. You can understand and edit one page without touching any
   other.
-- **One shared runtime script.** `scripts/i18n.js` is the only JS shared across
-  all pages. Everything else is page-local `<script>` at the bottom of the body.
+- **No shared runtime script.** Every page's JS is page-local, at the bottom of
+  the body — there's no cross-page JS include (the multi-language `i18n.js`
+  system, previously the one exception, was retired; see the page inventory
+  note below).
 - **Progressive, fail-soft behavior.** Network features (blog feed, live stats,
   chat) degrade silently: if a fetch fails, the page keeps its static content.
 
@@ -38,25 +38,22 @@ first for the high-level mental model.
 
 ## Page inventory
 
-| Page | Purpose | Loads `i18n.js`? | Notable integrations |
-|------|---------|:---:|----------------------|
-| `index.html` | Main one-page site (all sections) | ✅ | GA4, Zoho Mail (contact, via `/api/send-email`), RSS blog feed, Tidio chat |
-| `zabbix.html` | Monitoring service detail | ✅ | GA4 |
-| `kaspersky.html` | Security service detail | ✅ | GA4 |
-| `veeam.html` | Backup service detail | ✅ | GA4 |
-| `politica.html` | Privacy policy | ✅ | GA4 |
-| `termos.html` | Terms of use | ✅ | GA4 |
-| `andre.html` / `tchize.html` / `kawan.html` | Individual team-member profiles | — | — |
-| `landing.html` | "Free IT diagnostic" campaign landing | — | Zoho Mail form (see note) |
-| `ebook.html` | Zabbix e-book lead magnet | — | JotForm embed |
-| `mailmkt.html` | HTML **e-mail** template (table layout) | — | Rendered inside e-mail clients, not the browser |
-| `stats-snippet.html` | Reusable snippet to display live Zabbix stats | — | Reads `assets/data/stats.json` |
+| Page | Purpose | Notable integrations |
+|------|---------|----------------------|
+| `index.html` | Main one-page site (all sections) | GA4, Zoho Mail (contact, via `/api/send-email`), RSS blog feed, Tidio chat |
+| `zabbix.html` | Monitoring service detail | GA4, Tidio chat |
+| `kaspersky.html` | Security service detail | GA4, Tidio chat |
+| `veeam.html` | Backup service detail | GA4, Tidio chat |
+| `politica.html` | Privacy policy | GA4, Tidio chat |
+| `termos.html` | Terms of use | GA4, Tidio chat |
+| `trabalhe-conosco.html` | Careers page (candidatura form) | Zoho Mail (candidatura, via `/api/send-email`), Tidio chat |
+| `mailmkt.html` | HTML **e-mail** template (table layout) | Rendered inside e-mail clients, not the browser |
+| `stats-snippet.html` | Reusable snippet to display live Zabbix stats | Reads `assets/data/stats.json` |
 
-> **`landing.html` note:** its "Free Diagnostic" `<form>` submits to
-> `/api/send-email` (same Zoho Mail endpoint as the contact form, destination
-> `contato@glctech.com.br`) via a small JS handler, with a native HTML POST
-> fallback if JS is disabled. See
-> [`INTEGRATIONS.md`](INTEGRATIONS.md#zoho-mail-contact-diagnostic--careers-forms).
+> **The site is Portuguese-only.** The multi-language `i18n.js` system was
+> retired — `glctechsec.com` is now the dedicated site for English/European
+> visitors, so this site no longer needs to self-translate. See
+> [`INTEGRATIONS.md`](INTEGRATIONS.md#internationalization-retired).
 
 > **`mailmkt.html` is an e-mail, not a web page.** It uses table-based layout
 > and inline styles because e-mail clients don't support modern CSS. Don't
@@ -102,8 +99,8 @@ Every main page has:
 - A **fixed top nav** (`<nav>`) with the logo, section links, a red "Fale
   Conosco" CTA, and a hamburger button (`.hamburger`) shown under 900px.
 - A **mobile drawer** (`#mobile-menu`) toggled by the hamburger.
-- The **language switcher** is *not* in the HTML — it's injected into
-  `.nav-links` at runtime by `scripts/i18n.js`.
+- No language switcher — the site is Portuguese-only (see the page inventory
+  note above).
 
 ### Footer
 
@@ -139,13 +136,11 @@ flowchart TD
     BLOG --> CTA[cta-banner]
     CTA --> CONTACT[#contact — form + details]
     CONTACT --> FOOT[footer]
-    FOOT --> SCRIPTS[bottom scripts:<br/>blog IIFE, Zoho Mail send handler, i18n.js,<br/>mobile nav, Tidio]
+    FOOT --> SCRIPTS[bottom scripts:<br/>blog IIFE, Zoho Mail send handler,<br/>mobile nav, Tidio]
 ```
 
 **Order matters for the scripts at the bottom:** the blog feed IIFE, the
-Zoho Mail contact handler, then `scripts/i18n.js`, then the mobile-nav handlers,
-then the Tidio loader. `i18n.js` runs after the DOM exists and translates
-in place.
+Zoho Mail contact handler, then the mobile-nav handlers, then the Tidio loader.
 
 Several elements are intentionally **hidden** via the `hidden` attribute and
 kept in the markup for easy re-enabling: the `#blog` section, a third/fourth
@@ -156,38 +151,24 @@ team card (`style="display:none"`). Toggling them on is a content decision.
 
 ## JavaScript subsystems
 
-### 1. Internationalization (i18n)
+> **Where did i18n go?** The site used to self-translate into six languages
+> via `scripts/i18n.js` (dictionary + a nav language switcher). That system
+> was retired — `glctechsec.com` is now the dedicated site for
+> English/European visitors, so this one no longer needs to. Pages still
+> carry inert `data-i18n`/`data-i18n-attr`/`data-i18n-html` attributes from
+> that era; they're harmless (nothing reads them anymore) and don't need to
+> be stripped just to add new content. See
+> [`INTEGRATIONS.md`](INTEGRATIONS.md#internationalization-retired) for the
+> full history and how to bring it back if it's ever needed again.
 
-The single most important shared system. **Fully documented in
-[`I18N.md`](I18N.md)** — here's the one-paragraph version:
-
-`scripts/i18n.js` is a self-contained IIFE holding a dictionary for six
-languages (`pt`, `en`, `de`, `es`, `fr`, `it`). On load it detects the language
-(saved `localStorage['glctech_lang']` → browser languages → `pt`), builds a
-switcher, and replaces the text/attributes/HTML of every element tagged with
-`data-i18n`, `data-i18n-attr`, or `data-i18n-html`. Preference persists in
-`localStorage`.
-
-### 2. Language switcher
-
-Built at runtime by `buildSwitcher()` inside `i18n.js` and appended to
-`.nav-links`. It's a custom dropdown (flag + code) with its own injected CSS.
-
-> **Important internal detail (previously a bug):** `applyLang()` updates the
-> switcher's visual state through `window._glcSelectLang`, which points at a
-> **UI-only** function (`syncSwitcherUI`). It must *not* point at `selectLang`
-> (which calls `applyLang`), or you recreate an infinite
-> `applyLang → selectLang → applyLang` recursion (`RangeError: Maximum call
-> stack size exceeded`). This was fixed; keep the separation intact.
-
-### 3. Mobile navigation
+### 1. Mobile navigation
 
 Plain handlers at the bottom of `index.html`: `toggleMenu()` / `closeMenu()`
 add/remove an `.open` class on the hamburger and `#mobile-menu`, and lock body
 scroll while open. A document-level click listener closes the drawer when you
 click outside it.
 
-### 4. Contact form → Zoho Mail
+### 2. Contact form → Zoho Mail
 
 The `#contact` form is submitted with JS (no page reload) to `/api/send-email`,
 a Cloudflare Pages Function that authenticates to a Zoho Mail mailbox over
@@ -205,7 +186,7 @@ sequenceDiagram
     U->>P: Click "Enviar Mensagem"
     P->>P: clearErrors() + validateForm()
     alt invalid
-        P-->>U: Inline field errors (localized)
+        P-->>U: Inline field errors
     else valid
         P->>F: POST FormData { form_type: contact, nome, email, mensagem, … }
         F->>Z: SMTP AUTH LOGIN + MAIL/RCPT/DATA
@@ -218,10 +199,8 @@ sequenceDiagram
 - Credentials: `ZOHO_SMTP_USER` / `ZOHO_SMTP_PASS`, set as **secret** Pages
   environment variables — never shipped to the browser. See
   [`INTEGRATIONS.md`](INTEGRATIONS.md#zoho-mail-contact-diagnostic--careers-forms).
-- Validation errors are localized via `window._i18n_errors`, populated by
-  `applyLang()` — that's the coupling between the form and i18n.
 
-### 5. Blog RSS feed (hidden)
+### 3. Blog RSS feed (hidden)
 
 The `#blog` section pulls recent articles from Brazilian tech outlets. It is
 **currently disabled** (`<section id="blog" hidden>`), but the code is complete
@@ -244,13 +223,14 @@ flowchart TD
 To re-enable, remove the `hidden` attribute from `<section id="blog">`. The
 RSS2JSON API key lives in the IIFE (`RSS2JSON_KEY`).
 
-### 6. Tidio AI chatbot
+### 4. Tidio AI chatbot
 
 Loaded **asynchronously** just before `</body>` so it never blocks rendering.
 A small companion script makes it feel native:
-- Sets `document.tidioChatLang` from the site's detected language (same
-  `localStorage['glctech_lang']` key as i18n) **before** the widget loads, so
-  the chat opens in the visitor's language.
+- Sets `document.tidioChatLang` from `localStorage['glctech_lang']` (a leftover
+  key from the retired i18n system — no longer written by anything, so this
+  always falls through to its own `navigator.language` detection) **before**
+  the widget loads, so the chat opens in the visitor's language.
 - On the `tidioChat-ready` event, exposes `window.glcOpenChat()` so any brand
   button can open the chat programmatically.
 
@@ -262,7 +242,7 @@ carry the same two `<script>` blocks before `</body>`. Add the same pair to any
 new main page to keep it consistent. See
 [`INTEGRATIONS.md`](INTEGRATIONS.md#tidio-ai-chatbot).
 
-#### 6.1 Flow: Proactive Welcome Message
+#### 4.1 Flow: Proactive Welcome Message
 
 In addition to the reactive widget above, a proactive automation flow is configured in the **Tidio Flows** dashboard (no-code, not part of the site's codebase).
 
@@ -284,9 +264,9 @@ flowchart TD
 | 3 | Action | `Decision (buttons)` | Presents button options for the visitor to indicate their interest (e.g. Monitoring, Security, Backup, Talk to a specialist). |
 | 4 | Action | `Send a chat message` | Follow-up message, conditioned on the option selected in the decision node (branch under construction — flagged with an alert icon in the editor). |
 
-> ⚠️ **Configuration pending:** the `Decision (buttons)` node does not yet have all branches connected to downstream actions (lead capture form, per-solution routing). See section 6.2.
+> ⚠️ **Configuration pending:** the `Decision (buttons)` node does not yet have all branches connected to downstream actions (lead capture form, per-solution routing). See section 4.2.
 
-#### 6.2 Next steps
+#### 4.2 Next steps
 
 - [ ] Connect each button in the `Decision (buttons)` node to a solution-specific message (Zabbix / Kaspersky / Veeam);
 - [ ] Add a `Send a form` node at the end of each branch, to capture name, email, and company;
@@ -294,7 +274,7 @@ flowchart TD
 - [ ] Configure a `Chat status` condition (Online/Offline) to redirect the flow outside of support hours;
 - [ ] Activate the flow (`Activate`) after testing via the `Test` button.
 
-#### 6.3 Flow environment
+#### 4.3 Flow environment
 
 - **Platform:** Tidio (Flows)
 - **Flow name:** `Proactive Welcome Message`
@@ -347,17 +327,16 @@ Treat the Zabbix credentials as **secrets** — never commit them. See
 | File | Produced by | Consumed by |
 |------|-------------|-------------|
 | `assets/data/stats.json` | `scripts/fetch_zabbix_stats.py` | `stats-snippet.html` |
-| `localStorage['glctech_lang']` | `scripts/i18n.js` | i18n + chatbot language sync |
 | `localStorage['glc_rss_v6']` | blog IIFE | blog IIFE (25-min cache) |
 
 ---
 
 ## Gotchas & things that will bite you
 
-- **Only one translation system.** `scripts/i18n.js` is it. Three earlier dead
-  attempts (`js/i18n.js`, `lang.js`, `lang/*.json`) were removed. See
-  [`I18N.md`](I18N.md).
 - **Duplicated nav/footer.** No includes — update shared chrome on every page.
+- **No i18n anymore.** The site is Portuguese-only; don't reintroduce
+  per-page translation without reading why it was retired (see the page
+  inventory note above).
 - **Publish = merge to `glctech2.0`.** No staging. Preview locally.
 - **`CNAME` must stay** or the custom domain breaks.
 - **Client-side keys are public.** Anything in the HTML/JS is visible to
@@ -365,4 +344,3 @@ Treat the Zabbix credentials as **secrets** — never commit them. See
   in CI, not the repo). See [`INTEGRATIONS.md`](INTEGRATIONS.md).
 - **Serve over http, not `file://`.** `fetch()` and root-absolute paths need a
   real origin.
-- **The i18n switcher recursion trap** described above — don't reintroduce it.
