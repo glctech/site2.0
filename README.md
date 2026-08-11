@@ -1,12 +1,18 @@
 # GLCTech — Website (`site2.0`)
 
 Marketing website for **GLCTech**, an IT monitoring & security company
-(Zabbix, Grafana, Kaspersky, Veeam). Live at **https://glctech.com.br**.
+(Zabbix, Grafana, Kaspersky, Veeam). Live at **https://glctech.com.br**
+(Portuguese/Brazil) and **https://glctechsec.com** (English/Europe, a separate
+Cloudflare account mirroring the same content — see
+[`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md#zoho-mail-contact--careers-forms)
+for a caveat about that setup).
 
-This is a **static, no-build website**: plain HTML, CSS and vanilla JavaScript
-served directly by **GitHub Pages**. There is no framework, no bundler, no
-package manager, and no server-side code. You can open any `.html` file in a
-browser and it works.
+This is a **static, no-build site** for the pages themselves — plain HTML, CSS
+and vanilla JavaScript, one file per page, no framework/bundler/package
+manager. But there **is** a small amount of server-side code: a Cloudflare
+Worker (`_worker.js` + `functions/api/*`) that sends the site's e-mail forms
+over SMTP and serves the live stats endpoint. See
+[Hosting & deployment](#hosting--deployment) below.
 
 > **New here? Read this file top to bottom, then jump to
 > [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).** Everything you need to be
@@ -20,7 +26,7 @@ browser and it works.
 - [Tech stack](#tech-stack)
 - [Repository map](#repository-map)
 - [How the site is built (mental model)](#how-the-site-is-built-mental-model)
-- [Branching & deployment](#branching--deployment)
+- [Hosting & deployment](#hosting--deployment)
 - [Common tasks — "How do I…?"](#common-tasks--how-do-i)
 - [Documentation map](#documentation-map)
 - [Conventions](#conventions)
@@ -47,9 +53,11 @@ npx serve .                      # → http://localhost:3000
 Then open `http://localhost:8080/index.html`.
 
 > **Why a server and not just the file?** `index.html` fetches
-> `/assets/data/stats.json` and the RSS blog feed, and the language switcher and
-> analytics assume an `http(s)://` origin. `file://` will throw CORS/path
-> errors. Always use a local server.
+> `/assets/data/stats.json` and the RSS blog feed, and analytics assumes an
+> `http(s)://` origin. `file://` will throw CORS/path errors. Always use a
+> local server. (The e-mail forms won't work against a local server — they
+> call the deployed Worker directly; see
+> [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md#zoho-mail-contact--careers-forms).)
 
 ---
 
@@ -62,11 +70,11 @@ Then open `http://localhost:8080/index.html`.
 | Fonts            | Google Fonts — **Syne** (display) + **DM Sans** (body) | Loaded via `<link>` |
 | Icons            | Font Awesome 6 (CDN)                                | |
 | Scripting        | Vanilla JS (ES5-style, IIFEs)                       | No build; runs directly in the browser |
-| i18n             | `scripts/i18n.js` (custom, 6 languages)             | See [`docs/I18N.md`](docs/I18N.md) |
-| Hosting          | GitHub Pages + custom domain (`CNAME`)             | |
+| Hosting          | Cloudflare Workers (static assets + `_worker.js`) + custom domain (`CNAME`) | Git-connected; see [Hosting & deployment](#hosting--deployment) |
+| Server-side      | `functions/api/*` (Cloudflare Pages Functions convention, routed by `_worker.js`) | E-mail sending (SMTP), live stats |
 | Analytics        | Google Analytics 4 (`gtag.js`)                     | |
-| Forms            | Web3Forms, HubSpot, JotForm                        | See [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md) |
-| Chat             | Tidio AI chatbot                                    | On `index.html` |
+| Forms            | Zoho Mail SMTP, direct                              | See [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md) |
+| Chat             | Tidio AI chatbot                                    | Site-wide |
 | Stats pipeline   | Python + Zabbix API (API Token auth) → `assets/data/stats.json` | See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#stats-pipeline-zabbix--json) |
 
 ---
@@ -75,7 +83,9 @@ Then open `http://localhost:8080/index.html`.
 
 ```
 site2.0/
-├── CNAME                     # Custom domain for GitHub Pages → glctech.com.br
+├── CNAME                     # Custom domain → glctech.com.br (see Hosting & deployment)
+├── wrangler.toml              # Cloudflare Worker config (project name, secrets doc)
+├── _worker.js                 # Worker entrypoint: routes /api/* to functions/api/*, else serves static assets
 ├── README.md                 # ← you are here
 ├── docs/                     # Engineering documentation (start with ARCHITECTURE.md)
 │
@@ -90,25 +100,27 @@ site2.0/
 ├── politica.html             # Privacy policy
 ├── termos.html               # Terms of use
 │
-│   ── Team member profiles ──
-├── andre.html                # André Luiz Cézar (CEO)
-├── tchize.html               # Tchize Matias (Co-founder)
-├── kawan.html                # Kawan Pablo (Cloud Architect)
+│   ── Careers ──
+├── trabalhe-conosco.html     # Job openings + candidatura form
 │
-│   ── Campaign / standalone pages ──
-├── landing.html              # "Free IT diagnostic" landing page
-├── ebook.html                # Zabbix e-book lead magnet (JotForm capture)
+│   ── Standalone ──
 ├── mailmkt.html              # HTML e-mail marketing template (table-based)
 │
 │   ── Shared / support ──
 ├── stats-snippet.html        # Copy-paste snippet that renders live Zabbix stats
 │
+├── functions/api/             # Cloudflare Worker server-side code (routed by _worker.js)
+│   ├── send-email.js          # POST /api/send-email — contact + candidatura forms
+│   ├── stats.js                # GET /api/stats
+│   └── _lib/
+│       ├── smtp.mjs            # Hand-rolled SMTP client (Zoho Mail, port 465)
+│       └── zabbix.mjs
+│
 ├── .github/
 │   └── workflows/
-│       └── atualizar-stats-zabbix.yml  # Scheduled job: refresh assets/data/stats.json from Zabbix
+│       └── zabbix-stats.yml  # Scheduled job: refresh assets/data/stats.json from Zabbix
 │
 ├── scripts/
-│   ├── i18n.js               # ★ ACTIVE translation engine (all pages load this)
 │   ├── fetch_zabbix_stats.py # Zabbix API → assets/data/stats.json (run by the workflow)
 │   └── script.js             # Small legacy nav toggle (not used by current pages)
 │
@@ -122,13 +134,6 @@ site2.0/
 └── kaspersky/                # Kaspersky product icon images
 ```
 
-> ℹ️ **There is exactly one translation system: `scripts/i18n.js`.** Three
-> earlier dead attempts (`js/i18n.js`, `lang.js`, `lang/*.json`) were removed —
-> they used a different key scheme (`nav_about`) than the live pages
-> (`data-i18n="nav.about"`) and were loaded by nothing. If you find references
-> to them in old branches or history, ignore them. Details in
-> [`docs/I18N.md`](docs/I18N.md).
-
 ---
 
 ## How the site is built (mental model)
@@ -136,25 +141,22 @@ site2.0/
 Each HTML page is **self-contained**: its own `<style>`, its own markup, and a
 few shared `<script>` tags at the end. There is no templating, so shared pieces
 (nav, footer, design tokens) are **duplicated per page** and kept consistent by
-convention, not by tooling.
+convention, not by tooling. There used to be one shared runtime script
+(`scripts/i18n.js`, a translation engine) — it was retired; see
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#javascript-subsystems).
 
-The one truly shared runtime piece is **`scripts/i18n.js`**, which every
-customer-facing page loads. On load it:
-
-1. Detects the visitor's language (saved preference → browser language → `pt`).
-2. Injects a language-switcher dropdown into the nav.
-3. Translates every element carrying a `data-i18n*` attribute from an embedded
-   dictionary (pt / en / de / es / fr / it).
+Most requests are for a static file (`.html`, `.css`, image, etc.) and are
+served as-is. A handful of paths (`/api/send-email`, `/api/stats`) are
+intercepted by the Worker and run actual server-side code instead:
 
 ```mermaid
 flowchart TD
-    A[Browser requests page] --> B[GitHub Pages serves static HTML]
-    B --> C[Inline &lt;style&gt; renders design instantly]
-    B --> D[scripts/i18n.js runs]
-    D --> E{Language?}
-    E -->|saved / browser / default pt| F[Translate data-i18n elements]
-    D --> G[Inject language switcher into nav]
-    B --> H[Page-specific scripts:<br/>contact form, blog feed,<br/>mobile nav, chatbot]
+    A[Browser requests a path] --> W["_worker.js (Cloudflare Worker)"]
+    W --> R{"Path is /api/*?"}
+    R -->|yes| F["functions/api/*.js runs<br/>(e.g. SMTP send, Zabbix stats)"]
+    R -->|no| S["Serve static file as-is<br/>(HTML/CSS/JS/images)"]
+    S --> C["Inline &lt;style&gt; renders design instantly"]
+    S --> H["Page-specific scripts:<br/>contact form, blog feed,<br/>mobile nav, chatbot"]
 ```
 
 For the full page-by-page and subsystem breakdown, read
@@ -162,24 +164,39 @@ For the full page-by-page and subsystem breakdown, read
 
 ---
 
-## Branching & deployment
+## Hosting & deployment
 
-- **Default branch: `glctech2.0`.** This is what GitHub Pages publishes.
-- Deployment is **automatic**: pushing/merging to `glctech2.0` publishes to
-  `https://glctech.com.br` within a minute or two. There is no build step.
+- **Hosting: Cloudflare Workers**, Git-connected to this repo (a "Workers with
+  static assets" project — `wrangler.toml` + `_worker.js` — not classic
+  Cloudflare Pages, and not GitHub Pages, despite the repo also having GitHub
+  Pages nominally enabled from before this migration; the custom domain
+  binding on Cloudflare intercepts `glctech.com.br` first, so GitHub Pages
+  never actually serves live traffic for it).
+- **Default branch: `glctech2.0`.** This is what the Worker's production
+  build tracks.
+- Deployment is **automatic**: pushing/merging to `glctech2.0` triggers a
+  Cloudflare Workers build and publishes to `https://glctech.com.br` within a
+  minute or two. There is no build step of our own — Cloudflare just picks up
+  the repo as-is.
 - The custom domain is set by the `CNAME` file (`glctech.com.br`) — **do not
-  delete it**, or GitHub Pages reverts to `*.github.io`.
+  delete it**.
+- **Secrets** (`ZOHO_SMTP_USER`, `ZOHO_SMTP_PASS`, `ZABBIX_*`) live in the
+  Worker's dashboard under *Settings → Variables and Secrets → **Runtime***
+  (not *Build*) — see [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md) for
+  which ones exist and what they do.
 - Work on feature branches named `claude/<topic>` (or your own convention) and
   open a Pull Request into `glctech2.0`.
 
 ```mermaid
 flowchart LR
     F[feature branch] -->|Pull Request| M[glctech2.0 default branch]
-    M -->|GitHub Pages auto-publish| P[https://glctech.com.br]
+    M -->|Cloudflare Workers auto-build| P[https://glctech.com.br]
 ```
 
 > Because publish = merge, **preview changes locally first** (see
-> [Quick start](#quick-start)). There is no staging environment.
+> [Quick start](#quick-start)). There is no staging environment. Note that
+> local preview can't exercise `/api/*` — that only runs on the deployed
+> Worker.
 
 ---
 
@@ -188,7 +205,6 @@ flowchart LR
 | I want to…                              | Go to |
 |-----------------------------------------|-------|
 | Change hero text, stats, testimonials   | [`docs/CONTENT-EDITING.md`](docs/CONTENT-EDITING.md) |
-| Add/fix a translation or a new language | [`docs/I18N.md`](docs/I18N.md) |
 | Understand a page or a JS subsystem     | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) |
 | Change a form's destination / API key   | [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md) |
 | Update the live "devices monitored" number | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#stats-pipeline-zabbix--json) |
@@ -200,8 +216,7 @@ flowchart LR
 
 | Document | What's inside |
 |----------|---------------|
-| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Page-by-page tour, the shared design system, and every JS subsystem (i18n, blog feed, contact form, mobile nav, chatbot, stats pipeline) with data-flow diagrams. |
-| [`docs/I18N.md`](docs/I18N.md) | Deep dive on the translation engine: detection order, the `data-i18n` attributes, how to add a key or a language, and the removed legacy files. |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Page-by-page tour, the shared design system, and every JS subsystem (blog feed, contact form, mobile nav, chatbot, stats pipeline) with data-flow diagrams. |
 | [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md) | Every third-party service, where its key/ID lives, how to rotate it, and security notes. |
 | [`docs/CONTENT-EDITING.md`](docs/CONTENT-EDITING.md) | Task-oriented recipes for editing copy, images, testimonials, services and team without touching the plumbing. |
 

@@ -408,9 +408,10 @@
     fr: { symbol: '€',  locale: 'fr-FR', rate: 0.17,  period: '/mois',year: '/an'  },
     it: { symbol: '€',  locale: 'it-IT', rate: 0.17,  period: '/mese',year: '/anno'},
   };
+  // Site is Portuguese-only (glctechsec.com now covers other locales), so
+  // pricing always shows in BRL — no more switching this via language.
   function getCurr() {
-    const lang = window._currentLang || localStorage.getItem('glctech_lang') || 'pt';
-    return CURRENCY[lang] || CURRENCY.pt;
+    return CURRENCY.pt;
   }
   function fmtMoney(valueInBRL, period) {
     const c = getCurr();
@@ -451,7 +452,6 @@
     document.getElementById('k-cta').href = 'https://wa.me/5511911517501?text=' + msg;
   }
 </script>
-<script src="scripts/i18n.js"></script>
 <!-- ─────────────────────────────────────────────────────────────
      AI CHATBOT (Tidio) — GLCTech
      Integração nativa:
