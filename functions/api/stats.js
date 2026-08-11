@@ -31,6 +31,8 @@ function json(body, status, extraHeaders) {
         'Content-Type': 'application/json; charset=utf-8',
         'Cache-Control': `public, max-age=${CACHE_TTL_SECONDS}`,
         'Access-Control-Allow-Origin': '*',
+        'X-Content-Type-Options': 'nosniff',
+        'Referrer-Policy': 'strict-origin-when-cross-origin',
       },
       extraHeaders || {}
     ),

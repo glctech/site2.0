@@ -13,7 +13,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title data-i18n="page.title">GLCTech — Monitoramento e Segurança em TI</title>
+<meta name="description" content="Monitoramento inteligente com Zabbix, segurança com Kaspersky e backup com Veeam. Identifique falhas de infraestrutura antes que afetem sua operação — fale com um especialista GLCTech.">
+<link rel="canonical" href="https://glctech.com.br/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GLCTech">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://glctech.com.br/">
+<meta property="og:title" content="GLCTech — Monitoramento e Segurança em TI">
+<meta property="og:description" content="Monitoramento inteligente com Zabbix, segurança com Kaspersky e backup com Veeam. Identifique falhas de infraestrutura antes que afetem sua operação — fale com um especialista GLCTech.">
+<meta property="og:image" content="https://glctech.com.br/assets/hero/escritorio.webp">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GLCTech — Monitoramento e Segurança em TI">
+<meta name="twitter:description" content="Monitoramento inteligente com Zabbix, segurança com Kaspersky e backup com Veeam. Identifique falhas de infraestrutura antes que afetem sua operação — fale com um especialista GLCTech.">
+<meta name="twitter:image" content="https://glctech.com.br/assets/hero/escritorio.webp">
+
+<link rel="icon" type="image/webp" href="/assets/logo/favicon.webp">
+<link rel="icon" type="image/png" href="/assets/logo/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
@@ -95,7 +117,7 @@
   .nav-links a:hover { color: var(--white); }
 
   .nav-cta {
-    background: var(--red) !important; color: #fff !important;
+    background: var(--red) !important; color: var(--white) !important;
     padding: 9px 22px; border-radius: var(--radius);
     font-weight: 600 !important; transition: background var(--transition) !important;
   }
@@ -156,7 +178,7 @@
 
   .btn-primary {
     display: inline-flex; align-items: center; gap: 8px;
-    background: var(--red); color: #fff;
+    background: var(--red); color: var(--white);
     padding: 14px 28px; border-radius: var(--radius);
     text-decoration: none; font-weight: 600; font-size: 15px;
     font-family: var(--font-display);
@@ -190,7 +212,7 @@
 
   .hero-img-dots { display: flex; gap: 6px; }
   .hero-img-dots span { width: 10px; height: 10px; border-radius: 50%; background: var(--dark-border); display: block; }
-  .hero-img-dots span:first-child { background: #e6262c; }
+  .hero-img-dots span:first-child { background: var(--red); }
   .hero-img-dots span:nth-child(2) { background: #e6a826; }
   .hero-img-dots span:nth-child(3) { background: #26e64a; }
 
@@ -239,7 +261,7 @@
 
   .about-img-badge {
     position: absolute; bottom: -1.5rem; right: -1.5rem;
-    background: var(--red); color: #fff;
+    background: var(--red); color: var(--white);
     padding: 1.2rem 1.5rem; border-radius: var(--radius-lg);
   }
   .about-img-badge-num { font-family: var(--font-display); font-size: 2rem; font-weight: 800; line-height: 1; }
@@ -406,7 +428,7 @@
   .cta-banner { background: var(--red); padding: 5.5rem 0; text-align: center; position: relative; overflow: hidden; }
   .cta-banner::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 40px 40px; }
   .cta-banner-inner { position: relative; }
-  .cta-banner h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); color: #fff; margin-bottom: 1rem; }
+  .cta-banner h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); color: var(--white); margin-bottom: 1rem; }
   .cta-banner p { color: rgba(255,255,255,0.82); font-size: 17px; margin-bottom: 2.5rem; max-width: 540px; margin-left: auto; margin-right: auto; }
   .btn-white { display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--red); padding: 15px 32px; border-radius: var(--radius); text-decoration: none; font-weight: 700; font-size: 15px; font-family: var(--font-display); transition: transform var(--transition); }
   .btn-white:hover { transform: translateY(-2px); }
@@ -431,7 +453,7 @@
   input:focus, textarea:focus { border-color: var(--red); }
   textarea { resize: vertical; min-height: 120px; }
   input::placeholder, textarea::placeholder { color: var(--gray-dark); }
-  .form-submit { width: 100%; background: var(--red); color: #fff; border: none; border-radius: var(--radius); padding: 15px; font-family: var(--font-display); font-size: 15px; font-weight: 700; cursor: pointer; transition: background var(--transition); letter-spacing: 0.05em; }
+  .form-submit { width: 100%; background: var(--red); color: var(--white); border: none; border-radius: var(--radius); padding: 15px; font-family: var(--font-display); font-size: 15px; font-weight: 700; cursor: pointer; transition: background var(--transition); letter-spacing: 0.05em; }
   .form-submit:hover { background: var(--red-light); }
 
   /* ── FOOTER ── */
@@ -453,12 +475,12 @@
   /* Exceções: ícones que devem ter cor própria */
   .nav-links .fa-solid,
   .nav-links .fa-regular       { color: inherit; }
-  .btn-primary .fa-solid       { color: #fff; }
+  .btn-primary .fa-solid       { color: var(--white); }
   .btn-outline .fa-solid       { color: inherit; }
   .btn-white .fa-solid         { color: var(--red); }
-  .nav-cta .fa-regular         { color: #fff; }
-  .form-submit .fa-solid       { color: #fff; }
-  .result-cta .fa-solid        { color: #fff; }
+  .nav-cta .fa-regular         { color: var(--white); }
+  .form-submit .fa-solid       { color: var(--white); }
+  .result-cta .fa-solid        { color: var(--white); }
   .service-link .fa-solid      { color: var(--red); }
   #form-success .fa-solid      { color: #4ade80; }
   .blog-card-no-thumb .fa-regular { color: var(--gray-dim); }
@@ -526,7 +548,7 @@
   .mobile-menu .mob-cta {
     margin-top: 1rem;
     background: var(--red);
-    color: #fff !important;
+    color: var(--white) !important;
     padding: 14px 20px;
     border-radius: var(--radius);
     justify-content: center;
@@ -589,6 +611,32 @@
     .cta-banner p { font-size: 15px; }
   }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "GLCTech",
+  "legalName": "GLCTech Tecnologia",
+  "url": "https://glctech.com.br/",
+  "logo": "https://glctech.com.br/assets/logo/new_logo.png",
+  "image": "https://glctech.com.br/assets/hero/escritorio.webp",
+  "description": "Monitoramento inteligente de infraestrutura de TI, segurança com Kaspersky e backup corporativo com Veeam.",
+  "email": "contato@glctech.com.br",
+  "telephone": "+55-11-95762-4146",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "São Paulo",
+    "addressRegion": "SP",
+    "addressCountry": "BR"
+  },
+  "areaServed": "BR",
+  "makesOffer": [
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Monitoramento de Infraestrutura com Zabbix", "url": "https://glctech.com.br/zabbix.html" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Segurança Corporativa com Kaspersky", "url": "https://glctech.com.br/kaspersky.html" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Backup Corporativo com Veeam", "url": "https://glctech.com.br/veeam.html" } }
+  ]
+}
+</script>
 </head>
 
 <body>
@@ -597,7 +645,7 @@
 <nav>
   <div class="nav-inner">
     <a href="#hero" class="nav-logo4">
-      <img src="/assets/logo/new_logo.png" alt="GLCTech — Monitoramento e Segurança em TI">
+      <img src="/assets/logo/new_logo.png" alt="GLCTech — Monitoramento e Segurança em TI" width="1665" height="422">
     </a>
     <ul class="nav-links">
       <li><a href="#about" data-i18n="nav.about">Sobre</a></li>
@@ -649,7 +697,7 @@
           <span class="hero-img-label">GLCTech · Dashboard Zabbix</span>
           <div class="hero-img-live"><div class="hero-status-dot"></div><span data-i18n="hero.live">Ao vivo</span></div>
         </div>
-        <img src="./assets/hero/zabbix_fk.webp" alt="Dashboard Zabbix GLCTech" class="hero-zabbix-img" fetchpriority="high" decoding="async">
+        <img src="./assets/hero/zabbix_fk.webp" alt="Dashboard Zabbix GLCTech" class="hero-zabbix-img" width="1535" height="1024" fetchpriority="high" decoding="async">
       </div>
     </div>
   </div>
@@ -686,7 +734,7 @@
   <div class="container">
     <div class="about-grid">
       <div class="about-img-wrap">
-        <img src="/assets/hero/escritorio.webp" alt="Equipe GLCTech" loading="lazy" decoding="async">
+        <img src="/assets/hero/escritorio.webp" alt="Equipe GLCTech" width="1254" height="1254" loading="lazy" decoding="async">
         <div class="about-img-badge" hidden>
           <div class="about-img-badge-num">+50</div>
           <div class="about-img-badge-text" data-i18n="about.badge.sub">Projetos Entregues</div>
@@ -834,7 +882,7 @@
     </div>
     <div class="team-grid">
       <div class="team-card">
-        <img src="/assets/team/eu3.webp" alt="André Luiz Cézar" class="team-card-img face-fix" loading="lazy" decoding="async">
+        <img src="/assets/team/eu3.webp" alt="André Luiz Cézar" class="team-card-img face-fix" width="768" height="1344" loading="lazy" decoding="async">
         <div class="team-card-body">
           <div class="team-card-role" data-i18n="team.m1.role">CEO &amp; Fundador</div>
           <h3>André Luiz Cézar</h3>
@@ -842,7 +890,7 @@
         </div>
       </div>
       <div class="team-card">
-        <img src="/assets/team/tchize.webp" alt="Tchize Matias" class="team-card-img" loading="lazy" decoding="async">
+        <img src="/assets/team/tchize.webp" alt="Tchize Matias" class="team-card-img" width="2048" height="2048" loading="lazy" decoding="async">
         <div class="team-card-body">
           <div class="team-card-role" data-i18n="team.m2.role">Co-Founder &amp; Dev Operations</div>
           <h3>Tchize Matias</h3>
@@ -973,7 +1021,7 @@
     <div id="blog-error" style="display:none;text-align:center;padding:3rem;background:var(--dark-light);border:1px solid var(--dark-border);border-radius:var(--radius-lg);">
       <div style="font-size:2rem;margin-bottom:1rem;color:var(--red);"><i class="fa-solid fa-satellite-dish"></i></div>
       <div style="color:var(--white);font-family:var(--font-display);font-size:1rem;margin-bottom:.5rem;">Feeds temporariamente indisponíveis</div>
-      <div style="color:var(--gray-dim);font-size:14px;">Acesse: <a href="https://www.techtudo.com.br/" target="_blank" style="color:var(--red);text-decoration:none;">TechTudo</a> &nbsp;|&nbsp; <a href="https://www.tecmundo.com.br/seguranca" target="_blank" style="color:var(--red);text-decoration:none;">TecMundo Segurança</a></div>
+      <div style="color:var(--gray-dim);font-size:14px;">Acesse: <a href="https://www.techtudo.com.br/" target="_blank" rel="noopener" style="color:var(--red);text-decoration:none;">TechTudo</a> &nbsp;|&nbsp; <a href="https://www.tecmundo.com.br/seguranca" target="_blank" rel="noopener" style="color:var(--red);text-decoration:none;">TecMundo Segurança</a></div>
     </div>
  
   </div>
@@ -989,7 +1037,7 @@
   .blog-source-badge.techtudo { background:rgba(255,255,255,.06);color:var(--gray-dim); }
   .feed-tab { background:var(--dark-light);border:1px solid var(--dark-border);color:var(--gray-dim);padding:7px 16px;border-radius:100px;font-family:var(--font-display);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:.05em; }
   .feed-tab:hover { border-color:var(--red);color:var(--white); }
-  .feed-tab-active { background:var(--red) !important;border-color:var(--red) !important;color:#fff !important; }
+  .feed-tab-active { background:var(--red) !important;border-color:var(--red) !important;color:var(--white) !important; }
   @media(max-width:900px) { #blog-feed, #blog-skeleton { grid-template-columns:1fr !important; } }
 </style>
  
@@ -1156,7 +1204,7 @@
         + ' onerror="this.parentNode.innerHTML=\'<div class=&quot;blog-card-no-thumb&quot;><i class=&quot;fa-regular fa-newspaper&quot;></i></div>\'">'
       : '<div class="blog-card-no-thumb"><i class="fa-regular fa-newspaper"></i></div>';
 
-    return '<a href="' + item.link + '" target="_blank" rel="noopener" class="blog-card" data-source="' + item._source + '">'
+    return '<a href="' + item.link + '" target="_blank" rel="noopener" rel="noopener" class="blog-card" data-source="' + item._source + '">'
       + imgBlock
       + '<span class="blog-source-badge ' + item._source + '">' + item._label + '</span>'
       + '<div class="blog-card-cat">' + getCat(item) + '</div>'
@@ -1350,7 +1398,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="/assets/logo/new_logo.png" alt="GLCTech" loading="lazy" decoding="async">
+        <img src="/assets/logo/new_logo.png" alt="GLCTech" width="1665" height="422" loading="lazy" decoding="async">
         <p data-i18n="footer.p">Monitoramento inteligente e segurança de TI para empresas que exigem alta performance e continuidade operacional.</p>
       </div>
       <div class="footer-col">
