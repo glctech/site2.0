@@ -38,6 +38,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -124,7 +125,7 @@
   .about-content > p { color: var(--gray-dim); line-height: 1.8; margin-bottom: 1.5rem; }
   .check-list { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
   .check-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: var(--gray); }
-  .check-list li::before { content: '✓'; color: var(--red); font-weight: 700; flex-shrink: 0; margin-top: 3px; }
+  .check-list li::before { font: 900 15px "Font Awesome 6 Free"; content: '\f00c'; color: var(--red); flex-shrink: 0; margin-top: 3px; }
   .about-visual { display: flex; flex-direction: column; gap: 1rem; }
   .about-stat-card { background: var(--dark-light); border: 1px solid var(--dark-border); border-radius: var(--radius-lg); padding: 1.8rem; }
   .about-stat-num { font-family: var(--font-display); font-size: 2.4rem; font-weight: 800; color: var(--white); line-height: 1; margin-bottom: 4px; }
@@ -248,32 +249,32 @@
     </div>
     <div class="features-grid">
       <div class="feature-card">
-        <div class="feature-icon">🖥️</div>
+        <div class="feature-icon"><i class="fa-solid fa-desktop"></i></div>
         <h3 data-i18n="kasp.f1.h">Endpoints, Servidores e Estações</h3>
         <p data-i18n="kasp.f1.p">Proteção completa para todos os dispositivos da empresa — notebooks, desktops, servidores físicos e virtuais.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">☁️</div>
+        <div class="feature-icon"><i class="fa-solid fa-cloud"></i></div>
         <h3 data-i18n="kasp.f2.h">Ambientes Locais, Híbridos e Cloud</h3>
         <p data-i18n="kasp.f2.p">Cobertura para qualquer arquitetura: on-premise, nuvem ou híbrido, com console de gerenciamento unificado.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🔎</div>
+        <div class="feature-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
         <h3 data-i18n="kasp.f3.h">Detecção em Tempo Real (EDR)</h3>
         <p data-i18n="kasp.f3.p">EDR Foundations incluso — visibilidade de ameaças, detecção comportamental e resposta a incidentes automatizada.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🚫</div>
+        <div class="feature-icon"><i class="fa-solid fa-ban"></i></div>
         <h3 data-i18n="kasp.f4.h">Anti-Ransomware e Anti-Phishing</h3>
         <p data-i18n="kasp.f4.p">Múltiplas camadas de defesa contra ransomware, phishing, vazamentos de dados e ataques zero-day.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">📱</div>
+        <div class="feature-icon"><i class="fa-solid fa-mobile-screen"></i></div>
         <h3 data-i18n="kasp.f5.h">Proteção Mobile</h3>
         <p data-i18n="kasp.f5.p">Gestão e proteção de dispositivos móveis (iOS e Android) integrada ao mesmo console corporativo.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🎛️</div>
+        <div class="feature-icon"><i class="fa-solid fa-sliders"></i></div>
         <h3 data-i18n="kasp.f6.h">Console Unificado em Nuvem</h3>
         <p data-i18n="kasp.f6.p">Gerencie toda a segurança da empresa de um único painel web, sem necessidade de infraestrutura adicional.</p>
       </div>

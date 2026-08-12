@@ -37,6 +37,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -126,7 +127,7 @@
   .edition-divider { height: 1px; background: var(--dark-border); margin: 1.2rem 0; }
   .edition-features { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 1.5rem; }
   .edition-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--gray); }
-  .edition-features li::before { content: '✓'; color: var(--red); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+  .edition-features li::before { font: 900 14px "Font Awesome 6 Free"; content: '\f00c'; color: var(--red); flex-shrink: 0; margin-top: 2px; }
   .edition-btn { display: block; text-align: center; text-decoration: none; padding: 12px; border-radius: var(--radius); font-family: var(--font-display); font-weight: 600; font-size: 14px; transition: background var(--transition), color var(--transition), border-color var(--transition); border: 1px solid var(--dark-border); color: var(--gray); }
   .edition-btn:hover { border-color: var(--red); color: var(--red); }
   .edition-btn.featured { background: var(--red); color: #fff; border-color: var(--red); }
@@ -248,32 +249,32 @@
     </div>
     <div class="features-grid">
       <div class="feature-card">
-        <div class="feature-icon">⚡</div>
+        <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
         <h3 data-i18n="veeam.f1.h">Recovery Ultra-Rápido</h3>
         <p data-i18n="veeam.f1.p">Restauração instantânea de VMs, arquivos e aplicações — minimize o downtime e retome as operações em minutos, não horas.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🔁</div>
+        <div class="feature-icon"><i class="fa-solid fa-rotate"></i></div>
         <h3 data-i18n="veeam.f2.h">Backup Automático</h3>
         <p data-i18n="veeam.f2.p">Jobs automatizados e agendados para VMs VMware, Hyper-V, servidores físicos, NAS e ambientes de nuvem.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🛡️</div>
+        <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
         <h3 data-i18n="veeam.f3.h">Proteção Anti-Ransomware</h3>
         <p data-i18n="veeam.f3.p">Backups imutáveis e isolados garantem que suas cópias de segurança não sejam comprometidas por ataques de ransomware.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">☁️</div>
+        <div class="feature-icon"><i class="fa-solid fa-cloud"></i></div>
         <h3 data-i18n="veeam.f4.h">Backup para M365</h3>
         <p data-i18n="veeam.f4.p">Proteja Exchange, SharePoint, OneDrive e Teams — dados do Microsoft 365 não estão cobertos pelo SLA da Microsoft.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">📊</div>
+        <div class="feature-icon"><i class="fa-solid fa-chart-column"></i></div>
         <h3 data-i18n="veeam.f5.h">Relatórios Completos</h3>
         <p data-i18n="veeam.f5.p">Dashboards e relatórios detalhados sobre o status de todos os jobs, consumo de storage e histórico de recuperações.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🔍</div>
+        <div class="feature-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
         <h3 data-i18n="veeam.f6.h">Verificação de Integridade</h3>
         <p data-i18n="veeam.f6.p">SureBackup verifica automaticamente se seus backups são recuperáveis — sem surpresas na hora da restauração.</p>
       </div>
