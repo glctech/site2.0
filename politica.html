@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+ <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7VH0J5XFYK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7VH0J5XFYK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="pol.title">GLCTech — Política de Privacidade</title>
+<meta name="description" content="Política de Privacidade da GLCTech Tecnologia: como coletamos, usamos e protegemos seus dados pessoais em conformidade com a LGPD.">
+<link rel="canonical" href="https://glctech.com.br/politica.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GLCTech">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://glctech.com.br/politica.html">
+<meta property="og:title" content="GLCTech — Política de Privacidade">
+<meta property="og:description" content="Política de Privacidade da GLCTech Tecnologia: como coletamos, usamos e protegemos seus dados pessoais em conformidade com a LGPD.">
+<meta property="og:image" content="https://glctech.com.br/assets/hero/escritorio.webp">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GLCTech — Política de Privacidade">
+<meta name="twitter:description" content="Política de Privacidade da GLCTech Tecnologia: como coletamos, usamos e protegemos seus dados pessoais em conformidade com a LGPD.">
+<meta name="twitter:image" content="https://glctech.com.br/assets/hero/escritorio.webp">
+
+<link rel="icon" type="image/webp" href="/assets/logo/favicon.webp">
+<link rel="icon" type="image/png" href="/assets/logo/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --dark: #2d2d2d; --dark-mid: #242424; --dark-light: #383838; --dark-border: #484848;
+    --red: #e6262c; --red-light: #ff4a50; --red-dim: rgba(230,38,44,0.12);
+    --white: #ffffff; --gray: #c9c9c9; --gray-dim: #909090; --gray-dark: #606060;
+    --font-display: 'Syne', sans-serif; --font-body: 'DM Sans', sans-serif;
+    --radius: 4px; --radius-lg: 8px; --transition: 0.22s ease;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--dark); color: var(--gray); line-height: 1.7; font-size: 16px; overflow-x: hidden; }
+  h1,h2,h3,h4 { font-family: var(--font-display); font-weight: 700; line-height: 1.2; }
+  .container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(30,30,30,0.97); backdrop-filter: blur(14px); border-bottom: 1px solid var(--dark-border); height: 70px; display: flex; align-items: center; }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
+  .nav-logo img { height: 70px; width: auto; display: block; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+  .nav-links a { text-decoration: none; color: var(--gray-dim); font-size: 14px; font-weight: 500; transition: color var(--transition); }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta { background: var(--red) !important; color: #fff !important; padding: 9px 22px; border-radius: var(--radius); font-weight: 600 !important; transition: background var(--transition) !important; }
+  .nav-cta:hover { background: var(--red-light) !important; }
+
+  /* PAGE HERO */
+  .page-hero {
+    padding-top: 70px;
+    background: var(--dark-mid);
+    border-bottom: 1px solid var(--dark-border);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(72,72,72,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(72,72,72,0.2) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .page-hero-inner {
+    position: relative; z-index: 1;
+    padding: 5rem 2rem 4rem;
+    max-width: 1160px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .page-hero-label {
+    font-family: var(--font-display); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--red);
+  }
+  .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); color: var(--white); }
+  .page-hero-meta { display: flex; align-items: center; gap: 2rem; margin-top: 0.5rem; }
+  .page-hero-meta span { font-size: 13px; color: var(--gray-dim); display: flex; align-items: center; gap: 6px; }
+  .meta-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--dark-border); }
+
+  /* BREADCRUMB */
+  .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--gray-dim); margin-bottom: 2rem; }
+  .breadcrumb a { color: var(--gray-dim); text-decoration: none; transition: color var(--transition); }
+  .breadcrumb a:hover { color: var(--red); }
+  .breadcrumb-sep { color: var(--dark-border); }
+
+  /* LAYOUT */
+  .doc-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 4rem;
+    padding: 5rem 0 7rem;
+    max-width: 1160px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem;
+    align-items: start;
+  }
+
+  /* SIDEBAR */
+  .doc-sidebar { position: sticky; top: 90px; }
+  .sidebar-card {
+    background: var(--dark-light); border: 1px solid var(--dark-border);
+    border-radius: var(--radius-lg); overflow: hidden;
+  }
+  .sidebar-header {
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid var(--dark-border);
+    font-family: var(--font-display); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-dim);
+  }
+  .sidebar-nav { list-style: none; }
+  .sidebar-nav li a {
+    display: block; padding: 0.75rem 1.2rem;
+    text-decoration: none; font-size: 13px; color: var(--gray-dim);
+    border-bottom: 1px solid var(--dark-border);
+    transition: background var(--transition), color var(--transition);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sidebar-nav li:last-child a { border-bottom: none; }
+  .sidebar-nav li a:hover { background: var(--dark); color: var(--white); }
+  .sidebar-nav li a .sn-num {
+    font-family: var(--font-display); font-size: 11px; font-weight: 700;
+    color: var(--red); min-width: 20px;
+  }
+
+  .sidebar-contact {
+    margin-top: 1.5rem;
+    background: var(--dark-light); border: 1px solid var(--dark-border);
+    border-radius: var(--radius-lg); padding: 1.5rem;
+  }
+  .sidebar-contact h4 {
+    font-family: var(--font-display); font-size: 13px; color: var(--white);
+    margin-bottom: 1rem;
+  }
+  .sidebar-contact-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--gray-dim); margin-bottom: 0.7rem; }
+  .sidebar-contact-item:last-child { margin-bottom: 0; }
+  .sc-icon { width: 28px; height: 28px; background: var(--red-dim); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+
+  /* CONTENT */
+  .doc-content {}
+
+  .doc-section {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--dark-border);
+  }
+  .doc-section:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .doc-section-num {
+    font-family: var(--font-display); font-size: 11px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--red);
+    margin-bottom: 0.6rem; display: block;
+  }
+
+  .doc-section h2 {
+    font-size: 1.4rem; color: var(--white); margin-bottom: 1rem;
+  }
+
+  .doc-section p {
+    color: var(--gray-dim); line-height: 1.85; margin-bottom: 1rem;
+  }
+  .doc-section p:last-child { margin-bottom: 0; }
+
+  .doc-list {
+    list-style: none; display: flex; flex-direction: column; gap: 0.7rem;
+    margin: 1rem 0;
+  }
+  .doc-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 15px; color: var(--gray-dim); line-height: 1.7;
+  }
+  .doc-list li::before {
+    font: 900 15px "Font Awesome 6 Free"; content: '\f061'; color: var(--red);
+    flex-shrink: 0; margin-top: 2px;
+  }
+
+  .doc-highlight {
+    background: var(--dark-light); border: 1px solid var(--dark-border);
+    border-left: 3px solid var(--red);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    padding: 1.2rem 1.5rem; margin: 1.5rem 0;
+    font-size: 14px; color: var(--gray); line-height: 1.7;
+  }
+
+  .doc-contact-box {
+    background: var(--dark-light); border: 1px solid var(--dark-border);
+    border-radius: var(--radius-lg); padding: 2rem; margin-top: 1rem;
+  }
+  .contact-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+  .contact-row:last-child { margin-bottom: 0; }
+  .contact-icon { width: 36px; height: 36px; background: var(--red-dim); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .contact-row a { color: var(--gray); text-decoration: none; transition: color var(--transition); font-size: 14px; }
+  .contact-row a:hover { color: var(--red); }
+
+  /* FOOTER */
+  footer { background: var(--dark-mid); border-top: 1px solid var(--dark-border); padding: 4rem 0 2rem; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; max-width: 1160px; margin-left: auto; margin-right: auto; padding: 0 2rem; }
+  .footer-brand img { height: 40px; width: auto; margin-bottom: 1.2rem; display: block; }
+  .footer-brand p { font-size: 14px; color: var(--gray-dim); line-height: 1.8; max-width: 260px; }
+  .footer-col h4 { font-family: var(--font-display); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gray-dim); margin-bottom: 1.2rem; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .footer-links a { text-decoration: none; font-size: 14px; color: var(--gray-dim); transition: color var(--transition); }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom { border-top: 1px solid var(--dark-border); padding-top: 2rem; display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: var(--gray-dim); max-width: 1160px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; padding-top: 2rem; }
+
+  @media (max-width: 900px) {
+    .doc-layout { grid-template-columns: 1fr; }
+    .doc-sidebar { position: static; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html"><img src="/assets/logo/new_logo.png" alt="GLCTech" width="1665" height="422" style="height: 70px;width:auto;display:block;"></a>
+    <ul class="nav-links">
+      <li><a href="index.html" data-i18n="nav.home">Início</a></li>
+      <li><a href="index.html#about" data-i18n="nav.about">Sobre</a></li>
+      <li><a href="index.html#services" data-i18n="nav.services">Serviços</a></li>
+      <li><a href="trabalhe-conosco.html" data-i18n="nav.careers">Trabalhe Conosco</a></li>
+      <li><a href="index.html#contact" class="nav-cta" data-i18n="nav.contact">Fale Conosco</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-inner">
+    <span class="page-hero-label" data-i18n="doc.label">Legal &amp; Compliance</span>
+    <h1 data-i18n="pol.h1">Política de Privacidade</h1>
+    <div class="page-hero-meta">
+      <span data-i18n="doc.company">GLCTech Tecnologia</span>
+      <span class="meta-dot"></span>
+      <span data-i18n="doc.lastupdate">Última atualização: 08 de julho de 2025</span>
+      <span class="meta-dot"></span>
+      <span data-i18n="pol.lgpd">LGPD Compliant</span>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="doc-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="doc-sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-header" data-i18n="doc.index">Índice</div>
+      <ul class="sidebar-nav">
+        <li><a href="#s1"><span class="sn-num">01</span><span data-i18n="pol.s1.nav">Coleta de Dados</span></a></li>
+        <li><a href="#s2"><span class="sn-num">02</span><span data-i18n="pol.s2.nav">Uso das Informações</span></a></li>
+        <li><a href="#s3"><span class="sn-num">03</span><span data-i18n="pol.s3.nav">Compartilhamento</span></a></li>
+        <li><a href="#s4"><span class="sn-num">04</span><span data-i18n="pol.s4.nav">Segurança</span></a></li>
+        <li><a href="#s5"><span class="sn-num">05</span><span data-i18n="pol.s5.nav">Seus Direitos</span></a></li>
+        <li><a href="#s6"><span class="sn-num">06</span><span data-i18n="pol.s6.nav">Contato</span></a></li>
+        <li><a href="#s7"><span class="sn-num">07</span><span data-i18n="pol.s7.nav">Atualizações</span></a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-contact">
+      <h4 data-i18n="pol.sidebar.q">Dúvidas sobre privacidade?</h4>
+      <div class="sidebar-contact-item">
+        <div class="sc-icon"><i class="fa-solid fa-envelope"></i></div>
+        <span>contato@glctech.com.br</span>
+      </div>
+      <div class="sidebar-contact-item">
+        <div class="sc-icon"><i class="fa-solid fa-phone"></i></div>
+        <span>+55 11 95762-4146</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="doc-content">
+
+    <div class="breadcrumb">
+      <a href="index.html" data-i18n="nav.home">Início</a>
+      <span class="breadcrumb-sep">›</span>
+      <span data-i18n="pol.h1">Política de Privacidade</span>
+    </div>
+
+    <div class="doc-highlight">
+      Na <strong style="color:var(--white)">GLCTech</strong>, valorizamos sua privacidade e estamos comprometidos em proteger as informações pessoais que você compartilha conosco. Esta Política explica como coletamos, utilizamos e protegemos seus dados em conformidade com a LGPD (Lei Geral de Proteção de Dados — Lei nº 13.709/2018).
+    </div>
+
+    <div class="doc-section" id="s1">
+      <span class="doc-section-num" data-i18n="pol.s1.num">Seção 01</span>
+      <h2 data-i18n="pol.s1.h">Coleta de Dados</h2>
+      <p>Coletamos informações pessoais fornecidas voluntariamente por você através de formulários, contatos comerciais e interações com nossos conteúdos. Os dados coletados podem incluir:</p>
+      <ul class="doc-list">
+        <li>Nome completo e dados de identificação</li>
+        <li>Endereço de e-mail corporativo ou pessoal</li>
+        <li>Nome da empresa e cargo/função</li>
+        <li>Número de telefone e WhatsApp</li>
+        <li>Informações técnicas sobre sua infraestrutura de TI (quando fornecidas voluntariamente)</li>
+      </ul>
+      <p>Também podemos coletar automaticamente dados de navegação como endereço IP, tipo de navegador e páginas visitadas, para fins de melhoria da experiência e análise de uso.</p>
+    </div>
+
+    <div class="doc-section" id="s2">
+      <span class="doc-section-num" data-i18n="pol.s2.num">Seção 02</span>
+      <h2 data-i18n="pol.s2.h">Uso das Informações</h2>
+      <p>As informações coletadas são utilizadas exclusivamente para as seguintes finalidades:</p>
+      <ul class="doc-list">
+        <li>Entrar em contato e prestar os serviços solicitados</li>
+        <li>Enviar comunicações institucionais, técnicas e promocionais</li>
+        <li>Melhorar a experiência do usuário com nossos serviços e site</li>
+        <li>Elaborar propostas comerciais personalizadas</li>
+        <li>Cumprir obrigações legais e regulatórias</li>
+      </ul>
+      <div class="doc-highlight">
+        Não utilizamos seus dados para fins diferentes dos indicados acima sem o seu consentimento expresso.
+      </div>
+    </div>
+
+    <div class="doc-section" id="s3">
+      <span class="doc-section-num" data-i18n="pol.s3.num">Seção 03</span>
+      <h2 data-i18n="pol.s3.h">Compartilhamento de Dados</h2>
+      <p>A GLCTech não compartilha, vende ou aluga seus dados pessoais a terceiros, exceto nas seguintes situações:</p>
+      <ul class="doc-list">
+        <li>Quando necessário para a execução dos serviços contratados (ex: parceiros tecnológicos como Kaspersky, Veeam)</li>
+        <li>Por exigência de autoridade legal ou regulatória competente</li>
+        <li>Para proteção dos direitos e propriedades da GLCTech ou de nossos clientes</li>
+      </ul>
+      <p>Todos os terceiros com quem eventualmente compartilhamos dados são obrigados a tratar suas informações com o mesmo nível de segurança e confidencialidade que aplicamos.</p>
+    </div>
+
+    <div class="doc-section" id="s4">
+      <span class="doc-section-num" data-i18n="pol.s4.num">Seção 04</span>
+      <h2 data-i18n="pol.s4.h">Segurança da Informação</h2>
+      <p>Adotamos medidas técnicas e administrativas compatíveis com os padrões do mercado de segurança para proteger seus dados contra:</p>
+      <ul class="doc-list">
+        <li>Acessos não autorizados</li>
+        <li>Perda ou destruição acidental de dados</li>
+        <li>Roubo ou uso indevido de informações</li>
+        <li>Vazamentos e incidentes de segurança</li>
+      </ul>
+      <p>Como empresa especializada em segurança e monitoramento de TI, aplicamos internamente as mesmas boas práticas que recomendamos a nossos clientes.</p>
+    </div>
+
+    <div class="doc-section" id="s5">
+      <span class="doc-section-num" data-i18n="pol.s5.num">Seção 05</span>
+      <h2 data-i18n="pol.s5.h">Seus Direitos (LGPD)</h2>
+      <p>Em conformidade com a Lei Geral de Proteção de Dados (LGPD), você pode, a qualquer momento, solicitar:</p>
+      <ul class="doc-list">
+        <li>Confirmação da existência de tratamento de seus dados</li>
+        <li>Acesso aos dados pessoais coletados sobre você</li>
+        <li>Correção de dados incompletos, inexatos ou desatualizados</li>
+        <li>Anonimização, bloqueio ou eliminação de dados desnecessários</li>
+        <li>Exclusão dos dados pessoais, quando aplicável por lei</li>
+        <li>Portabilidade dos dados a outro fornecedor de serviço</li>
+        <li>Informação sobre com quem seus dados foram compartilhados</li>
+        <li>Revogação do consentimento a qualquer momento</li>
+      </ul>
+      <p>Para exercer qualquer um desses direitos, entre em contato conosco pelos canais abaixo.</p>
+    </div>
+
+    <div class="doc-section" id="s6">
+      <span class="doc-section-num" data-i18n="pol.s6.num">Seção 06</span>
+      <h2 data-i18n="pol.s6.h">Contato</h2>
+      <p>Se você tiver dúvidas, solicitações ou quiser exercer seus direitos previstos na LGPD, entre em contato com nossa equipe responsável pelo tratamento de dados:</p>
+      <div class="doc-contact-box">
+        <div class="contact-row">
+          <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+          <a href="mailto:contato@glctech.com.br">contato@glctech.com.br</a>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+          <a href="tel:+5511957624146">+55 11 95762-4146</a>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <span style="font-size:14px;color:var(--gray-dim);">São Paulo, SP — Brasil</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-section" id="s7">
+      <span class="doc-section-num" data-i18n="pol.s7.num">Seção 07</span>
+      <h2 data-i18n="pol.s7.h">Atualizações desta Política</h2>
+      <p>Esta Política de Privacidade pode ser atualizada periodicamente para refletir alterações legais, operacionais ou de serviços. Recomendamos que você a revise periodicamente.</p>
+      <div class="doc-highlight">
+        <strong style="color:var(--white)">Última atualização:</strong> 08 de julho de 2025. Caso haja alterações relevantes, comunicaremos por e-mail os titulares de dados cadastrados em nossa base.
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="/assets/logo/new_logo.png" alt="GLCTech" width="1665" height="422" loading="lazy" decoding="async">
+      <p data-i18n="footer.p">Monitoramento inteligente e segurança de TI para empresas que exigem alta performance e continuidade operacional.</p>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.nav.title">Navegação</h4>
+      <ul class="footer-links">
+        <li><a href="index.html" data-i18n="nav.home">Início</a></li>
+        <li><a href="index.html#about" data-i18n="nav.about">Sobre</a></li>
+        <li><a href="index.html#services" data-i18n="nav.services">Serviços</a></li>
+        <li><a href="index.html#team" data-i18n="nav.team">Time</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.svc.title">Serviços</h4>
+      <ul class="footer-links">
+        <li><a href="zabbix.html">Zabbix</a></li>
+        <li><a href="kaspersky.html">Kaspersky</a></li>
+        <li><a href="veeam.html" data-i18n="footer.svc.veeam">Veeam Backup</a></li>
+        <li><a href="trabalhe-conosco.html">Trabalhe Conosco</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.legal.title">Legal</h4>
+      <ul class="footer-links">
+        <li><a href="politica.html" style="color:var(--white)">Política de Privacidade</a></li>
+        <li><a href="termos.html" data-i18n="footer.legal.terms">Termos de Uso</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span data-i18n="footer.copy">© 2025 GLCTech Tecnologia. Todos os direitos reservados.</span>
+    <span data-i18n="footer.location">São Paulo, SP — Brasil</span>
+  </div>
+</footer>
+
+<!-- ─────────────────────────────────────────────────────────────
+     AI CHATBOT (Tidio) — GLCTech
+     Integração nativa:
+       • Carregado de forma assíncrona (não bloqueia a renderização).
+       • Herda o idioma detectado pelo site (pt/en/de/es/fr/it), para
+         que o atendimento por IA fale a mesma língua da página.
+       • Expõe window.glcOpenChat() para abrir o chat a partir de
+         qualquer botão da marca.
+     Obs.: a identidade visual (cor #e6262c, avatar, saudação) deve ser
+     configurada no painel Tidio para combinar com a marca GLCTech.
+────────────────────────────────────────────────────────────────── -->
+<script>
+  (function () {
+    // Sincroniza o idioma do chat com o idioma do site (mesma chave do i18n)
+    try {
+      var supported = ['pt', 'en', 'de', 'es', 'fr', 'it'];
+      var lang = localStorage.getItem('glctech_lang');
+      if (!lang || supported.indexOf(lang) === -1) {
+        var nav = (navigator.language || 'pt').toLowerCase().split('-')[0];
+        lang = supported.indexOf(nav) > -1 ? nav : 'pt';
+      }
+      document.tidioChatLang = lang;
+    } catch (e) { /* localStorage indisponível — usa idioma padrão do Tidio */ }
+
+    // Atalho bespoke: abre o chat a partir dos CTAs do site quando pronto
+    document.addEventListener('tidioChat-ready', function () {
+      window.glcOpenChat = function () {
+        if (window.tidioChatApi) window.tidioChatApi.open();
+      };
+    });
+  })();
+</script>
+<script src="//code.tidio.co/z471nxc3tjaciumkzzasuoe928m5odks.js" async></script>
+
+</body>
+</html>

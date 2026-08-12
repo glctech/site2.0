@@ -1,0 +1,59 @@
+<!-- ═══════════════════════════════════════════════════════
+     STATS ZABBIX — cole este bloco antes do </body> no index.html
+     Lê /assets/data/stats.json gerado pelo GitHub Actions
+     e atualiza o contador de devices na seção de stats.
+     ════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  // IDs dos elementos que exibem os stats
+  // Ajuste os seletores conforme o HTML do seu site
+  var SELECTORS = {
+    devices: '[data-stat="devices"]',   // elemento com o número de devices
+  };
+
+  // Formata número: 144 → "144+" | 1200 → "1.2k+"
+  function fmt(n) {
+    if (n >= 1000) return (n / 1000).toFixed(1).replace('.', ',') + 'k+';
+    return n + '+';
+  }
+
+  // Animação de contagem (0 → valor final)
+  function animateCount(el, target, duration) {
+    var start     = 0;
+    var startTime = null;
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      // easeOutExpo
+      var ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      var current = Math.floor(ease * target);
+      el.textContent = fmt(current);
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = fmt(target);
+    }
+    requestAnimationFrame(step);
+  }
+
+  fetch('/assets/data/stats.json?v=' + Date.now())
+    .then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function (data) {
+      var devices = parseInt(data.devices, 10);
+      if (isNaN(devices) || devices < 1) return;
+
+      // Atualizar todos os elementos que exibem o número de devices
+      var els = document.querySelectorAll(SELECTORS.devices);
+      els.forEach(function (el) {
+        animateCount(el, devices, 1200);
+      });
+
+      console.log('[stats] Devices Zabbix:', devices, '| Atualizado:', data.updated_at);
+    })
+    .catch(function (e) {
+      // Falha silenciosa — mantém o valor estático do HTML
+      console.warn('[stats] Não foi possível carregar stats.json:', e.message);
+    });
+})();
+</script>
