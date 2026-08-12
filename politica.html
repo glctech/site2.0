@@ -37,6 +37,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -179,9 +180,8 @@
     font-size: 15px; color: var(--gray-dim); line-height: 1.7;
   }
   .doc-list li::before {
-    content: '→'; color: var(--red); font-weight: 700;
+    font: 900 15px "Font Awesome 6 Free"; content: '\f061'; color: var(--red);
     flex-shrink: 0; margin-top: 2px;
-    font-family: var(--font-display);
   }
 
   .doc-highlight {
@@ -273,11 +273,11 @@
     <div class="sidebar-contact">
       <h4 data-i18n="pol.sidebar.q">Dúvidas sobre privacidade?</h4>
       <div class="sidebar-contact-item">
-        <div class="sc-icon">✉️</div>
+        <div class="sc-icon"><i class="fa-solid fa-envelope"></i></div>
         <span>contato@glctech.com.br</span>
       </div>
       <div class="sidebar-contact-item">
-        <div class="sc-icon">📞</div>
+        <div class="sc-icon"><i class="fa-solid fa-phone"></i></div>
         <span>+55 11 95762-4146</span>
       </div>
     </div>
@@ -374,15 +374,15 @@
       <p>Se você tiver dúvidas, solicitações ou quiser exercer seus direitos previstos na LGPD, entre em contato com nossa equipe responsável pelo tratamento de dados:</p>
       <div class="doc-contact-box">
         <div class="contact-row">
-          <div class="contact-icon">✉️</div>
+          <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
           <a href="mailto:contato@glctech.com.br">contato@glctech.com.br</a>
         </div>
         <div class="contact-row">
-          <div class="contact-icon">📞</div>
+          <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
           <a href="tel:+5511957624146">+55 11 95762-4146</a>
         </div>
         <div class="contact-row">
-          <div class="contact-icon">📍</div>
+          <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
           <span style="font-size:14px;color:var(--gray-dim);">São Paulo, SP — Brasil</span>
         </div>
       </div>
