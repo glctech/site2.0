@@ -219,6 +219,7 @@ flowchart LR
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Page-by-page tour, the shared design system, and every JS subsystem (blog feed, contact form, mobile nav, chatbot, stats pipeline) with data-flow diagrams. |
 | [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md) | Every third-party service, where its key/ID lives, how to rotate it, and security notes. |
 | [`docs/CONTENT-EDITING.md`](docs/CONTENT-EDITING.md) | Task-oriented recipes for editing copy, images, testimonials, services and team without touching the plumbing. |
+| [`AUDITORIA.md`](AUDITORIA.md) | The automated weekly/monthly site audit agent (`auditor/`) — how it works, how to run it, and how to configure it. |
 
 ---
 
