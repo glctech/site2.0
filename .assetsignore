@@ -3,3 +3,9 @@ _worker.js
 wrangler.toml
 scripts/
 docs/
+auditor/
+reports/
+package.json
+package-lock.json
+node_modules/
+AUDITORIA.md
