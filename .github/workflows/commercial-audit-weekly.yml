@@ -1,0 +1,61 @@
+name: Auditoria Comercial Semanal (Conversão e UX)
+
+on:
+  schedule:
+    # Domingo, 05:00 UTC = 02:00 America/Sao_Paulo (conforme pedido no spec).
+    - cron: "0 5 * * 0"
+  workflow_dispatch:
+    inputs:
+      send_email:
+        description: "Enviar o relatório por e-mail para a diretoria"
+        type: boolean
+        default: true
+
+# Note the absence of pull-requests: write — this workflow NEVER opens a PR
+# or touches site code. contents: write is only used to commit the report
+# file itself (pure history, never served — see .assetsignore), the same
+# low-risk pattern the existing zabbix-stats.yml workflow already uses.
+permissions:
+  contents: write
+
+jobs:
+  commercial-audit:
+    runs-on: ubuntu-latest
+    env:
+      ZOHO_SMTP_USER: ${{ secrets.ZOHO_SMTP_USER }}
+      ZOHO_SMTP_PASS: ${{ secrets.ZOHO_SMTP_PASS }}
+      REPORT_EMAIL_TO: ${{ secrets.REPORT_EMAIL_TO }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Instalar Chromium (Playwright)
+        run: npx playwright install --with-deps chromium
+
+      - name: Executar auditoria comercial (somente leitura + relatório)
+        run: |
+          EMAIL_FLAG=""
+          if [ "${{ github.event_name != 'workflow_dispatch' || inputs.send_email }}" = "true" ]; then
+            EMAIL_FLAG="--email"
+          fi
+          node auditor/commercial/audit.mjs $EMAIL_FLAG
+
+      - name: Upload do relatório como artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: commercial-audit-${{ github.run_id }}
+          path: |
+            reports/commercial/weekly/*.md
+            reports/commercial/_data/*.json
+          retention-days: 90

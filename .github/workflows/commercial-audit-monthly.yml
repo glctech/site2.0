@@ -1,0 +1,48 @@
+name: Auditoria Comercial Mensal (consolidação)
+
+on:
+  schedule:
+    # Primeiro dia útil do mês seguinte, 08:00 UTC — alternativa explicitamente
+    # permitida pelo spec ao "último dia do mês", já que cron não expressa
+    # "último dia do mês" nativamente.
+    - cron: "0 8 1 * *"
+  workflow_dispatch:
+    inputs:
+      month:
+        description: "Mês a consolidar (AAAA-MM). Vazio = mês atual."
+        required: false
+
+permissions:
+  contents: write
+
+jobs:
+  monthly-commercial-report:
+    runs-on: ubuntu-latest
+    env:
+      ZOHO_SMTP_USER: ${{ secrets.ZOHO_SMTP_USER }}
+      ZOHO_SMTP_PASS: ${{ secrets.ZOHO_SMTP_PASS }}
+      REPORT_EMAIL_TO: ${{ secrets.REPORT_EMAIL_TO }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Instalar dependências
+        run: npm install --ignore-scripts
+
+      - name: Gerar e enviar relatório mensal comercial
+        run: node auditor/commercial/monthly.mjs ${{ inputs.month }} --email
+
+      - name: Upload do relatório como artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: commercial-monthly-${{ github.run_id }}
+          path: reports/commercial/monthly/*.md
+          retention-days: 365

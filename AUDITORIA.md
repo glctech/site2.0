@@ -203,13 +203,20 @@ mais barato que existe: nunca chega a existir um commit ruim. Isso fica
 registrado no relatório (`Rollback: SIM — ...`).
 
 **2. Depois do merge, já em produção** (`auditor/postdeploy.mjs`, workflow
-`post-deploy-check.yml`). Este é o único ponto do sistema que tem permissão
-para reverter **e publicar** sozinho, e só faz isso quando o smoke test
-contra o site *já publicado* falha depois de um merge. Nesse caso específico
-(site já está no ar quebrado), o agente:
+`post-deploy-check.yml`). Testa o site *já publicado* depois de um merge, com
+até 3 tentativas (20s de intervalo) antes de concluir qualquer coisa — status
+403/429/401 nunca contam como quebra sozinhos (ver incidente abaixo), só
+5xx, timeout, erro de conexão ou uma resposta 200 anormalmente pequena.
 
-1. roda `git revert --no-edit <commit>` (nunca `reset --hard`, nunca reescreve
-   histórico);
+Se confirmar quebra real, **por padrão o script só alerta** (falha o job,
+explica o que encontrou no log) — ele NÃO reverte nem publica nada sozinho,
+a menos que a variável de repositório `AUTO_REVERT_ON_BREAKAGE` esteja
+definida como `true` (Settings → Secrets and variables → Actions →
+Variables). Só ative isso depois de acompanhar o script alertar (sem agir)
+algumas vezes e confiar no julgamento dele. Quando ativado, o revert:
+
+1. roda `git revert -m 1 --no-edit <commit>` (nunca `reset --hard`, nunca
+   reescreve histórico);
 2. dá push direto em `glctech2.0`;
 3. registra tudo no log do workflow.
 
@@ -218,6 +225,31 @@ automático anterior, o agente para e pede aprovação humana em vez de
 continuar revertendo às cegas (pode ser um problema de infraestrutura
 externa — este projeto já teve problemas assim com CDN/DNS fora do
 repositório).
+
+### Incidente de 2026-08-12
+
+Na primeira execução real deste workflow (logo após o merge da PR #15), o
+smoke test recebeu HTTP 403 em todas as páginas — quase certamente uma
+oscilação do WAF/CDN em frente ao domínio (o mesmo tipo de instabilidade já
+documentada neste projeto), não uma quebra real de código. Isso já teria
+sido resolvido pela trava de "não revert em 403" que existe agora — mas na
+época essa trava ainda não existia, e o script tentou reverter. Só que o
+checkout do workflow usava a profundidade padrão (`fetch-depth: 1`, um clone
+raso, sem o histórico de pais do commit de merge). Sem essa informação,
+`git revert` não conseguiu calcular um diff cirúrgico e apagou o repositório
+inteiro (93 arquivos) num único commit, ao invés de desfazer só as mudanças
+da PR #15. Alguém percebeu e restaurou manualmente os arquivos via upload
+pelo GitHub, o que devolveu o conteúdo do site mas não a pasta
+`.github/workflows/` (upload por arraste geralmente ignora pastas ocultas
+como `.github`), então os workflows (inclusive o `zabbix-stats.yml` original,
+sem relação com este projeto de auditoria) tiveram que ser restaurados à
+parte.
+
+**Correções aplicadas depois do incidente:**
+- `post-deploy-check.yml` agora usa `fetch-depth: 0` (histórico completo).
+- `postdeploy.mjs` tenta múltiplas vezes, nunca trata 403/429/401 como prova
+  de quebra, usa `git revert -m 1` (mainline explícito, redundância de
+  segurança) e **o revert automático agora é opt-in**, desligado por padrão.
 
 ## Autonomia com limites
 
