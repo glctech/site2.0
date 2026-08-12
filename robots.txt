@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://glctech.com.br/sitemap.xml
