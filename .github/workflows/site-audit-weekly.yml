@@ -1,0 +1,77 @@
+name: Auditoria Semanal do Site
+
+on:
+  schedule:
+    # Segunda-feira, 06:00 UTC ≈ 03:00 America/Sao_Paulo — fora do horário
+    # comercial. Ajuste o cron para mudar dia/horário (ver AUDITORIA.md).
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "DRY_RUN — audita e gera relatório, mas não altera nem publica nada"
+        type: boolean
+        default: true
+      send_email:
+        description: "Enviar o relatório por e-mail para a diretoria"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    env:
+      # Scheduled (cron) runs are ALWAYS dry-run — audit + report only, never
+      # auto-fix or open a PR unattended. Real fixes only happen when a human
+      # explicitly runs this workflow manually with "dry_run" unchecked.
+      # See AUDITORIA.md §"Modo Dry Run" before flipping this default.
+      DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || 'true' }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      ZOHO_SMTP_USER: ${{ secrets.ZOHO_SMTP_USER }}
+      ZOHO_SMTP_PASS: ${{ secrets.ZOHO_SMTP_PASS }}
+      REPORT_EMAIL_TO: ${{ secrets.REPORT_EMAIL_TO }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Instalar Chromium (Playwright)
+        run: npx playwright install --with-deps chromium
+
+      - name: Criar tag de backup
+        run: |
+          TAG="audit-backup-$(date +%Y-%m-%d)-$(date +%s)"
+          git tag "$TAG"
+          git push origin "$TAG"
+          echo "Backup tag: $TAG"
+
+      - name: Executar auditoria (audit → fix → PR, se seguro)
+        run: |
+          EMAIL_FLAG=""
+          if [ "${{ github.event_name != 'workflow_dispatch' || inputs.send_email }}" = "true" ]; then
+            EMAIL_FLAG="--email"
+          fi
+          node auditor/run.mjs full $EMAIL_FLAG
+
+      - name: Upload do relatório como artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-report-${{ github.run_id }}
+          path: |
+            reports/weekly/*.md
+            reports/_data/*.json
+            reports/_data/screenshots/**
+          retention-days: 90

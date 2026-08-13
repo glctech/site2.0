@@ -1,0 +1,44 @@
+name: Verificação Pós-Deploy
+
+# Fires after anything lands on the production branch. Cloudflare Workers
+# builds automatically on push (that's the actual "deploy" — see
+# README.md#hosting--deployment); this job waits a bit for that build to
+# finish, then smoke-tests the LIVE site. If it's broken, this is the one
+# workflow in the project allowed to auto-revert (see auditor/postdeploy.mjs
+# for why).
+on:
+  push:
+    branches: [glctech2.0]
+
+permissions:
+  contents: write
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      SITE_URL: https://glctech.com.br
+      # OFF by default since the 2026-08-12 incident (see auditor/postdeploy.mjs).
+      # To enable: Settings → Secrets and variables → Actions → Variables →
+      # add AUTO_REVERT_ON_BREAKAGE = true. Until then this workflow only
+      # alerts (job fails, log explains what it found) — it never pushes.
+      AUTO_REVERT_ON_BREAKAGE: ${{ vars.AUTO_REVERT_ON_BREAKAGE }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: glctech2.0
+          # CRITICAL: full history, not the default shallow (depth-1) clone.
+          # A shallow clone has no parent commit for a merge, so `git revert`
+          # on a merge commit can't compute a surgical diff and instead
+          # deletes the entire tree — this is exactly what happened in
+          # production on 2026-08-12 (see AUDITORIA.md incident note). Never
+          # remove this without also re-reading that note.
+          fetch-depth: 0
+
+      - name: Aguardar build do Cloudflare Workers
+        run: sleep 90
+
+      - name: Smoke test + revert automático se necessário
+        run: node auditor/postdeploy.mjs
