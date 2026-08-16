@@ -173,7 +173,7 @@
   .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
   .footer-brand img { height: 40px; width: auto; margin-bottom: 1.2rem; display: block; }
   .footer-brand p { font-size: 14px; color: var(--gray-dim); line-height: 1.8; max-width: 260px; }
-  .footer-col h4 { font-family: var(--font-display); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gray-dim); margin-bottom: 1.2rem; }
+  .footer-col h3 { font-family: var(--font-display); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gray-dim); margin-bottom: 1.2rem; }
   .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
   .footer-links a { text-decoration: none; font-size: 14px; color: var(--gray-dim); transition: color var(--transition); }
   .footer-links a:hover { color: var(--white); }
@@ -303,7 +303,7 @@
           <li>Relatórios e alertas básicos</li>
           <li>Suporte a servidores físicos</li>
         </ul>
-        <a href="https://wa.me/5511911517501?text=Olá! Tenho interesse no Veeam Data Platform Foundation. Gostaria de uma proposta." target="_blank" rel="noopener" class="edition-btn" data-i18n="veeam.req.proposal">Solicitar Proposta</a>
+        <a href="https://wa.me/5511957624146?text=Olá! Tenho interesse no Veeam Data Platform Foundation. Gostaria de uma proposta." target="_blank" rel="noopener" class="edition-btn" data-i18n="veeam.req.proposal">Solicitar Proposta</a>
       </div>
 
       <div class="edition-card featured">
@@ -319,7 +319,7 @@
           <li>SureBackup — verificação automática</li>
           <li>Relatórios avançados e compliance</li>
         </ul>
-        <a href="https://wa.me/5511911517501?text=Olá! Tenho interesse no Veeam Data Platform Advanced. Gostaria de uma proposta." target="_blank" rel="noopener" class="edition-btn featured" data-i18n="veeam.req.proposal">Solicitar Proposta</a>
+        <a href="https://wa.me/5511957624146?text=Olá! Tenho interesse no Veeam Data Platform Advanced. Gostaria de uma proposta." target="_blank" rel="noopener" class="edition-btn featured" data-i18n="veeam.req.proposal">Solicitar Proposta</a>
       </div>
 
       <div class="edition-card">
@@ -334,7 +334,7 @@
           <li>Cyber Secure Program incluso</li>
           <li>SLA premium com NOC dedicado</li>
         </ul>
-        <a href="https://wa.me/5511911517501?text=Olá! Tenho interesse no Veeam Premium Cyber Secure. Gostaria de uma proposta." target="_blank" rel="noopener" class="edition-btn" data-i18n="veeam.req.proposal">Solicitar Proposta</a>
+        <a href="https://wa.me/5511957624146?text=Olá! Tenho interesse no Veeam Premium Cyber Secure. Gostaria de uma proposta." target="_blank" rel="noopener" class="edition-btn" data-i18n="veeam.req.proposal">Solicitar Proposta</a>
       </div>
     </div>
   </div>
@@ -408,7 +408,7 @@
           <div class="result-item"><span class="result-item-key" data-i18n="veeam.result.baas">Serviço BaaS</span><span class="result-item-val" id="v-baas">—</span></div>
           <div class="result-item"><span class="result-item-key" data-i18n="veeam.result.storage">Storage protegido</span><span class="result-item-val" id="v-storage">—</span></div>
         </div>
-        <a href="https://wa.me/5511911517501" target="_blank" rel="noopener" class="result-cta" id="v-cta" data-i18n="veeam.cta.wa">Solicitar Proposta Veeam</a>
+        <a href="https://wa.me/5511957624146" target="_blank" rel="noopener" class="result-cta" id="v-cta" data-i18n="veeam.cta.wa">Solicitar Proposta Veeam</a>
       </div>
     </div>
   </div>
@@ -430,7 +430,7 @@
         <p data-i18n="footer.p">Monitoramento inteligente e segurança de TI para empresas que exigem alta performance e continuidade operacional.</p>
       </div>
       <div class="footer-col">
-        <h4 data-i18n="footer.nav.title">Navegação</h4>
+        <h3 data-i18n="footer.nav.title">Navegação</h3>
         <ul class="footer-links">
           <li><a href="index.html" data-i18n="nav.home">Início</a></li>
           <li><a href="index.html#about" data-i18n="nav.about">Sobre</a></li>
@@ -439,7 +439,7 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h4 data-i18n="footer.svc.title">Serviços</h4>
+        <h3 data-i18n="footer.svc.title">Serviços</h3>
         <ul class="footer-links">
           <li><a href="zabbix.html">Zabbix</a></li>
           <li><a href="kaspersky.html">Kaspersky</a></li>
@@ -448,7 +448,7 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h4 data-i18n="footer.legal.title">Legal</h4>
+        <h3 data-i18n="footer.legal.title">Legal</h3>
         <ul class="footer-links">
           <li><a href="politica.html" data-i18n="footer.legal.privacy">Política de Privacidade</a></li>
           <li><a href="termos.html" data-i18n="footer.legal.terms">Termos de Uso</a></li>
@@ -509,7 +509,7 @@
     const c   = getCurr();
     const val = Math.round(monthlyBRL * c.rate / 10) * 10;
     const msg = encodeURIComponent('Hello! I simulated my Veeam environment: ' + workloads + ' workloads, ' + storage + 'TB, edition ' + edicaoLabels[document.getElementById('edicao').value] + '. Estimate: ' + c.symbol + ' ' + val.toLocaleString(c.locale) + c.period + '. I would like a proposal.');
-    document.getElementById('v-cta').href = 'https://wa.me/5511911517501?text=' + msg;
+    document.getElementById('v-cta').href = 'https://wa.me/5511957624146?text=' + msg;
   }
 </script>
 <!-- ─────────────────────────────────────────────────────────────
@@ -544,7 +544,7 @@
     });
   })();
 </script>
-<script src="//code.tidio.co/z471nxc3tjaciumkzzasuoe928m5odks.js" async></script>
+<script src="https://code.tidio.co/z471nxc3tjaciumkzzasuoe928m5odks.js" async></script>
 
 </body>
 </html>
