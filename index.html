@@ -412,6 +412,8 @@
   .partners-row { display: flex; align-items: center; justify-content: center; gap: 3rem; flex-wrap: wrap; }
   .partner-badge { background: var(--dark); border: 1px solid var(--dark-border); border-radius: var(--radius); padding: 1rem 2rem; font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--gray-dim); letter-spacing: 0.05em; transition: border-color var(--transition), color var(--transition); }
   .partner-badge:hover { border-color: var(--red); color: var(--white); }
+  .partner-logo { height: 46px; width: auto; display: block; opacity: 0.92; transition: opacity var(--transition), transform var(--transition); }
+  .partner-logo:hover { opacity: 1; transform: translateY(-2px); }
 
   /* ── BLOG ── */
   #blog { background: var(--dark-mid); border-top: 1px solid var(--dark-border); }
@@ -584,6 +586,7 @@
     .blog-grid { grid-template-columns: 1fr; }
     .partners-row { gap: 1rem; }
     .partner-badge { padding: 0.7rem 1.2rem; font-size: 13px; }
+    .partner-logo { height: 34px; }
 
     /* Contact */
     .form-row { grid-template-columns: 1fr; }
@@ -973,8 +976,8 @@
     <div class="partners-row">
       <div class="partner-badge" hidden>Zabbix</div>
       <div class="partner-badge">DSR9</div>
-      <div class="partner-badge">Kaspersky</div>
-      <div class="partner-badge">Veeam</div>
+      <img src="/assets/partner/image-1787460586184.webp" alt="Kaspersky Registered B2B Partner" class="partner-logo" width="2000" height="836" loading="lazy" decoding="async">
+      <img src="/assets/partner/VVAR_registered_color_rgb.png" alt="Veeam Value-Added Reseller — Registered" class="partner-logo" width="416" height="291" loading="lazy" decoding="async">
       <div class="partner-badge">Nordenet</div>
       <div class="partner-badge">Web+ Telecom</div>
     </div>
