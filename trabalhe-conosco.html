@@ -154,7 +154,6 @@
   .contact-form-wrap { background: var(--dark); border: 1px solid var(--dark-border); border-radius: var(--radius-lg); padding: 2.5rem; }
   .form-group { margin-bottom: 1.2rem; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
   label { display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-dim); margin-bottom: 6px; font-family: var(--font-display); }
   label .opt { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--gray-dark); }
   input, textarea, select { width: 100%; background: var(--dark-light); border: 1px solid var(--dark-border); border-radius: var(--radius); padding: 12px 14px; color: var(--white); font-family: var(--font-body); font-size: 15px; transition: border-color var(--transition); outline: none; -webkit-appearance: none; }
@@ -202,7 +201,7 @@
     .process-step { display: flex; gap: 1rem; align-items: flex-start; text-align: left; padding: 0; }
     .process-step:not(:last-child)::after { display: none; }
     .process-num { margin: 0; flex-shrink: 0; }
-    .form-row, .form-row-3 { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
     .nav-links { display: none; }
   }
@@ -533,30 +532,9 @@
           <span class="field-error" id="err-c-vaga"></span>
         </div>
 
-        <div class="form-row-3">
-          <div class="form-group">
-            <label for="c-curso">Curso <span class="opt">(se aplicável)</span></label>
-            <input type="text" id="c-curso" name="curso" placeholder="Ex: Marketing Digital">
-          </div>
-          <div class="form-group">
-            <label for="c-instituicao">Instituição de Ensino <span class="opt">(se aplicável)</span></label>
-            <input type="text" id="c-instituicao" name="instituicao" placeholder="Nome da instituição">
-          </div>
-          <div class="form-group">
-            <label for="c-semestre">Semestre <span class="opt">(se aplicável)</span></label>
-            <input type="text" id="c-semestre" name="semestre" placeholder="Ex: 5º semestre">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="c-linkedin">LinkedIn</label>
-            <input type="url" id="c-linkedin" name="linkedin" placeholder="linkedin.com/in/seu-perfil">
-          </div>
-          <div class="form-group">
-            <label for="c-github">GitHub <span class="opt">(opcional)</span></label>
-            <input type="url" id="c-github" name="github" placeholder="github.com/seu-usuario">
-          </div>
+        <div class="form-group">
+          <label for="c-linkedin">LinkedIn</label>
+          <input type="url" id="c-linkedin" name="linkedin" placeholder="linkedin.com/in/seu-perfil">
         </div>
 
         <div class="form-group">
