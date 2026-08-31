@@ -1,0 +1,116 @@
+{
+  "date": "2026-08-31",
+  "findings": [
+    {
+      "id": "F0001",
+      "category": "javascript",
+      "severity": "ALTO",
+      "page": "index.html",
+      "problem": "Requisição falhou: https://code.tidio.co/z471nxc3tjaciumkzzasuoe928m5odks.js (net::ERR_BLOCKED_BY_ORB)",
+      "cause": "NÃO FOI POSSÍVEL DETERMINAR",
+      "line": null,
+      "autoFixable": false,
+      "fixId": null,
+      "fixData": null,
+      "recommendation": "Verificar se o recurso existe e se a URL está correta.",
+      "status": "detectado"
+    },
+    {
+      "id": "F0002",
+      "category": "javascript",
+      "severity": "ALTO",
+      "page": "zabbix.html",
+      "problem": "Requisição falhou: https://code.tidio.co/z471nxc3tjaciumkzzasuoe928m5odks.js (net::ERR_BLOCKED_BY_ORB)",
+      "cause": "NÃO FOI POSSÍVEL DETERMINAR",
+      "line": null,
+      "autoFixable": false,
+      "fixId": null,
+      "fixData": null,
+      "recommendation": "Verificar se o recurso existe e se a URL está correta.",
+      "status": "detectado"
+    },
+    {
+      "id": "F0003",
+      "category": "javascript",
+      "severity": "ALTO",
+      "page": "kaspersky.html",
+      "problem": "Requisição falhou: https://code.tidio.co/z471nxc3tjaciumkzzasuoe928m5odks.js (net::ERR_BLOCKED_BY_ORB)",
+      "cause": "NÃO FOI POSSÍVEL DETERMINAR",
+      "line": null,
+      "autoFixable": false,
+      "fixId": null,
+      "fixData": null,
+      "recommendation": "Verificar se o recurso existe e se a URL está correta.",
+      "status": "detectado"
+    },
+    {
+      "id": "F0004",
+      "category": "javascript",
+      "severity": "ALTO",
+      "page": "veeam.html",
+      "problem": "Requisição falhou: https://code.tidio.co/z471nxc3tjaciumkzzasuoe928m5odks.js (net::ERR_BLOCKED_BY_ORB)",
+      "cause": "NÃO FOI POSSÍVEL DETERMINAR",
+      "line": null,
+      "autoFixable": false,
+      "fixId": null,
+      "fixData": null,
+      "recommendation": "Verificar se o recurso existe e se a URL está correta.",
+      "status": "detectado"
+    },
+    {
+      "id": "F0005",
+      "category": "javascript",
+      "severity": "ALTO",
+      "page": "trabalhe-conosco.html",
+      "problem": "Requisição falhou: https://code.tidio.co/z471nxc3tjaciumkzzasuoe928m5odks.js (net::ERR_BLOCKED_BY_ORB)",
+      "cause": "NÃO FOI POSSÍVEL DETERMINAR",
+      "line": null,
+      "autoFixable": false,
+      "fixId": null,
+      "fixData": null,
+      "recommendation": "Verificar se o recurso existe e se a URL está correta.",
+      "status": "detectado"
+    },
+    {
+      "id": "F0006",
+      "category": "javascript",
+      "severity": "ALTO",
+      "page": "politica.html",
+      "problem": "Requisição falhou: https://code.tidio.co/z471nxc3tjaciumkzzasuoe928m5odks.js (net::ERR_BLOCKED_BY_ORB)",
+      "cause": "NÃO FOI POSSÍVEL DETERMINAR",
+      "line": null,
+      "autoFixable": false,
+      "fixId": null,
+      "fixData": null,
+      "recommendation": "Verificar se o recurso existe e se a URL está correta.",
+      "status": "detectado"
+    },
+    {
+      "id": "F0007",
+      "category": "javascript",
+      "severity": "ALTO",
+      "page": "termos.html",
+      "problem": "Requisição falhou: https://code.tidio.co/z471nxc3tjaciumkzzasuoe928m5odks.js (net::ERR_BLOCKED_BY_ORB)",
+      "cause": "NÃO FOI POSSÍVEL DETERMINAR",
+      "line": null,
+      "autoFixable": false,
+      "fixId": null,
+      "fixData": null,
+      "recommendation": "Verificar se o recurso existe e se a URL está correta.",
+      "status": "detectado"
+    }
+  ],
+  "summary": {
+    "total": 7,
+    "bySeverity": {
+      "CRÍTICO": 0,
+      "ALTO": 7,
+      "MÉDIO": 0,
+      "BAIXO": 0
+    },
+    "fixed": 0
+  },
+  "deployResult": "NÃO EXECUTADO (dry-run, modo audit, ou nenhuma alteração)",
+  "prUrl": null,
+  "dryRun": true
+}
