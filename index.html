@@ -23,13 +23,13 @@
 <meta property="og:url" content="https://glctech.com.br/">
 <meta property="og:title" content="GLCTech — Monitoramento e Segurança em TI">
 <meta property="og:description" content="Monitoramento inteligente com Zabbix, segurança com Kaspersky e backup com Veeam. Identifique falhas de infraestrutura antes que afetem sua operação — fale com um especialista GLCTech.">
-<meta property="og:image" content="https://glctech.com.br/assets/hero/escritorio.webp">
+<meta property="og:image" content="https://glctech.com.br/assets/hero/zabbix_fk.webp">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="GLCTech — Monitoramento e Segurança em TI">
 <meta name="twitter:description" content="Monitoramento inteligente com Zabbix, segurança com Kaspersky e backup com Veeam. Identifique falhas de infraestrutura antes que afetem sua operação — fale com um especialista GLCTech.">
-<meta name="twitter:image" content="https://glctech.com.br/assets/hero/escritorio.webp">
+<meta name="twitter:image" content="https://glctech.com.br/assets/hero/zabbix_fk.webp">
 
 <link rel="icon" type="image/webp" href="/assets/logo/favicon.webp">
 <link rel="icon" type="image/png" href="/assets/logo/favicon.png">
@@ -250,44 +250,27 @@
   /* ── ABOUT ── */
   #about { background: var(--dark); }
 
-  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
-
-  .about-img-wrap { position: relative; }
-  .about-img-wrap img {
-    width: 100%; height: auto; border-radius: var(--radius-lg);
-    border: 1px solid var(--dark-border);
-    display: block; filter: brightness(0.78) contrast(1.1);
-  }
-
-  .about-img-badge {
-    position: absolute; bottom: -1.5rem; right: -1.5rem;
-    background: var(--red); color: var(--white);
-    padding: 1.2rem 1.5rem; border-radius: var(--radius-lg);
-  }
-  .about-img-badge-num { font-family: var(--font-display); font-size: 2rem; font-weight: 800; line-height: 1; }
-  .about-img-badge-text { font-size: 12px; opacity: 0.9; margin-top: 2px; }
-
+  .about-content { max-width: 720px; }
   .about-content .label { display: block; margin-bottom: 1rem; }
   .about-content h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--white); margin-bottom: 1rem; }
-  .about-content > p { color: var(--gray-dim); margin-bottom: 2rem; line-height: 1.8; }
+  .about-content > p { color: var(--gray-dim); line-height: 1.8; }
 
-  .about-pillars { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+  .about-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2.5rem; }
 
   .pillar {
-    display: flex; gap: 1.2rem;
     background: var(--dark-light); border: 1px solid var(--dark-border);
-    border-radius: var(--radius-lg); padding: 1.2rem 1.4rem;
+    border-radius: var(--radius-lg); padding: 1.75rem 1.5rem;
     transition: border-color var(--transition);
   }
   .pillar:hover { border-color: var(--red); }
 
   .pillar-icon {
-    width: 40px; height: 40px; flex-shrink: 0;
+    width: 44px; height: 44px; margin-bottom: 1rem;
     background: var(--red-dim); border-radius: var(--radius);
-    display: flex; align-items: center; justify-content: center; font-size: 18px;
+    display: flex; align-items: center; justify-content: center; font-size: 19px;
   }
 
-  .pillar h3 { font-family: var(--font-display); font-size: 14px; color: var(--white); margin-bottom: 4px; }
+  .pillar h3 { font-family: var(--font-display); font-size: 15px; color: var(--white); margin-bottom: 6px; }
   .pillar p { font-size: 13px; color: var(--gray-dim); line-height: 1.6; }
 
   /* ── SERVICES ── */
@@ -578,8 +561,8 @@
     .stat-number { font-size: 2.2rem; }
 
     /* Sections */
-    .about-grid, .why-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .about-img-badge { bottom: -1rem; right: -0.5rem; }
+    .why-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-pillars { grid-template-columns: 1fr; }
     .services-grid { grid-template-columns: 1fr; gap: 1.5px; }
     .team-grid { grid-template-columns: 1fr; max-width: 100%; }
     .testimonials-grid { grid-template-columns: 1fr; }
@@ -622,7 +605,7 @@
   "legalName": "GLCTech Tecnologia",
   "url": "https://glctech.com.br/",
   "logo": "https://glctech.com.br/assets/logo/new_logo.png",
-  "image": "https://glctech.com.br/assets/hero/escritorio.webp",
+  "image": "https://glctech.com.br/assets/hero/zabbix_fk.webp",
   "description": "Monitoramento inteligente de infraestrutura de TI, segurança com Kaspersky e backup corporativo com Veeam.",
   "email": "contato@glctech.com.br",
   "telephone": "+55-11-95762-4146",
@@ -735,42 +718,32 @@
 <!-- ABOUT -->
 <section id="about">
   <div class="container">
-    <div class="about-grid">
-      <div class="about-img-wrap">
-        <img src="/assets/hero/escritorio.webp" alt="Equipe GLCTech" width="1254" height="1254" loading="lazy" decoding="async">
-        <div class="about-img-badge" hidden>
-          <div class="about-img-badge-num">+50</div>
-          <div class="about-img-badge-text" data-i18n="about.badge.sub">Projetos Entregues</div>
+    <div class="about-content">
+      <span class="label" data-i18n="about.label">Sobre a GLCTech</span>
+      <h2 data-i18n="about.h2">Especialistas que garantem a continuidade do seu negócio</h2>
+      <div class="rule"></div>
+      <p data-i18n="about.p">A GLCTech nasceu com um propósito claro: transformar o monitoramento de TI em vantagem competitiva. Nossa abordagem combina tecnologia de ponta com profundo conhecimento técnico para garantir que sua infraestrutura opere no máximo desempenho — sempre.</p>
+    </div>
+    <div class="about-pillars">
+      <div class="pillar">
+        <div class="pillar-icon"><i class="fa-solid fa-bolt"></i></div>
+        <div>
+          <h3 data-i18n="about.pillar1.h">Expertise em Zabbix</h3>
+          <p data-i18n="about.pillar1.p">Equipe altamente qualificada em uma das plataformas líderes de monitoramento, com soluções personalizadas para cada cliente.</p>
         </div>
       </div>
-
-      <div class="about-content">
-        <span class="label" data-i18n="about.label">Sobre a GLCTech</span>
-        <h2 data-i18n="about.h2">Especialistas que garantem a continuidade do seu negócio</h2>
-        <div class="rule"></div>
-        <p data-i18n="about.p">A GLCTech nasceu com um propósito claro: transformar o monitoramento de TI em vantagem competitiva. Nossa abordagem combina tecnologia de ponta com profundo conhecimento técnico para garantir que sua infraestrutura opere no máximo desempenho — sempre.</p>
-        <div class="about-pillars">
-          <div class="pillar">
-            <div class="pillar-icon"><i class="fa-solid fa-bolt"></i></div>
-            <div>
-              <h3 data-i18n="about.pillar1.h">Expertise em Zabbix</h3>
-              <p data-i18n="about.pillar1.p">Equipe altamente qualificada em uma das plataformas líderes de monitoramento, com soluções personalizadas para cada cliente.</p>
-            </div>
-          </div>
-          <div class="pillar">
-            <div class="pillar-icon"><i class="fa-solid fa-shield-halved"></i></div>
-            <div>
-              <h3 data-i18n="about.pillar2.h">Suporte Abrangente</h3>
-              <p data-i18n="about.pillar2.p">Da concepção à manutenção contínua, estamos ao seu lado em todas as etapas do projeto.</p>
-            </div>
-          </div>
-          <div class="pillar">
-            <div class="pillar-icon"><i class="fa-solid fa-chart-line"></i></div>
-            <div>
-              <h3 data-i18n="about.pillar3.h">Inovação Tecnológica</h3>
-              <p data-i18n="about.pillar3.p">Utilizamos Zabbix, Grafana e as melhores ferramentas do mercado para dashboards precisos e insights acionáveis.</p>
-            </div>
-          </div>
+      <div class="pillar">
+        <div class="pillar-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <div>
+          <h3 data-i18n="about.pillar2.h">Suporte Abrangente</h3>
+          <p data-i18n="about.pillar2.p">Da concepção à manutenção contínua, estamos ao seu lado em todas as etapas do projeto.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <div>
+          <h3 data-i18n="about.pillar3.h">Inovação Tecnológica</h3>
+          <p data-i18n="about.pillar3.p">Utilizamos Zabbix, Grafana e as melhores ferramentas do mercado para dashboards precisos e insights acionáveis.</p>
         </div>
       </div>
     </div>

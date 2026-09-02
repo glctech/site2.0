@@ -25,13 +25,13 @@
 <meta property="og:url" content="https://glctech.com.br/trabalhe-conosco.html">
 <meta property="og:title" content="Trabalhe Conosco — Vagas de Vendas e Marketing | GLCTech">
 <meta property="og:description" content="Vagas abertas na GLCTech para Parceiro de Vendas (Hunter) e Parceiro de Growth Marketing. Trabalho 100% remoto, comissões acima da média do mercado e stack de elite: Zabbix, Grafana, Kaspersky, Veeam e AWS.">
-<meta property="og:image" content="https://glctech.com.br/assets/hero/escritorio.webp">
+<meta property="og:image" content="https://glctech.com.br/assets/hero/zabbix_fk.webp">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Trabalhe Conosco — Vagas de Vendas e Marketing | GLCTech">
 <meta name="twitter:description" content="Vagas abertas na GLCTech para Parceiro de Vendas (Hunter) e Parceiro de Growth Marketing. Trabalho 100% remoto e comissões acima da média do mercado.">
-<meta name="twitter:image" content="https://glctech.com.br/assets/hero/escritorio.webp">
+<meta name="twitter:image" content="https://glctech.com.br/assets/hero/zabbix_fk.webp">
 
 <link rel="icon" type="image/webp" href="/assets/logo/favicon.webp">
 <link rel="icon" type="image/png" href="/assets/logo/favicon.png">
@@ -75,7 +75,7 @@
   #hero { padding-top: 70px; min-height: 72vh; display: flex; align-items: center; position: relative; overflow: hidden; }
   .hero-grid-bg { position: absolute; inset: 0; background-image: linear-gradient(rgba(72,72,72,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(72,72,72,0.25) 1px, transparent 1px); background-size: 60px 60px; }
   .hero-glow { position: absolute; top: -10%; right: -5%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(230,38,44,0.06) 0%, transparent 65%); pointer-events: none; }
-  .hero-inner { position: relative; z-index: 1; width: 100%; max-width: 1160px; margin: 0 auto; padding: 5rem 2rem 4rem; display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 5rem; }
+  .hero-inner { position: relative; z-index: 1; width: 100%; max-width: 1160px; margin: 0 auto; padding: 5rem 2rem 4rem; }
   .hero-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--dark-border); background: var(--dark-light); padding: 6px 14px; border-radius: 100px; font-size: 12px; font-weight: 500; color: var(--gray-dim); margin-bottom: 1.5rem; }
   .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
@@ -87,11 +87,6 @@
   .btn-primary:hover { background: var(--red-light); transform: translateY(-1px); }
   .btn-outline { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--dark-border); color: var(--gray-dim); padding: 13px 26px; border-radius: var(--radius); text-decoration: none; font-weight: 500; font-size: 15px; font-family: var(--font-display); transition: border-color var(--transition), color var(--transition); }
   .btn-outline:hover { border-color: var(--red); color: var(--red); }
-  .hero-img-wrap { position: relative; }
-  .hero-img-wrap img { width: 100%; height: auto; border-radius: var(--radius-lg); border: 1px solid var(--dark-border); display: block; filter: brightness(0.85); }
-  .hero-img-badge { position: absolute; bottom: -1.2rem; left: -1.2rem; background: var(--red); color: #fff; padding: 1rem 1.3rem; border-radius: var(--radius-lg); }
-  .hero-img-badge-num { font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; line-height: 1; }
-  .hero-img-badge-text { font-size: 11px; opacity: 0.9; margin-top: 2px; max-width: 140px; }
 
   /* SOBRE A OPORTUNIDADE */
   #sobre { background: var(--dark-mid); border-top: 1px solid var(--dark-border); border-bottom: 1px solid var(--dark-border); }
@@ -192,8 +187,6 @@
   .footer-bottom { border-top: 1px solid var(--dark-border); padding-top: 2rem; display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: var(--gray-dim); }
 
   @media (max-width: 900px) {
-    .hero-inner { grid-template-columns: 1fr; }
-    .hero-img-wrap { display: none; }
     .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .vagas-grid { grid-template-columns: 1fr; }
     .features-grid { grid-template-columns: 1fr 1fr; }
@@ -242,19 +235,12 @@
   <div class="hero-glow"></div>
   <div class="hero-inner">
     <div class="hero-content">
-      <div class="hero-badge"><div class="hero-badge-dot"></div><span>Vagas abertas · Vendas &amp; Growth Marketing</span></div>
+      <div class="hero-badge"><div class="hero-badge-dot"></div><span>2 vagas abertas · Vendas &amp; Growth Marketing</span></div>
       <h1>Construa sua carreira na <span>GLCTech</span></h1>
       <p>Faça parte de uma empresa apaixonada por tecnologia, inovação e monitoramento de infraestrutura. Estamos em plena fase de tração e buscamos parceiros com mentalidade empreendedora para crescer com a gente.</p>
       <div class="hero-actions">
         <a href="#candidatura" class="btn-primary"><span>Quero me candidatar</span> <i class="fa-solid fa-arrow-right"></i></a>
         <a href="#vagas" class="btn-outline">Ver vagas abertas</a>
-      </div>
-    </div>
-    <div class="hero-img-wrap">
-      <img src="/assets/hero/escritorio.webp" alt="Equipe GLCTech" width="1254" height="1254" fetchpriority="high" decoding="async">
-      <div class="hero-img-badge">
-        <div class="hero-img-badge-num">2</div>
-        <div class="hero-img-badge-text">Vagas de parceria comercial abertas agora</div>
       </div>
     </div>
   </div>
