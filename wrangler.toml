@@ -1,4 +1,4 @@
-name = 'shy-river-6fc7'
+name = 'site2-0'
 main = "_worker.js"
 compatibility_date = "2025-06-01"
 
@@ -10,15 +10,10 @@ directory = "."
 binding = "ASSETS"
 
 # ── Newsletter (Boletim GLCTech) — see docs/NEWSLETTER.md ──────────────────
-# ATENÇÃO: este binding fica COMENTADO até o banco D1 real existir. Um
-# database_id inválido/placeholder faz o `wrangler deploy` do Cloudflare
-# Workers Builds falhar para TODO o Worker (não só as rotas de newsletter) —
-# já aconteceu neste PR. Depois de rodar `wrangler d1 create glctech-newsletter`,
-# descomente as 4 linhas abaixo e cole o database_id real.
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "glctech-newsletter"
-# database_id = "REPLACE_AFTER_WRANGLER_D1_CREATE"
+[[d1_databases]]
+binding = "DB"
+database_name = "glctech-newsletter"
+database_id = "41e74da6-ccd8-48f5-a792-834fc07a59c1"
 
 [triggers]
 crons = ["0 11 * * 1"]   # segunda-feira 11:00 UTC (08:00 em São Paulo, UTC-3)

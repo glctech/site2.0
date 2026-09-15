@@ -78,31 +78,31 @@ duas correções aplicadas nesta adaptação):
 
 ## O que falta — só quem tem acesso ao Cloudflare consegue fazer
 
-Não tenho acesso à conta Cloudflare desta sessão. Alguém com acesso ao
-painel precisa rodar:
+**Status atual (feito em 2026-09-15):**
+
+- [x] Banco D1 `glctech-newsletter` criado (`database_id` já em `wrangler.toml`)
+- [x] Migration `0001_newsletter.sql` aplicada em produção (`--remote`)
+- [x] Secret `HMAC_SECRET` configurado
+- [x] Secret `ADMIN_TOKEN` configurado (valor entregue a quem pediu o deploy —
+      guardar em gerenciador de senhas; não está em nenhum arquivo do repo)
+- [ ] Secret `ANTHROPIC_API_KEY` — falta uma chave de console.anthropic.com
+- [x] `wrangler.toml`: corrigido `name` de `shy-river-6fc7` (nunca usado pelo
+      Worker real) para `site2-0` (nome real do Worker em produção, visto nos
+      builds do Cloudflare) — evita repetir o engano de criar um Worker vazio
+      com o nome errado ao rodar `wrangler secret put`/`wrangler deploy` na CLI
+
+Falta só:
 
 ```bash
-# 1) Criar o banco D1, descomentar o bloco [[d1_databases]] no wrangler.toml
-#    (está comentado de propósito — um database_id placeholder quebra o
-#    deploy do Worker inteiro, não só da newsletter) e colar o database_id real
-wrangler d1 create glctech-newsletter
-#   → descomentar as 4 linhas do [[d1_databases]] em wrangler.toml e colar
-#     o "database_id" retornado no lugar de REPLACE_AFTER_WRANGLER_D1_CREATE
-
-# 2) Aplicar a migration
-wrangler d1 migrations apply glctech-newsletter --local
-wrangler d1 migrations apply glctech-newsletter --remote
-
-# 3) Configurar os secrets (nunca no wrangler.toml nem no código)
-wrangler secret put ANTHROPIC_API_KEY     # console.anthropic.com
-wrangler secret put HMAC_SECRET           # openssl rand -hex 32
-wrangler secret put ADMIN_TOKEN           # openssl rand -hex 32
-#   (ZOHO_SMTP_USER / ZOHO_SMTP_PASS já devem existir — são os mesmos do
+# Configurar o secret que falta (nunca no wrangler.toml nem no código)
+wrangler secret put ANTHROPIC_API_KEY --name site2-0     # console.anthropic.com
+#   (ZOHO_SMTP_USER / ZOHO_SMTP_PASS já existem — são os mesmos do
 #    contato/candidatura, ver INTEGRATIONS.md)
-
-# 4) Deploy
-wrangler deploy
 ```
+
+O deploy do código em si **não precisa de `wrangler deploy` manual** — este
+repositório usa Cloudflare Workers Builds com integração Git: todo push na
+branch de produção (`glctech2.0`) já dispara o build/deploy sozinho.
 
 Para desenvolvimento local, criar `.dev.vars` (confirmar que está no
 `.gitignore`):
