@@ -10,6 +10,20 @@ import { signToken } from './security.mjs';
 
 const isTest = (env) => env.TEST_MODE === 'true';
 
+// Mesma lógica do gatilho semanal (`scheduled()` em _worker.js): gera o
+// rascunho e, em TEST_MODE, já aprova e envia sozinho (alcança só
+// TEST_RECIPIENT). Extraída aqui para ser chamada tanto pelo cron real
+// quanto por /api/newsletter/cron-test (admin), útil pra testar sem
+// depender do agendamento da Cloudflare.
+export async function runWeeklyCron(env) {
+  const draft = await createDraft(env);
+  if (isTest(env)) {
+    const sendResult = await sendIssue(env, draft.issueId);
+    return { ...draft, autoSent: sendResult };
+  }
+  return draft;
+}
+
 export async function createDraft(env) {
   const { items, errors } = await collectItems();
   if (items.length < 5) {
