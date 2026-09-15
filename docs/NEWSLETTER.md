@@ -213,7 +213,7 @@ curl -X POST http://localhost:8787/api/newsletter/generate                      
 | B9 | Gmail/Outlook mostram "Cancelar inscrição" ao lado do remetente | Cabeçalho `List-Unsubscribe` funcionando |
 | B10 | Verificar nota em mail-tester.com (adicionar o endereço deles como `TEST_RECIPIENT` temporariamente) | Nota ≥ 9/10 |
 | B11 | Abrir em desktop e mobile, tema claro e escuro | Layout legível |
-| B12 | Deixar o cron rodar numa segunda-feira | Preview chega sem intervenção manual |
+| B12 | Deixar o cron rodar numa terça-feira | Preview chega sem intervenção manual |
 
 ### Fase C — Qualidade editorial (2–3 edições em TEST_MODE)
 
@@ -250,7 +250,7 @@ manual.
 
 ## Operação semanal
 
-Segunda-feira, 11h UTC (08h em São Paulo) chega o rascunho em
+Terça-feira, 11h UTC (08h em São Paulo) chega o rascunho em
 `contato@glctech.com.br` → revisar → abrir o link → clicar "Aprovar e
 enviar". Sem esse clique, nada sai.
 

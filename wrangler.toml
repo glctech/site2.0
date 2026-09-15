@@ -16,7 +16,7 @@ database_name = "glctech-newsletter"
 database_id = "41e74da6-ccd8-48f5-a792-834fc07a59c1"
 
 [triggers]
-crons = ["0 11 * * 1"]   # segunda-feira 11:00 UTC (08:00 em São Paulo, UTC-3)
+crons = ["0 11 * * 2"]   # terça-feira 11:00 UTC (08:00 em São Paulo, UTC-3) — melhor dia p/ taxa de abertura B2B
 
 [vars]
 # Base pública do site — usada só como texto/branding nos e-mails (ex.:
