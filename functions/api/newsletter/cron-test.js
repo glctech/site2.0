@@ -1,16 +1,14 @@
 /* ============================================================================
- * POST /api/newsletter/generate — Cloudflare Pages Function
+ * POST /api/newsletter/cron-test — Cloudflare Pages Function
  * ----------------------------------------------------------------------------
- * Gera um rascunho de edição e manda o preview para ADMIN_EMAIL, com o link
- * de revisão/aprovação. Só gera — nunca envia sozinho, mesmo em TEST_MODE.
- * Chamado manualmente por um admin autenticado (Authorization: Bearer
- * ADMIN_TOKEN). O cron semanal usa runWeeklyCron() direto (ver _worker.js),
- * que em TEST_MODE também aprova e envia sozinho — para isso, ver
- * /api/newsletter/cron-test.
+ * Roda exatamente a mesma lógica do gatilho semanal (`scheduled()` em
+ * _worker.js), sob demanda — útil para testar o disparo automático sem
+ * depender do agendamento de cron da Cloudflare (ex.: durante a fase de
+ * teste, ou para diagnosticar se um cron não disparou). Admin-only.
  * ==========================================================================*/
 
 import { checkAdmin } from '../_lib/newsletter/security.mjs';
-import { createDraft } from '../_lib/newsletter/pipeline.mjs';
+import { runWeeklyCron } from '../_lib/newsletter/pipeline.mjs';
 
 function json(body, status) {
   return new Response(JSON.stringify(body), {
@@ -22,7 +20,7 @@ function json(body, status) {
 export async function onRequestPost(context) {
   const { request, env } = context;
   if (!checkAdmin(request, env)) return json({ error: 'unauthorized' }, 401);
-  const result = await createDraft(env);
+  const result = await runWeeklyCron(env);
   return json(result);
 }
 

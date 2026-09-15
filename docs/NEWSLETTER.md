@@ -277,6 +277,12 @@ comando `INSERT INTO company_news` acima.
   um mailbox `newsletter@` dedicado — evita configurar SPF/DKIM/DMARC do
   zero; a autenticação do domínio já existe e está provada em produção
   (formulário de contato).
+- **Remetente da newsletter é `marketing@glctech.com.br`** (`NEWSLETTER_FROM_EMAIL`
+  em `wrangler.toml`), não `ZOHO_SMTP_USER` — mas quem efetivamente autentica
+  no SMTP continua sendo `ZOHO_SMTP_USER` (`contato@glctech.com.br`), que
+  tem permissão "enviar como" configurada no Zoho Mail para esse grupo. Sem
+  essa permissão, trocar `NEWSLETTER_FROM_EMAIL` faz o Zoho rejeitar ou
+  marcar o envio como suspeito (ver `smtp.mjs`/`mailer.mjs`).
 - **Sem dependências novas** (`fast-xml-parser` etc.) — `feeds.mjs` usa um
   parser RSS mínimo por regex, consistente com a filosofia "sem passo de
   build" do projeto (ver `ARCHITECTURE.md`) e com `smtp.mjs`, que já evita

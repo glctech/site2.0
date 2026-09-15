@@ -32,6 +32,11 @@ SITE_URL          = "https://glctech.com.br"
 WORKER_URL        = "https://site2-0.aluiz-cez.workers.dev"
 ADMIN_EMAIL       = "contato@glctech.com.br"
 ANTHROPIC_MODEL   = "claude-sonnet-5"
+# Remetente da newsletter (não do contato/candidatura, que continuam usando
+# ZOHO_SMTP_USER). Precisa ter permissão "enviar como" para ZOHO_SMTP_USER
+# configurada no Zoho Mail — ver mailer.mjs. Se remover, cai de volta pro
+# remetente padrão (ZOHO_SMTP_USER).
+NEWSLETTER_FROM_EMAIL = "marketing@glctech.com.br"
 
 # ── Modo de teste — enquanto true, TODO envio da newsletter (não a confirmação
 # de inscrição em si) vai só para TEST_RECIPIENT, nunca para a lista real.

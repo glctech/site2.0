@@ -184,12 +184,17 @@ function buildMessage({ from, fromName, to, replyTo, subject, text, html, attach
  *   (text + HTML). Existing callers (contato/candidatura) don't pass it, so
  *   they keep getting the original plain-text-only message unchanged.
  *   `extraHeaders` lets a caller add custom headers (e.g. List-Unsubscribe).
+ *   `from` overrides the sender address (envelope + header) — only valid
+ *   when the authenticated mailbox (`user`) has "send as" permission for it
+ *   in Zoho Mail (e.g. a group like marketing@glctech.com.br); otherwise
+ *   Zoho's relay may reject or flag the message. Defaults to `user`.
  */
-export async function sendZohoMail(env, { to, replyTo, subject, text, html, attachments, extraHeaders }) {
+export async function sendZohoMail(env, { to, replyTo, subject, text, html, attachments, extraHeaders, from }) {
   const host = env.ZOHO_SMTP_HOST || 'smtppro.zoho.com';
   const port = Number(env.ZOHO_SMTP_PORT || 465);
   const user = env.ZOHO_SMTP_USER;
   const pass = env.ZOHO_SMTP_PASS;
+  const fromAddress = from || user;
   const fromName = env.ZOHO_FROM_NAME || 'Site GLCTech';
 
   if (!user || !pass) {
@@ -208,11 +213,11 @@ export async function sendZohoMail(env, { to, replyTo, subject, text, html, atta
     await conn.command('AUTH LOGIN', '334');
     await conn.command(strToBase64(user), '334');
     await conn.command(strToBase64(pass), '235');
-    await conn.command(`MAIL FROM:<${user}>`, '250');
+    await conn.command(`MAIL FROM:<${fromAddress}>`, '250');
     await conn.command(`RCPT TO:<${to}>`, '25'); // 250 or 251
     await conn.command('DATA', '354');
 
-    const raw = buildMessage({ from: user, fromName, to, replyTo, subject, text, html, attachments, extraHeaders });
+    const raw = buildMessage({ from: fromAddress, fromName, to, replyTo, subject, text, html, attachments, extraHeaders });
     const dotStuffed = raw
       .split('\r\n')
       .map((l) => (l.startsWith('.') ? '.' + l : l))
