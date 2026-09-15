@@ -122,8 +122,18 @@ pública, nunca um link de repositório privado):
 
 ```bash
 wrangler d1 execute glctech-newsletter --remote --command \
-"INSERT INTO company_news (title, summary, url, image_url) VALUES ('Nova parceria', 'Resumo curto...', 'https://glctech.com.br/...', 'https://glctech.com.br/assets/novidades/exemplo.png')"
+"INSERT INTO company_news (title, summary, url, image_url) VALUES ('Nova parceria', 'Resumo curto...', 'https://glctech.com.br/...', 'https://site2-0.aluiz-cez.workers.dev/assets/novidades/exemplo.png')"
 ```
+
+**Importante sobre `image_url`**: use sempre o domínio do Worker
+(`WORKER_URL`, ex. `https://site2-0.aluiz-cez.workers.dev/assets/...`), nunca
+`glctech.com.br`. O motivo é o mesmo dos links de confirmar/descadastrar/
+aprovar (ver seção seguinte): `glctech.com.br` é servido por uma
+infraestrutura separada (GitHub Pages atrás do CDN) que não reflete os
+arquivos publicados via `wrangler deploy` neste Worker. `url` (o link
+"Saiba mais") pode continuar apontando para `glctech.com.br` normalmente,
+porque esse link é aberto pelo destinatário no navegador — só a imagem
+embutida no e-mail precisa vir de um domínio que sirva o arquivo de fato.
 
 ---
 
