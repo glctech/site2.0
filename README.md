@@ -2,16 +2,20 @@
 
 Marketing website for **GLCTech**, an IT monitoring & security company
 (Zabbix, Grafana, Kaspersky, Veeam). Live at **https://glctech.com.br**
-(Portuguese/Brazil) and **https://glctechsec.com** (English/Europe, a separate
-Cloudflare account mirroring the same content — see
-[`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md#zoho-mail-contact--careers-forms)
-for a caveat about that setup).
+(Portuguese/Brazil). **https://glctechsec.com** is a separate, dedicated site
+for English/European visitors (own Cloudflare account, not a mirror of this
+repo's content) — see
+[`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md#internationalization-retired)
+for why this site is Portuguese-only.
 
 This is a **static, no-build site** for the pages themselves — plain HTML, CSS
 and vanilla JavaScript, one file per page, no framework/bundler/package
 manager. But there **is** a small amount of server-side code: a Cloudflare
 Worker (`_worker.js` + `functions/api/*`) that sends the site's e-mail forms
-over SMTP and serves the live stats endpoint. See
+over SMTP, serves the live stats endpoint, and runs the **Boletim GLCTech**
+newsletter agent (weekly AI-drafted security newsletter, D1-backed, human
+approval required before any real send — see
+[`docs/NEWSLETTER.md`](docs/NEWSLETTER.md)). See
 [Hosting & deployment](#hosting--deployment) below.
 
 > **New here? Read this file top to bottom, then jump to
@@ -76,6 +80,7 @@ Then open `http://localhost:8080/index.html`.
 | Forms            | Zoho Mail SMTP, direct                              | See [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md) |
 | Chat             | Tidio AI chatbot                                    | Site-wide |
 | Stats pipeline   | Python + Zabbix API (API Token auth) → `assets/data/stats.json` | See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#stats-pipeline-zabbix--json) |
+| Newsletter       | Cloudflare D1 + Anthropic API + the same Zoho SMTP client | Weekly cron drafts, human approval required — see [`docs/NEWSLETTER.md`](docs/NEWSLETTER.md) |
 
 ---
 
@@ -84,12 +89,14 @@ Then open `http://localhost:8080/index.html`.
 ```
 site2.0/
 ├── CNAME                     # Custom domain → glctech.com.br (see Hosting & deployment)
-├── wrangler.toml              # Cloudflare Worker config (project name, secrets doc)
-├── _worker.js                 # Worker entrypoint: routes /api/* to functions/api/*, else serves static assets
+├── wrangler.toml              # Cloudflare Worker config (project name, D1 binding, cron, secrets doc)
+├── .assetsignore              # Paths excluded from the static-assets upload (server code, docs, internal reports…)
+├── _worker.js                 # Worker entrypoint: routes /api/* to functions/api/*, runs the newsletter cron, else serves static assets
 ├── README.md                 # ← you are here
 ├── docs/                     # Engineering documentation (start with ARCHITECTURE.md)
 │
-├── index.html                # Main single-page site (hero, services, team, contact…)
+├── index.html                # Main single-page site (hero, services, team, contact, newsletter signup…)
+├── diagnostico-zabbix.html   # Landing page: free 15-day Zabbix diagnostic
 │
 │   ── Service detail pages ──
 ├── zabbix.html               # Monitoring (Zabbix)
@@ -112,9 +119,13 @@ site2.0/
 ├── functions/api/             # Cloudflare Worker server-side code (routed by _worker.js)
 │   ├── send-email.js          # POST /api/send-email — contact + candidatura forms
 │   ├── stats.js                # GET /api/stats
+│   ├── newsletter/             # Boletim GLCTech — subscribe/confirm/unsubscribe/generate/approve/cron-test
 │   └── _lib/
-│       ├── smtp.mjs            # Hand-rolled SMTP client (Zoho Mail, port 465)
-│       └── zabbix.mjs
+│       ├── smtp.mjs            # Hand-rolled SMTP client (Zoho Mail, port 465), reused by the newsletter
+│       ├── zabbix.mjs
+│       └── newsletter/         # feeds.mjs, agent.mjs (Anthropic API), template.mjs, mailer.mjs, pipeline.mjs, security.mjs, page.mjs
+│
+├── migrations/                # D1 schema for the newsletter (subscribers, issues, company_news)
 │
 ├── .github/
 │   └── workflows/
@@ -129,6 +140,7 @@ site2.0/
 │
 ├── assets/
 │   ├── logo/  team/  services/  hero/  partner/  flags/  linkedin.png
+│   ├── novidades/            # Screenshots featured in the newsletter's "Novidade GLCTech" section
 │   └── data/stats.json       # Generated Zabbix numbers (see stats pipeline)
 │
 └── kaspersky/                # Kaspersky product icon images
@@ -146,17 +158,20 @@ convention, not by tooling. There used to be one shared runtime script
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#javascript-subsystems).
 
 Most requests are for a static file (`.html`, `.css`, image, etc.) and are
-served as-is. A handful of paths (`/api/send-email`, `/api/stats`) are
-intercepted by the Worker and run actual server-side code instead:
+served as-is. A handful of paths (`/api/send-email`, `/api/stats`,
+`/api/newsletter/*`) are intercepted by the Worker and run actual
+server-side code instead. A weekly cron trigger also runs the newsletter's
+draft-generation pipeline directly (not over HTTP):
 
 ```mermaid
 flowchart TD
     A[Browser requests a path] --> W["_worker.js (Cloudflare Worker)"]
     W --> R{"Path is /api/*?"}
-    R -->|yes| F["functions/api/*.js runs<br/>(e.g. SMTP send, Zabbix stats)"]
+    R -->|yes| F["functions/api/*.js runs<br/>(e.g. SMTP send, Zabbix stats,<br/>newsletter subscribe/approve)"]
     R -->|no| S["Serve static file as-is<br/>(HTML/CSS/JS/images)"]
     S --> C["Inline &lt;style&gt; renders design instantly"]
     S --> H["Page-specific scripts:<br/>contact form, blog feed,<br/>mobile nav, chatbot"]
+    T["Weekly cron trigger"] --> N["runWeeklyCron()<br/>(newsletter draft + preview,<br/>auto-send while TEST_MODE=true)"]
 ```
 
 For the full page-by-page and subsystem breakdown, read
@@ -180,10 +195,20 @@ For the full page-by-page and subsystem breakdown, read
   the repo as-is.
 - The custom domain is set by the `CNAME` file (`glctech.com.br`) — **do not
   delete it**.
-- **Secrets** (`ZOHO_SMTP_USER`, `ZOHO_SMTP_PASS`, `ZABBIX_*`) live in the
-  Worker's dashboard under *Settings → Variables and Secrets → **Runtime***
-  (not *Build*) — see [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md) for
-  which ones exist and what they do.
+- **Secrets** (`ZOHO_SMTP_USER`, `ZOHO_SMTP_PASS`, `ZABBIX_*`,
+  `ANTHROPIC_API_KEY`, `HMAC_SECRET`, `ADMIN_TOKEN`) live in the Worker's
+  dashboard under *Settings → Variables and Secrets → **Runtime*** (not
+  *Build*) — see [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md) for which
+  ones exist and what they do, and [`docs/NEWSLETTER.md`](docs/NEWSLETTER.md)
+  for the newsletter-specific ones.
+- **D1 database** (`glctech-newsletter`, binding `DB`) backs the newsletter —
+  see [`docs/NEWSLETTER.md`](docs/NEWSLETTER.md).
+- ⚠️ **Known issue:** the Cloudflare Workers Builds check (Git integration)
+  has been failing on every push since the D1 binding was added, for reasons
+  that need dashboard access to diagnose (see `docs/NEWSLETTER.md`). Until
+  that's fixed, deploys need to be done manually with `wrangler deploy`
+  after merging — the automated build/publish described above isn't
+  currently reliable.
 - Work on feature branches named `claude/<topic>` (or your own convention) and
   open a Pull Request into `glctech2.0`.
 
@@ -209,6 +234,8 @@ flowchart LR
 | Change a form's destination / API key   | [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md) |
 | Update the live "devices monitored" number | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#stats-pipeline-zabbix--json) |
 | Change the chatbot                       | [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md#tidio-ai-chatbot) |
+| Add a company update to the next newsletter | [`docs/NEWSLETTER.md`](docs/NEWSLETTER.md) |
+| Test the newsletter without waiting for the weekly cron | [`docs/NEWSLETTER.md`](docs/NEWSLETTER.md) — `POST /api/newsletter/cron-test` |
 
 ---
 
@@ -219,6 +246,7 @@ flowchart LR
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Page-by-page tour, the shared design system, and every JS subsystem (blog feed, contact form, mobile nav, chatbot, stats pipeline) with data-flow diagrams. |
 | [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md) | Every third-party service, where its key/ID lives, how to rotate it, and security notes. |
 | [`docs/CONTENT-EDITING.md`](docs/CONTENT-EDITING.md) | Task-oriented recipes for editing copy, images, testimonials, services and team without touching the plumbing. |
+| [`docs/NEWSLETTER.md`](docs/NEWSLETTER.md) | The Boletim GLCTech newsletter agent: what's built, required secrets, test plan, go-live checklist, weekly operation, and the design decisions behind it. |
 | [`AUDITORIA.md`](AUDITORIA.md) | The automated weekly/monthly technical maintenance agent (`auditor/`) — audits + a narrow safe auto-fix allowlist, opens draft PRs. |
 | [`AUDIT-COMERCIAL.md`](AUDIT-COMERCIAL.md) | The automated weekly/monthly commercial/conversion/UX audit agent (`auditor/commercial/`) — strictly read-only, recommendations only. |
 
@@ -232,14 +260,14 @@ flowchart LR
   top of each page's `:root { … }`. The brand red is **`#e6262c`**. Reuse the
   variables (`var(--red)`, `var(--dark)`, …) instead of hard-coding values.
 - **Asset paths are root-relative** (`/assets/...` or `./assets/...`) on every
-  page — this matters now that the site is also served live from a second
-  domain (`glctechsec.com`, for the European market) without a redirect, so a
-  hardcoded `https://glctech.com.br/...` URL would force an extra cross-domain
-  hop for visitors on the other domain. Keep new references relative. The only
-  intentionally **absolute** URLs (to `glctech.com.br`, the canonical domain)
-  are `mailmkt.html` (an e-mail has no "current origin") and `<link rel="canonical">`
-  / `og:url` / `og:image` / `twitter:image` meta tags (social crawlers and
-  canonicalization need an absolute URL).
+  page — keep new references relative rather than hardcoding
+  `https://glctech.com.br/...`. The only intentionally **absolute** URLs (to
+  `glctech.com.br`, the canonical domain) are `mailmkt.html` (an e-mail has no
+  "current origin") and `<link rel="canonical">` / `og:url` / `og:image` /
+  `twitter:image` meta tags (social crawlers and canonicalization need an
+  absolute URL) — plus the newsletter's functional links, which deliberately
+  point at the Worker's own domain instead (see
+  [`docs/NEWSLETTER.md`](docs/NEWSLETTER.md#por-que-os-links-funcionais-usam-outro-domínio)).
 - **No secrets that aren't already public:** because everything ships to the
   browser, treat every key in the HTML as public (see
   [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md) for which keys are safe to
