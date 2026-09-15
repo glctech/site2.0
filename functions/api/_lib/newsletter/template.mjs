@@ -50,7 +50,8 @@ export function renderEmail({ content, items, companyNews, unsubscribeUrl, siteU
   <span style="display:none;max-height:0;overflow:hidden">${esc(content.preheader)}</span>
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:640px;margin:0 auto;background:${C.dark}">
     ${banner}
-    <tr><td style="padding:32px;border-bottom:3px solid ${C.red}">
+    <tr><td style="padding:28px 32px 24px;border-bottom:3px solid ${C.red}">
+      <img src="${esc(siteUrl)}/assets/logo/new_logo.png" alt="GLCTech" width="150" height="38" style="display:block;border:0;outline:none;height:auto;max-width:150px;margin:0 0 14px">
       <h1 style="margin:0;color:${C.white};font-size:22px">Boletim GLCTech</h1>
     </td></tr>
     <tr><td style="padding:24px 32px;color:${C.white};line-height:1.5">${esc(content.intro)}</td></tr>
