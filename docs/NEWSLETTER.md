@@ -250,9 +250,21 @@ manual.
 
 ## Operação semanal
 
-Terça-feira, 11h UTC (08h em São Paulo) chega o rascunho em
+**Enquanto `TEST_MODE="true"` (fase de teste atual):** toda terça-feira,
+11h UTC (08h em São Paulo), o cron gera o rascunho **e já aprova e envia
+sozinho** — sem precisar clicar em nada. Como é teste, o envio automático
+só alcança `TEST_RECIPIENT` (`contato@glctech.com.br`), nunca a lista real
+de assinantes. O objetivo é validar o fluxo fim a fim toda semana (equipe e
+consultor comercial recebem o e-mail pronto na caixa de entrada) antes de
+ligar para valer.
+
+**Quando virar `TEST_MODE="false"` (produção definitiva):** o
+auto-envio do cron para automaticamente — a aprovação humana volta a ser
+obrigatória para qualquer edição que vá para a lista real (ver `pipeline.mjs`
+→ `_worker.js` `scheduled()`: o `sendIssue` automático só roda se
+`TEST_MODE==="true"`). Nesse modo, toda terça chega só o rascunho em
 `contato@glctech.com.br` → revisar → abrir o link → clicar "Aprovar e
-enviar". Sem esse clique, nada sai.
+enviar". Sem esse clique, nada sai para os assinantes.
 
 Para adicionar uma novidade da empresa antes da próxima edição, ver o
 comando `INSERT INTO company_news` acima.

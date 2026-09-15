@@ -21,7 +21,7 @@ import * as newsletterConfirm from './functions/api/newsletter/confirm.js';
 import * as newsletterUnsubscribe from './functions/api/newsletter/unsubscribe.js';
 import * as newsletterGenerate from './functions/api/newsletter/generate.js';
 import * as newsletterApprove from './functions/api/newsletter/approve.js';
-import { createDraft } from './functions/api/_lib/newsletter/pipeline.mjs';
+import { createDraft, sendIssue } from './functions/api/_lib/newsletter/pipeline.mjs';
 
 const routes = {
   '/api/send-email': sendEmail,
@@ -73,6 +73,20 @@ export default {
   // a lista sozinho; ctx.waitUntil garante que o job termina mesmo que a
   // invocação do cron em si não espere por ele.
   async scheduled(event, env, ctx) {
-    ctx.waitUntil(createDraft(env).catch((err) => console.error('newsletter cron failed:', err)));
+    ctx.waitUntil((async () => {
+      try {
+        const { issueId } = await createDraft(env);
+        // Fase de teste: aprova e envia sozinho toda semana (alcança só
+        // TEST_RECIPIENT, nunca a lista real) para validar o fluxo fim a fim
+        // sem depender de alguém clicar "Aprovar" manualmente. Em produção
+        // (TEST_MODE="false") isso NUNCA roda — a aprovação humana continua
+        // obrigatória para qualquer envio à lista real de assinantes.
+        if (env.TEST_MODE === 'true') {
+          await sendIssue(env, issueId);
+        }
+      } catch (err) {
+        console.error('newsletter cron failed:', err);
+      }
+    })());
   },
 };
