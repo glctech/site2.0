@@ -17,7 +17,7 @@ export async function createDraft(env) {
   }
 
   const { results: companyNews } = await env.DB
-    .prepare('SELECT id, title, summary, url FROM company_news WHERE used_in IS NULL ORDER BY id DESC LIMIT 3')
+    .prepare('SELECT id, title, summary, url, image_url FROM company_news WHERE used_in IS NULL ORDER BY id DESC LIMIT 3')
     .all();
 
   const content = await generateIssue(env, items, companyNews);

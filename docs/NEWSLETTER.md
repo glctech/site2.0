@@ -115,12 +115,33 @@ ZOHO_SMTP_USER=...
 ZOHO_SMTP_PASS=...
 ```
 
-Adicionar uma novidade da GLCTech para a próxima edição:
+Adicionar uma novidade da GLCTech para a próxima edição (a seção "Novidade
+GLCTech" tem destaque visual logo após a introdução do boletim — `image_url`
+é opcional, mas recomendado para chamar mais atenção; precisa ser uma URL
+pública, nunca um link de repositório privado):
+
+**Convenção para as imagens**: subir 3 screenshots direto em
+`assets/screens/` no repositório (via GitHub, upload de arquivo), nomeados
+`<nome-do-modulo>_01.png`, `<nome-do-modulo>_02.png`, `<nome-do-modulo>_03.png`.
+A partir daí: escolher a mais visual/impactante das 3, mover para
+`assets/novidades/<nome-do-modulo>.png`, apagar o resto de `assets/screens/`,
+publicar (`wrangler deploy`) e só então usar essa URL como `image_url` —
+sempre no domínio do Worker (ver nota abaixo).
 
 ```bash
 wrangler d1 execute glctech-newsletter --remote --command \
-"INSERT INTO company_news (title, summary, url) VALUES ('Nova parceria', 'Resumo curto...', 'https://glctech.com.br/...')"
+"INSERT INTO company_news (title, summary, url, image_url) VALUES ('Nova parceria', 'Resumo curto...', 'https://glctech.com.br/...', 'https://site2-0.aluiz-cez.workers.dev/assets/novidades/exemplo.png')"
 ```
+
+**Importante sobre `image_url`**: use sempre o domínio do Worker
+(`WORKER_URL`, ex. `https://site2-0.aluiz-cez.workers.dev/assets/...`), nunca
+`glctech.com.br`. O motivo é o mesmo dos links de confirmar/descadastrar/
+aprovar (ver seção seguinte): `glctech.com.br` é servido por uma
+infraestrutura separada (GitHub Pages atrás do CDN) que não reflete os
+arquivos publicados via `wrangler deploy` neste Worker. `url` (o link
+"Saiba mais") pode continuar apontando para `glctech.com.br` normalmente,
+porque esse link é aberto pelo destinatário no navegador — só a imagem
+embutida no e-mail precisa vir de um domínio que sirva o arquivo de fato.
 
 ---
 
@@ -192,7 +213,7 @@ curl -X POST http://localhost:8787/api/newsletter/generate                      
 | B9 | Gmail/Outlook mostram "Cancelar inscrição" ao lado do remetente | Cabeçalho `List-Unsubscribe` funcionando |
 | B10 | Verificar nota em mail-tester.com (adicionar o endereço deles como `TEST_RECIPIENT` temporariamente) | Nota ≥ 9/10 |
 | B11 | Abrir em desktop e mobile, tema claro e escuro | Layout legível |
-| B12 | Deixar o cron rodar numa segunda-feira | Preview chega sem intervenção manual |
+| B12 | Deixar o cron rodar numa terça-feira | Preview chega sem intervenção manual |
 
 ### Fase C — Qualidade editorial (2–3 edições em TEST_MODE)
 
@@ -229,9 +250,21 @@ manual.
 
 ## Operação semanal
 
-Segunda-feira, 11h UTC (08h em São Paulo) chega o rascunho em
+**Enquanto `TEST_MODE="true"` (fase de teste atual):** toda terça-feira,
+11h UTC (08h em São Paulo), o cron gera o rascunho **e já aprova e envia
+sozinho** — sem precisar clicar em nada. Como é teste, o envio automático
+só alcança `TEST_RECIPIENT` (`contato@glctech.com.br`), nunca a lista real
+de assinantes. O objetivo é validar o fluxo fim a fim toda semana (equipe e
+consultor comercial recebem o e-mail pronto na caixa de entrada) antes de
+ligar para valer.
+
+**Quando virar `TEST_MODE="false"` (produção definitiva):** o
+auto-envio do cron para automaticamente — a aprovação humana volta a ser
+obrigatória para qualquer edição que vá para a lista real (ver `pipeline.mjs`
+→ `_worker.js` `scheduled()`: o `sendIssue` automático só roda se
+`TEST_MODE==="true"`). Nesse modo, toda terça chega só o rascunho em
 `contato@glctech.com.br` → revisar → abrir o link → clicar "Aprovar e
-enviar". Sem esse clique, nada sai.
+enviar". Sem esse clique, nada sai para os assinantes.
 
 Para adicionar uma novidade da empresa antes da próxima edição, ver o
 comando `INSERT INTO company_news` acima.

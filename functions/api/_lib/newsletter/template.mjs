@@ -17,6 +17,7 @@ export function renderEmail({ content, items, companyNews, unsubscribeUrl, siteU
   const url = (idx) => items[idx].url;
   const src = (idx) => items[idx].source;
   const companyUrl = (id) => companyNews.find((n) => n.id === id)?.url;
+  const companyImage = (id) => companyNews.find((n) => n.id === id)?.image_url;
 
   const banner = testBanner
     ? `<tr><td style="background:#F5C400;color:#000;padding:10px;text-align:center;font-weight:bold">
@@ -38,12 +39,16 @@ export function renderEmail({ content, items, companyNews, unsubscribeUrl, siteU
     <span style="color:${C.muted}"> — ${esc(src(h.idx))}</span></li>`).join('');
 
   const company = content.company_news.length ? `
-    <tr><td style="padding:8px 32px 24px">
-      <h3 style="color:${C.red};margin:0 0 12px">Novidades da GLCTech</h3>
-      ${content.company_news.map((c) => `
-        <p style="margin:0 0 4px;color:${C.white}"><strong>${esc(c.headline)}</strong></p>
-        <p style="margin:0 0 12px;color:${C.white}">${esc(c.summary)}
-        ${companyUrl(c.id) ? ` <a href="${esc(companyUrl(c.id))}" style="color:${C.red}">Saiba mais</a>` : ''}</p>`).join('')}
+    <tr><td style="padding:0 32px 28px">
+      <div style="background:${C.darkMid};border:1px solid ${C.border};border-left:4px solid ${C.red};border-radius:4px;padding:20px">
+        <p style="margin:0 0 12px;color:${C.red};font-size:12px;font-weight:bold;text-transform:uppercase;letter-spacing:0.5px">Novidade GLCTech</p>
+        ${content.company_news.map((c) => `
+          <h2 style="margin:0 0 10px;color:${C.white};font-size:19px">${esc(c.headline)}</h2>
+          ${companyImage(c.id) ? `<img src="${esc(companyImage(c.id))}" alt="${esc(c.headline)}" width="576" style="display:block;width:100%;max-width:576px;height:auto;border-radius:4px;margin:0 0 14px;border:1px solid ${C.border}">` : ''}
+          <p style="margin:0 0 14px;color:${C.white};line-height:1.5">${esc(c.summary)}</p>
+          ${companyUrl(c.id) ? `<p style="margin:0"><a href="${esc(companyUrl(c.id))}" style="background:${C.red};color:${C.white};padding:9px 18px;text-decoration:none;border-radius:4px;font-size:14px;display:inline-block">Saiba mais →</a></p>` : ''}
+        `).join(`<hr style="border:none;border-top:1px solid ${C.border};margin:20px 0">`)}
+      </div>
     </td></tr>` : '';
 
   const html = `<!doctype html><html><body style="margin:0;background:${C.dark};font-family:Arial,Helvetica,sans-serif">
@@ -51,10 +56,11 @@ export function renderEmail({ content, items, companyNews, unsubscribeUrl, siteU
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:640px;margin:0 auto;background:${C.dark}">
     ${banner}
     <tr><td style="padding:28px 32px 24px;border-bottom:3px solid ${C.red}">
-      <img src="${esc(siteUrl)}/assets/logo/new_logo.png" alt="GLCTech" width="150" height="38" style="display:block;border:0;outline:none;height:auto;max-width:150px;margin:0 0 14px">
+      <img src="${esc(siteUrl)}/assets/logo/new_logo.png" alt="GLCTech" width="220" height="56" style="display:block;border:0;outline:none;height:auto;max-width:220px;margin:0 0 18px">
       <h1 style="margin:0;color:${C.white};font-size:22px">Boletim GLCTech</h1>
     </td></tr>
     <tr><td style="padding:24px 32px;color:${C.white};line-height:1.5">${esc(content.intro)}</td></tr>
+    ${company}
     ${stories}
     <tr><td style="padding:0 32px 24px">
       <h3 style="color:${C.red};margin:0 0 12px">Resumo rápido</h3>
@@ -66,7 +72,6 @@ export function renderEmail({ content, items, companyNews, unsubscribeUrl, siteU
         <p style="color:${C.white};margin:0;line-height:1.5">${esc(content.tip.body)}</p>
       </div>
     </td></tr>
-    ${company}
     <tr><td style="padding:24px 32px;color:${C.muted};font-size:12px;border-top:1px solid ${C.border}">
       Você recebe este e-mail porque se inscreveu em ${esc(siteUrl)}.<br>
       <a href="${esc(unsubscribeUrl)}" style="color:${C.muted}">Cancelar inscrição</a> ·
@@ -77,6 +82,7 @@ export function renderEmail({ content, items, companyNews, unsubscribeUrl, siteU
   const text = [
     testBanner ? '*** TESTE — não enviado para a lista ***\n' : '',
     'Boletim GLCTech', '', content.intro, '',
+    ...content.company_news.map((c) => `>>> NOVIDADE GLCTECH: ${c.headline}\n${c.summary}${companyUrl(c.id) ? `\n${companyUrl(c.id)}` : ''}\n`),
     ...content.top_stories.map((s) => `■ ${s.headline}\n${s.summary}\nPor que importa: ${s.why_it_matters}\n${url(s.idx)}\n`),
     'Resumo rápido:', ...content.quick_hits.map((h) => `- ${h.line} ${url(h.idx)}`), '',
     `Dica: ${content.tip.title}\n${content.tip.body}`, '',
