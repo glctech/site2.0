@@ -16,10 +16,21 @@
 
 import * as sendEmail from './functions/api/send-email.js';
 import * as stats from './functions/api/stats.js';
+import * as newsletterSubscribe from './functions/api/newsletter/subscribe.js';
+import * as newsletterConfirm from './functions/api/newsletter/confirm.js';
+import * as newsletterUnsubscribe from './functions/api/newsletter/unsubscribe.js';
+import * as newsletterGenerate from './functions/api/newsletter/generate.js';
+import * as newsletterApprove from './functions/api/newsletter/approve.js';
+import { createDraft } from './functions/api/_lib/newsletter/pipeline.mjs';
 
 const routes = {
   '/api/send-email': sendEmail,
   '/api/stats': stats,
+  '/api/newsletter/subscribe': newsletterSubscribe,
+  '/api/newsletter/confirm': newsletterConfirm,
+  '/api/newsletter/unsubscribe': newsletterUnsubscribe,
+  '/api/newsletter/generate': newsletterGenerate,
+  '/api/newsletter/approve': newsletterApprove,
 };
 
 function methodHandler(mod, method) {
@@ -55,5 +66,13 @@ export default {
 
     // Everything else: serve the static site exactly as before.
     return env.ASSETS.fetch(request);
+  },
+
+  // Cron trigger (see [triggers] in wrangler.toml) — gera o rascunho semanal
+  // da newsletter e manda para ADMIN_EMAIL revisar/aprovar. Nunca envia para
+  // a lista sozinho; ctx.waitUntil garante que o job termina mesmo que a
+  // invocação do cron em si não espere por ele.
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(createDraft(env).catch((err) => console.error('newsletter cron failed:', err)));
   },
 };

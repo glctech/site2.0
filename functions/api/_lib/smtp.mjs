@@ -103,7 +103,7 @@ class SmtpConnection {
   }
 }
 
-function buildMessage({ from, fromName, to, replyTo, subject, text, attachments }) {
+function buildMessage({ from, fromName, to, replyTo, subject, text, html, attachments, extraHeaders }) {
   const fromHeader = fromName ? `${encodeHeader(fromName)} <${from}>` : from;
   const headers = [
     `From: ${fromHeader}`,
@@ -112,23 +112,52 @@ function buildMessage({ from, fromName, to, replyTo, subject, text, attachments 
     `Subject: ${encodeHeader(subject)}`,
     `Date: ${new Date().toUTCString()}`,
     `MIME-Version: 1.0`,
+    ...Object.entries(extraHeaders || {}).map(([k, v]) => `${k}: ${v}`),
   ].filter(Boolean);
 
-  if (!attachments || attachments.length === 0) {
+  // Caso original (usado por contato/candidatura): só texto, sem anexos.
+  if (!html && (!attachments || attachments.length === 0)) {
     headers.push('Content-Type: text/plain; charset="UTF-8"');
     headers.push('Content-Transfer-Encoding: base64');
     return headers.join('\r\n') + '\r\n\r\n' + wrap76(strToBase64(text)) + '\r\n';
   }
 
+  // Corpo: texto simples, ou texto+HTML como multipart/alternative (newsletter).
+  let bodyContentType, bodyContent;
+  if (html) {
+    const altBoundary = 'GLC-ALT-' + crypto.randomUUID().replace(/-/g, '');
+    bodyContentType = `multipart/alternative; boundary="${altBoundary}"`;
+    bodyContent =
+      `--${altBoundary}\r\n` +
+        'Content-Type: text/plain; charset="UTF-8"\r\n' +
+        'Content-Transfer-Encoding: base64\r\n\r\n' +
+        wrap76(strToBase64(text || '')) + '\r\n' +
+      `--${altBoundary}\r\n` +
+        'Content-Type: text/html; charset="UTF-8"\r\n' +
+        'Content-Transfer-Encoding: base64\r\n\r\n' +
+        wrap76(strToBase64(html)) + '\r\n' +
+      `--${altBoundary}--\r\n`;
+  } else {
+    bodyContentType = 'text/plain; charset="UTF-8"';
+    bodyContent = wrap76(strToBase64(text)) + '\r\n';
+  }
+
+  // Sem anexos: o corpo (simples ou alternative) é o topo da mensagem.
+  if (!attachments || attachments.length === 0) {
+    headers.push(`Content-Type: ${bodyContentType}`);
+    if (!html) headers.push('Content-Transfer-Encoding: base64');
+    return headers.join('\r\n') + '\r\n\r\n' + bodyContent;
+  }
+
+  // Com anexos: multipart/mixed envolvendo o corpo + cada anexo.
   const boundary = 'GLC-' + crypto.randomUUID().replace(/-/g, '');
   headers.push(`Content-Type: multipart/mixed; boundary="${boundary}"`);
 
   const parts = [
     `--${boundary}\r\n` +
-      'Content-Type: text/plain; charset="UTF-8"\r\n' +
-      'Content-Transfer-Encoding: base64\r\n\r\n' +
-      wrap76(strToBase64(text)) +
-      '\r\n',
+      `Content-Type: ${bodyContentType}\r\n` +
+      (html ? '\r\n' : 'Content-Transfer-Encoding: base64\r\n\r\n') +
+      bodyContent,
   ];
 
   for (const att of attachments) {
@@ -150,9 +179,13 @@ function buildMessage({ from, fromName, to, replyTo, subject, text, attachments 
 /**
  * Sends one e-mail through Zoho's SMTP (implicit TLS, port 465 by default).
  * @param {object} env - Pages Function env (bindings + secrets).
- * @param {{to:string, replyTo?:string, subject:string, text:string, attachments?:Array<{filename:string, contentType?:string, content:Uint8Array}>}} msg
+ * @param {{to:string, replyTo?:string, subject:string, text:string, html?:string, attachments?:Array<{filename:string, contentType?:string, content:Uint8Array}>, extraHeaders?:Record<string,string>}} msg
+ *   `html` is optional — when present, the e-mail is sent as multipart/alternative
+ *   (text + HTML). Existing callers (contato/candidatura) don't pass it, so
+ *   they keep getting the original plain-text-only message unchanged.
+ *   `extraHeaders` lets a caller add custom headers (e.g. List-Unsubscribe).
  */
-export async function sendZohoMail(env, { to, replyTo, subject, text, attachments }) {
+export async function sendZohoMail(env, { to, replyTo, subject, text, html, attachments, extraHeaders }) {
   const host = env.ZOHO_SMTP_HOST || 'smtppro.zoho.com';
   const port = Number(env.ZOHO_SMTP_PORT || 465);
   const user = env.ZOHO_SMTP_USER;
@@ -179,7 +212,7 @@ export async function sendZohoMail(env, { to, replyTo, subject, text, attachment
     await conn.command(`RCPT TO:<${to}>`, '25'); // 250 or 251
     await conn.command('DATA', '354');
 
-    const raw = buildMessage({ from: user, fromName, to, replyTo, subject, text, attachments });
+    const raw = buildMessage({ from: user, fromName, to, replyTo, subject, text, html, attachments, extraHeaders });
     const dotStuffed = raw
       .split('\r\n')
       .map((l) => (l.startsWith('.') ? '.' + l : l))
