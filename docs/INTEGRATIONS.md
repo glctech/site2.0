@@ -15,6 +15,7 @@ value is safe to be public, and how to change it.
 - [RSS2JSON + CORS proxies (blog feed)](#rss2json--cors-proxies-blog-feed)
 - [Tidio AI chatbot](#tidio-ai-chatbot)
 - [Zabbix API (stats pipeline)](#zabbix-api-stats-pipeline)
+- [Newsletter (Boletim GLCTech)](#newsletter-boletim-glctech)
 - [Google Fonts & Font Awesome](#google-fonts--font-awesome)
 - [Internationalization (retired)](#internationalization-retired)
 
@@ -29,6 +30,8 @@ value is safe to be public, and how to change it.
 | RSS2JSON | Blog feed JSON | `RSS2JSON_KEY` in `index.html` blog IIFE | ✅ public API key |
 | Tidio | AI chatbot | script URL id in `index.html` | ✅ public widget id |
 | Zabbix API | Live device stats | **env vars**, not in repo | 🔒 **secret** |
+| Anthropic API | Redige o conteúdo da newsletter | **Worker secret**, not in repo | 🔒 **secret** |
+| Cloudflare D1 | Inscritos/edições da newsletter | `wrangler.toml` binding (`DB`) | — (banco, não é chave) |
 
 ---
 
@@ -171,6 +174,27 @@ value is safe to be public, and how to change it.
 - **Zabbix 7.x specifics** (already handled in the script): login field is
   `username` (not `user`); auth is an `Authorization: Bearer <token>` header
   (not an `auth` body field).
+
+---
+
+## Newsletter (Boletim GLCTech)
+
+- **What:** a newsletter semanal de cibersegurança/novidades — inscrição no
+  rodapé de `index.html`, geração de conteúdo via API da Anthropic (a partir
+  de feeds RSS reais, nunca inventado), aprovação humana obrigatória, envio
+  pela mesma caixa Zoho já usada em contato/candidatura.
+- **Files:** `functions/api/newsletter/*.js` (rotas) e
+  `functions/api/_lib/newsletter/*.mjs` (lógica). `functions/api/_lib/smtp.mjs`
+  foi estendido (não recriado) para suportar corpo HTML e o cabeçalho
+  `List-Unsubscribe`, sem alterar o comportamento das chamadas existentes
+  (contato/candidatura continuam só-texto).
+- **Required secrets:** `ANTHROPIC_API_KEY`, `HMAC_SECRET`, `ADMIN_TOKEN` —
+  ver [`NEWSLETTER.md`](NEWSLETTER.md) para os comandos exatos.
+- **Banco:** Cloudflare D1 (binding `DB` no `wrangler.toml`), schema em
+  `migrations/0001_newsletter.sql`.
+- **Guia completo:** [`NEWSLETTER.md`](NEWSLETTER.md) — arquitetura, plano de
+  teste, checklist de go-live.
+- **Public?** No — chaves e o banco ficam só no lado do servidor.
 
 ---
 

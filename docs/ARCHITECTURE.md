@@ -14,6 +14,7 @@ first for the high-level mental model.
   - [3. Blog RSS feed (hidden)](#3-blog-rss-feed-hidden)
   - [4. Tidio AI chatbot](#4-tidio-ai-chatbot)
 - [Stats pipeline (Zabbix → JSON)](#stats-pipeline-zabbix--json)
+- [Newsletter (Boletim GLCTech)](#newsletter-boletim-glctech)
 - [Data files](#data-files)
 - [Gotchas & things that will bite you](#gotchas--things-that-will-bite-you)
 
@@ -40,7 +41,7 @@ first for the high-level mental model.
 
 | Page | Purpose | Notable integrations |
 |------|---------|----------------------|
-| `index.html` | Main one-page site (all sections) | GA4, Zoho Mail (contact, via `/api/send-email`), RSS blog feed, Tidio chat |
+| `index.html` | Main one-page site (all sections) | GA4, Zoho Mail (contact, via `/api/send-email`), RSS blog feed, Tidio chat, newsletter signup (footer, via `/api/newsletter/subscribe`) |
 | `zabbix.html` | Monitoring service detail | GA4, Tidio chat |
 | `kaspersky.html` | Security service detail | GA4, Tidio chat |
 | `veeam.html` | Backup service detail | GA4, Tidio chat |
@@ -321,6 +322,16 @@ Treat the Zabbix credentials as **secrets** — never commit them. See
 [`INTEGRATIONS.md`](INTEGRATIONS.md#zabbix-api-stats-pipeline).
 
 ---
+
+## Newsletter (Boletim GLCTech)
+
+A newsletter semanal (`#newsletter-form` no rodapé de `index.html`) tem seu
+próprio subsistema de servidor: geração de conteúdo por IA (só a partir de
+feeds RSS reais, nunca inventado), aprovação humana obrigatória antes de
+qualquer envio à lista, e banco D1 para inscritos/edições. Roda no mesmo
+Worker de `/api/send-email` e `/api/stats`. Guia completo (arquitetura,
+plano de teste, checklist de go-live, como rodar as migrations D1):
+[`NEWSLETTER.md`](NEWSLETTER.md).
 
 ## Data files
 
