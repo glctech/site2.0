@@ -115,11 +115,14 @@ ZOHO_SMTP_USER=...
 ZOHO_SMTP_PASS=...
 ```
 
-Adicionar uma novidade da GLCTech para a próxima edição:
+Adicionar uma novidade da GLCTech para a próxima edição (a seção "Novidade
+GLCTech" tem destaque visual logo após a introdução do boletim — `image_url`
+é opcional, mas recomendado para chamar mais atenção; precisa ser uma URL
+pública, nunca um link de repositório privado):
 
 ```bash
 wrangler d1 execute glctech-newsletter --remote --command \
-"INSERT INTO company_news (title, summary, url) VALUES ('Nova parceria', 'Resumo curto...', 'https://glctech.com.br/...')"
+"INSERT INTO company_news (title, summary, url, image_url) VALUES ('Nova parceria', 'Resumo curto...', 'https://glctech.com.br/...', 'https://glctech.com.br/assets/novidades/exemplo.png')"
 ```
 
 ---
