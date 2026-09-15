@@ -120,6 +120,14 @@ GLCTech" tem destaque visual logo após a introdução do boletim — `image_url
 é opcional, mas recomendado para chamar mais atenção; precisa ser uma URL
 pública, nunca um link de repositório privado):
 
+**Convenção para as imagens**: subir 3 screenshots direto em
+`assets/screens/` no repositório (via GitHub, upload de arquivo), nomeados
+`<nome-do-modulo>_01.png`, `<nome-do-modulo>_02.png`, `<nome-do-modulo>_03.png`.
+A partir daí: escolher a mais visual/impactante das 3, mover para
+`assets/novidades/<nome-do-modulo>.png`, apagar o resto de `assets/screens/`,
+publicar (`wrangler deploy`) e só então usar essa URL como `image_url` —
+sempre no domínio do Worker (ver nota abaixo).
+
 ```bash
 wrangler d1 execute glctech-newsletter --remote --command \
 "INSERT INTO company_news (title, summary, url, image_url) VALUES ('Nova parceria', 'Resumo curto...', 'https://glctech.com.br/...', 'https://site2-0.aluiz-cez.workers.dev/assets/novidades/exemplo.png')"
