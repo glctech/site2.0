@@ -82,9 +82,12 @@ Não tenho acesso à conta Cloudflare desta sessão. Alguém com acesso ao
 painel precisa rodar:
 
 ```bash
-# 1) Criar o banco D1 e colar o database_id no wrangler.toml
+# 1) Criar o banco D1, descomentar o bloco [[d1_databases]] no wrangler.toml
+#    (está comentado de propósito — um database_id placeholder quebra o
+#    deploy do Worker inteiro, não só da newsletter) e colar o database_id real
 wrangler d1 create glctech-newsletter
-#   → copiar o "database_id" retornado para wrangler.toml (REPLACE_AFTER_WRANGLER_D1_CREATE)
+#   → descomentar as 4 linhas do [[d1_databases]] em wrangler.toml e colar
+#     o "database_id" retornado no lugar de REPLACE_AFTER_WRANGLER_D1_CREATE
 
 # 2) Aplicar a migration
 wrangler d1 migrations apply glctech-newsletter --local
