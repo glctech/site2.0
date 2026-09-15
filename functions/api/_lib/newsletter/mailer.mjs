@@ -1,10 +1,12 @@
 /* ============================================================================
  * Newsletter — envio de e-mail, reaproveitando o cliente SMTP existente.
  * ----------------------------------------------------------------------------
- * Usa a mesma caixa Zoho já configurada para contato/candidatura
- * (ZOHO_SMTP_USER/ZOHO_SMTP_PASS) — sem precisar de um mailbox
- * "newsletter@" dedicado nem de nova configuração de SPF/DKIM/DMARC, já que
- * o domínio já está autenticado para esse remetente.
+ * Autentica pela mesma caixa Zoho já configurada para contato/candidatura
+ * (ZOHO_SMTP_USER/ZOHO_SMTP_PASS) — sem precisar de senha própria para
+ * NEWSLETTER_FROM_EMAIL. Isso só funciona porque ZOHO_SMTP_USER tem
+ * permissão "enviar como" configurada no Zoho Mail para esse remetente
+ * (ex.: um grupo como marketing@glctech.com.br); sem essa permissão, trocar
+ * NEWSLETTER_FROM_EMAIL faz o Zoho rejeitar ou marcar o envio como suspeito.
  *
  * Cada chamada abre sua própria conexão SMTP (uma por destinatário). Para o
  * tamanho de lista esperado inicialmente isso é suficiente; se a lista
@@ -26,5 +28,6 @@ export async function sendNewsletterMail(env, { to, subject, html, text, unsubsc
     text,
     html,
     extraHeaders,
+    from: env.NEWSLETTER_FROM_EMAIL || undefined,
   });
 }
