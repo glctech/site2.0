@@ -559,12 +559,18 @@
     .nav-links { display: none; }
     .hamburger { display: flex; }
 
-    /* Hero */
-    .hero-inner { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
+    /* Hero — nunca ocupa 100vh no mobile: em telas reais o navegador conta
+       a barra de endereço nesse cálculo, então min-height:100vh soma altura
+       invisível e (por causa do align-items:center do #hero) empurra o CTA
+       para baixo da dobra. Deixamos a altura seguir o conteúdo, o mais
+       compacta possível, para garantir que o CTA sempre caiba sem rolar. */
+    #hero { min-height: 0; }
+    .hero-inner { grid-template-columns: 1fr; padding: 5.5rem 1.5rem 2rem; }
     .hero-visual { display: none; }
-    .hero-content h1 { font-size: 2.2rem; }
-    .hero-content p { font-size: 16px; }
-    .hero-actions { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+    .hero-badge { margin-bottom: 1rem; }
+    .hero-content h1 { font-size: 2rem; margin-bottom: 0.9rem; }
+    .hero-content p { font-size: 15px; line-height: 1.5; margin-bottom: 1.4rem; }
+    .hero-actions { flex-direction: column; align-items: flex-start; gap: 0.7rem; }
     .btn-primary, .btn-outline { width: 100%; justify-content: center; }
 
     /* Stats */
@@ -603,8 +609,11 @@
     .stat-item { padding: 1.4rem 1rem; }
     .stat-number { font-size: 1.9rem; }
     .footer-grid { grid-template-columns: 1fr; }
-    .hero-badge { font-size: 11px; }
-    .hero-content h1 { font-size: 1.9rem; }
+    .hero-inner { padding: 5rem 1.25rem 1.5rem; }
+    .hero-badge { font-size: 11px; margin-bottom: 0.8rem; }
+    .hero-content h1 { font-size: 1.7rem; margin-bottom: 0.7rem; }
+    .hero-content p { font-size: 14px; margin-bottom: 1.1rem; }
+    .btn-primary, .btn-outline { padding: 12px 24px; font-size: 14px; }
     .cta-banner h2 { font-size: 1.6rem; }
     .cta-banner p { font-size: 15px; }
   }
@@ -959,7 +968,7 @@
   <div class="container">
     <p class="partners-label" data-i18n="partners.label">Tecnologias &amp; Parceiros de Confiança</p>
     <div class="partners-row">
-      <div class="partner-badge" hidden>Zabbix</div>
+      <div class="partner-badge">Zabbix</div>
       <div class="partner-badge">DSR9</div>
       <img src="/assets/partner/Kaspersky_logotype_white.png" alt="Kaspersky" class="partner-logo" width="1280" height="482" loading="lazy" decoding="async">
       <img src="/assets/partner/Veeam_logo_2026_RGB_black_white.png" alt="Veeam" class="partner-logo" width="668" height="201" loading="lazy" decoding="async">
