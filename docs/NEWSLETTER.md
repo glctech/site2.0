@@ -100,9 +100,16 @@ wrangler secret put ANTHROPIC_API_KEY --name site2-0     # console.anthropic.com
 #    contato/candidatura, ver INTEGRATIONS.md)
 ```
 
-O deploy do código em si **não precisa de `wrangler deploy` manual** — este
-repositório usa Cloudflare Workers Builds com integração Git: todo push na
-branch de produção (`glctech2.0`) já dispara o build/deploy sozinho.
+Em condições normais, o deploy do Worker não precisaria de `wrangler deploy`
+manual — o repositório usa Cloudflare Workers Builds com integração Git, que
+dispara o build/deploy sozinho a cada push na branch de produção
+(`glctech2.0`). **Mas esse pipeline está quebrado desde que o binding D1 foi
+adicionado** (ver "O que já está pronto" acima e o README) — até resolver,
+rode `wrangler deploy` manualmente depois de cada merge que toque
+`functions/api/*`, `_worker.js` ou `wrangler.toml`. Isso afeta só o Worker
+(rotas `/api/*` da newsletter); as páginas estáticas do site
+(`glctech.com.br`) são publicadas separadamente pelo GitHub Pages e não
+dependem disso.
 
 Para desenvolvimento local, criar `.dev.vars` (confirmar que está no
 `.gitignore`):

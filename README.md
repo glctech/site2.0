@@ -181,20 +181,26 @@ For the full page-by-page and subsystem breakdown, read
 
 ## Hosting & deployment
 
-- **Hosting: Cloudflare Workers**, Git-connected to this repo (a "Workers with
-  static assets" project — `wrangler.toml` + `_worker.js` — not classic
-  Cloudflare Pages, and not GitHub Pages, despite the repo also having GitHub
-  Pages nominally enabled from before this migration; the custom domain
-  binding on Cloudflare intercepts `glctech.com.br` first, so GitHub Pages
-  never actually serves live traffic for it).
-- **Default branch: `glctech2.0`.** This is what the Worker's production
-  build tracks.
-- Deployment is **automatic**: pushing/merging to `glctech2.0` triggers a
-  Cloudflare Workers build and publishes to `https://glctech.com.br` within a
-  minute or two. There is no build step of our own — Cloudflare just picks up
-  the repo as-is.
-- The custom domain is set by the `CNAME` file (`glctech.com.br`) — **do not
-  delete it**.
+- **`https://glctech.com.br` is served by GitHub Pages** — confirmed via
+  response headers (`x-github-request-id`, `via: 1.1 varnish`) and by
+  diffing live content against the `glctech2.0` branch. **This corrects
+  earlier docs/README text** that claimed a Cloudflare custom-domain binding
+  intercepted this domain and that GitHub Pages "never actually serves live
+  traffic for it" — that was wrong. GitHub Pages auto-rebuilds on every
+  push/merge to `glctech2.0` (the default branch, set via the `CNAME` file —
+  **do not delete it**), independent of anything Cloudflare-side. This is
+  the deploy path for **all static HTML/CSS/JS/image changes**.
+- **The Cloudflare Worker (`site2-0`, reachable at
+  `site2-0.aluiz-cez.workers.dev`) is a separate thing**, Git-connected to
+  this same repo via Cloudflare Workers Builds. It does **not** serve
+  `glctech.com.br` — its job is running `/api/*` (contact/careers forms,
+  live stats, the newsletter) as a cross-origin backend the static pages
+  call into (see [`docs/INTEGRATIONS.md`](docs/INTEGRATIONS.md) for why it's
+  cross-origin), and it separately hosts its own copy of the static assets
+  under `[assets]` in `wrangler.toml` (mostly irrelevant — visitors never
+  hit that domain directly). Deploying it is a **different action** from
+  publishing the site: either Cloudflare Workers Builds picks up a push
+  automatically, or someone runs `wrangler deploy` manually.
 - **Secrets** (`ZOHO_SMTP_USER`, `ZOHO_SMTP_PASS`, `ZABBIX_*`,
   `ANTHROPIC_API_KEY`, `HMAC_SECRET`, `ADMIN_TOKEN`) live in the Worker's
   dashboard under *Settings → Variables and Secrets → **Runtime*** (not
@@ -205,23 +211,29 @@ For the full page-by-page and subsystem breakdown, read
   see [`docs/NEWSLETTER.md`](docs/NEWSLETTER.md).
 - ⚠️ **Known issue:** the Cloudflare Workers Builds check (Git integration)
   has been failing on every push since the D1 binding was added, for reasons
-  that need dashboard access to diagnose (see `docs/NEWSLETTER.md`). Until
-  that's fixed, deploys need to be done manually with `wrangler deploy`
-  after merging — the automated build/publish described above isn't
-  currently reliable.
+  that need dashboard access to diagnose (see `docs/NEWSLETTER.md`). This
+  only affects the **Worker** (so `/api/*` code and its own asset copy can
+  go stale) — until it's fixed, deploy the Worker manually with
+  `wrangler deploy` after merging anything that touches `functions/api/*`,
+  `_worker.js` or `wrangler.toml`. **It does not affect `glctech.com.br`
+  itself** — plain page/content changes go live via GitHub Pages on merge,
+  no manual step needed.
 - Work on feature branches named `claude/<topic>` (or your own convention) and
   open a Pull Request into `glctech2.0`.
 
 ```mermaid
 flowchart LR
     F[feature branch] -->|Pull Request| M[glctech2.0 default branch]
-    M -->|Cloudflare Workers auto-build| P[https://glctech.com.br]
+    M -->|GitHub Pages auto-build| P[https://glctech.com.br]
+    M -->|Cloudflare Workers Builds<br/>currently broken, see below| W[site2-0 Worker<br/>/api/* + its own asset copy]
 ```
 
 > Because publish = merge, **preview changes locally first** (see
 > [Quick start](#quick-start)). There is no staging environment. Note that
 > local preview can't exercise `/api/*` — that only runs on the deployed
-> Worker.
+> Worker, and manual testing against production `/api/*` requires either a
+> working Workers Builds pipeline or a manual `wrangler deploy` (see the
+> known issue above).
 
 ---
 

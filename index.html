@@ -458,6 +458,23 @@
   .footer-newsletter-consent input[type="checkbox"] { width: auto; flex-shrink: 0; margin-top: 2px; -webkit-appearance: checkbox; appearance: checkbox; background: none; border: none; border-radius: 0; padding: 0; }
   .footer-newsletter-consent a { color: var(--gray-dim); text-decoration: underline; }
   .footer-newsletter-status { font-size: 12px; margin-top: 8px; min-height: 16px; }
+
+  /* Pop-up de captura de e-mail (Boletim GLCTech) */
+  .nl-popup-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.72); display: flex; align-items: center; justify-content: center; z-index: 2000; padding: 1rem; opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
+  .nl-popup-overlay.nl-popup-show { opacity: 1; pointer-events: auto; }
+  .nl-popup { background: var(--dark); border: 1px solid var(--dark-border); border-radius: var(--radius-lg); padding: 2rem; max-width: 400px; width: 100%; position: relative; box-shadow: 0 24px 60px rgba(0,0,0,0.5); transform: translateY(12px); transition: transform 0.25s ease; }
+  .nl-popup-overlay.nl-popup-show .nl-popup { transform: translateY(0); }
+  .nl-popup-close { position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--gray-dim); font-size: 24px; line-height: 1; cursor: pointer; padding: 6px 10px; }
+  .nl-popup-close:hover { color: var(--white); }
+  .nl-popup h3 { font-family: var(--font-display); color: var(--white); font-size: 20px; margin: 0 0 8px; padding-right: 1.5rem; }
+  .nl-popup-lead { color: var(--gray-dim); font-size: 14px; margin: 0 0 1.2rem; line-height: 1.5; font-family: var(--font-body); font-weight: 400; }
+  .nl-popup input[type="email"] { width: 100%; background: var(--dark-light); border: 1px solid var(--dark-border); border-radius: var(--radius); padding: 12px 14px; color: var(--white); font-family: var(--font-body); font-size: 14px; outline: none; transition: border-color var(--transition); }
+  .nl-popup input[type="email"]:focus { border-color: var(--red); }
+  .nl-popup-submit { width: 100%; background: var(--red); color: #fff; border: none; border-radius: var(--radius); padding: 13px; font-family: var(--font-display); font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 12px; transition: background var(--transition); }
+  .nl-popup-submit:hover { background: var(--red-light); }
+  .nl-popup-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  .nl-popup-status { font-size: 12px; margin-top: 8px; min-height: 16px; color: var(--gray-dim); }
+  @media (max-width: 480px) { .nl-popup { padding: 1.5rem; } }
   .footer-col h4 { font-family: var(--font-display); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gray-dim); margin-bottom: 1.2rem; }
   .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
   .footer-links a { text-decoration: none; font-size: 14px; color: var(--gray-dim); transition: color var(--transition); }
@@ -559,12 +576,18 @@
     .nav-links { display: none; }
     .hamburger { display: flex; }
 
-    /* Hero */
-    .hero-inner { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
+    /* Hero — nunca ocupa 100vh no mobile: em telas reais o navegador conta
+       a barra de endereço nesse cálculo, então min-height:100vh soma altura
+       invisível e (por causa do align-items:center do #hero) empurra o CTA
+       para baixo da dobra. Deixamos a altura seguir o conteúdo, o mais
+       compacta possível, para garantir que o CTA sempre caiba sem rolar. */
+    #hero { min-height: 0; }
+    .hero-inner { grid-template-columns: 1fr; padding: 5.5rem 1.5rem 2rem; }
     .hero-visual { display: none; }
-    .hero-content h1 { font-size: 2.2rem; }
-    .hero-content p { font-size: 16px; }
-    .hero-actions { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+    .hero-badge { margin-bottom: 1rem; }
+    .hero-content h1 { font-size: 2rem; margin-bottom: 0.9rem; }
+    .hero-content p { font-size: 15px; line-height: 1.5; margin-bottom: 1.4rem; }
+    .hero-actions { flex-direction: column; align-items: flex-start; gap: 0.7rem; }
     .btn-primary, .btn-outline { width: 100%; justify-content: center; }
 
     /* Stats */
@@ -603,8 +626,11 @@
     .stat-item { padding: 1.4rem 1rem; }
     .stat-number { font-size: 1.9rem; }
     .footer-grid { grid-template-columns: 1fr; }
-    .hero-badge { font-size: 11px; }
-    .hero-content h1 { font-size: 1.9rem; }
+    .hero-inner { padding: 5rem 1.25rem 1.5rem; }
+    .hero-badge { font-size: 11px; margin-bottom: 0.8rem; }
+    .hero-content h1 { font-size: 1.7rem; margin-bottom: 0.7rem; }
+    .hero-content p { font-size: 14px; margin-bottom: 1.1rem; }
+    .btn-primary, .btn-outline { padding: 12px 24px; font-size: 14px; }
     .cta-banner h2 { font-size: 1.6rem; }
     .cta-banner p { font-size: 15px; }
   }
@@ -959,7 +985,7 @@
   <div class="container">
     <p class="partners-label" data-i18n="partners.label">Tecnologias &amp; Parceiros de Confiança</p>
     <div class="partners-row">
-      <div class="partner-badge" hidden>Zabbix</div>
+      <div class="partner-badge">Zabbix</div>
       <div class="partner-badge">DSR9</div>
       <img src="/assets/partner/Kaspersky_logotype_white.png" alt="Kaspersky" class="partner-logo" width="1280" height="482" loading="lazy" decoding="async">
       <img src="/assets/partner/Veeam_logo_2026_RGB_black_white.png" alt="Veeam" class="partner-logo" width="668" height="201" loading="lazy" decoding="async">
@@ -1579,6 +1605,117 @@
       })
       .finally(function () { btn.disabled = false; });
   });
+</script>
+
+<!-- ── Pop-up de captura de e-mail (Boletim GLCTech) ─────────────────────────
+     Objetivo: capturar e-mail de quem NÃO vai rolar até o rodapé (a maioria
+     do tráfego mobile). Aparece uma vez por visita, via exit-intent no
+     desktop (mouse saindo pelo topo) ou por tempo/rolagem no mobile (onde
+     exit-intent não existe). Reaproveita o mesmo endpoint e regra de
+     consentimento do formulário do rodapé. Não aparece de novo por 30 dias
+     depois de fechado, e nunca mais depois de uma inscrição bem-sucedida. -->
+<div class="nl-popup-overlay" id="nl-popup-overlay" hidden>
+  <div class="nl-popup" role="dialog" aria-modal="true" aria-labelledby="nl-popup-title">
+    <button type="button" class="nl-popup-close" id="nl-popup-close" aria-label="Fechar">&times;</button>
+    <h3 id="nl-popup-title">Boletim GLCTech</h3>
+    <p class="nl-popup-lead">Alertas de segurança e novidades de TI direto no seu e-mail — sem spam, cancele quando quiser.</p>
+    <form id="nl-popup-form" novalidate>
+      <input type="email" name="email" id="nl-popup-email" placeholder="seu@email.com" required autocomplete="email">
+      <input type="text" name="website" tabindex="-1" autocomplete="off" hidden>
+      <label class="footer-newsletter-consent">
+        <input type="checkbox" name="consent" required>
+        <span>Concordo em receber o Boletim GLCTech por e-mail. Posso cancelar a inscrição a qualquer momento. Ver <a href="politica.html">Política de Privacidade</a>.</span>
+      </label>
+      <button type="submit" class="nl-popup-submit" id="nl-popup-submit">Quero receber</button>
+      <p class="nl-popup-status" id="nl-popup-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</div>
+<script>
+(function () {
+  var STORAGE_KEY = 'glc_nl_popup';
+  var SNOOZE_DAYS = 30;
+  var overlay = document.getElementById('nl-popup-overlay');
+  var form = document.getElementById('nl-popup-form');
+  var closeBtn = document.getElementById('nl-popup-close');
+  var shown = false;
+
+  function getState() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { return {}; }
+  }
+  function setState(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) { /* localStorage indisponível */ }
+  }
+  function shouldShow() {
+    var state = getState();
+    if (state.subscribed) return false;
+    if (state.dismissedAt && (Date.now() - state.dismissedAt) < SNOOZE_DAYS * 24 * 60 * 60 * 1000) return false;
+    return true;
+  }
+  function openPopup() {
+    if (shown || !shouldShow()) return;
+    shown = true;
+    overlay.hidden = false;
+    requestAnimationFrame(function () { overlay.classList.add('nl-popup-show'); });
+    setTimeout(function () { document.getElementById('nl-popup-email').focus(); }, 300);
+  }
+  function closePopup(persistDismiss) {
+    overlay.classList.remove('nl-popup-show');
+    setTimeout(function () { overlay.hidden = true; }, 250);
+    if (persistDismiss) {
+      var state = getState();
+      state.dismissedAt = Date.now();
+      setState(state);
+    }
+  }
+
+  closeBtn.addEventListener('click', function () { closePopup(true); });
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) closePopup(true); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !overlay.hidden) closePopup(true); });
+
+  // Exit-intent (desktop): mouse saindo pela borda superior da janela.
+  document.addEventListener('mouseout', function (e) {
+    if (!e.relatedTarget && e.clientY <= 0) openPopup();
+  });
+  // Fallback por tempo (cobre mobile, onde não existe exit-intent).
+  setTimeout(openPopup, 20000);
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var status = document.getElementById('nl-popup-status');
+    var btn = document.getElementById('nl-popup-submit');
+    var email = document.getElementById('nl-popup-email').value.trim();
+    var consent = form.consent.checked;
+
+    if (!email || !consent) {
+      status.textContent = 'Informe um e-mail válido e aceite o consentimento.';
+      status.style.color = 'var(--red)';
+      return;
+    }
+
+    btn.disabled = true;
+    status.textContent = 'Enviando...';
+    status.style.color = 'var(--gray-dim)';
+
+    fetch('https://site2-0.aluiz-cez.workers.dev/api/newsletter/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, consent: consent, website: form.website.value }),
+    })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function () {
+        status.textContent = 'Confira seu e-mail para confirmar a inscrição.';
+        status.style.color = 'var(--gray-dim)';
+        setState({ subscribed: true });
+        setTimeout(function () { closePopup(false); }, 2500);
+      })
+      .catch(function () {
+        status.textContent = 'Não foi possível inscrever agora. Tente novamente em instantes.';
+        status.style.color = 'var(--red)';
+        btn.disabled = false;
+      });
+  });
+})();
 </script>
 
 <!-- Hamburger JS -->
