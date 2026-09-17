@@ -85,30 +85,27 @@ duas correções aplicadas nesta adaptação):
 - [x] Secret `HMAC_SECRET` configurado
 - [x] Secret `ADMIN_TOKEN` configurado (valor entregue a quem pediu o deploy —
       guardar em gerenciador de senhas; não está em nenhum arquivo do repo)
-- [ ] Secret `ANTHROPIC_API_KEY` — falta uma chave de console.anthropic.com
+- [x] Secret `ANTHROPIC_API_KEY` configurado
 - [x] `wrangler.toml`: corrigido `name` de `shy-river-6fc7` (nunca usado pelo
       Worker real) para `site2-0` (nome real do Worker em produção, visto nos
       builds do Cloudflare) — evita repetir o engano de criar um Worker vazio
       com o nome errado ao rodar `wrangler secret put`/`wrangler deploy` na CLI
 
-Falta só:
-
-```bash
-# Configurar o secret que falta (nunca no wrangler.toml nem no código)
-wrangler secret put ANTHROPIC_API_KEY --name site2-0     # console.anthropic.com
-#   (ZOHO_SMTP_USER / ZOHO_SMTP_PASS já existem — são os mesmos do
-#    contato/candidatura, ver INTEGRATIONS.md)
-```
+Todos os secrets necessários já estão configurados — nada pendente por aqui.
 
 Em condições normais, o deploy do Worker não precisaria de `wrangler deploy`
 manual — o repositório usa Cloudflare Workers Builds com integração Git, que
 dispara o build/deploy sozinho a cada push na branch de produção
-(`glctech2.0`). **Mas esse pipeline está quebrado desde que o binding D1 foi
-adicionado** (ver "O que já está pronto" acima e o README) — até resolver,
-rode `wrangler deploy` manualmente depois de cada merge que toque
-`functions/api/*`, `_worker.js` ou `wrangler.toml`. Isso afeta só o Worker
-(rotas `/api/*` da newsletter); as páginas estáticas do site
-(`glctech.com.br`) são publicadas separadamente pelo GitHub Pages e não
+(`glctech2.0`). **Mas esse pipeline está quebrado** desde que o binding D1 foi
+adicionado, e o log de build (17/09) revelou a causa exata: *"The build
+token selected for this build has been deleted or rolled and cannot be used
+for this build."* — **fix**: Cloudflare dashboard → Workers & Pages →
+site2-0 → Settings → Builds → reconectar/gerar um novo build token. Até
+alguém com acesso ao dashboard fazer isso, rode `wrangler deploy`
+manualmente depois de cada merge que toque `functions/api/*`, `_worker.js`
+ou `wrangler.toml`. Isso afeta só o Worker (rotas `/api/*` da newsletter);
+as páginas estáticas do site (`glctech.com.br`) são publicadas
+separadamente pelo GitHub Pages e não
 dependem disso.
 
 Para desenvolvimento local, criar `.dev.vars` (confirmar que está no
