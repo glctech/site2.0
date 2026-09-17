@@ -209,14 +209,18 @@ For the full page-by-page and subsystem breakdown, read
   for the newsletter-specific ones.
 - **D1 database** (`glctech-newsletter`, binding `DB`) backs the newsletter —
   see [`docs/NEWSLETTER.md`](docs/NEWSLETTER.md).
-- ⚠️ **Known issue:** the Cloudflare Workers Builds check (Git integration)
-  has been failing on every push since the D1 binding was added, for reasons
-  that need dashboard access to diagnose (see `docs/NEWSLETTER.md`). This
-  only affects the **Worker** (so `/api/*` code and its own asset copy can
-  go stale) — until it's fixed, deploy the Worker manually with
-  `wrangler deploy` after merging anything that touches `functions/api/*`,
-  `_worker.js` or `wrangler.toml`. **It does not affect `glctech.com.br`
-  itself** — plain page/content changes go live via GitHub Pages on merge,
+- ⚠️ **Known issue (confirmed cause, needs a dashboard fix):** the Cloudflare
+  Workers Builds check (Git integration) has been failing on every push
+  since the D1 binding was added. The build log names the exact reason:
+  *"The build token selected for this build has been deleted or rolled and
+  cannot be used for this build."* Fix: Cloudflare dashboard → Workers &
+  Pages → **site2-0** → Settings → **Builds** → reconnect/regenerate the
+  build token. This only affects the **Worker** (so `/api/*` code and its
+  own asset copy can go stale) — until it's fixed, deploy the Worker
+  manually with `wrangler deploy` after merging anything that touches
+  `functions/api/*`, `_worker.js` or `wrangler.toml`. **It does not affect
+  `glctech.com.br` itself** — plain page/content changes go live via
+  GitHub Pages on merge,
   no manual step needed.
 - Work on feature branches named `claude/<topic>` (or your own convention) and
   open a Pull Request into `glctech2.0`.
