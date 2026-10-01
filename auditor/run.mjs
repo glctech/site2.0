@@ -335,6 +335,7 @@ async function sendWeeklyEmail({ s, pages, deployResult, rollback, fixesApplied,
     rollback,
     highlights,
     attention,
+    findings,
   });
 
   log(`Enviando relatório por e-mail para ${to}`);

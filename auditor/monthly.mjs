@@ -84,7 +84,7 @@ async function main() {
 
   if (SEND_EMAIL) {
     const to = process.env.REPORT_EMAIL_TO || 'diretoria@glctech.com.br';
-    const html = monthlyEmailHtml({ monthStr, weeksCount: weeks.length, totals, timeline, pending: pending.map((p) => `[${p.severity}] ${p.page} — ${p.problem}`) });
+    const html = monthlyEmailHtml({ monthStr, weeksCount: weeks.length, totals, timeline, pending: pending.map((p) => `[${p.severity}] ${p.page} — ${p.problem}`), weeks });
     await sendZohoMailNode({
       to,
       subject: `[GLCTech] Relatório Mensal de Auditoria e Evolução do Site — ${monthStr}`,
