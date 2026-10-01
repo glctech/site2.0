@@ -1,87 +1,93 @@
-/* Email bodies for the weekly/monthly audit reports — same visual language
- * (GLCTech red, light card layout, inline styles for mail-client safety) as
- * the improvement-summary emails already being sent for each manual change. */
+/* Email bodies for the weekly/monthly technical audit reports — mesmo padrão
+ * visual usado nos 4 relatórios de auditoria (semanal/mensal × técnico/
+ * comercial) e espelhado do agente equivalente em glctechsec.com, para os
+ * dois sites ficarem padronizados. */
 
 import { SEVERITY } from './finding.mjs';
+import { reportShell, sectionHeading, paragraph, dataTable, noteBox, bulletList, groupByCategory, esc } from './report-ui.mjs';
 
-function shell(title, subtitle, bodyHtml, footerDate) {
-  return `<div style="font-family:Arial,Helvetica,sans-serif;background:#f4f3f2;padding:24px 12px;color:#201f1f;">
-<div style="max-width:640px;margin:0 auto;background:#ffffff;border:1px solid #e6e3e0;border-radius:10px;overflow:hidden;">
-  <div style="padding:28px 32px 20px;border-bottom:1px solid #e6e3e0;">
-    <div style="font-weight:800;font-size:18px;letter-spacing:0.02em;color:#e6262c;">GLCTECH</div>
-    <div style="font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#e6262c;margin-top:14px;">Auditoria automática do site</div>
-    <div style="font-size:22px;font-weight:800;color:#201f1f;margin-top:6px;line-height:1.25;">${title}</div>
-    <div style="font-size:13px;color:#5c5854;margin-top:10px;">${subtitle}</div>
-  </div>
-  <div style="padding:22px 32px 4px;">${bodyHtml}</div>
-  <div style="padding:16px 32px 24px;border-top:1px solid #e6e3e0;font-size:11.5px;color:#938e88;display:flex;justify-content:space-between;">
-    <span>GLCTech · Agente de auditoria — glctech.com.br</span>
-    <span>${footerDate}</span>
-  </div>
-</div>
-</div>`;
-}
+const SITE = 'glctech.com.br';
+const EYEBROW = 'GLCTECH BRASIL · AGENTE DE AUDITORIA CONTÍNUA';
 
-function statusBadge(status) {
-  const colors = { OK: '#1c7c3c', ATENÇÃO: '#8a5a00', CRÍTICO: '#a2181d' };
-  const c = colors[status] || '#5c5854';
-  return `<span style="display:inline-block;font-weight:700;font-size:12px;padding:4px 10px;border-radius:100px;background:${c}1a;color:${c};">${status}</span>`;
-}
+export function weeklyEmailHtml({ dateStr, status, pagesAnalyzed, summary, deployResult, rollback, highlights, attention, findings = [] }) {
+  const crit = summary.bySeverity[SEVERITY.CRITICAL] || 0;
+  const high = summary.bySeverity[SEVERITY.HIGH] || 0;
 
-function statRow(label, value) {
-  return `<tr><td style="padding:6px 0;color:#5c5854;font-size:13.5px;">${label}</td><td style="padding:6px 0;text-align:right;font-weight:700;color:#201f1f;font-size:13.5px;">${value}</td></tr>`;
-}
+  const resumo = [
+    `Execução semanal de ${dateStr}: ${pagesAnalyzed} página(s) analisada(s), ${summary.total} problema(s) encontrado(s) e ${summary.fixed} corrigido(s) automaticamente.`,
+    crit > 0 ? `${crit} achado(s) crítico(s) seguem pendentes.` : (high > 0 ? `${high} achado(s) de severidade alta seguem pendentes.` : 'Nenhum achado crítico ou alto pendente ao final da execução.'),
+    `Deploy: ${deployResult}${rollback ? ' — ROLLBACK acionado.' : '.'}`,
+  ].join(' ');
 
-export function weeklyEmailHtml({ dateStr, status, pagesAnalyzed, summary, deployResult, rollback, highlights, attention }) {
+  const byCat = groupByCategory(findings);
+
   const body = `
-    <p style="margin:0 0 16px;font-size:14px;">Status geral: ${statusBadge(status)}</p>
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
-      ${statRow('Páginas analisadas', pagesAnalyzed)}
-      ${statRow('Problemas encontrados', summary.total)}
-      ${statRow('— Crítico', summary.bySeverity[SEVERITY.CRITICAL] || 0)}
-      ${statRow('— Alto', summary.bySeverity[SEVERITY.HIGH] || 0)}
-      ${statRow('— Médio', summary.bySeverity[SEVERITY.MEDIUM] || 0)}
-      ${statRow('— Baixo', summary.bySeverity[SEVERITY.LOW] || 0)}
-      ${statRow('Corrigidos automaticamente', summary.fixed)}
-      ${statRow('Deploy', deployResult)}
-      ${statRow('Rollback', rollback ? 'SIM' : 'NÃO')}
-    </table>
-    ${highlights.length ? `<div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#e6262c;margin-bottom:8px;">Principais melhorias</div>
-    <ul style="margin:0 0 20px;padding-left:18px;font-size:13.5px;color:#3a3733;line-height:1.7;">${highlights.map((h) => `<li>${h}</li>`).join('')}</ul>` : ''}
-    ${attention.length ? `<div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8a5a00;margin-bottom:8px;">Pontos que precisam de atenção</div>
-    <ul style="margin:0 0 20px;padding-left:18px;font-size:13.5px;color:#6b4a08;line-height:1.7;">${attention.map((a) => `<li>${a}</li>`).join('')}</ul>` : ''}
-    <p style="font-size:13px;color:#5c5854;">Relatório completo em anexo (Markdown).</p>
+    ${sectionHeading('Resumo executivo')}
+    ${paragraph(resumo)}
+
+    ${byCat.length ? sectionHeading('Achados da semana por categoria') + dataTable(
+      ['Categoria', 'Quantidade', 'IDs'],
+      byCat.map((c) => [esc(c.categoria), String(c.quantidade), esc(c.ids.join(', '))])
+    ) : ''}
+
+    ${highlights.length ? sectionHeading('Principais melhorias') + bulletList(highlights.map(esc)) : ''}
+    ${attention.length ? sectionHeading('Pontos que precisam de atenção') + bulletList(attention.map(esc)) : ''}
+
+    ${noteBox('Relatório completo em anexo (Markdown), com evidência e causa de cada achado.')}
   `;
-  return shell(
-    `Relatório Semanal de Auditoria — ${dateStr}`,
-    `Site: glctech.com.br · Repositório: glctech/site2.0`,
-    body,
-    dateStr
-  );
+
+  return reportShell({
+    eyebrow: EYEBROW,
+    title: `Relatório Semanal — Auditoria e Evolução do Site`,
+    period: `Período: ${dateStr} · ${SITE} · Execução semanal`,
+    bodyHtml: body,
+    footerText: `Gerado automaticamente pelo Agente de Auditoria do ${SITE} — glctech/site2.0.`,
+  });
 }
 
-export function monthlyEmailHtml({ monthStr, weeksCount, totals, timeline, pending }) {
+export function monthlyEmailHtml({ monthStr, weeksCount, totals, timeline, pending, weeks = [] }) {
+  const resumo = [
+    `${monthStr}: ${weeksCount} execução(ões) semanal(is) no mês, cobrindo ${totals.pagesAnalyzed || 'N/D'} análise(s) de página.`,
+    `${totals.found} problema(s) encontrado(s) no total, ${totals.fixed} corrigido(s) automaticamente.`,
+    pending.length ? `${pending.length} problema(s) crítico(s)/alto(s) seguem pendentes ao final do mês.` : 'Nenhum problema crítico/alto pendente ao final do mês.',
+    `${totals.deploys} deploy(s) de correção, ${totals.rollbacks} rollback(s).`,
+  ].join(' ');
+
+  const allFindings = weeks.flatMap((w) => w.findings || []);
+  const byCat = groupByCategory(allFindings.filter((f) => f.status !== 'corrigido automaticamente'));
+
+  const execRows = weeks.map((w) => [
+    esc(w.date),
+    String(w.summary?.total ?? 0),
+    String(w.summary?.fixed ?? 0),
+    esc(w.deployResult || '—'),
+  ]);
+
   const body = `
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
-      ${statRow('Auditorias no mês', weeksCount)}
-      ${statRow('Páginas analisadas (total)', totals.pagesAnalyzed)}
-      ${statRow('Problemas encontrados', totals.found)}
-      ${statRow('Problemas corrigidos', totals.fixed)}
-      ${statRow('Deploys', totals.deploys)}
-      ${statRow('Rollbacks', totals.rollbacks)}
-    </table>
-    <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#e6262c;margin-bottom:8px;">Linha do tempo</div>
-    <ul style="margin:0 0 20px;padding-left:18px;font-size:13.5px;color:#3a3733;line-height:1.8;">
-      ${timeline.map((t) => `<li><b>${t.date}</b> — ${t.summary}</li>`).join('')}
-    </ul>
-    ${pending.length ? `<div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8a5a00;margin-bottom:8px;">Problemas pendentes</div>
-    <ul style="margin:0 0 20px;padding-left:18px;font-size:13.5px;color:#6b4a08;line-height:1.7;">${pending.map((p) => `<li>${p}</li>`).join('')}</ul>` : ''}
-    <p style="font-size:13px;color:#5c5854;">Relatório completo em anexo (Markdown).</p>
+    ${sectionHeading('Resumo executivo')}
+    ${paragraph(resumo)}
+
+    ${sectionHeading('Total de execuções no mês')}
+    ${dataTable(['Data', 'Achados', 'Corrigidos', 'Deploy'], execRows)}
+
+    ${byCat.length ? sectionHeading('Achados por categoria (ao final do mês)') + dataTable(
+      ['Categoria', 'Quantidade', 'IDs'],
+      byCat.map((c) => [esc(c.categoria), String(c.quantidade), esc(c.ids.join(', '))])
+    ) : ''}
+
+    ${sectionHeading('Linha do tempo')}
+    ${bulletList(timeline.map((t) => `<b>${esc(t.date)}</b> — ${esc(t.summary)}`))}
+
+    ${pending.length ? sectionHeading('Problemas pendentes') + bulletList(pending.map(esc)) : ''}
+
+    ${noteBox('Relatório completo em anexo (Markdown).')}
   `;
-  return shell(
-    `Relatório Mensal de Auditoria e Evolução — ${monthStr}`,
-    `Site: glctech.com.br · Repositório: glctech/site2.0`,
-    body,
-    monthStr
-  );
+
+  return reportShell({
+    eyebrow: EYEBROW,
+    title: `Relatório Mensal — Auditoria e Evolução do Site`,
+    period: `Período: ${monthStr} · ${SITE} · Consolidado mensal`,
+    bodyHtml: body,
+    footerText: `Gerado automaticamente pelo Agente de Auditoria do ${SITE}, consolidando as execuções semanais do mês.`,
+  });
 }
