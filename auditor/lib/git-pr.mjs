@@ -42,7 +42,24 @@ export async function commitReportFiles({ files, message }) {
   const staged = (await git(['diff', '--cached', '--name-only'])).stdout.trim();
   if (!staged) return { committed: false };
   await git(['-c', 'user.name=glctech-site-auditor[bot]', '-c', 'user.email=github-actions[bot]@users.noreply.github.com', 'commit', '-m', message]);
-  await git(['push', 'origin', 'HEAD']);
+
+  // O push pode colidir com outro job automático empurrando pra mesma branch
+  // ao mesmo tempo (ex.: zabbix-stats.yml roda a cada hora) — isso já causou
+  // relatório mensal gerado mas nunca commitado (e, por consequência, nunca
+  // enviado por e-mail, já que o envio vem depois desta chamada nos
+  // scripts). Tenta de novo com rebase antes de desistir.
+  const branch = (await git(['rev-parse', '--abbrev-ref', 'HEAD'])).stdout.trim();
+  const attempts = 3;
+  for (let i = 1; i <= attempts; i++) {
+    try {
+      await git(['push', 'origin', 'HEAD']);
+      return { committed: true };
+    } catch (e) {
+      if (i === attempts) throw e;
+      await git(['fetch', 'origin', branch]);
+      await git(['rebase', `origin/${branch}`]);
+    }
+  }
   return { committed: true };
 }
 

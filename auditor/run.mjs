@@ -238,11 +238,18 @@ async function main() {
     if (process.env.GITHUB_ACTIONS === 'true') {
       const relMd = mdPath.slice(ROOT.length).replace(/^\/+/, '');
       const relJson = jsonPath.slice(ROOT.length).replace(/^\/+/, '');
-      const { committed } = await commitReportFiles({
-        files: [relMd, relJson],
-        message: `chore(audit): relatório semanal ${dateStr()} [skip ci]`,
-      });
-      if (committed) log('Relatório commitado no histórico (reports/).');
+      // Nunca deixa uma falha de git (ex.: colisão de push com outro job
+      // automático, como o zabbix-stats.yml que roda a cada hora) impedir o
+      // envio do e-mail abaixo.
+      try {
+        const { committed } = await commitReportFiles({
+          files: [relMd, relJson],
+          message: `chore(audit): relatório semanal ${dateStr()} [skip ci]`,
+        });
+        if (committed) log('Relatório commitado no histórico (reports/).');
+      } catch (e) {
+        log(`[WARN] Falha ao commitar o relatório (${e.message}) — seguindo para o envio do e-mail mesmo assim.`);
+      }
     }
 
     if (SEND_EMAIL && !DRY_RUN) {
