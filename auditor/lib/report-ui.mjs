@@ -11,11 +11,14 @@ const esc = (s = '') => String(s)
 
 const C = { red: '#e6262c', dark: '#2d2d2d', text: '#201f1f', muted: '#5c5854', border: '#e6e3e0', noteBg: '#f4f3f2' };
 
-/** Moldura do e-mail: banner escuro (eyebrow + título + período) + corpo branco + rodapé. */
+const LOGO_URL = 'https://glctech.com.br/assets/logo/new_logo.png';
+
+/** Moldura do e-mail: banner escuro (logo + eyebrow + título + período) + corpo branco + rodapé. */
 export function reportShell({ eyebrow, title, period, bodyHtml, footerText }) {
   return `<div style="font-family:Arial,Helvetica,sans-serif;background:${C.noteBg};padding:24px 12px;color:${C.text};">
 <div style="max-width:680px;margin:0 auto;background:#ffffff;border:1px solid ${C.border};border-radius:10px;overflow:hidden;">
   <div style="background:${C.dark};padding:28px 32px;">
+    <img src="${LOGO_URL}" alt="GLCTECH" width="160" height="41" style="display:block;margin-bottom:16px;border:0;">
     <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:${C.red};">${esc(eyebrow)}</div>
     <div style="font-size:24px;font-weight:800;color:#ffffff;margin-top:8px;line-height:1.3;">${esc(title)}</div>
     <div style="font-size:13px;color:#b9b6b2;margin-top:10px;">${esc(period)}</div>
