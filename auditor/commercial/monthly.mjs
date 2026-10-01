@@ -58,7 +58,13 @@ async function main() {
   if (process.env.GITHUB_ACTIONS === 'true') {
     const { commitReportFiles } = await import('../lib/git-pr.mjs');
     const rel = mdPath.slice(ROOT.length).replace(/^\/+/, '');
-    await commitReportFiles({ files: [rel], message: `chore(audit-comercial): relatório mensal ${monthStr} [skip ci]` });
+    // Nunca deixa uma falha de git (ex.: colisão de push com outro job
+    // automático) impedir o envio do e-mail abaixo.
+    try {
+      await commitReportFiles({ files: [rel], message: `chore(audit-comercial): relatório mensal ${monthStr} [skip ci]` });
+    } catch (e) {
+      log(`[WARN] Falha ao commitar o relatório (${e.message}) — seguindo para o envio do e-mail mesmo assim.`);
+    }
   }
 
   if (SEND_EMAIL) {

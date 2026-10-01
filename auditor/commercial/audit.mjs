@@ -159,8 +159,14 @@ async function main() {
       // Commits ONLY the report itself (pure historical record, never served
       // by the Worker — see .assetsignore). This script never touches any
       // site file, so there is nothing else `git status` could show here.
-      const { committed } = await commitReportFiles({ files: [relMd, relJson], message: `chore(audit-comercial): relatório semanal ${dateStr} [skip ci]` });
-      if (committed) log('Relatório commitado no histórico (reports/commercial/).');
+      // Nunca deixa uma falha de git (ex.: colisão de push com outro job
+      // automático) impedir o envio do e-mail abaixo.
+      try {
+        const { committed } = await commitReportFiles({ files: [relMd, relJson], message: `chore(audit-comercial): relatório semanal ${dateStr} [skip ci]` });
+        if (committed) log('Relatório commitado no histórico (reports/commercial/).');
+      } catch (e) {
+        log(`[WARN] Falha ao commitar o relatório (${e.message}) — seguindo para o envio do e-mail mesmo assim.`);
+      }
     }
 
     if (SEND_EMAIL) {

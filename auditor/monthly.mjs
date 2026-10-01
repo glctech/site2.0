@@ -72,7 +72,14 @@ async function main() {
 
   if (process.env.GITHUB_ACTIONS === 'true') {
     const rel = mdPath.slice(ROOT.length).replace(/^\/+/, '');
-    await commitReportFiles({ files: [rel], message: `chore(audit): relatório mensal ${monthStr} [skip ci]` });
+    // Nunca deixa uma falha de git (ex.: colisão de push com outro job
+    // automático) impedir o envio do e-mail abaixo — o relatório já foi
+    // gerado e é o que importa chegar na caixa de entrada.
+    try {
+      await commitReportFiles({ files: [rel], message: `chore(audit): relatório mensal ${monthStr} [skip ci]` });
+    } catch (e) {
+      log(`[WARN] Falha ao commitar o relatório (${e.message}) — seguindo para o envio do e-mail mesmo assim.`);
+    }
   }
 
   if (SEND_EMAIL) {
