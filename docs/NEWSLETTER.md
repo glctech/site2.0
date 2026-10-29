@@ -124,18 +124,40 @@ GLCTech" tem destaque visual logo após a introdução do boletim — `image_url
 é opcional, mas recomendado para chamar mais atenção; precisa ser uma URL
 pública, nunca um link de repositório privado):
 
-**Convenção para as imagens**: subir 3 screenshots direto em
-`assets/screens/` no repositório (via GitHub, upload de arquivo), nomeados
-`<nome-do-modulo>_01.png`, `<nome-do-modulo>_02.png`, `<nome-do-modulo>_03.png`.
-A partir daí: escolher a mais visual/impactante das 3, mover para
-`assets/novidades/<nome-do-modulo>.png`, apagar o resto de `assets/screens/`,
-publicar (`wrangler deploy`) e só então usar essa URL como `image_url` —
-sempre no domínio do Worker (ver nota abaixo).
+**Convenção para as imagens + texto**: subir até 3 screenshots candidatas
+direto em `assets/screens/` no repositório (via GitHub, upload de arquivo),
+nomeados `<nome-do-modulo>_1.jpg`, `<nome-do-modulo>_2.jpg`,
+`<nome-do-modulo>_3.jpg` (jpg/jpeg/png/webp, qualquer sufixo que ordene
+1/2/3), mais um `<nome-do-modulo>.md` com o texto da novidade:
+
+```
+title: Nova parceria com Veeam
+url: https://glctech.com.br/veeam.html
+---
+Resumo curto que vai aparecer no corpo do e-mail. Pode ter várias linhas.
+```
+
+Depois, o script `scripts/newsletter-novidade.mjs` cuida do resto:
 
 ```bash
-wrangler d1 execute glctech-newsletter --remote --command \
-"INSERT INTO company_news (title, summary, url, image_url) VALUES ('Nova parceria', 'Resumo curto...', 'https://glctech.com.br/...', 'https://site2-0.aluiz-cez.workers.dev/assets/novidades/exemplo.png')"
+# 1) lista as candidatas para escolher visualmente a melhor
+node scripts/newsletter-novidade.mjs <nome-do-modulo>
+
+# 2) aplica a escolha (ex.: a 2ª da lista impressa acima) — move a vencedora
+#    para assets/novidades/, apaga as outras 2 + o .md, e gera o SQL
+node scripts/newsletter-novidade.mjs <nome-do-modulo> --choose 2
 ```
+
+O script imprime o `INSERT INTO company_news` pronto (title/summary/url do
+`.md`, `image_url` já no domínio correto do Worker — ver nota abaixo) e o
+caminho de um `.sql` temporário para rodar com `wrangler d1 execute
+glctech-newsletter --remote --file=...`. Ele **não roda o wrangler sozinho**
+(passe `--run` ao script só se quiser que ele execute também); publicar a
+imagem nova ainda exige `wrangler deploy` depois.
+
+Fluxo manual antigo (sem o script) continua funcionando — montar o mesmo
+`INSERT INTO company_news (title, summary, url, image_url) VALUES (...)` à
+mão — mas o script evita escapar SQL/mover arquivos manualmente.
 
 **Importante sobre `image_url`**: use sempre o domínio do Worker
 (`WORKER_URL`, ex. `https://site2-0.aluiz-cez.workers.dev/assets/...`), nunca
